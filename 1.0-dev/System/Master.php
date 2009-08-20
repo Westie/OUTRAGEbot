@@ -244,7 +244,7 @@ class Master
 	 *
 	 *	@param string $sChannel Channel name.
 	 */
-	function getModes($sChannel)
+	function getNames($sChannel)
 	{
 		if(!$sChannel) return false;
 		if($this->oCurrentBot->isClone()) return false;
@@ -377,19 +377,16 @@ class Master
 			}
 			case "JOIN":
 			{
-				$this->getModes($aChunks[2]);
 				$this->_onJoin($aChunks);
 				break;
 			}
 			case "KICK":
 			{
-				$this->getModes($aChunks[2]);
 				$this->_onKick($aChunks);
 				break;
 			}
 			case "PART":
 			{
-				$this->getModes($aChunks[2]);
 				$this->_onPart($aChunks);
 				break;
 			}
@@ -400,13 +397,11 @@ class Master
 			}
 			case "MODE":
 			{
-				$this->getModes($aChunks[2]);
 				$this->_onMode($aChunks);
 				break;
 			}
 			case "NICK":
 			{
-				$this->getModes($aChunks[2]);
 				$this->_onNick($aChunks);
 				break;
 			}
@@ -525,6 +520,43 @@ class Master
 	private function _onMode($aChunks)
 	{
 		$this->invokeEvent("onMode", $aChunks[2], $aChunks[3]);
+			
+		foreach($this->parseModes($aChunks[3]) as $aMode)
+		{
+			switch($aMode['MODE'])
+			{
+				case 'v':
+				{
+					if($aMode['ACTION'] == '+') $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] |= 1;
+					else $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] ^= 1;
+					break;
+				}
+				case 'h':
+				{
+					if($aMode['ACTION'] == '+') $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] |= 3;
+					else $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] ^= 3;
+					break;
+				}
+				case 'o':
+				{
+					if($aMode['ACTION'] == '+') $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] |= 7;
+					else $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] ^= 7;
+					break;
+				}
+				case 'a':
+				{
+					if($aMode['ACTION'] == '+') $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] |= 15;
+					else $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] ^= 15;
+					break;
+				}
+				case 'q':
+				{
+					if($aMode['ACTION'] == '+') $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] |= 31;
+					else $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] ^= 31;
+					break;
+				}
+			}
+		}
 	}
 	
 	
@@ -535,13 +567,15 @@ class Master
 	{
 		$sNickname = $this->getNickname($aChunks[0]);
 		
-		if(!strcmp($sNickname, $this->oCurrentBot->aConfig['Nick']))
+		if(!strcmp($sNickname, $this->oCurrentBot->aConfig['nickname']))
 		{
 			/* God, this IRCnet sucks. :( */
-			$this->oCurrentBot->aConfig['Nick'] = $sNickname;
+			$this->oCurrentBot->aConfig['nickname'] = $sNickname;
 		}
 		
 		$this->invokeEvent("onNick", $sNickname, $aChunks[2]);
+		$this->oModes->aUsers[$aChunks[2]] = $this->oModes->aUsers[$sNickname];
+		unset($this->oModes->aUsers[$sNickname]);
 	}
 	
 	
@@ -681,7 +715,7 @@ class Master
 	 */
 	function isUserVoice($sChan, $sUser)
 	{
-		return (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] & MODE_USER_VOICE) != false);
+		return !isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) ? false : (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] & MODE_USER_VOICE) != false);
 	}
 	
 	
@@ -694,7 +728,7 @@ class Master
 	 */
 	function isUserHalfOp($sChan, $sUser)
 	{
-		return (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] & MODE_USER_HOPER) != false);
+		return !isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) ? false : (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] & MODE_USER_HOPER) != false);
 	}
 	
 	
@@ -707,7 +741,7 @@ class Master
 	 */
 	function isUserOper($sChan, $sUser)
 	{
-		return (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] & MODE_USER_OPER) != false);
+		return !isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) ? false : (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] & MODE_USER_OPER) != false);
 	}
 	
 	
@@ -720,7 +754,7 @@ class Master
 	 */
 	function isUserAdmin($sChan, $sUser)
 	{
-		return (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] >= MODE_USER_ADMIN) != false);
+		return !isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) ? false : (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] >= MODE_USER_ADMIN) != false);
 	}
 	
 	
@@ -733,7 +767,7 @@ class Master
 	 */
 	function isUserOwner($sChan, $sUser)
 	{
-		return (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] == MODE_USER_OWNER) != false);
+		return !isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) ? false : (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] == MODE_USER_OWNER) != false);
 	}
 		
 	
@@ -1234,6 +1268,43 @@ class Master
 	public function Part($sChannel, $sReason = false)
 	{
 		return $this->sendRaw("PART $sChannel".($sReason == false ? "" : " :{$sReason}"));
+	}
+	
+	
+	/**
+	 *	Parses a mode string into a usable array.
+	 *
+	 *	@param $sModes Mode that has just been set.
+	 *	@return array Array of modes.
+	 */
+	public function parseModes($sMode)
+	{
+		$iAction = 0;
+		$iIndex = 0;
+		$aModes = explode(' ', $sMode);
+		$iModes = strlen($aModes[0]);
+		$aReturn = array();
+
+		for($iCount = 0; $iCount < $iModes; ++$iCount)
+		{
+			if($aModes[0][$iCount] == '+' || $aModes[0][$iCount] == '-')
+			{
+				$iAction = $aModes[0][$iCount];
+				continue;
+			}
+			
+			if(isset($aModes[++$iIndex]))
+			{
+				$aReturn[] = array
+				(
+					"ACTION" => $iAction,
+					"MODE" => $aModes[0][$iCount],
+					"PARAM" => $aModes[$iIndex],
+				);
+			}
+		}
+		
+		return $aReturn;
 	}
 }
 
