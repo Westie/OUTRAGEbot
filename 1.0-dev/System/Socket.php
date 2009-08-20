@@ -1,0 +1,233 @@
+<?php
+/**
+ *	Socket class for OUTRAGEbot
+ *
+ *	@ignore
+ *	@package OUTRAGEbot
+ *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/
+ *	@author David Weston <westie@typefish.co.uk>
+ *	@version 1.0
+ */
+
+class Socket
+{
+	public
+		$oMaster = null,
+		$aConfig = array(),
+		$aStatistics = array(),
+		$rSocket = null,
+		
+		$isWaiting = false,
+		$iPingTimer = -1,
+		$iHasBeenReply = false,
+		
+		$iNoReply = 0,
+		$isActive = false,
+		$isRemove = false,
+		
+		$iUseQueue = false,
+		$aSearch = array(),
+		$aMsgQueue = array(),
+		$aMatchQueue = array();
+	
+	
+	/* Constructing the class */
+	public function constructBot()
+	{
+		/* Resetting statistics */
+		$this->aStatistics = array
+		(
+			"StartTime" => time(),
+			"Input" => array
+			(
+				"Packets" => 0,
+				"Bytes" => 0,
+			),
+			"Output" => array
+			(
+				"Packets" => 0,
+				"Bytes" => 0,
+			),
+		);
+		
+		/* Shortcut, eh? */
+		$oConfig = $this->oMaster->oConfig;
+		
+		$this->rSocket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+		
+		if(isset($oConfig->Network['bind']))
+		{
+			socket_bind($this->rSocket, $oConfig->Network['bind']);
+		}
+		
+		socket_connect($this->rSocket, $oConfig->Network['host'], $oConfig->Network['port']);
+		if(!isset($_SERVER['WINDIR']) && !isset($_SERVER['windir']))
+		{
+			socket_set_nonblock($this->rSocket);
+		}
+		
+		if(isset($this->aConfig['password']))
+		{
+			$this->Output("PASS {$this->aConfig['password']}");
+		}
+		
+		$this->Output("NICK {$this->aConfig['nickname']}");
+		$this->Output("USER {$this->aConfig['username']} x x :{$this->aConfig['username']}");
+		
+		$this->Active = true;
+		$this->isWaiting = false;
+		$this->iPingTimer = Timers::Create(array($this, "Ping"), 60, -1);
+	}
+	
+	
+	/* The socket gets shutdown by unsetting the class. */
+	public function destructBot()
+	{
+		$this->Output("QUIT :{$this->oMaster->oConfig->Network['quitmsg']}");
+		Timers::Delete($this->iPingTimer);
+		
+		@socket_clear_error();
+		
+		$this->socketShutdown();
+		$this->Active = false;
+		$this->isWaiting = false;
+	}
+	
+	
+	/* The real constructor. */
+	public function __construct($oMaster, $aBasic)
+	{
+		$this->aConfig = $aBasic;
+		$this->oMaster = $oMaster;
+		
+		$this->constructBot();
+	}
+	
+	
+	/* The real destructor. */
+	public function __destruct()
+	{
+	}
+	
+	
+	/* Sending data from socket */
+	public function Output($sRaw)
+	{
+		++$this->aStatistics['Output']['Packets'];
+		$this->aStatistics['Output']['Bytes'] += strlen($sRaw.PHP_EOL);
+		return @socket_write($this->rSocket, $sRaw.PHP_EOL);
+	}
+	
+	
+	/* All important ping check */
+	public function Ping()
+	{
+		if(!$this->iHasBeenReply)
+		{
+			$this->iNoReply++;
+			$this->iHasBeenReply = false;
+		}
+		
+		if($this->iNoReply >= 5)
+		{
+			$this->destructBot();
+			Timers::Create($this, "constructBot", $this->aConfig['timewait'], 0);
+			
+			$this->isWaiting = true;
+			$this->iNoReply = 0;
+		}			
+		
+		$this->Output("PING ".time());
+		$this->iHasBeenReply = false;
+	}
+
+	
+	/* Recieving data from socket */
+	public function Input()
+	{	
+		if(!$this->isSocketActive())
+		{
+			if(!$this->isWaiting)
+			{
+				$this->destructBot();
+				$this->isWaiting = true;
+				$this->constructBot();
+			}
+			return true;
+		}
+		else
+		{
+			if($this->isWaiting) return true;
+			
+			if(count($this->aMsgQueue))
+			{
+				foreach($this->aMsgQueue as $iKey => &$sChunk)
+				{
+					$this->oMaster->getSend($this, $sChunk);
+					unset($this->aMsgQueue[$iKey]);
+				}
+			}
+			
+			if(($sInput = socket_read($this->rSocket, 4096, PHP_BINARY_READ)))
+			{
+				$aInput = explode("\n", $sInput);
+				
+				foreach($aInput as $sChunk)
+				{
+					/* Statistics */
+					++$this->aStatistics['Input']['Packets'];
+					$this->aStatistics['Input']['Bytes'] += strlen($sChunk);
+					$this->oMaster->getSend($this, $sChunk);
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	
+	/* Is socket online? */
+	private function isSocketActive()
+	{
+		if(!$this->Active)
+		{
+			return false;
+		}
+		
+		if(!is_resource($this->rSocket))
+		{
+			return false;
+		}
+		
+		if(strlen(socket_last_error($this->rSocket)) > 3)
+		{
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	/* Making it easier to check of clones */
+	public function isClone()
+	{
+		return ($this->aConfig['slave'] !== false);
+	}
+	
+	
+	/* Changing the bot's nickname! */
+	public function setNickname($sNickname)
+	{
+		$this->aConfig['nickname'] = $sNickname;
+		$this->Output("NICK {$sNickname}");
+	}
+	
+	
+	/* Shutting down socket - used for restarting, and dying. */
+	public function socketShutdown()
+	{
+		return @socket_shutdown($this->rSocket);
+	}
+}
+
+?>
