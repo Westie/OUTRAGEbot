@@ -32,7 +32,7 @@ class Socket
 	
 	
 	/* Constructing the class */
-	public function constructBot(&$oMaster = false, &$aBasic = false)
+	public function constructBot()
 	{
 		/* Resetting statistics */
 		$this->aStatistics = array
@@ -107,7 +107,6 @@ class Socket
 	/* The real destructor. */
 	public function __destruct()
 	{
-		$this->destructBot();
 	}
 	
 	

@@ -471,16 +471,9 @@ class Master
 	{
 		$this->invokeEvent("onConnect");
 		
-		foreach((array) explode(',', $this->oConfig->Network['channels'])  as $mChannel)
+		foreach((array) explode(',', $this->oConfig->Network['channels']) as $sChannel)
 		{
-			if(is_array($mChannel))
-			{
-				$this->sendRaw("JOIN {$mChannel[0]} {$mChannel[1]}");
-			}
-			else
-			{
-				$this->sendRaw("JOIN {$mChannel}");
-			}
+			$this->sendRaw("JOIN {$sChannel}");
 		}
 	}
 	
@@ -755,6 +748,30 @@ class Master
 		$sHostname = $this->getHostname($aChunks[0]);
 		
 		return (in_array($sHostname, $this->oConfig->Network['_owners']) !== false);
+	}
+	
+	
+	/**
+	 *	Checks if the selected/current bot is a clone.
+	 *
+	 *	@param $iBot Bot's ID. (Starts from zero)
+	 *	@return bool 'true' on success.
+	 */
+	public function isClone($iBot = false)
+	{
+		if($iBot == false)
+		{
+			return $this->oCurrentBot->isClone();
+		}
+		else
+		{
+			if(isset($this->aBotObjects[$iBot]))
+			{
+				return $this->aBotObjects[$iBot]->isClone();
+			}
+		}
+		
+		return false;
 	}
 
 
@@ -1162,7 +1179,7 @@ class Master
 	 *	@param integer $iSleep Milliseconds to sleep before getting input.
 	 *	@return array The response matched to the data in $aSearch.
 	 */
-	function getRealtimeRequest($sRequest, $mSearch, $iSleep = 0)
+	public function getRealtimeRequest($sRequest, $mSearch, $iSleep = 0)
 	{
 		$this->oCurrentBot->iUseQueue = true;
 		$this->oCurrentBot->aSearch = (array) $mSearch;
@@ -1173,6 +1190,55 @@ class Master
 		$this->oCurrentBot->iUseQueue = false;
 		
 		return $this->oCurrentBot->aMatchQueue;
+	}
+	
+	
+	/**
+	 *	Invites a user to a channel.
+	 *
+	 *	@param string $sChannel Channel name.
+	 *	@param string $sNickname Nickname of the person to kick.
+	 *	@param string $sReason Reason of the kick.
+	 */
+	public function Invite($sChannel, $sNickname)
+	{
+		return $this->sendRaw("INVITE {$sNickname} {$sChannel}");
+	}
+	
+	
+	/**
+	 *	Kicks a user from a channel.
+	 *
+	 *	@param string $sChannel Channel name.
+	 *	@param string $sNickname Nickname of the person to kick.
+	 *	@param string $sReason Reason of the kick.
+	 */
+	public function Kick($sChannel, $sNickname, $sReason = "Kick")
+	{
+		return $this->sendRaw("KICK {$sChannel} :{$sReason}");
+	}
+	
+	
+	/**
+	 *	Allows the bot to join a channel.
+	 *
+	 *	@param string $sChannel Channel name.
+	 */
+	public function Join($sChannel)
+	{
+		return $this->sendRaw("JOIN $sChannel");
+	}
+	
+	
+	/**
+	 *	Allows the bot to part a channel.
+	 *
+	 *	@param string $sChannel Channel name.
+	 *	@param string $sReason Reason for leaving
+	 */
+	public function Part($sChannel, $sReason = false)
+	{
+		return $this->sendRaw("PART $sChannel".($sReason == false ? "" : " :{$sReason}"));
 	}
 }
 
