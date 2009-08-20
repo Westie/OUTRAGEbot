@@ -107,6 +107,7 @@ class Socket
 	/* The real destructor. */
 	public function __destruct()
 	{
+		/* Nothing here! Yay! */
 	}
 	
 	
