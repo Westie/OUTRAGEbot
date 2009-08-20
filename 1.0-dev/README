@@ -10,6 +10,10 @@ filename (ie, renaming it to '~OUTRAGEbot.ini', that configuration file will not
 be loaded. Just to tell you!
 
 
+== EXAMPLES ==
+Some examples can be found in the /_Examples/ directory.
+
+
 == STARTING BOT ==
 You can start the bot using PHP, seeing as it is a PHP bot.
 ---

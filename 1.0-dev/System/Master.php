@@ -1080,7 +1080,7 @@ class Master
 	 *
 	 *	<code>$this->iBindID = $this->bindCreate("INVITE", array($this, "onInvite"), array(2, 3));</code>
 	 *
-	 *	@example ../_examples/bindCreate.php A demo plugin that demonstrates how to use it.
+	 *	@example ../_Examples/bindCreate.php A demo plugin that demonstrates how to use it.
 	 *	@param string $sInput IRC numeric name
 	 *	@param callback $cCallback Callback to bind handler.
 	 *	@param array $aFormat Array of arguments to pass to the bind handler.
