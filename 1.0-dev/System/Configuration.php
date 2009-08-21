@@ -37,6 +37,17 @@
  *	altnick = OUTRAGEbot`
  *	username = testing
  *	realname = David Weston
+ *
+ *
+ *	<font color="#008000">; </font>
+ *	<font color="#008000">; This is an example of configuration for plugins. What you can do here</font>
+ *	<font color="#008000">; is use the name of the plugin, with '~' prefixed to it, like '~Network'.</font>
+ *	<font color="#008000">; You can then call this from PHP with $this->getConfig(); - which will</font>
+ *	<font color="#008000">; the configuration (for that plugin only) in an array.</font>
+ *	<font color="#008000">; </font>
+ *	<font color="4E009B"><b>[~Evaluation]</b></font>
+ *	<font color="#008000">; As you can tell, this is for the plugin 'Evaluation'.</font>
+ *	testing = "It seems to work!"
  *	</pre>
  -	End of epic HTML formatting.
  *

@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Docs For Class Control</title>
+<title>Docs For Class Plugins</title>
 <link rel="stylesheet" type="text/css" href="../media/style.css">
 </head>
 <body>
@@ -60,8 +60,8 @@
     <td>
       <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
 
-<h1>Class: Control</h1>
-Source Location: /Control.php<br /><br />
+<h1>Class: Plugins</h1>
+Source Location: /Plugins.php<br /><br />
 
 
 <table width="100%" border="0">
@@ -69,18 +69,18 @@ Source Location: /Control.php<br /><br />
 
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre></pre><br />
-<div class="description">Control class for OUTRAGEbot</div><br /><br />
+<div class="description">Plugins class for OUTRAGEbot</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>David Weston &lt;<a href="mailto:westie@typefish.co.uk">westie@typefish.co.uk</a>&gt;</li>
-                  </ul>
+                        </ul>
 
 
 
 
         
           
-  
+      
 <h4>Version:</h4>
 <ul>
   <li>1.0</li>
@@ -93,13 +93,21 @@ Source Location: /Control.php<br /><br />
         
 </td>
 
+<td valign="top">
+<h3><a href="#class_vars">Variables</a></h3>
+<ul>
+    <li><a href="../OUTRAGEbot/Plugins.html#var$pAuthor">$pAuthor</a></li>
+    <li><a href="../OUTRAGEbot/Plugins.html#var$pTitle">$pTitle</a></li>
+    <li><a href="../OUTRAGEbot/Plugins.html#var$pVersion">$pVersion</a></li>
+  </ul>
+</td>
 
 
 <td valign="top">
 <h3><a href="#class_methods">Methods</a></h3>
 <ul>
-    <li><a href="../OUTRAGEbot/Control.html#methodbotCreate">botCreate</a></li>
-    <li><a href="../OUTRAGEbot/Control.html#methodbotRemove">botRemove</a></li>
+    <li><a href="../OUTRAGEbot/Plugins.html#methodgetConfig">getConfig</a></li>
+    <li><a href="../OUTRAGEbot/Plugins.html#methodLog">Log</a></li>
   </ul>
 </td>
 
@@ -119,8 +127,8 @@ Source Location: /Control.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 15]<br />
-Control class for OUTRAGEbot<br /><br /><p>The real brain of the bot, this controls everything. This static hosts all of the bots, and all their files. 	If you want to access a bot, this is the class to use.</p><br /><br /><br />
+[line 11]<br />
+Plugins class for OUTRAGEbot<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -133,34 +141,146 @@ Control class for OUTRAGEbot<br /><br /><p>The real brain of the bot, this contr
   <tr>
     <td><b>copyright:</b>&nbsp;&nbsp;</td><td>David Weston (c) 2009 -&gt; http://www.typefish.co.uk/licences/</td>
   </tr>
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
 </table>
 </div>
 </div><br /><br />
 <div class="top">[ <a href="#top">Top</a> ]</div><br />
 
+<hr />
+<a name="class_vars"></a>
+<h3>Class Variables</h3>
+<div class="tags">
+	<a name="var$pAuthor"></a>
+	<p></p>
+	<h4>$pAuthor = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<p>[line 26]</p>
+  Author of the plugin.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>string</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$pTitle"></a>
+	<p></p>
+	<h4>$pTitle = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<p>[line 18]</p>
+  Title of the plugin.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>string</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$pVersion"></a>
+	<p></p>
+	<h4>$pVersion = <span class="value">&nbsp;&quot;&quot;</span></h4>
+	<p>[line 34]</p>
+  Version of the plugin.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>string</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+</div><br />
 
 <hr />
 <a name="class_methods"></a>
 <h3>Class Methods</h3>
 <div class="tags">
+
   <hr />
-	<a name="methodbotCreate"></a>
-	<h3>static method botCreate <span class="smalllinenumber">[line 41]</span></h3>
+	<a name="methodgetConfig"></a>
+	<h3>method getConfig <span class="smalllinenumber">[line 137]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>static void botCreate(
-string
-$sConfig)</code>
+		<code>array getConfig(
+)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Creates a bot from an INI file in the config folder.<br /><br /><br /><br />
+		Returns the<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/ConfigParser.html#methodparseConfigFile">ConfigParser::parseConfigFile()</a></td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Configuration that is supplied with the bot.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodLog"></a>
+	<h3>method Log <span class="smalllinenumber">[line 125]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void Log(
+string
+$sString)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Function that is used to write to print to console.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>todo:</b>&nbsp;&nbsp;</td><td>Might enable printing to a file.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -172,56 +292,19 @@ $sConfig)</code>
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
         <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sConfig</b>&nbsp;&nbsp;</td>
-        <td></td>
+        <td><b>$sString</b>&nbsp;&nbsp;</td>
+        <td>String to echo.</td>
       </tr>
         </table>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
-  <hr />
-	<a name="methodbotRemove"></a>
-	<h3>static method botRemove <span class="smalllinenumber">[line 56]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>static bool botRemove(
-string
-$sConfig)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Kills a bot(-group) where from the name of its config file.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sConfig</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-
 </div><br />
 
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Fri, 21 Aug 2009 14:07:54 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Fri, 21 Aug 2009 14:07:55 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

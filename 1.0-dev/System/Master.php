@@ -1054,7 +1054,7 @@ class Master
 		include($sFile);
 		unlink($sFile);
 				
-		$this->oPlugins->$sPlugin = new $sIdentifier($this, $sIdentifier);
+		$this->oPlugins->$sPlugin = new $sIdentifier($this, array($sPlugin, $sIdentifier));
 		echo "* Plugin ".$sPlugin." has been loaded.".PHP_EOL;
 		return true;
 	}
