@@ -27,16 +27,16 @@ class Timers
 
 		$aTimer = array();
 		
-		$aTimer['sKey']       = substr(sha1(time()."-".uniqid()), 4, 10);
+		$aTimer['KEY'] = substr(sha1(time()."-".uniqid()), 4, 10);
 		
-		$aTimer['cCallback']  = $cCallback;
-		$aTimer['iInterval']  = $iInterval;
-		$aTimer['iRepeat']    = $iRepeat;
-		$aTimer['iCallTime']  = (time() + $iInterval);
-		$aTimer['aArguments'] = (array) $aArguments;
+		$aTimer['CALLBACK'] = $cCallback;
+		$aTimer['INTERVAL'] = $iInterval;
+		$aTimer['REPEAT'] = $iRepeat;
+		$aTimer['CALLTIME'] = (time() + $iInterval);
+		$aTimer['ARGUMENTS'] = (array) $aArguments;
 		
 		self::$aTimers[] = $aTimer;
-		return $aTimer['sKey'];
+		return $aTimer['KEY'];
 	}
 	
 	
@@ -45,7 +45,7 @@ class Timers
 	{
 		foreach(self::$aTimers as $iKey => $aTimer)
 		{
-			if($aTimer['sKey'] == $sKey)
+			if($aTimer['KEY'] == $sKey)
 			{
 				unset(self::$aTimers[$iKey]);
 				return true;
@@ -79,11 +79,11 @@ class Timers
 		
 		foreach(self::$aTimers as $iKey => &$aTimer)
 		{
-			if(time() >= $aTimer['iCallTime'])
+			if(time() >= $aTimer['CALLTIME'])
 			{
-				call_user_func_array($aTimer['cCallback'], (array) $aTimer['aArguments']);
+				call_user_func_array($aTimer['CALLBACK'], (array) $aTimer['ARGUMENTS']);
 				
-				$iTimes = (isset($aTimer['iRepeat']) ? (int) $aTimer['iRepeat'] : 0);
+				$iTimes = (isset($aTimer['REPEAT']) ? (int) $aTimer['REPEAT'] : 0);
 				
 				if($iTimes != -1)
 				{
@@ -91,8 +91,8 @@ class Timers
 					
 					if($iTimes > 0)
 					{
-						$aTimer['iCallTime'] = (time() + $aTimer['iInterval']);
-						$aTimer['iRepeat'] = $iTimes;
+						$aTimer['CALLTIME'] = (time() + $aTimer['INTERVAL']);
+						$aTimer['REPEAT'] = $iTimes;
 					}
 					else
 					{
@@ -101,7 +101,7 @@ class Timers
 				}
 				else
 				{
-					$aTimer['iCallTime'] = (time() + $aTimer['iInterval']);
+					$aTimer['CALLTIME'] = (time() + $aTimer['INTERVAL']);
 				}
 			}
 		}

@@ -981,6 +981,7 @@ class Master
 	 *	@param callback $cCallback Timer callback 
 	 *	@param integer $iInterval <b>Seconds</b> between timer calls.
 	 *	@param integer $iRepeat How many times the timer should call before it is destroyed. -1 implies infinite.
+	 *	@param mixed $... Arguments to pass to timer.
 	 *	@return string Timer reference ID.
 	 */
 	public function timerCreate($cCallback, $iInterval, $iRepeat)
@@ -992,10 +993,20 @@ class Master
 		
 		return Timers::Create($cCallback, $iInterval, $iRepeat, (array) $aArguments);
 	}
-	
-	
+
+		
 	/**
 	 *	Gets the information of a timer from its reference ID.
+	 *
+	 *	These are the contents of the array that is returned when this function is invoked.
+	 *	
+	 *	<pre>
+	 *	<b>CALLBACK</b>  -> Callback which the timer calls when invoked.
+	 *	<b>INTERVAL</b>  -> How many seconds pass between each call.
+	 *	<b>REPEAT</b>    -> How many times left the plugin is called before it is unlinked.
+	 *	<b>CALLTIME</b>  -> When the plugin will next call itself (Unix time).
+	 *	<b>ARGUMENTS</b> -> Array of arguments that will be passed to the timer.
+	 *	</pre>
 	 *
 	 *	@param string $sKey Timer reference ID.
 	 *	@return array Array of timer information.
@@ -1047,7 +1058,7 @@ class Master
 		}
 			
 		$sClass = preg_replace("/(class[\s]+?)".$sPlugin."([\s]+?extends[\s]+?Plugins[\s]+?{)/", "\\1".$sIdentifier."\\2", $sClass);
-		$sFile = tempnam(dirname($sDirname), "nat"); // Stops the __FILE__ bugs.
+		$sFile = tempnam(dirname($sDirname), "mod"); // Stops the __FILE__ bugs.
 		file_put_contents($sFile, $sClass);				
 		unset($sClass); // Weight off the shoulders anyone?
 			
@@ -1056,10 +1067,28 @@ class Master
 				
 		$this->oPlugins->$sPlugin = new $sIdentifier($this, array($sPlugin, $sIdentifier));
 		echo "* Plugin ".$sPlugin." has been loaded.".PHP_EOL;
+		
 		return true;
 	}
 	
-	
+
+	/**
+	 *	Gets the instance of the plugin if it exists.
+	 *
+	 *	@param string $sPlugin Plugin name
+	 *	@return Plugin Object of the plugin.
+	 */
+	public function pluginGet($sPlugin)
+	{
+		if(isset($this->oPlugins->$sPlugin))
+		{
+			return $this->oPlugins->$sPlugin;
+		}
+
+		return null;
+	}
+
+
 	/**
 	 *	Unloads an active plugin from memory.
 	 *
@@ -1126,14 +1155,37 @@ class Master
 		
 		$this->aBinds[$sHandle] = array
 		(
-			"sInput" => $sInput,
-			"cCallback" => $cCallback,
-			"aFormat" => $aFormat,
+			"INPUT" => $sInput,
+			"CALLBACK" => $cCallback,
+			"FORMAT" => $aFormat,
 		);
 		
 		return $sHandle;
 	}
-	
+	   
+	/**
+	 *	Gets the information of a bind from its reference ID.
+	 *
+	 *	These are the contents of the array that is returned when this function is invoked.
+	 *	<pre>
+	 *	<b>CALLBACK</b> -> Callback which the bind calls when invoked.
+	 *	<b>FORMAT</b>   -> Arguments to pass to the event. See bindCreate.
+	 *	<b>INPUT</b>    -> The IRC command matches the bind.
+	 *	</pre>
+	 *
+	 *	@param string $sKey Bind reference ID.
+	 *	@return array Array of bind information.
+	 */
+	public function bindGet($sKey)
+	{
+		if(isset($this->aBinds[$sKey]))
+        {
+			return $this->aBinds[$sKey];
+		}
+
+		return null;
+	}
+
 	
 	/**
 	 *	Delete a reference to a bind handler.
@@ -1165,26 +1217,26 @@ class Master
 		{
 			if(!isset($aChunks[1])) return;
 			
-			if($aSection['sInput'] != $aChunks[1])
+			if($aSection['INPUT'] != $aChunks[1])
 			{
 				continue;
 			}
 			
 			$aArguments = array();
 			
-			if($aSection['aFormat'] === true)
+			if($aSection['FORMAT'] === true)
 			{
 				$aArguments = implode(' ', $aChunks);
 			}
 			else
 			{
-				foreach($aSection['aFormat'] as $mFormat)
+				foreach($aSection['FORMAT'] as $mFormat)
 				{
 					$aArguments[] = (is_integer($mFormat) ? $aChunks[$mFormat] : $mFormat);					
 				}
 			}
 			
-			call_user_func_array($aSection['cCallback'], $aArguments);
+			call_user_func_array($aSection['CALLBACK'], $aArguments);
 		}
 	}
 	
@@ -1197,18 +1249,18 @@ class Master
 	 *
 	 *	<code>$aMatches = $this->getRealtimeRequest("NAMES #westie", array(353, 366), 4);
 	 *
-	 *	//	Array
-	 *	//	(
-	 *	//		[0] => :irc.nl.ffsnetwork.com 353 OUTRAGEbot = #westie :OUTRAGEbot ~Westie Pacer|AFK IJzerenRita kc woot Cameron
-	 *	//		[1] => :irc.nl.ffsnetwork.com 366 OUTRAGEbot #westie :End of /NAMES list.
-	 *	//	)</code>
+	 *	// Array
+	 *	// (
+	 *	//	 [0] => :ircd 353 OUTRAGEbot = #westie :OUTRAGEbot ~Westie
+	 *	//	 [1] => :ircd 366 OUTRAGEbot #westie :End of /NAMES list.
+	 *	// )</code>
 	 *
 	 *	@param string $sRequest Message to send to the server.
 	 *	@param mixed $mSearch IRC numerics to cache.
-	 *	@param integer $iSleep Milliseconds to sleep before getting input.
+	 *	@param integer $iSleep <i>Microseconds</i> to sleep before getting input.
 	 *	@return array The response matched to the data in $aSearch.
 	 */
-	public function getRealtimeRequest($sRequest, $mSearch, $iSleep = 0)
+	public function getRealtimeRequest($sRequest, $mSearch, $iSleep = 10000)
 	{
 		$this->oCurrentBot->iUseQueue = true;
 		$this->oCurrentBot->aSearch = (array) $mSearch;
@@ -1304,6 +1356,77 @@ class Master
 			}
 		}
 		
+		return $aReturn;
+	}
+	
+	
+	/**
+	 *	Returns current WHOIS data about a user into an array.
+	 *
+	 *	A list of rows that this function returns when called.
+	 *	<pre>
+	 *	<b>INFO:</b>
+	 *		|- <b>USERNAME</b> -> The username of the user.
+	 *		|- <b>HOSTNAME</b> -> The user's hostname.
+	 *		'- <b>REALNAME</b> -> The user's realname.
+	 *	 
+	 *	<b>SERVER:</b>
+	 *		|- <b>SERVER</b>   -> The server's address.
+	 *		'- <b>REALNAME</b> -> The server/network name.
+	 *
+	 *	<b>CHANNELS</b> -> An array of all the channels (with modes) that the user is in.
+	 *	</pre>
+	 *
+	 *	@param $sNickname Nickname of the user.
+	 *	@param $iDelay Microseconds to wait before fetching input.
+	 *	@return array Array of modes.
+	 */
+	public function getWhois($sNickname, $iDelay = 500000)
+	{
+		$aMatches = $this->getRealtimeRequest("WHOIS {$sNickname}", array('311', '312', '318', '319'), $iDelay);
+		$aReturn = array();
+		$aReturn['CHANNELS'] = array();
+	
+		foreach($aMatches as $sMatch)
+		{
+			$aTemp = explode(' ', $sMatch, 5);
+			$aTemp[4] = trim($aTemp[4]);
+			
+			switch($aTemp[1])
+			{
+				case '311':
+				{
+					$aChunks = explode(' ', $aTemp[4], 4);
+					$aReturn['INFO'] = array
+					(
+						"USERNAME" => $aChunks[0],
+						"HOSTNAME" => $aChunks[1],
+						"REALNAME" => substr($aChunks[3], 1),
+					);
+					break;
+				}
+				case '312':
+				{
+					$aChunks = explode(' ', $aTemp[4], 2);
+					$aReturn['SERVER'] = array
+					(
+						"SERVER" => $aChunks[0],
+						"INFO" => substr($aChunks[1], 1),
+					);
+					break;
+				}
+				case '318':
+				{
+					break;
+				}
+				case '319':
+				{
+					$aReturn['CHANNELS'] = array_merge($aReturn['CHANNELS'], explode(' ', substr($aTemp[4], 1)));
+					break;
+				}
+			}
+		}
+
 		return $aReturn;
 	}
 }

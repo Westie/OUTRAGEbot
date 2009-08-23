@@ -159,7 +159,7 @@ class Socket
 		{
 			if($this->isWaiting) return true;
 			
-			if(count($this->aMsgQueue))
+			if(count($this->aMsgQueue) && $this->iUseQueue == false)
 			{
 				foreach($this->aMsgQueue as $iKey => &$sChunk)
 				{

@@ -108,6 +108,7 @@ Source Location: /Master.php<br /><br />
     <li><a href="../OUTRAGEbot/Master.html#methodAction">Action</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodbindCreate">bindCreate</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodbindDelete">bindDelete</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodbindGet">bindGet</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodctcpReply">ctcpReply</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodctcpRequest">ctcpRequest</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetHostname">getHostname</a></li>
@@ -115,6 +116,7 @@ Source Location: /Master.php<br /><br />
     <li><a href="../OUTRAGEbot/Master.html#methodgetNextClone">getNextClone</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetNickname">getNickname</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetRealtimeRequest">getRealtimeRequest</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodgetWhois">getWhois</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodInvite">Invite</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodinvokeEvent">invokeEvent</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodisAdmin">isAdmin</a></li>
@@ -130,6 +132,7 @@ Source Location: /Master.php<br /><br />
     <li><a href="../OUTRAGEbot/Master.html#methodNotice">Notice</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodparseModes">parseModes</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodPart">Part</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodpluginGet">pluginGet</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodpluginIsActive">pluginIsActive</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodpluginLoad">pluginLoad</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodpluginReload">pluginReload</a></li>
@@ -294,7 +297,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodbindCreate"></a>
-	<h3>method bindCreate <span class="smalllinenumber">[line 1123]</span></h3>
+	<h3>method bindCreate <span class="smalllinenumber">[line 1152]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -349,7 +352,7 @@ $aFormat)</code>
   </div>
   <hr />
 	<a name="methodbindDelete"></a>
-	<h3>method bindDelete <span class="smalllinenumber">[line 1144]</span></h3>
+	<h3>method bindDelete <span class="smalllinenumber">[line 1196]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -381,6 +384,47 @@ $sKey)</code>
         <td class="type">string&nbsp;&nbsp;</td>
         <td><b>$sKey</b>&nbsp;&nbsp;</td>
         <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodbindGet"></a>
+	<h3>method bindGet <span class="smalllinenumber">[line 1179]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array bindGet(
+string
+$sKey)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gets the information of a bind from its reference ID.<br /><br /><p>These are the contents of the array that is returned when this function is invoked. 	<pre>	<b>CALLBACK</b> -> Callback which the bind calls when invoked.
+	<b>FORMAT</b>   -> Arguments to pass to the event. See bindCreate.
+	<b>INPUT</b>    -> The IRC command matches the bind.</pre></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array of bind information.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sKey</b>&nbsp;&nbsp;</td>
+        <td>Bind reference ID.</td>
       </tr>
         </table>
     </div><br />
@@ -617,7 +661,7 @@ $sHost)</code>
   </div>
   <hr />
 	<a name="methodgetRealtimeRequest"></a>
-	<h3>method getRealtimeRequest <span class="smalllinenumber">[line 1211]</span></h3>
+	<h3>method getRealtimeRequest <span class="smalllinenumber">[line 1263]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -625,17 +669,17 @@ $sHost)</code>
 string
 $sRequest, mixed
 $mSearch, [integer
-$iSleep = 0])</code>
+$iSleep = 10000])</code>
     </td></tr></table>
     </td></tr></table><br />
 	
 		Request information realtime.<br /><br /><p>The data that are you requesting (for instance, what is in $mSearch) will not be parsed by the bot. 	This essentially means it is the job of the code using that request to deal with parsing it properly.</p><p><ol><li><div class="src-line"><span class="src-var">$aMatches&nbsp;</span>=&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../OUTRAGEbot/Master.html#methodgetRealtimeRequest">getRealtimeRequest</a><span class="src-sym">(</span><span class="src-str">&quot;NAMES&nbsp;#westie&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-key">array</span><span class="src-sym">(</span><span class="src-num">353</span><span class="src-sym">,&nbsp;</span><span class="src-num">366</span><span class="src-sym">)</span><span class="src-sym">,&nbsp;</span><span class="src-num">4</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line">&nbsp;</div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;Array</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;(</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0]&nbsp;=&gt;&nbsp;:irc.nl.ffsnetwork.com&nbsp;353&nbsp;OUTRAGEbot&nbsp;=&nbsp;#westie&nbsp;:OUTRAGEbot&nbsp;~Westie&nbsp;Pacer|AFK&nbsp;IJzerenRita&nbsp;kc&nbsp;woot&nbsp;Cameron</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1]&nbsp;=&gt;&nbsp;:irc.nl.ffsnetwork.com&nbsp;366&nbsp;OUTRAGEbot&nbsp;#westie&nbsp;:End&nbsp;of&nbsp;/NAMES&nbsp;list.</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;Array</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0]&nbsp;=&gt;&nbsp;:ircd&nbsp;353&nbsp;OUTRAGEbot&nbsp;=&nbsp;#westie&nbsp;:OUTRAGEbot&nbsp;~Westie</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1]&nbsp;=&gt;&nbsp;:ircd&nbsp;366&nbsp;OUTRAGEbot&nbsp;#westie&nbsp;:End&nbsp;of&nbsp;/NAMES&nbsp;list.</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;)</span></div></li>
 </ol></p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -667,7 +711,61 @@ $iSleep = 0])</code>
           <tr>
         <td class="type">integer&nbsp;&nbsp;</td>
         <td><b>$iSleep</b>&nbsp;&nbsp;</td>
-        <td>Milliseconds to sleep before getting input.</td>
+        <td><em>Microseconds</em> to sleep before getting input.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetWhois"></a>
+	<h3>method getWhois <span class="smalllinenumber">[line 1384]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array getWhois(
+$sNickname
+$sNickname, [$iDelay
+$iDelay = 500000])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Returns current WHOIS data about a user into an array.<br /><br /><p>A list of rows that this function returns when called. 	<pre>	<b>INFO:</b>
+		|- <b>USERNAME</b> -> The username of the user.
+		|- <b>HOSTNAME</b> -> The user's hostname.
+		'- <b>REALNAME</b> -> The user's realname.
+
+	<b>SERVER:</b>
+		|- <b>SERVER</b>   -> The server's address.
+		'- <b>REALNAME</b> -> The server/network name.
+
+	<b>CHANNELS</b> -> An array of all the channels (with modes) that the user is in.</pre></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array of modes.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">$sNickname&nbsp;&nbsp;</td>
+        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
+        <td>Nickname of the user.</td>
+      </tr>
+          <tr>
+        <td class="type">$iDelay&nbsp;&nbsp;</td>
+        <td><b>$iDelay</b>&nbsp;&nbsp;</td>
+        <td>Microseconds to wait before fetching input.</td>
       </tr>
         </table>
     </div><br />
@@ -675,7 +773,7 @@ $iSleep = 0])</code>
   </div>
   <hr />
 	<a name="methodInvite"></a>
-	<h3>method Invite <span class="smalllinenumber">[line 1232]</span></h3>
+	<h3>method Invite <span class="smalllinenumber">[line 1284]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1042,7 +1140,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodJoin"></a>
-	<h3>method Join <span class="smalllinenumber">[line 1256]</span></h3>
+	<h3>method Join <span class="smalllinenumber">[line 1308]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1078,7 +1176,7 @@ $sChannel)</code>
   </div>
   <hr />
 	<a name="methodKick"></a>
-	<h3>method Kick <span class="smalllinenumber">[line 1245]</span></h3>
+	<h3>method Kick <span class="smalllinenumber">[line 1297]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1228,7 +1326,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodparseModes"></a>
-	<h3>method parseModes <span class="smalllinenumber">[line 1280]</span></h3>
+	<h3>method parseModes <span class="smalllinenumber">[line 1332]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1267,7 +1365,7 @@ $sMode)</code>
   </div>
   <hr />
 	<a name="methodPart"></a>
-	<h3>method Part <span class="smalllinenumber">[line 1268]</span></h3>
+	<h3>method Part <span class="smalllinenumber">[line 1320]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1308,8 +1406,47 @@ $sReason = false])</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
+	<a name="methodpluginGet"></a>
+	<h3>method pluginGet <span class="smalllinenumber">[line 1081]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>Plugin pluginGet(
+string
+$sPlugin)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gets the instance of the plugin if it exists.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Object of the plugin.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sPlugin</b>&nbsp;&nbsp;</td>
+        <td>Plugin name</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
 	<a name="methodpluginIsActive"></a>
-	<h3>method pluginIsActive <span class="smalllinenumber">[line 1101]</span></h3>
+	<h3>method pluginIsActive <span class="smalllinenumber">[line 1130]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1348,7 +1485,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginLoad"></a>
-	<h3>method pluginLoad <span class="smalllinenumber">[line 1027]</span></h3>
+	<h3>method pluginLoad <span class="smalllinenumber">[line 1038]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1387,7 +1524,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginReload"></a>
-	<h3>method pluginReload <span class="smalllinenumber">[line 1088]</span></h3>
+	<h3>method pluginReload <span class="smalllinenumber">[line 1117]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1426,7 +1563,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginUnload"></a>
-	<h3>method pluginUnload <span class="smalllinenumber">[line 1069]</span></h3>
+	<h3>method pluginUnload <span class="smalllinenumber">[line 1098]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1777,7 +1914,7 @@ $sText)</code>
   </div>
   <hr />
 	<a name="methodtimerCreate"></a>
-	<h3>method timerCreate <span class="smalllinenumber">[line 986]</span></h3>
+	<h3>method timerCreate <span class="smalllinenumber">[line 987]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1785,7 +1922,8 @@ $sText)</code>
 callback
 $cCallback, integer
 $iInterval, integer
-$iRepeat)</code>
+$iRepeat, mixed
+$...)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
@@ -1822,13 +1960,18 @@ $iRepeat)</code>
         <td><b>$iRepeat</b>&nbsp;&nbsp;</td>
         <td>How many times the timer should call before it is destroyed. -1 implies infinite.</td>
       </tr>
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$...</b>&nbsp;&nbsp;</td>
+        <td>Arguments to pass to timer.</td>
+      </tr>
         </table>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="methodtimerGet"></a>
-	<h3>method timerGet <span class="smalllinenumber">[line 1003]</span></h3>
+	<h3>method timerGet <span class="smalllinenumber">[line 1014]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1838,7 +1981,11 @@ $sKey)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Gets the information of a timer from its reference ID.<br /><br /><br /><br />
+		Gets the information of a timer from its reference ID.<br /><br /><p>These are the contents of the array that is returned when this function is invoked.</p><p><pre>	<b>CALLBACK</b>  -> Callback which the timer calls when invoked.
+	<b>INTERVAL</b>  -> How many seconds pass between each call.
+	<b>REPEAT</b>    -> How many times left the plugin is called before it is unlinked.
+	<b>CALLTIME</b>  -> When the plugin will next call itself (Unix time).
+	<b>ARGUMENTS</b> -> Array of arguments that will be passed to the timer.</pre></p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -1867,7 +2014,7 @@ $sKey)</code>
   </div>
   <hr />
 	<a name="methodtimerKill"></a>
-	<h3>method timerKill <span class="smalllinenumber">[line 1015]</span></h3>
+	<h3>method timerKill <span class="smalllinenumber">[line 1026]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1909,7 +2056,7 @@ $sKey)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Fri, 21 Aug 2009 14:07:54 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Sun, 23 Aug 2009 14:35:41 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
