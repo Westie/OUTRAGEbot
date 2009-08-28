@@ -9,6 +9,7 @@
  *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
  *	@version 1.0
+ *	@todo Fix that memory leak. It does my head in. :(
  */
  
 

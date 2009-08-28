@@ -1,0 +1,2070 @@
+<html>
+<head>
+<title>Docs For Class Master</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">OUTRAGEbot</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                    
+                              		  [ <a href="../classtrees_OUTRAGEbot.html" class="menu">class tree: OUTRAGEbot</a> ]
+		  [ <a href="../elementindex_OUTRAGEbot.html" class="menu">index: OUTRAGEbot</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+	<div id="todolist">
+			<p><a href="../todolist.html">Todo List</a></p>
+	</div>
+      <b>Packages:</b><br />
+              <a href="../li_OUTRAGEbot.html">OUTRAGEbot</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="../OUTRAGEbot/_Configuration.php.html">		Configuration.php
+		</a><br>
+			<a href="../OUTRAGEbot/_Control.php.html">		Control.php
+		</a><br>
+			<a href="../OUTRAGEbot/_Definitions.php.html">		Definitions.php
+		</a><br>
+			<a href="../OUTRAGEbot/_Format.php.html">		Format.php
+		</a><br>
+			<a href="../OUTRAGEbot/_Master.php.html">		Master.php
+		</a><br>
+			<a href="../OUTRAGEbot/_Plugins.php.html">		Plugins.php
+		</a><br>
+	  </div><br />
+      
+      
+            <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../OUTRAGEbot/ConfigParser.html">ConfigParser</a><br />
+	    		<a href="../OUTRAGEbot/Control.html">Control</a><br />
+	    		<a href="../OUTRAGEbot/Format.html">Format</a><br />
+	    		<a href="../OUTRAGEbot/Master.html">Master</a><br />
+	    		<a href="../OUTRAGEbot/Plugins.html">Plugins</a><br />
+	  </div>
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Class: Master</h1>
+Source Location: /Master.php<br /><br />
+
+
+<table width="100%" border="0">
+<tr><td valign="top">
+
+<h3><a href="#class_details">Class Overview</a></h3>
+<pre></pre><br />
+<div class="description">Master class for OUTRAGEbot</div><br /><br />
+<h4>Author(s):</h4>
+<ul>
+          <li>David Weston &lt;<a href="mailto:westie@typefish.co.uk">westie@typefish.co.uk</a>&gt;</li>
+                        </ul>
+
+
+
+
+        
+          
+      
+<h4>Version:</h4>
+<ul>
+  <li>1.0</li>
+</ul>
+
+<h4>Copyright:</h4>
+<ul>
+  <li>David Weston (c) 2009 -&gt; http://www.typefish.co.uk/licences/</li>
+</ul>
+        
+</td>
+
+<td valign="top">
+<h3><a href="#class_vars">Variables</a></h3>
+<ul>
+    <li><a href="../OUTRAGEbot/Master.html#var$oCurrentBot">$oCurrentBot</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#var$sCurrentChunk">$sCurrentChunk</a></li>
+  </ul>
+</td>
+
+
+<td valign="top">
+<h3><a href="#class_methods">Methods</a></h3>
+<ul>
+    <li><a href="../OUTRAGEbot/Master.html#methodAction">Action</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodbindCreate">bindCreate</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodbindDelete">bindDelete</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodbindGet">bindGet</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodctcpReply">ctcpReply</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodctcpRequest">ctcpRequest</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodgetHostname">getHostname</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodgetNames">getNames</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodgetNextClone">getNextClone</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodgetNickname">getNickname</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodgetRealtimeRequest">getRealtimeRequest</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodgetWhois">getWhois</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodInvite">Invite</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodinvokeEvent">invokeEvent</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodisAdmin">isAdmin</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodisClone">isClone</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodisUserAdmin">isUserAdmin</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodisUserHalfOp">isUserHalfOp</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodisUserOper">isUserOper</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodisUserOwner">isUserOwner</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodisUserVoice">isUserVoice</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodJoin">Join</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodKick">Kick</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodMessage">Message</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodNotice">Notice</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodparseModes">parseModes</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodPart">Part</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodpluginGet">pluginGet</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodpluginIsActive">pluginIsActive</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodpluginLoad">pluginLoad</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodpluginReload">pluginReload</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodpluginUnload">pluginUnload</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodsendAction">sendAction</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodsendMessage">sendMessage</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodsendNotice">sendNotice</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodsendRaw">sendRaw</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodstripAll">stripAll</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodstripColour">stripColour</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodstripFormat">stripFormat</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodtimerCreate">timerCreate</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodtimerGet">timerGet</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodtimerKill">timerKill</a></li>
+  </ul>
+</td>
+
+</tr></table>
+<hr />
+
+<table width="100%" border="0"><tr>
+
+
+
+
+
+
+</tr></table>
+<hr />
+
+<a name="class_details"></a>
+<h3>Class Details</h3>
+<div class="tags">
+[line 17]<br />
+Master class for OUTRAGEbot<br /><br /><p>This class deals with all the interaction with plugins, how the bot acts, etc. 	This class also contains all of the commands, etc.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>David Weston &lt;<a href="mailto:westie@typefish.co.uk">westie@typefish.co.uk</a>&gt;</td>
+  </tr>
+  <tr>
+    <td><b>version:</b>&nbsp;&nbsp;</td><td>1.0</td>
+  </tr>
+  <tr>
+    <td><b>copyright:</b>&nbsp;&nbsp;</td><td>David Weston (c) 2009 -&gt; http://www.typefish.co.uk/licences/</td>
+  </tr>
+  <tr>
+    <td><b>todo:</b>&nbsp;&nbsp;</td><td>Fix that memory leak. It does my head in. :(</td>
+  </tr>
+</table>
+</div>
+</div><br /><br />
+<div class="top">[ <a href="#top">Top</a> ]</div><br />
+
+<hr />
+<a name="class_vars"></a>
+<h3>Class Variables</h3>
+<div class="tags">
+	<a name="var$oCurrentBot"></a>
+	<p></p>
+	<h4>$oCurrentBot = <span class="value"></span></h4>
+	<p>[line 65]</p>
+  Contains the instance of the current bot.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>Socket</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$sCurrentChunk"></a>
+	<p></p>
+	<h4>$sCurrentChunk = <span class="value"></span></h4>
+	<p>[line 72]</p>
+  Contains the string/message that is sent to the bot<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>string</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+</div><br />
+
+<hr />
+<a name="class_methods"></a>
+<h3>Class Methods</h3>
+<div class="tags">
+
+  <hr />
+	<a name="methodAction"></a>
+	<h3>method Action <span class="smalllinenumber">[line 935]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void Action(
+
+$sChannel, 
+$sMessage, [
+$iSend = SEND_DEF])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sends an action to the specified channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>see:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/Master.html#methodsendAction">Master::sendAction()</a></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$sMessage</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$iSend</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodbindCreate"></a>
+	<h3>method bindCreate <span class="smalllinenumber">[line 1153]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string bindCreate(
+string
+$sInput, callback
+$cCallback, array
+$aFormat)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Create a bind handler for IRC numerics/commands.<br /><br /><p>If you are passing arguments to the bind handler, then <strong>must</strong> $aFormat must be populated. 	If you do not want to pass arguments, you can either assign $aFormat to false or a blank array. 	If you want the full string, assign $aFormat to be true. 	Otherwise, when using $aFormat, numeric characters are replaced with their corresponding chunk when called.</p><p><ol><li><div class="src-line"><span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">iBindID&nbsp;</span>=&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../OUTRAGEbot/Master.html#methodbindCreate">bindCreate</a><span class="src-sym">(</span><span class="src-str">&quot;INVITE&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-key">array</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;onInvite&quot;</span><span class="src-sym">)</span><span class="src-sym">,&nbsp;</span><span class="src-key">array</span><span class="src-sym">(</span><span class="src-num">2</span><span class="src-sym">,&nbsp;</span><span class="src-num">3</span><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Bind resource ID.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>example:</b>&nbsp;&nbsp;</td><td><a href="../__examplesource/exsource_Westie_OUTRAGEbot_1.0-dev__Examples_bindCreate.php_8d555b9fd0b5738ab9361f2ed17fbfbf.html">A demo plugin that demonstrates how to use it.</a></td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sInput</b>&nbsp;&nbsp;</td>
+        <td>IRC numeric name</td>
+      </tr>
+          <tr>
+        <td class="type">callback&nbsp;&nbsp;</td>
+        <td><b>$cCallback</b>&nbsp;&nbsp;</td>
+        <td>Callback to bind handler.</td>
+      </tr>
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$aFormat</b>&nbsp;&nbsp;</td>
+        <td>Array of arguments to pass to the bind handler.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodbindDelete"></a>
+	<h3>method bindDelete <span class="smalllinenumber">[line 1197]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool bindDelete(
+string
+$sKey)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Delete a reference to a bind handler.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sKey</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodbindGet"></a>
+	<h3>method bindGet <span class="smalllinenumber">[line 1180]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array bindGet(
+string
+$sKey)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gets the information of a bind from its reference ID.<br /><br /><p>These are the contents of the array that is returned when this function is invoked. 	<pre>	<b>CALLBACK</b> -> Callback which the bind calls when invoked.
+	<b>FORMAT</b>   -> Arguments to pass to the event. See bindCreate.
+	<b>INPUT</b>    -> The IRC command matches the bind.</pre></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array of bind information.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sKey</b>&nbsp;&nbsp;</td>
+        <td>Bind reference ID.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodctcpReply"></a>
+	<h3>method ctcpReply <span class="smalllinenumber">[line 959]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void ctcpReply(
+string
+$sNickname, string
+$sMessage)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sends a CTCP reply.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>see:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/Master.html#methodsendRaw">Master::sendRaw()</a></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
+        <td>Nickname</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sMessage</b>&nbsp;&nbsp;</td>
+        <td>CTCP reply</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodctcpRequest"></a>
+	<h3>method ctcpRequest <span class="smalllinenumber">[line 973]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void ctcpRequest(
+string
+$sNickname, string
+$sRequest, [integer
+$iSend = SEND_DEF])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sends a CTCP request.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>see:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/Master.html#methodsendRaw">Master::sendRaw()</a></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
+        <td>Nickname</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sRequest</b>&nbsp;&nbsp;</td>
+        <td>CTCP request</td>
+      </tr>
+          <tr>
+        <td class="type">integer&nbsp;&nbsp;</td>
+        <td><b>$iSend</b>&nbsp;&nbsp;</td>
+        <td>How to send message</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetHostname"></a>
+	<h3>method getHostname <span class="smalllinenumber">[line 277]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string getHostname(
+string
+$sHost)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Get the users hostname from a hostname string.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Hostmask</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sHost</b>&nbsp;&nbsp;</td>
+        <td>The hostname string</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetNames"></a>
+	<h3>method getNames <span class="smalllinenumber">[line 248]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void getNames(
+string
+$sChannel)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Request the modes in a channel - used for user modes.<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetNextClone"></a>
+	<h3>method getNextClone <span class="smalllinenumber">[line 289]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>Socket getNextClone(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Get the next bot along in a multi-bot system<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>The instance of the bot</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetNickname"></a>
+	<h3>method getNickname <span class="smalllinenumber">[line 264]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string getNickname(
+string
+$sHost)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Get the users nickname from a hostname string.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Nickname</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sHost</b>&nbsp;&nbsp;</td>
+        <td>The hostname string</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetRealtimeRequest"></a>
+	<h3>method getRealtimeRequest <span class="smalllinenumber">[line 1264]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array getRealtimeRequest(
+string
+$sRequest, mixed
+$mSearch, [integer
+$iSleep = 10000])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Request information realtime.<br /><br /><p>The data that are you requesting (for instance, what is in $mSearch) will not be parsed by the bot. 	This essentially means it is the job of the code using that request to deal with parsing it properly.</p><p><ol><li><div class="src-line"><span class="src-var">$aMatches&nbsp;</span>=&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../OUTRAGEbot/Master.html#methodgetRealtimeRequest">getRealtimeRequest</a><span class="src-sym">(</span><span class="src-str">&quot;NAMES&nbsp;#westie&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-key">array</span><span class="src-sym">(</span><span class="src-num">353</span><span class="src-sym">,&nbsp;</span><span class="src-num">366</span><span class="src-sym">)</span><span class="src-sym">,&nbsp;</span><span class="src-num">4</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;Array</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0]&nbsp;=&gt;&nbsp;:ircd&nbsp;353&nbsp;OUTRAGEbot&nbsp;=&nbsp;#westie&nbsp;:OUTRAGEbot&nbsp;~Westie</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1]&nbsp;=&gt;&nbsp;:ircd&nbsp;366&nbsp;OUTRAGEbot&nbsp;#westie&nbsp;:End&nbsp;of&nbsp;/NAMES&nbsp;list.</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;)</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>The response matched to the data in $aSearch.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sRequest</b>&nbsp;&nbsp;</td>
+        <td>Message to send to the server.</td>
+      </tr>
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$mSearch</b>&nbsp;&nbsp;</td>
+        <td>IRC numerics to cache.</td>
+      </tr>
+          <tr>
+        <td class="type">integer&nbsp;&nbsp;</td>
+        <td><b>$iSleep</b>&nbsp;&nbsp;</td>
+        <td><em>Microseconds</em> to sleep before getting input.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetWhois"></a>
+	<h3>method getWhois <span class="smalllinenumber">[line 1385]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array getWhois(
+$sNickname
+$sNickname, [$iDelay
+$iDelay = 500000])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Returns current WHOIS data about a user into an array.<br /><br /><p>A list of rows that this function returns when called. 	<pre>	<b>INFO:</b>
+		|- <b>USERNAME</b> -> The username of the user.
+		|- <b>HOSTNAME</b> -> The user's hostname.
+		'- <b>REALNAME</b> -> The user's realname.
+
+	<b>SERVER:</b>
+		|- <b>SERVER</b>   -> The server's address.
+		'- <b>REALNAME</b> -> The server/network name.
+
+	<b>CHANNELS</b> -> An array of all the channels (with modes) that the user is in.</pre></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array of modes.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">$sNickname&nbsp;&nbsp;</td>
+        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
+        <td>Nickname of the user.</td>
+      </tr>
+          <tr>
+        <td class="type">$iDelay&nbsp;&nbsp;</td>
+        <td><b>$iDelay</b>&nbsp;&nbsp;</td>
+        <td>Microseconds to wait before fetching input.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodInvite"></a>
+	<h3>method Invite <span class="smalllinenumber">[line 1285]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void Invite(
+string
+$sChannel, string
+$sNickname, string
+$sReason)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Invites a user to a channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
+        <td>Nickname of the person to kick.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sReason</b>&nbsp;&nbsp;</td>
+        <td>Reason of the kick.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodinvokeEvent"></a>
+	<h3>method invokeEvent <span class="smalllinenumber">[line 820]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void invokeEvent(
+string
+$sEvent, mixed
+$...)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Invokes an event/callback from plugins.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sEvent</b>&nbsp;&nbsp;</td>
+        <td>Event to invoke</td>
+      </tr>
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$...</b>&nbsp;&nbsp;</td>
+        <td>Arguments to pass to event.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodisAdmin"></a>
+	<h3>method isAdmin <span class="smalllinenumber">[line 780]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool isAdmin(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Checks if that user is registered as an administrator of the bot.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodisClone"></a>
+	<h3>method isClone <span class="smalllinenumber">[line 795]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool isClone(
+[$iBot
+$iBot = false])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Checks if the selected/current bot is a clone.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">$iBot&nbsp;&nbsp;</td>
+        <td><b>$iBot</b>&nbsp;&nbsp;</td>
+        <td>Bot's ID. (Starts from zero)</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodisUserAdmin"></a>
+	<h3>method isUserAdmin <span class="smalllinenumber">[line 756]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool isUserAdmin(
+string
+$sChan, string
+$sUser)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Checks if that user has admin in that channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChan</b>&nbsp;&nbsp;</td>
+        <td>Channel where user is</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sUser</b>&nbsp;&nbsp;</td>
+        <td>Nickname to check</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodisUserHalfOp"></a>
+	<h3>method isUserHalfOp <span class="smalllinenumber">[line 730]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool isUserHalfOp(
+string
+$sChan, string
+$sUser)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Checks if that user has half-op in that channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChan</b>&nbsp;&nbsp;</td>
+        <td>Channel where user is</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sUser</b>&nbsp;&nbsp;</td>
+        <td>Nickname to check</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodisUserOper"></a>
+	<h3>method isUserOper <span class="smalllinenumber">[line 743]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool isUserOper(
+string
+$sChan, string
+$sUser)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Checks if that user has operator in that channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChan</b>&nbsp;&nbsp;</td>
+        <td>Channel where user is</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sUser</b>&nbsp;&nbsp;</td>
+        <td>Nickname to check</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodisUserOwner"></a>
+	<h3>method isUserOwner <span class="smalllinenumber">[line 769]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool isUserOwner(
+string
+$sChan, string
+$sUser)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Checks if that user has owner in that channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChan</b>&nbsp;&nbsp;</td>
+        <td>Channel where user is</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sUser</b>&nbsp;&nbsp;</td>
+        <td>Nickname to check</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodisUserVoice"></a>
+	<h3>method isUserVoice <span class="smalllinenumber">[line 717]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool isUserVoice(
+string
+$sChan, string
+$sUser)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Checks if that user has voice in that channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChan</b>&nbsp;&nbsp;</td>
+        <td>Channel where user is</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sUser</b>&nbsp;&nbsp;</td>
+        <td>Nickname to check</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodJoin"></a>
+	<h3>method Join <span class="smalllinenumber">[line 1309]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void Join(
+string
+$sChannel)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Allows the bot to join a channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodKick"></a>
+	<h3>method Kick <span class="smalllinenumber">[line 1298]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void Kick(
+string
+$sChannel, string
+$sNickname, [string
+$sReason = &quot;Kick&quot;])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Kicks a user from a channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
+        <td>Nickname of the person to kick.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sReason</b>&nbsp;&nbsp;</td>
+        <td>Reason of the kick.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodMessage"></a>
+	<h3>method Message <span class="smalllinenumber">[line 924]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void Message(
+
+$sChannel, 
+$sMessage, [
+$iSend = SEND_DEF])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sends a message to the specified channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>see:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/Master.html#methodsendMessage">Master::sendMessage()</a></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$sMessage</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$iSend</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodNotice"></a>
+	<h3>method Notice <span class="smalllinenumber">[line 946]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void Notice(
+
+$sNickname, 
+$sMessage, [
+$iSend = SEND_DEF])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sends a notice to the specified channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>see:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/Master.html#methodsendNotice">Master::sendNotice()</a></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$sMessage</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$iSend</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodparseModes"></a>
+	<h3>method parseModes <span class="smalllinenumber">[line 1333]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array parseModes(
+$sModes
+$sMode)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Parses a mode string into a usable array.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array of modes.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">$sModes&nbsp;&nbsp;</td>
+        <td><b>$sMode</b>&nbsp;&nbsp;</td>
+        <td>Mode that has just been set.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodPart"></a>
+	<h3>method Part <span class="smalllinenumber">[line 1321]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void Part(
+string
+$sChannel, [string
+$sReason = false])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Allows the bot to part a channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sReason</b>&nbsp;&nbsp;</td>
+        <td>Reason for leaving</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodpluginGet"></a>
+	<h3>method pluginGet <span class="smalllinenumber">[line 1082]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>Plugin pluginGet(
+string
+$sPlugin)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gets the instance of the plugin if it exists.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Object of the plugin.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sPlugin</b>&nbsp;&nbsp;</td>
+        <td>Plugin name</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodpluginIsActive"></a>
+	<h3>method pluginIsActive <span class="smalllinenumber">[line 1131]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool pluginIsActive(
+string
+$sPlugin)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Check if a plugin is loaded into memory.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sPlugin</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodpluginLoad"></a>
+	<h3>method pluginLoad <span class="smalllinenumber">[line 1039]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool pluginLoad(
+string
+$sPlugin)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Loads a plugin from the plugin directory.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sPlugin</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodpluginReload"></a>
+	<h3>method pluginReload <span class="smalllinenumber">[line 1118]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool pluginReload(
+string
+$sPlugin)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Unloads and reloads a plugin.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sPlugin</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodpluginUnload"></a>
+	<h3>method pluginUnload <span class="smalllinenumber">[line 1099]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool pluginUnload(
+string
+$sPlugin)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Unloads an active plugin from memory.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sPlugin</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsendAction"></a>
+	<h3>method sendAction <span class="smalllinenumber">[line 899]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void sendAction(
+string
+$sChannel, string
+$sMessage, [integer
+$iSend = SEND_DEF])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sends an action to the specified channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>see:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/Master.html#methodsendRaw">Master::sendRaw()</a></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sMessage</b>&nbsp;&nbsp;</td>
+        <td>Message to send</td>
+      </tr>
+          <tr>
+        <td class="type">integer&nbsp;&nbsp;</td>
+        <td><b>$iSend</b>&nbsp;&nbsp;</td>
+        <td>How to send message</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsendMessage"></a>
+	<h3>method sendMessage <span class="smalllinenumber">[line 885]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void sendMessage(
+string
+$sChannel, string
+$sMessage, [integer
+$iSend = SEND_DEF])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sends a message to the specified channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>see:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/Master.html#methodsendRaw">Master::sendRaw()</a></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sMessage</b>&nbsp;&nbsp;</td>
+        <td>Message to send</td>
+      </tr>
+          <tr>
+        <td class="type">integer&nbsp;&nbsp;</td>
+        <td><b>$iSend</b>&nbsp;&nbsp;</td>
+        <td>How to send message</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsendNotice"></a>
+	<h3>method sendNotice <span class="smalllinenumber">[line 913]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void sendNotice(
+string
+$sNickname, string
+$sMessage, [integer
+$iSend = SEND_DEF])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sends a notice to the specified channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>see:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/Master.html#methodsendRaw">Master::sendRaw()</a></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
+        <td>Nickname</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sMessage</b>&nbsp;&nbsp;</td>
+        <td>Message to send</td>
+      </tr>
+          <tr>
+        <td class="type">integer&nbsp;&nbsp;</td>
+        <td><b>$iSend</b>&nbsp;&nbsp;</td>
+        <td>How to send message</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsendRaw"></a>
+	<h3>method sendRaw <span class="smalllinenumber">[line 205]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void sendRaw(
+string
+$sMessage, [integer
+$iSend = SEND_CURR])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sends RAW IRC Messages<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sMessage</b>&nbsp;&nbsp;</td>
+        <td>Raw IRC message you want to send.</td>
+      </tr>
+          <tr>
+        <td class="type">integer&nbsp;&nbsp;</td>
+        <td><b>$iSend</b>&nbsp;&nbsp;</td>
+        <td>How to send the message.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstripAll"></a>
+	<h3>method stripAll <span class="smalllinenumber">[line 870]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string stripAll(
+string
+$sText)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Strips the text of formatting and colours.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Stripped text</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sText</b>&nbsp;&nbsp;</td>
+        <td>Text to strip</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstripColour"></a>
+	<h3>method stripColour <span class="smalllinenumber">[line 858]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string stripColour(
+string
+$sText)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Strips the text of colours.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Stripped text</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sText</b>&nbsp;&nbsp;</td>
+        <td>Text to strip</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstripFormat"></a>
+	<h3>method stripFormat <span class="smalllinenumber">[line 846]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string stripFormat(
+string
+$sText)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Strips the text of formatting.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Stripped text</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sText</b>&nbsp;&nbsp;</td>
+        <td>Text to strip</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodtimerCreate"></a>
+	<h3>method timerCreate <span class="smalllinenumber">[line 988]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string timerCreate(
+callback
+$cCallback, integer
+$iInterval, integer
+$iRepeat, mixed
+$...)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Creates a timer, note that arguments to be passed to $cCallback to after $iRepeat.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Timer reference ID.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">callback&nbsp;&nbsp;</td>
+        <td><b>$cCallback</b>&nbsp;&nbsp;</td>
+        <td>Timer callback</td>
+      </tr>
+          <tr>
+        <td class="type">integer&nbsp;&nbsp;</td>
+        <td><b>$iInterval</b>&nbsp;&nbsp;</td>
+        <td><strong>Seconds</strong> between timer calls.</td>
+      </tr>
+          <tr>
+        <td class="type">integer&nbsp;&nbsp;</td>
+        <td><b>$iRepeat</b>&nbsp;&nbsp;</td>
+        <td>How many times the timer should call before it is destroyed. -1 implies infinite.</td>
+      </tr>
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$...</b>&nbsp;&nbsp;</td>
+        <td>Arguments to pass to timer.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodtimerGet"></a>
+	<h3>method timerGet <span class="smalllinenumber">[line 1015]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array timerGet(
+string
+$sKey)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gets the information of a timer from its reference ID.<br /><br /><p>These are the contents of the array that is returned when this function is invoked.</p><p><pre>	<b>CALLBACK</b>  -> Callback which the timer calls when invoked.
+	<b>INTERVAL</b>  -> How many seconds pass between each call.
+	<b>REPEAT</b>    -> How many times left the plugin is called before it is unlinked.
+	<b>CALLTIME</b>  -> When the plugin will next call itself (Unix time).
+	<b>ARGUMENTS</b> -> Array of arguments that will be passed to the timer.</pre></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array of timer information.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sKey</b>&nbsp;&nbsp;</td>
+        <td>Timer reference ID.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodtimerKill"></a>
+	<h3>method timerKill <span class="smalllinenumber">[line 1027]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool timerKill(
+string
+$sKey)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Creates a timer, note that arguments to be passed to $cCallback to after $iRepeat.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sKey</b>&nbsp;&nbsp;</td>
+        <td>Timer reference ID.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+</div><br />
+
+
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Fri, 28 Aug 2009 22:12:34 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
