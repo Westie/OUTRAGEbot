@@ -109,6 +109,10 @@ Source Location: /Master.php<br /><br />
     <li><a href="../OUTRAGEbot/Master.html#methodbindCreate">bindCreate</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodbindDelete">bindDelete</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodbindGet">bindGet</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodchannelInvite">channelInvite</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodchannelJoin">channelJoin</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodchannelKick">channelKick</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodchannelPart">channelPart</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodctcpReply">ctcpReply</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodctcpRequest">ctcpRequest</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetHostname">getHostname</a></li>
@@ -116,22 +120,20 @@ Source Location: /Master.php<br /><br />
     <li><a href="../OUTRAGEbot/Master.html#methodgetNextClone">getNextClone</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetNickname">getNickname</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetRealtimeRequest">getRealtimeRequest</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodgetUserInfoFromChannel">getUserInfoFromChannel</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetWhois">getWhois</a></li>
-    <li><a href="../OUTRAGEbot/Master.html#methodInvite">Invite</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodinvokeEvent">invokeEvent</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodisAdmin">isAdmin</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodisClone">isClone</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodisUserAdmin">isUserAdmin</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodisUserHalfOp">isUserHalfOp</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodisUserInChannel">isUserInChannel</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodisUserOper">isUserOper</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodisUserOwner">isUserOwner</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodisUserVoice">isUserVoice</a></li>
-    <li><a href="../OUTRAGEbot/Master.html#methodJoin">Join</a></li>
-    <li><a href="../OUTRAGEbot/Master.html#methodKick">Kick</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodMessage">Message</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodNotice">Notice</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodparseModes">parseModes</a></li>
-    <li><a href="../OUTRAGEbot/Master.html#methodPart">Part</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodpluginGet">pluginGet</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodpluginIsActive">pluginIsActive</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodpluginLoad">pluginLoad</a></li>
@@ -249,7 +251,7 @@ Master class for OUTRAGEbot<br /><br /><p>This class deals with all the interact
 
   <hr />
 	<a name="methodAction"></a>
-	<h3>method Action <span class="smalllinenumber">[line 935]</span></h3>
+	<h3>method Action <span class="smalllinenumber">[line 1066]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -300,7 +302,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodbindCreate"></a>
-	<h3>method bindCreate <span class="smalllinenumber">[line 1153]</span></h3>
+	<h3>method bindCreate <span class="smalllinenumber">[line 1284]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -355,7 +357,7 @@ $aFormat)</code>
   </div>
   <hr />
 	<a name="methodbindDelete"></a>
-	<h3>method bindDelete <span class="smalllinenumber">[line 1197]</span></h3>
+	<h3>method bindDelete <span class="smalllinenumber">[line 1328]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -394,7 +396,7 @@ $sKey)</code>
   </div>
   <hr />
 	<a name="methodbindGet"></a>
-	<h3>method bindGet <span class="smalllinenumber">[line 1180]</span></h3>
+	<h3>method bindGet <span class="smalllinenumber">[line 1311]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -434,8 +436,182 @@ $sKey)</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
+	<a name="methodchannelInvite"></a>
+	<h3>method channelInvite <span class="smalllinenumber">[line 1416]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void channelInvite(
+string
+$sChannel, string
+$sNickname, string
+$sReason)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Invites a user to a channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
+        <td>Nickname of the person to kick.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sReason</b>&nbsp;&nbsp;</td>
+        <td>Reason of the kick.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodchannelJoin"></a>
+	<h3>method channelJoin <span class="smalllinenumber">[line 1440]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void channelJoin(
+string
+$sChannel)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Allows the bot to join a channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name (IRC format applies!).</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodchannelKick"></a>
+	<h3>method channelKick <span class="smalllinenumber">[line 1429]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void channelKick(
+string
+$sChannel, string
+$sNickname, [string
+$sReason = &quot;Kick&quot;])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Kicks a user from a channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
+        <td>Nickname of the person to kick.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sReason</b>&nbsp;&nbsp;</td>
+        <td>Reason of the kick.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodchannelPart"></a>
+	<h3>method channelPart <span class="smalllinenumber">[line 1452]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void channelPart(
+string
+$sChannel, [string
+$sReason = false])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Allows the bot to part a channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
+        <td>Channel name.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sReason</b>&nbsp;&nbsp;</td>
+        <td>Reason for leaving</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
 	<a name="methodctcpReply"></a>
-	<h3>method ctcpReply <span class="smalllinenumber">[line 959]</span></h3>
+	<h3>method ctcpReply <span class="smalllinenumber">[line 1090]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -480,7 +656,7 @@ $sMessage)</code>
   </div>
   <hr />
 	<a name="methodctcpRequest"></a>
-	<h3>method ctcpRequest <span class="smalllinenumber">[line 973]</span></h3>
+	<h3>method ctcpRequest <span class="smalllinenumber">[line 1104]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -664,7 +840,7 @@ $sHost)</code>
   </div>
   <hr />
 	<a name="methodgetRealtimeRequest"></a>
-	<h3>method getRealtimeRequest <span class="smalllinenumber">[line 1264]</span></h3>
+	<h3>method getRealtimeRequest <span class="smalllinenumber">[line 1395]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -721,8 +897,53 @@ $iSleep = 10000])</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
+	<a name="methodgetUserInfoFromChannel"></a>
+	<h3>method getUserInfoFromChannel <span class="smalllinenumber">[line 780]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array getUserInfoFromChannel(
+string
+$sChan, string
+$sUser)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Checks if that user has voice in that channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Returns an array on success, FALSE on failure.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChan</b>&nbsp;&nbsp;</td>
+        <td>Channel where user is</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sUser</b>&nbsp;&nbsp;</td>
+        <td>Nickname to check</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
 	<a name="methodgetWhois"></a>
-	<h3>method getWhois <span class="smalllinenumber">[line 1385]</span></h3>
+	<h3>method getWhois <span class="smalllinenumber">[line 1516]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -775,56 +996,8 @@ $iDelay = 500000])</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
-	<a name="methodInvite"></a>
-	<h3>method Invite <span class="smalllinenumber">[line 1285]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void Invite(
-string
-$sChannel, string
-$sNickname, string
-$sReason)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Invites a user to a channel.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
-        <td>Channel name.</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
-        <td>Nickname of the person to kick.</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sReason</b>&nbsp;&nbsp;</td>
-        <td>Reason of the kick.</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
 	<a name="methodinvokeEvent"></a>
-	<h3>method invokeEvent <span class="smalllinenumber">[line 820]</span></h3>
+	<h3>method invokeEvent <span class="smalllinenumber">[line 951]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -866,7 +1039,7 @@ $...)</code>
   </div>
   <hr />
 	<a name="methodisAdmin"></a>
-	<h3>method isAdmin <span class="smalllinenumber">[line 780]</span></h3>
+	<h3>method isAdmin <span class="smalllinenumber">[line 911]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -894,7 +1067,7 @@ $...)</code>
   </div>
   <hr />
 	<a name="methodisClone"></a>
-	<h3>method isClone <span class="smalllinenumber">[line 795]</span></h3>
+	<h3>method isClone <span class="smalllinenumber">[line 926]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -933,7 +1106,7 @@ $iBot = false])</code>
   </div>
   <hr />
 	<a name="methodisUserAdmin"></a>
-	<h3>method isUserAdmin <span class="smalllinenumber">[line 756]</span></h3>
+	<h3>method isUserAdmin <span class="smalllinenumber">[line 873]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -950,6 +1123,9 @@ $sUser)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -975,7 +1151,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodisUserHalfOp"></a>
-	<h3>method isUserHalfOp <span class="smalllinenumber">[line 730]</span></h3>
+	<h3>method isUserHalfOp <span class="smalllinenumber">[line 833]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -992,6 +1168,54 @@ $sUser)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChan</b>&nbsp;&nbsp;</td>
+        <td>Channel where user is</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sUser</b>&nbsp;&nbsp;</td>
+        <td>Nickname to check</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodisUserInChannel"></a>
+	<h3>method isUserInChannel <span class="smalllinenumber">[line 800]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>bool isUserInChannel(
+string
+$sChan, string
+$sUser)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Checks if that user is actually in that channel.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -1017,7 +1241,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodisUserOper"></a>
-	<h3>method isUserOper <span class="smalllinenumber">[line 743]</span></h3>
+	<h3>method isUserOper <span class="smalllinenumber">[line 853]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1034,6 +1258,9 @@ $sUser)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -1059,7 +1286,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodisUserOwner"></a>
-	<h3>method isUserOwner <span class="smalllinenumber">[line 769]</span></h3>
+	<h3>method isUserOwner <span class="smalllinenumber">[line 893]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1076,6 +1303,9 @@ $sUser)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -1101,7 +1331,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodisUserVoice"></a>
-	<h3>method isUserVoice <span class="smalllinenumber">[line 717]</span></h3>
+	<h3>method isUserVoice <span class="smalllinenumber">[line 813]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1118,6 +1348,9 @@ $sUser)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>'true' on success.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -1142,92 +1375,8 @@ $sUser)</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
-	<a name="methodJoin"></a>
-	<h3>method Join <span class="smalllinenumber">[line 1309]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void Join(
-string
-$sChannel)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Allows the bot to join a channel.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
-        <td>Channel name.</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodKick"></a>
-	<h3>method Kick <span class="smalllinenumber">[line 1298]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void Kick(
-string
-$sChannel, string
-$sNickname, [string
-$sReason = &quot;Kick&quot;])</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Kicks a user from a channel.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
-        <td>Channel name.</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sNickname</b>&nbsp;&nbsp;</td>
-        <td>Nickname of the person to kick.</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sReason</b>&nbsp;&nbsp;</td>
-        <td>Reason of the kick.</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
 	<a name="methodMessage"></a>
-	<h3>method Message <span class="smalllinenumber">[line 924]</span></h3>
+	<h3>method Message <span class="smalllinenumber">[line 1055]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1278,7 +1427,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodNotice"></a>
-	<h3>method Notice <span class="smalllinenumber">[line 946]</span></h3>
+	<h3>method Notice <span class="smalllinenumber">[line 1077]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1329,7 +1478,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodparseModes"></a>
-	<h3>method parseModes <span class="smalllinenumber">[line 1333]</span></h3>
+	<h3>method parseModes <span class="smalllinenumber">[line 1464]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1367,50 +1516,8 @@ $sMode)</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
-	<a name="methodPart"></a>
-	<h3>method Part <span class="smalllinenumber">[line 1321]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void Part(
-string
-$sChannel, [string
-$sReason = false])</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Allows the bot to part a channel.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
-        <td>Channel name.</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sReason</b>&nbsp;&nbsp;</td>
-        <td>Reason for leaving</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
 	<a name="methodpluginGet"></a>
-	<h3>method pluginGet <span class="smalllinenumber">[line 1082]</span></h3>
+	<h3>method pluginGet <span class="smalllinenumber">[line 1213]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1449,7 +1556,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginIsActive"></a>
-	<h3>method pluginIsActive <span class="smalllinenumber">[line 1131]</span></h3>
+	<h3>method pluginIsActive <span class="smalllinenumber">[line 1262]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1488,7 +1595,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginLoad"></a>
-	<h3>method pluginLoad <span class="smalllinenumber">[line 1039]</span></h3>
+	<h3>method pluginLoad <span class="smalllinenumber">[line 1170]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1527,7 +1634,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginReload"></a>
-	<h3>method pluginReload <span class="smalllinenumber">[line 1118]</span></h3>
+	<h3>method pluginReload <span class="smalllinenumber">[line 1249]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1566,7 +1673,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginUnload"></a>
-	<h3>method pluginUnload <span class="smalllinenumber">[line 1099]</span></h3>
+	<h3>method pluginUnload <span class="smalllinenumber">[line 1230]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1605,7 +1712,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodsendAction"></a>
-	<h3>method sendAction <span class="smalllinenumber">[line 899]</span></h3>
+	<h3>method sendAction <span class="smalllinenumber">[line 1030]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1656,7 +1763,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodsendMessage"></a>
-	<h3>method sendMessage <span class="smalllinenumber">[line 885]</span></h3>
+	<h3>method sendMessage <span class="smalllinenumber">[line 1016]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1707,7 +1814,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodsendNotice"></a>
-	<h3>method sendNotice <span class="smalllinenumber">[line 913]</span></h3>
+	<h3>method sendNotice <span class="smalllinenumber">[line 1044]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1800,7 +1907,7 @@ $iSend = SEND_CURR])</code>
   </div>
   <hr />
 	<a name="methodstripAll"></a>
-	<h3>method stripAll <span class="smalllinenumber">[line 870]</span></h3>
+	<h3>method stripAll <span class="smalllinenumber">[line 1001]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1839,7 +1946,7 @@ $sText)</code>
   </div>
   <hr />
 	<a name="methodstripColour"></a>
-	<h3>method stripColour <span class="smalllinenumber">[line 858]</span></h3>
+	<h3>method stripColour <span class="smalllinenumber">[line 989]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1878,7 +1985,7 @@ $sText)</code>
   </div>
   <hr />
 	<a name="methodstripFormat"></a>
-	<h3>method stripFormat <span class="smalllinenumber">[line 846]</span></h3>
+	<h3>method stripFormat <span class="smalllinenumber">[line 977]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1917,7 +2024,7 @@ $sText)</code>
   </div>
   <hr />
 	<a name="methodtimerCreate"></a>
-	<h3>method timerCreate <span class="smalllinenumber">[line 988]</span></h3>
+	<h3>method timerCreate <span class="smalllinenumber">[line 1119]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1974,7 +2081,7 @@ $...)</code>
   </div>
   <hr />
 	<a name="methodtimerGet"></a>
-	<h3>method timerGet <span class="smalllinenumber">[line 1015]</span></h3>
+	<h3>method timerGet <span class="smalllinenumber">[line 1146]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2017,7 +2124,7 @@ $sKey)</code>
   </div>
   <hr />
 	<a name="methodtimerKill"></a>
-	<h3>method timerKill <span class="smalllinenumber">[line 1027]</span></h3>
+	<h3>method timerKill <span class="smalllinenumber">[line 1158]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2059,7 +2166,7 @@ $sKey)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Fri, 28 Aug 2009 22:12:34 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 31 Aug 2009 16:59:40 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

@@ -480,6 +480,7 @@ class Master
 	private function _onJoin($aChunks)
 	{
 		$this->invokeEvent("onJoin", $this->getNickname($aChunks[0]), $aChunks[2]);
+		$this->addUserToChannel($aChunks[2], $this->getNickname($aChunks[0]));
 	}
 	
 	
@@ -491,7 +492,7 @@ class Master
 		$aChunks[3] = explode(' ', $aChunks[3], 2);
 		$aChunks[3][1] = trim(isset($aChunks[3][1]) ? substr($aChunks[3][1], 1) : "");
 		$this->invokeEvent("onKick", $this->getNickname($aChunks[0]), $aChunks[3][0], $aChunks[2], $aChunks[3][1]);
-		unset($this->oModes->aUsers[$aChunks[3][0]][strtolower($aChunks[2])]);
+		$this->removeUserFromChannel($aChunks[2], $aChunks[3][0]);
 	}
 	
 	
@@ -501,7 +502,7 @@ class Master
 	private function _onPart($aChunks)
 	{
 		$this->invokeEvent("onPart", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
-		unset($this->oModes->aUsers[$this->getNickname($aChunks[0])][strtolower($aChunks[2])]);
+		$this->removeUserFromChannel($aChunks[2], $this->getNickname($aChunks[0]));
 	}
 	
 	
@@ -511,7 +512,7 @@ class Master
 	private function _onQuit($aChunks)
 	{
 		$this->invokeEvent("onQuit", $this->getNickname($aChunks[0]), $aChunks[3]);
-		unset($this->oModes->aUsers[$this->getNickname($aChunks[0])]);
+		$this->removeUserFromChannel('*', $this->getNickname($aChunks[0]));
 	}
 	
 	
@@ -528,32 +529,32 @@ class Master
 			{
 				case 'v':
 				{
-					if($aMode['ACTION'] == '+') $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] |= 1;
-					else $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] ^= 1;
+					if($aMode['ACTION'] == '+') $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] |= 1;
+					else $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] ^= 1;
 					break;
 				}
 				case 'h':
 				{
-					if($aMode['ACTION'] == '+') $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] |= 3;
-					else $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] ^= 3;
+					if($aMode['ACTION'] == '+') $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] |= 3;
+					else $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] ^= 3;
 					break;
 				}
 				case 'o':
 				{
-					if($aMode['ACTION'] == '+') $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] |= 7;
-					else $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] ^= 7;
+					if($aMode['ACTION'] == '+') $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] |= 7;
+					else $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] ^= 7;
 					break;
 				}
 				case 'a':
 				{
-					if($aMode['ACTION'] == '+') $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] |= 15;
-					else $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] ^= 15;
+					if($aMode['ACTION'] == '+') $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] |= 15;
+					else $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] ^= 15;
 					break;
 				}
 				case 'q':
 				{
-					if($aMode['ACTION'] == '+') $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] |= 31;
-					else $this->oModes->aUsers[$aMode['PARAM']][strtolower($aChunks[2])]['iMode'] ^= 31;
+					if($aMode['ACTION'] == '+') $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] |= 31;
+					else $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] ^= 31;
 					break;
 				}
 			}
@@ -575,8 +576,7 @@ class Master
 		}
 		
 		$this->invokeEvent("onNick", $sNickname, $aChunks[2]);
-		$this->oModes->aUsers[$aChunks[2]] = $this->oModes->aUsers[$sNickname];
-		unset($this->oModes->aUsers[$sNickname]);
+		$this->renameUserFromChannel($sNickname, $aChunks[2]);
 	}
 	
 	
@@ -700,10 +700,106 @@ class Master
 					}
 					
 					$sUser = preg_replace("/[+%@&~]/", "", $sUser);
-					$this->oModes->aUsers[$sUser][$sChan]['iMode'] = $iTemp;
+					$this->oModes->aChannels[$sChan][$sUser]['iMode'] = $iTemp;
+					$this->oModes->aUsers[$sUser][$sChan] = true;
 				}
 			}
 		}
+	}
+	
+	
+	/**
+	 *	Adds a user to the channel's database. Used internally.
+	 *
+	 *	@ignore
+	 *	@param string $sChan Channel where user is.
+	 *	@param string $sUser Nickname to remove from list.
+	 */
+	public function addUserToChannel($sChan, $sUser)
+	{
+		$this->oModes->aUsers[$sUser][strtolower($sChan)] = true;
+	}
+	
+	
+	/**
+	 *	Removes a user from the channel's database. Used internally.
+	 *
+	 *	@ignore
+	 *	@param string $sChan Channel where user is.
+	 *	@param string $sUser Nickname to remove from list.
+	 */
+	public function removeUserFromChannel($sChan, $sUser)
+	{
+		if($sChan != '*')
+		{
+			unset($this->oModes->aChannels[strtolower($sChan)][$sUser]);
+			return;
+		}
+		
+		foreach($this->oModes->aUsers[$sUser] as $sChannel => $mUnused)
+		{
+			unset($this->oModes->aChannels[$sChannel][$sUser]);
+			unset($this->oModes->aUsers[$sUser][$sChannel]);
+		}
+		return;
+	}
+	
+	
+	/**
+	 *	Renames a user from the channel's database. Used internally.
+	 *
+	 *	@ignore
+	 *	@param string $sOldNick The old nickname.
+	 *	@param string $sNewNick The new nickname.
+	 */
+	public function renameUserFromChannel($sOldNick, $sNewNick)
+	{
+		foreach($this->oModes->aUsers[$sOldNick] as $sChannel => $mUnused)
+		{
+			$this->oModes->aChannels[$sChannel][$sNewNick] = $this->oModes->aChannels[$sChannel][$sOldNick];
+			unset($this->oModes->aChannels[$sChannel][$sOldNick]);
+		}
+		
+		$this->oModes->aUsers[$sNewNick] = $this->oModes->aUsers[$sOldNick];	
+		unset($this->oModes->aUsers[$sOldNick]);
+		
+		return;
+		
+		print_r($this->oModes->aUsers[$sOldNick]);
+		print_r($this->oModes->aUsers[$sNewNick]);
+	}
+	
+	
+	/**
+	 *	Checks if that user has voice in that channel.
+	 *
+	 *	@param string $sChan Channel where user is
+	 *	@param string $sUser Nickname to check
+	 *	@return array Returns an array on success, FALSE on failure.
+	 */
+	public function getUserInfoFromChannel($sChan, $sUser)
+	{
+		$sChan = strtolower($sChan);
+		
+		if(!isset($this->oModes->aChannels[$sChan][$sUser]))
+		{
+			return false;
+		}
+		
+		return $this->oModes->aChannels[$sChan][$sUser];
+	}
+	
+	
+	/**
+	 *	Checks if that user is actually in that channel.
+	 *
+	 *	@param string $sChan Channel where user is
+	 *	@param string $sUser Nickname to check
+	 *	@return bool 'true' on success.
+	 */
+	public function isUserInChannel($sChan, $sUser)
+	{
+		return isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) != false;
 	}
 	
 	
@@ -714,9 +810,16 @@ class Master
 	 *	@param string $sUser Nickname to check
 	 *	@return bool 'true' on success.
 	 */
-	function isUserVoice($sChan, $sUser)
+	public function isUserVoice($sChan, $sUser)
 	{
-		return !isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) ? false : (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] & MODE_USER_VOICE) != false);
+		$aUser = $this->getUserInfoFromChannel($sChan, $sUser);
+		
+		if($aUser === false)
+		{
+			return false;
+		}
+		
+		return ($aUser['iMode'] & MODE_USER_VOICE) != 0; 
 	}
 	
 	
@@ -727,9 +830,16 @@ class Master
 	 *	@param string $sUser Nickname to check
 	 *	@return bool 'true' on success.
 	 */
-	function isUserHalfOp($sChan, $sUser)
+	public function isUserHalfOp($sChan, $sUser)
 	{
-		return !isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) ? false : (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] & MODE_USER_HOPER) != false);
+		$aUser = $this->getUserInfoFromChannel($sChan, $sUser);
+		
+		if($aUser === false)
+		{
+			return false;
+		}
+		
+		return ($aUser['iMode'] & MODE_USER_HOPER) != 0; 
 	}
 	
 	
@@ -740,9 +850,16 @@ class Master
 	 *	@param string $sUser Nickname to check
 	 *	@return bool 'true' on success.
 	 */
-	function isUserOper($sChan, $sUser)
+	public function isUserOper($sChan, $sUser)
 	{
-		return !isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) ? false : (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] & MODE_USER_OPER) != false);
+		$aUser = $this->getUserInfoFromChannel($sChan, $sUser);
+		
+		if($aUser === false)
+		{
+			return false;
+		}
+		
+		return ($aUser['iMode'] & MODE_USER_OPER) != 0; 
 	}
 	
 	
@@ -753,9 +870,16 @@ class Master
 	 *	@param string $sUser Nickname to check
 	 *	@return bool 'true' on success.
 	 */
-	function isUserAdmin($sChan, $sUser)
+	public function isUserAdmin($sChan, $sUser)
 	{
-		return !isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) ? false : (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] >= MODE_USER_ADMIN) != false);
+		$aUser = $this->getUserInfoFromChannel($sChan, $sUser);
+		
+		if($aUser === false)
+		{
+			return false;
+		}
+		
+		return ($aUser['iMode'] & MODE_USER_ADMIN) != 0; 
 	}
 	
 	
@@ -766,9 +890,16 @@ class Master
 	 *	@param string $sUser Nickname to check
 	 *	@return bool 'true' on success.
 	 */
-	function isUserOwner($sChan, $sUser)
-	{
-		return !isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) ? false : (($this->oModes->aUsers[$sUser][strtolower($sChan)]['iMode'] == MODE_USER_OWNER) != false);
+	public function isUserOwner($sChan, $sUser)
+	{	
+		$aUser = $this->getUserInfoFromChannel($sChan, $sUser);
+		
+		if($aUser === false)
+		{
+			return false;
+		}
+		
+		return ($aUser['iMode'] & MODE_USER_OWNER) != 0; 
 	}
 		
 	
@@ -992,7 +1123,7 @@ class Master
 		array_shift($aArguments);
 		array_shift($aArguments);
 		
-		return Timers::Create($cCallback, $iInterval, $iRepeat, (array) $aArguments);
+		return Timers::Create($cCallback, $iInterval, $iRepeat, (array) $aArguments); 
 	}
 
 		
@@ -1282,7 +1413,7 @@ class Master
 	 *	@param string $sNickname Nickname of the person to kick.
 	 *	@param string $sReason Reason of the kick.
 	 */
-	public function Invite($sChannel, $sNickname)
+	public function channelInvite($sChannel, $sNickname)
 	{
 		return $this->sendRaw("INVITE {$sNickname} {$sChannel}");
 	}
@@ -1295,7 +1426,7 @@ class Master
 	 *	@param string $sNickname Nickname of the person to kick.
 	 *	@param string $sReason Reason of the kick.
 	 */
-	public function Kick($sChannel, $sNickname, $sReason = "Kick")
+	public function channelKick($sChannel, $sNickname, $sReason = "Kick")
 	{
 		return $this->sendRaw("KICK {$sChannel} :{$sReason}");
 	}
@@ -1304,9 +1435,9 @@ class Master
 	/**
 	 *	Allows the bot to join a channel.
 	 *
-	 *	@param string $sChannel Channel name.
+	 *	@param string $sChannel Channel name (IRC format applies!).
 	 */
-	public function Join($sChannel)
+	public function channelJoin($sChannel)
 	{
 		return $this->sendRaw("JOIN $sChannel");
 	}
@@ -1318,7 +1449,7 @@ class Master
 	 *	@param string $sChannel Channel name.
 	 *	@param string $sReason Reason for leaving
 	 */
-	public function Part($sChannel, $sReason = false)
+	public function channelPart($sChannel, $sReason = false)
 	{
 		return $this->sendRaw("PART $sChannel".($sReason == false ? "" : " :{$sReason}"));
 	}
