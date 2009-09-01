@@ -142,8 +142,12 @@
 				<dd>in file Format.php, class constant <a href="OUTRAGEbot/Format.html#constBold">Format::Bold</a></dd>
 							<dt><b>botCreate</b></dt>
 				<dd>in file Control.php, method <a href="OUTRAGEbot/Control.html#methodbotCreate">Control::botCreate()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Creates a bot from an INI file in the config folder.</dd>
+							<dt><b>botGetInfo</b></dt>
+				<dd>in file Control.php, method <a href="OUTRAGEbot/Control.html#methodbotGetInfo">Control::botGetInfo()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;This function gets a list of the active (loaded) bots, and their associated children.</dd>
 							<dt><b>botRemove</b></dt>
 				<dd>in file Control.php, method <a href="OUTRAGEbot/Control.html#methodbotRemove">Control::botRemove()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Kills a bot(-group) where from the name of its config file.</dd>
+							<dt><b>botSend</b></dt>
+				<dd>in file Control.php, method <a href="OUTRAGEbot/Control.html#methodbotSend">Control::botSend()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Sends a raw IRC message from a selected bot(-group) with various settings.</dd>
 							<dt><b>Brown</b></dt>
 				<dd>in file Format.php, class constant <a href="OUTRAGEbot/Format.html#constBrown">Format::Brown</a></dd>
 					</dl>
@@ -231,7 +235,7 @@
 							<dt><b>getRealtimeRequest</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodgetRealtimeRequest">Master::getRealtimeRequest()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Request information realtime.</dd>
 							<dt><b>getUserInfoFromChannel</b></dt>
-				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodgetUserInfoFromChannel">Master::getUserInfoFromChannel()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Checks if that user has voice in that channel.</dd>
+				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodgetUserInfoFromChannel">Master::getUserInfoFromChannel()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Returns user information from a channel.</dd>
 							<dt><b>getWhois</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodgetWhois">Master::getWhois()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Returns current WHOIS data about a user into an array.</dd>
 							<dt><b>Green</b></dt>
@@ -469,7 +473,7 @@
 	<a href="elementindex_OUTRAGEbot.html#top">top</a><br>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 31 Aug 2009 16:59:40 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Tue, 01 Sep 2009 16:36:05 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

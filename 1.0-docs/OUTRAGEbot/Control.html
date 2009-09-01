@@ -99,7 +99,9 @@ Source Location: /Control.php<br /><br />
 <h3><a href="#class_methods">Methods</a></h3>
 <ul>
     <li><a href="../OUTRAGEbot/Control.html#methodbotCreate">botCreate</a></li>
+    <li><a href="../OUTRAGEbot/Control.html#methodbotGetInfo">botGetInfo</a></li>
     <li><a href="../OUTRAGEbot/Control.html#methodbotRemove">botRemove</a></li>
+    <li><a href="../OUTRAGEbot/Control.html#methodbotSend">botSend</a></li>
   </ul>
 </td>
 
@@ -173,7 +175,43 @@ $sConfig)</code>
           <tr>
         <td class="type">string&nbsp;&nbsp;</td>
         <td><b>$sConfig</b>&nbsp;&nbsp;</td>
-        <td></td>
+        <td>Bot-group</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodbotGetInfo"></a>
+	<h3>static method botGetInfo <span class="smalllinenumber">[line 91]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>static array botGetInfo(
+[string
+$sConfig = false])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		This function gets a list of the active (loaded) bots, and their associated children.<br /><br /><p>This also returns a pretty big array, so it is advised against printing it in channels.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array of details.</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sConfig</b>&nbsp;&nbsp;</td>
+        <td>Bot-group - optional.</td>
       </tr>
         </table>
     </div><br />
@@ -209,7 +247,40 @@ $sConfig)</code>
           <tr>
         <td class="type">string&nbsp;&nbsp;</td>
         <td><b>$sConfig</b>&nbsp;&nbsp;</td>
-        <td></td>
+        <td>Bot-group</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodbotSend"></a>
+	<h3>static method botSend <span class="smalllinenumber">[line 75]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>static void botSend(
+string
+$sConfig, string
+$sMessage)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sends a raw IRC message from a selected bot(-group) with various settings.<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sConfig</b>&nbsp;&nbsp;</td>
+        <td>Bot-group</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sMessage</b>&nbsp;&nbsp;</td>
+        <td>IRC message to send from that bot.</td>
       </tr>
         </table>
     </div><br />
@@ -221,7 +292,7 @@ $sConfig)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 31 Aug 2009 16:59:40 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Tue, 01 Sep 2009 16:36:06 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

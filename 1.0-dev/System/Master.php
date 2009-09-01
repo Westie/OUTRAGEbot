@@ -722,7 +722,7 @@ class Master
 	
 	
 	/**
-	 *	Removes a user from the channel's database. Used internally.
+	 *	Removes a user from the channel's database. Used internally. '*' signifies all.
 	 *
 	 *	@ignore
 	 *	@param string $sChan Channel where user is.
@@ -771,7 +771,7 @@ class Master
 	
 	
 	/**
-	 *	Checks if that user has voice in that channel.
+	 *	Returns user information from a channel.
 	 *
 	 *	@param string $sChan Channel where user is
 	 *	@param string $sUser Nickname to check
