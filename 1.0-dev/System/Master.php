@@ -32,7 +32,7 @@ class Master
 	 *	@ignore
 	 */
 	public $MasterPresent = false;
-	
+		
 	
 	/**
 	 *	@ignore
@@ -87,7 +87,7 @@ class Master
 		
 		foreach($this->oConfig->Bots as $aOption)
 		{	
-			$this->CreateBot($aOption);
+			$this->_childCreate($aOption['nickname'], $aOption);
 			$this->MasterPresent = true;
 		}
 		
@@ -181,18 +181,100 @@ class Master
 	
 	
 	/**
-	 *	Creates a clone that belongs to this group.
+	 *	The backend of creating a child. Why oh why did I make it so complicated?
 	 *
 	 *	@ignore
+	 *	@param string $sChild Child reference.
+	 *	@param array $aDetails Details of the child.
+	 *	@return bool true on success.
 	 */
-	public function CreateBot($aDetails)
+	private function _childCreate($sChild, $aDetails)
 	{
+		if(isset($this->aBotObjects[$sChild]))
+		{
+			return false;
+		}
+		
 		$aDetails['slave'] = $this->MasterPresent;
+		
+		if($this->MasterPresent == false)
+		{
+			$this->MasterReference = $sChild;
+		}
+		
 		$aDetails['timewait'] = 1;
 		$aDetails['loadtime'] = (time() + $aDetails['timewait']);
 		
-		$this->aBotObjects[] = new Socket($this, $aDetails);
+		$this->aBotObjects[] = new Socket($this, $sChild, $aDetails);
 		return true;
+	}
+	
+	
+	/**
+	 *	The backend of creating a child. Why oh why did I make it so complicated?
+	 *
+	 *	@param string $sChild Child reference.
+	 *	@param string $sNickname The child's nickname.
+	 *	@param string $sUsername The child's username.
+	 *	@param string $sRealname The child's real name.
+	 *	@return bool true on success.
+	 */
+	public function childCreate($sChild, $sNickname, $sUsername, $sRealname)
+	{
+		$aDetails = array
+		(
+			'nickname' => $sNickname,
+			'username' => $sUsername,
+			'realname' => $sRealname,
+		);
+		
+		return $this->_childCreate($sChild, $aDetails);
+	}
+	
+	
+	/**
+	 *	Lists all the children this group has.
+	 *
+	 *	@return array Array of children.
+	 */
+	public function childGet()
+	{
+		$aReturn = array();
+		
+		foreach($this->aBotObjects as $iReference => $oChild)
+		{
+			$aReturn[$iReference] = $oChild->sChild;
+		}
+		
+		return $aReturn;
+	}
+	
+	
+	/**
+	 *	Removes a child from this group.
+	 *
+	 *	@param $sChild Child reference.
+	 *	@return bool true on success.
+	 */
+	public function childRemove($sChild)
+	{
+		foreach($this->aBotObjects as $iReference => $oChild)
+		{
+			if($oChild->sChild == $sChild)
+			{
+				if($iReference == 0)
+				{
+					return false;
+				}
+				
+				$oChild->destructBot();
+				unset($this->aBotObjects[$iReference]);
+				
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	

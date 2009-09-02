@@ -26,6 +26,7 @@ class Socket
 		$isRemove = false,
 		
 		$iUseQueue = false,
+		$sChild = "",
 		$aSearch = array(),
 		$aMsgQueue = array(),
 		$aMatchQueue = array();
@@ -95,10 +96,11 @@ class Socket
 	
 	
 	/* The real constructor. */
-	public function __construct($oMaster, $aBasic)
+	public function __construct($oMaster, $sChild, $aBasic)
 	{
 		$this->aConfig = $aBasic;
 		$this->oMaster = $oMaster;
+		$this->sChild = $sChild;
 		
 		$this->constructBot();
 	}
