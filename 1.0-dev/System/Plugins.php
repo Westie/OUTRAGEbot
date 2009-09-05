@@ -44,7 +44,8 @@ abstract class Plugins
 	
 	
 	/**
-	 *	The internal name of the plugin, used in getting configs.
+	 *	An array of the internal names of the plugin, namely the
+	 *	plugins virtual name, and its real, unique name.
 	 *
 	 *	@ignore
 	 *	@var array

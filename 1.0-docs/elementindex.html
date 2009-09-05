@@ -140,10 +140,16 @@
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchannelPart">Master::channelPart()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Allows the bot to part a channel.</dd>
 							<dt><b>childCreate</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildCreate">Master::childCreate()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;The backend of creating a child. Why oh why did I make it so complicated?</dd>
+							<dt><b>childExists</b></dt>
+				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildExists">Master::childExists()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Checks if a child exists. Note that the child name is not necessarily the 	IRC nick of the bot, but in most cases it is.</dd>
 							<dt><b>childGet</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildGet">Master::childGet()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Lists all the children this group has.</dd>
+							<dt><b>childGetObject</b></dt>
+				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildGetObject">Master::childGetObject()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Returns an object of a child from its reference.</dd>
 							<dt><b>childRemove</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildRemove">Master::childRemove()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Removes a child from this group.</dd>
+							<dt><b>childRename</b></dt>
+				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildRename">Master::childRename()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;This function renames a child by its reference. The reference is (in most cases) 	the bot's original name. Look in the configuration for more details.</dd>
 							<dt><b>Clear</b></dt>
 				<dd>in file Format.php, class constant <a href="OUTRAGEbot/Format.html#constClear">Format::Clear</a></dd>
 							<dt><b>Colour</b></dt>
@@ -328,10 +334,10 @@
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodparseModes">Master::parseModes()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Parses a mode string into a usable array.</dd>
 							<dt><b>Pink</b></dt>
 				<dd>in file Format.php, class constant <a href="OUTRAGEbot/Format.html#constPink">Format::Pink</a></dd>
+							<dt><b>pluginExists</b></dt>
+				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodpluginExists">Master::pluginExists()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Check if a plugin is loaded into memory.</dd>
 							<dt><b>pluginGet</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodpluginGet">Master::pluginGet()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Gets the instance of the plugin if it exists.</dd>
-							<dt><b>pluginIsActive</b></dt>
-				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodpluginIsActive">Master::pluginIsActive()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Check if a plugin is loaded into memory.</dd>
 							<dt><b>pluginLoad</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodpluginLoad">Master::pluginLoad()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Loads a plugin from the plugin directory.</dd>
 							<dt><b>pluginReload</b></dt>
@@ -451,7 +457,7 @@
 	<a href="elementindex.html#top">top</a><br>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Tue, 01 Sep 2009 23:59:26 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Sat, 05 Sep 2009 15:56:42 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

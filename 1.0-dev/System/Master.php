@@ -83,12 +83,11 @@ class Master
 		$this->oPlugins = new stdClass();
 		$this->oModes = new stdClass();
 
-		echo PHP_EOL."$ Creating '{$this->oConfig->Network['name']}' at {$this->oConfig->Network['host']}:{$this->oConfig->Network['port']}".PHP_EOL;
+		echo PHP_EOL." Creating '{$this->oConfig->Network['name']}' at {$this->oConfig->Network['host']}:{$this->oConfig->Network['port']}".PHP_EOL;
 		
 		foreach($this->oConfig->Bots as $aOption)
 		{	
 			$this->_childCreate($aOption['nickname'], $aOption);
-			$this->MasterPresent = true;
 		}
 		
 		foreach(explode(',', $this->oConfig->Network['plugins']) as $sPlugin)
@@ -97,7 +96,7 @@ class Master
 			$this->pluginLoad($sPlugin);
 		}
 		
-		/* The uncool stuff. */
+		/* The uncool stuff. This does mean that yeah, you can this in the configs. */
 		if(!isset($this->oConfig->Network['delimiter']))
 		{
 			$this->oConfig->Network['delimiter'] = "!";
@@ -133,7 +132,7 @@ class Master
 	 */
 	public function _onDestruct()
 	{
-		foreach($this->oPlugins as $sReference => &$oPlugin)
+		foreach($this->oPlugins as $sReference => $oPlugin)
 		{
 			call_user_func(array($this->oPlugins->$sReference, "onDestruct"));
 			unset($this->oPlugins->$sReference);
@@ -190,7 +189,7 @@ class Master
 	 */
 	private function _childCreate($sChild, $aDetails)
 	{
-		if(isset($this->aBotObjects[$sChild]))
+		if($this->childExists($sChild))
 		{
 			return false;
 		}
@@ -199,6 +198,7 @@ class Master
 		
 		if($this->MasterPresent == false)
 		{
+			$this->MasterPresent = true;
 			$this->MasterReference = $sChild;
 		}
 		
@@ -226,6 +226,7 @@ class Master
 			'nickname' => $sNickname,
 			'username' => $sUsername,
 			'realname' => $sRealname,
+			'altnick' => $sNickname.rand(0, 10),
 		);
 		
 		return $this->_childCreate($sChild, $aDetails);
@@ -251,7 +252,48 @@ class Master
 	
 	
 	/**
+	 *	Returns an object of a child from its reference.
+	 *
+	 *	@param $sChild Child reference.
+	 *	@return Socket Class of the socket child.
+	 */
+	public function childGetObject($sChild)
+	{
+		$aReturn = array();
+		
+		foreach($this->aBotObjects as $iReference => $oChild)
+		{
+			if($sChild == $oChild->sChild)
+			{
+				return $oChild;
+			}
+		}
+		
+		return null;
+	}
+	
+	
+	/**
+	 *	This function renames a child by its reference. The reference is (in most cases)
+	 *	the bot's original name. Look in the configuration for more details.
+	 *
+	 *	@param string $sChild Child reference.
+	 *	@param string $sNewNick New nickname of the child.
+	 */
+	public function childRename($sChild, $sNewNick)
+	{
+		if(($oChild = $this->childGetObject($sChild)) === null)
+		{
+			return false;
+		}
+		
+		$oChild->setNickname($sNewNick);
+	}
+	
+	
+	/**
 	 *	Removes a child from this group.
+	 *	Please note that you cannot remove the master. That would just be pointless.
 	 *
 	 *	@param $sChild Child reference.
 	 *	@return bool true on success.
@@ -270,6 +312,27 @@ class Master
 				$oChild->destructBot();
 				unset($this->aBotObjects[$iReference]);
 				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	/**
+	 *	Checks if a child exists. Note that the child name is not necessarily the 
+	 *	IRC nick of the bot, but in most cases it is.
+	 *
+	 *	@param $sChild Child name.
+	 *	@return bool true on success.
+	 */
+	public function childExists($sChild)
+	{
+		foreach($this->aBotObjects as $oChild)
+		{
+			if($oChild->sChild == $sChild)
+			{
 				return true;
 			}
 		}
@@ -305,7 +368,7 @@ class Master
 			}
 			case SEND_ALL:
 			{
-				foreach($this->aBotObjects as &$oBot)
+				foreach($this->aBotObjects as $oBot)
 				{
 					$oBot->Output($sMessage);
 				}
@@ -380,7 +443,7 @@ class Master
 		
 		if((is_object($this->aBotObjects[$this->iBotIndex])) && ($this->aBotObjects[$this->iBotIndex] instanceof Socket))
 		{
-			$pBot = &$this->aBotObjects[$this->iBotIndex];
+			$pBot = $this->aBotObjects[$this->iBotIndex];
 			++$this->iBotIndex;
 		}
 		else
@@ -545,7 +608,7 @@ class Master
 	/**
 	 *	@ignore
 	 */
-	private function _onConnect(&$oBot)
+	private function _onConnect($oBot)
 	{
 		$this->invokeEvent("onConnect");
 		
@@ -757,6 +820,7 @@ class Master
 	{
 		switch($aChunks[1])
 		{
+			/* NAMES reply. */
 			case 353:
 			{
 				/* Dirty arrays are dirty. I hate them. */
@@ -785,6 +849,15 @@ class Master
 					$this->oModes->aChannels[$sChan][$sUser]['iMode'] = $iTemp;
 					$this->oModes->aUsers[$sUser][$sChan] = true;
 				}
+				
+				break;
+			}
+			
+			/* Nick already in use. */
+			case 433:
+			{
+				$this->oCurrentBot->setNickname($this->oCurrentBot->aConfig['nickname'].rand(10, 20));
+				break;
 			}
 		}
 	}
@@ -846,9 +919,6 @@ class Master
 		unset($this->oModes->aUsers[$sOldNick]);
 		
 		return;
-		
-		print_r($this->oModes->aUsers[$sOldNick]);
-		print_r($this->oModes->aUsers[$sNewNick]);
 	}
 	
 	
@@ -1341,7 +1411,7 @@ class Master
 	 *	@param string $sPlugin
 	 *	@return bool 'true' on success.
 	 */
-	public function pluginIsActive($sPlugin)
+	public function pluginExists($sPlugin)
 	{
 		return isset($this->oPlugins->$sPlugin);
 	}
@@ -1576,7 +1646,10 @@ class Master
 	
 	/**
 	 *	Returns current WHOIS data about a user into an array.
-	 *
+	 -
+	 -	Please forgive me, for I have sinned with a lot of HTML.
+	 -	You should be able to figure out what this is all about anyway.
+	 -
 	 *	A list of rows that this function returns when called.
 	 *	<pre>
 	 *	<b>INFO:</b>
