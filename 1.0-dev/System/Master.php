@@ -114,7 +114,7 @@ class Master
 		
 		if(!isset($this->oConfig->Network['version']))
 		{
-			$this->oConfig->Network['version'] = "OUTRAGEbot v1.0-RC1; David Weston; http://outrage.typefish.co.uk";
+			$this->oConfig->Network['version'] = "OUTRAGEbot v1.0-RC1 (rel. 17:00 05/09/09); David Weston; http://outrage.typefish.co.uk";
 		}
 		
 		foreach(explode(',', $this->oConfig->Network['owners']) as $sAddr)
