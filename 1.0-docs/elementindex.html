@@ -139,13 +139,15 @@
 							<dt><b>channelPart</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchannelPart">Master::channelPart()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Allows the bot to part a channel.</dd>
 							<dt><b>childCreate</b></dt>
-				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildCreate">Master::childCreate()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;The backend of creating a child. Why oh why did I make it so complicated?</dd>
+				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildCreate">Master::childCreate()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;This function creates a child. A child is an instance of the Socket, 	basically an IRC client.</dd>
 							<dt><b>childExists</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildExists">Master::childExists()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Checks if a child exists. Note that the child name is not necessarily the 	IRC nick of the bot, but in most cases it is.</dd>
 							<dt><b>childGet</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildGet">Master::childGet()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Lists all the children this group has.</dd>
 							<dt><b>childGetObject</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildGetObject">Master::childGetObject()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Returns an object of a child from its reference.</dd>
+							<dt><b>childReconnect</b></dt>
+				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildReconnect">Master::childReconnect()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;This function reconnects a IRC child. This is useful in cases where IRC bots 	have to physically disconnect from the network in order to work.</dd>
 							<dt><b>childRemove</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodchildRemove">Master::childRemove()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Removes a child from this group.</dd>
 							<dt><b>childRename</b></dt>
@@ -206,12 +208,12 @@
 	<div>
 		<h2>g</h2>
 		<dl>
+							<dt><b>getChildAsObject</b></dt>
+				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodgetChildAsObject">Master::getChildAsObject()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Returns an object of a child from its reference. Alias of Master::childGetObject.</dd>
 							<dt><b>getConfig</b></dt>
 				<dd>in file Plugins.php, method <a href="OUTRAGEbot/Plugins.html#methodgetConfig">Plugins::getConfig()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Returns the</dd>
 							<dt><b>getHostname</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodgetHostname">Master::getHostname()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Get the users hostname from a hostname string.</dd>
-							<dt><b>getNames</b></dt>
-				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodgetNames">Master::getNames()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Request the modes in a channel - used for user modes.</dd>
 							<dt><b>getNextClone</b></dt>
 				<dd>in file Master.php, method <a href="OUTRAGEbot/Master.html#methodgetNextClone">Master::getNextClone()</a><br>&nbsp;&nbsp;&nbsp;&nbsp;Get the next bot along in a multi-bot system</dd>
 							<dt><b>getNickname</b></dt>
@@ -457,7 +459,7 @@
 	<a href="elementindex.html#top">top</a><br>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 05 Sep 2009 15:56:42 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Tue, 15 Sep 2009 19:17:33 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

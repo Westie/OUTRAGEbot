@@ -2,11 +2,14 @@
 /**
  *	Socket class for OUTRAGEbot
  *
+ *	I suppose I have no intention to document this piece of code,
+ *	I suppose.
+ *
  *	@ignore
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0
+ *	@version 1.0-RC2
  */
 
 class Socket
@@ -82,9 +85,9 @@ class Socket
 	
 	
 	/* The socket gets shutdown by unsetting the class. */
-	public function destructBot()
+	public function destructBot($sMessage = false)
 	{
-		$this->Output("QUIT :{$this->oMaster->oConfig->Network['quitmsg']}");
+		$this->Output('QUIT :'.($sMessage == false ? $this->oMaster->oConfig->Network['quitmsg'] : $sMessage));
 		Timers::Delete($this->iPingTimer);
 		
 		@socket_clear_error();

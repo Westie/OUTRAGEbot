@@ -5,10 +5,15 @@
  *	This class deals with all the interaction with plugins, how the bot acts, etc.
  *	This class also contains all of the commands, etc.
  *
+ *	Note: In this documentation, there are some psuedo types that are used to describe
+ *	certain arguments.
+ *
+ *	- callback => String if non-OOP function, array with 0 => Object and 1 => Func name if OOP.
+ *
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0
+ *	@version 1.0-RC2
  *	@todo Fix that memory leak. It does my head in. :(
  */
  
@@ -114,7 +119,7 @@ class Master
 		
 		if(!isset($this->oConfig->Network['version']))
 		{
-			$this->oConfig->Network['version'] = "OUTRAGEbot v1.0-RC1 (rel. 17:00 05/09/09); David Weston; http://outrage.typefish.co.uk";
+			$this->oConfig->Network['version'] = "OUTRAGEbot v1.0-RC2 (rel. BETA); David Weston; http://outrage.typefish.co.uk";
 		}
 		
 		foreach(explode(',', $this->oConfig->Network['owners']) as $sAddr)
@@ -211,7 +216,10 @@ class Master
 	
 	
 	/**
-	 *	The backend of creating a child. Why oh why did I make it so complicated?
+	 *	This function creates a child. A child is an instance of the Socket,
+	 *	basically an IRC client.
+	 *
+	 *	<code>$this->childCreate("bot4", "OUTRAGEbot|4", "outrage", "OUTRAGEbot");</code> 
 	 *
 	 *	@param string $sChild Child reference.
 	 *	@param string $sNickname The child's nickname.
@@ -254,7 +262,7 @@ class Master
 	/**
 	 *	Returns an object of a child from its reference.
 	 *
-	 *	@param $sChild Child reference.
+	 *	@param string $sChild Child reference.
 	 *	@return Socket Class of the socket child.
 	 */
 	public function childGetObject($sChild)
@@ -295,7 +303,7 @@ class Master
 	 *	Removes a child from this group.
 	 *	Please note that you cannot remove the master. That would just be pointless.
 	 *
-	 *	@param $sChild Child reference.
+	 *	@param string $sChild Child reference.
 	 *	@return bool true on success.
 	 */
 	public function childRemove($sChild)
@@ -324,7 +332,7 @@ class Master
 	 *	Checks if a child exists. Note that the child name is not necessarily the 
 	 *	IRC nick of the bot, but in most cases it is.
 	 *
-	 *	@param $sChild Child name.
+	 *	@param string $sChild Child name.
 	 *	@return bool true on success.
 	 */
 	public function childExists($sChild)
@@ -338,6 +346,40 @@ class Master
 		}
 		
 		return false;
+	}
+
+
+	/**
+	 *	This function reconnects a IRC child. This is useful in cases where IRC bots
+	 *	have to physically disconnect from the network in order to work.
+	 *
+	 *	@param string $sChild Child reference.
+	 *	@param string $sMessage Quit message.
+	 */
+	public function childReconnect($sChild, $sMessage = "Rehash!")
+	{
+		if(($oChild = $this->childGetObject($sChild)) === null)
+		{
+			return false;
+		}
+
+		$oChild->destructBot($sMessage);
+		$oChild->constructBot();
+		
+		return true;
+	}
+	
+	
+	/**
+	 *	Returns an object of a child from its reference. Alias of Master::childGetObject.
+	 *
+	 *	@param string $sChild Child reference.
+	 *	@return Socket Class of the socket child.
+	 *	@uses childGetObject
+	 */
+	public function getChildAsObject($sChild)
+	{
+		return $this->childGetObject($sChild);
 	}
 	
 	
@@ -387,7 +429,9 @@ class Master
 		
 	/**
 	 *	Request the modes in a channel - used for user modes.
+	 *	Do we need to call this any more?
 	 *
+	 *	@ignore
 	 *	@param string $sChannel Channel name.
 	 */
 	function getNames($sChannel)

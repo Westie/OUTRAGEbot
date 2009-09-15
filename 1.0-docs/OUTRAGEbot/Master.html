@@ -83,7 +83,7 @@ Source Location: /Master.php<br /><br />
       
 <h4>Version:</h4>
 <ul>
-  <li>1.0</li>
+  <li>1.0-RC2</li>
 </ul>
 
 <h4>Copyright:</h4>
@@ -117,12 +117,13 @@ Source Location: /Master.php<br /><br />
     <li><a href="../OUTRAGEbot/Master.html#methodchildExists">childExists</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodchildGet">childGet</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodchildGetObject">childGetObject</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodchildReconnect">childReconnect</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodchildRemove">childRemove</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodchildRename">childRename</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodctcpReply">ctcpReply</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodctcpRequest">ctcpRequest</a></li>
+    <li><a href="../OUTRAGEbot/Master.html#methodgetChildAsObject">getChildAsObject</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetHostname">getHostname</a></li>
-    <li><a href="../OUTRAGEbot/Master.html#methodgetNames">getNames</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetNextClone">getNextClone</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetNickname">getNickname</a></li>
     <li><a href="../OUTRAGEbot/Master.html#methodgetRealtimeRequest">getRealtimeRequest</a></li>
@@ -174,8 +175,8 @@ Source Location: /Master.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 17]<br />
-Master class for OUTRAGEbot<br /><br /><p>This class deals with all the interaction with plugins, how the bot acts, etc. 	This class also contains all of the commands, etc.</p><br /><br /><br />
+[line 22]<br />
+Master class for OUTRAGEbot<br /><br /><p>This class deals with all the interaction with plugins, how the bot acts, etc. 	This class also contains all of the commands, etc.</p><p>Note: In this documentation, there are some psuedo types that are used to describe 	certain arguments.</p><p><ul><li>callback =&gt; String if non-OOP function, array with 0 =&gt; Object and 1 =&gt; Func name if OOP.</li></ul></p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -183,7 +184,7 @@ Master class for OUTRAGEbot<br /><br /><p>This class deals with all the interact
     <td><b>author:</b>&nbsp;&nbsp;</td><td>David Weston &lt;<a href="mailto:westie@typefish.co.uk">westie@typefish.co.uk</a>&gt;</td>
   </tr>
   <tr>
-    <td><b>version:</b>&nbsp;&nbsp;</td><td>1.0</td>
+    <td><b>version:</b>&nbsp;&nbsp;</td><td>1.0-RC2</td>
   </tr>
   <tr>
     <td><b>copyright:</b>&nbsp;&nbsp;</td><td>David Weston (c) 2009 -&gt; http://www.typefish.co.uk/licences/</td>
@@ -203,7 +204,7 @@ Master class for OUTRAGEbot<br /><br /><p>This class deals with all the interact
 	<a name="var$oCurrentBot"></a>
 	<p></p>
 	<h4>$oCurrentBot = <span class="value"></span></h4>
-	<p>[line 65]</p>
+	<p>[line 70]</p>
   Contains the instance of the current bot.<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -227,7 +228,7 @@ Master class for OUTRAGEbot<br /><br /><p>This class deals with all the interact
 	<a name="var$sCurrentChunk"></a>
 	<p></p>
 	<h4>$sCurrentChunk = <span class="value"></span></h4>
-	<p>[line 72]</p>
+	<p>[line 77]</p>
   Contains the string/message that is sent to the bot<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -257,7 +258,7 @@ Master class for OUTRAGEbot<br /><br /><p>This class deals with all the interact
 
   <hr />
 	<a name="methodAction"></a>
-	<h3>method Action <span class="smalllinenumber">[line 1218]</span></h3>
+	<h3>method Action <span class="smalllinenumber">[line 1262]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -308,7 +309,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodbindCreate"></a>
-	<h3>method bindCreate <span class="smalllinenumber">[line 1436]</span></h3>
+	<h3>method bindCreate <span class="smalllinenumber">[line 1480]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -363,7 +364,7 @@ $aFormat)</code>
   </div>
   <hr />
 	<a name="methodbindDelete"></a>
-	<h3>method bindDelete <span class="smalllinenumber">[line 1480]</span></h3>
+	<h3>method bindDelete <span class="smalllinenumber">[line 1524]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -402,7 +403,7 @@ $sKey)</code>
   </div>
   <hr />
 	<a name="methodbindGet"></a>
-	<h3>method bindGet <span class="smalllinenumber">[line 1463]</span></h3>
+	<h3>method bindGet <span class="smalllinenumber">[line 1507]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -443,7 +444,7 @@ $sKey)</code>
   </div>
   <hr />
 	<a name="methodchannelInvite"></a>
-	<h3>method channelInvite <span class="smalllinenumber">[line 1568]</span></h3>
+	<h3>method channelInvite <span class="smalllinenumber">[line 1612]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -491,7 +492,7 @@ $sReason)</code>
   </div>
   <hr />
 	<a name="methodchannelJoin"></a>
-	<h3>method channelJoin <span class="smalllinenumber">[line 1592]</span></h3>
+	<h3>method channelJoin <span class="smalllinenumber">[line 1636]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -527,7 +528,7 @@ $sChannel)</code>
   </div>
   <hr />
 	<a name="methodchannelKick"></a>
-	<h3>method channelKick <span class="smalllinenumber">[line 1581]</span></h3>
+	<h3>method channelKick <span class="smalllinenumber">[line 1625]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -575,7 +576,7 @@ $sReason = &quot;Kick&quot;])</code>
   </div>
   <hr />
 	<a name="methodchannelPart"></a>
-	<h3>method channelPart <span class="smalllinenumber">[line 1604]</span></h3>
+	<h3>method channelPart <span class="smalllinenumber">[line 1648]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -617,7 +618,7 @@ $sReason = false])</code>
   </div>
   <hr />
 	<a name="methodchildCreate"></a>
-	<h3>method childCreate <span class="smalllinenumber">[line 222]</span></h3>
+	<h3>method childCreate <span class="smalllinenumber">[line 230]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -630,7 +631,8 @@ $sRealname)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		The backend of creating a child. Why oh why did I make it so complicated?<br /><br /><br /><br />
+		This function creates a child. A child is an instance of the Socket, 	basically an IRC client.<br /><br /><p><ol><li><div class="src-line"><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../OUTRAGEbot/Master.html#methodchildCreate">childCreate</a><span class="src-sym">(</span><span class="src-str">&quot;bot4&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;OUTRAGEbot|4&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;outrage&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;OUTRAGEbot&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -674,12 +676,12 @@ $sRealname)</code>
   </div>
   <hr />
 	<a name="methodchildExists"></a>
-	<h3>method childExists <span class="smalllinenumber">[line 330]</span></h3>
+	<h3>method childExists <span class="smalllinenumber">[line 338]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>bool childExists(
-$sChild
+string
 $sChild)</code>
     </td></tr></table>
     </td></tr></table><br />
@@ -703,7 +705,7 @@ $sChild)</code>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">$sChild&nbsp;&nbsp;</td>
+        <td class="type">string&nbsp;&nbsp;</td>
         <td><b>$sChild</b>&nbsp;&nbsp;</td>
         <td>Child name.</td>
       </tr>
@@ -713,7 +715,7 @@ $sChild)</code>
   </div>
   <hr />
 	<a name="methodchildGet"></a>
-	<h3>method childGet <span class="smalllinenumber">[line 241]</span></h3>
+	<h3>method childGet <span class="smalllinenumber">[line 249]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -741,12 +743,12 @@ $sChild)</code>
   </div>
   <hr />
 	<a name="methodchildGetObject"></a>
-	<h3>method childGetObject <span class="smalllinenumber">[line 260]</span></h3>
+	<h3>method childGetObject <span class="smalllinenumber">[line 268]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>Socket childGetObject(
-$sChild
+string
 $sChild)</code>
     </td></tr></table>
     </td></tr></table><br />
@@ -761,6 +763,9 @@ $sChild)</code>
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
+  <tr>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/Master.html#methodgetChildAsObject">Master::getChildAsObject()</a></td>
+  </tr>
 </table>
 </div>
 <br /><br />
@@ -770,7 +775,7 @@ $sChild)</code>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">$sChild&nbsp;&nbsp;</td>
+        <td class="type">string&nbsp;&nbsp;</td>
         <td><b>$sChild</b>&nbsp;&nbsp;</td>
         <td>Child reference.</td>
       </tr>
@@ -779,13 +784,55 @@ $sChild)</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
+	<a name="methodchildReconnect"></a>
+	<h3>method childReconnect <span class="smalllinenumber">[line 359]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void childReconnect(
+string
+$sChild, [string
+$sMessage = &quot;Rehash!&quot;])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		This function reconnects a IRC child. This is useful in cases where IRC bots 	have to physically disconnect from the network in order to work.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChild</b>&nbsp;&nbsp;</td>
+        <td>Child reference.</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sMessage</b>&nbsp;&nbsp;</td>
+        <td>Quit message.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
 	<a name="methodchildRemove"></a>
-	<h3>method childRemove <span class="smalllinenumber">[line 301]</span></h3>
+	<h3>method childRemove <span class="smalllinenumber">[line 309]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>bool childRemove(
-$sChild
+string
 $sChild)</code>
     </td></tr></table>
     </td></tr></table><br />
@@ -809,7 +856,7 @@ $sChild)</code>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">$sChild&nbsp;&nbsp;</td>
+        <td class="type">string&nbsp;&nbsp;</td>
         <td><b>$sChild</b>&nbsp;&nbsp;</td>
         <td>Child reference.</td>
       </tr>
@@ -819,7 +866,7 @@ $sChild)</code>
   </div>
   <hr />
 	<a name="methodchildRename"></a>
-	<h3>method childRename <span class="smalllinenumber">[line 283]</span></h3>
+	<h3>method childRename <span class="smalllinenumber">[line 291]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -861,7 +908,7 @@ $sNewNick)</code>
   </div>
   <hr />
 	<a name="methodctcpReply"></a>
-	<h3>method ctcpReply <span class="smalllinenumber">[line 1242]</span></h3>
+	<h3>method ctcpReply <span class="smalllinenumber">[line 1286]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -906,7 +953,7 @@ $sMessage)</code>
   </div>
   <hr />
 	<a name="methodctcpRequest"></a>
-	<h3>method ctcpRequest <span class="smalllinenumber">[line 1256]</span></h3>
+	<h3>method ctcpRequest <span class="smalllinenumber">[line 1300]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -956,8 +1003,50 @@ $iSend = SEND_DEF])</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
+	<a name="methodgetChildAsObject"></a>
+	<h3>method getChildAsObject <span class="smalllinenumber">[line 380]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>Socket getChildAsObject(
+string
+$sChild)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Returns an object of a child from its reference. Alias of Master::childGetObject.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Class of the socket child.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../OUTRAGEbot/Master.html#methodchildGetObject">Master::childGetObject()</a></td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$sChild</b>&nbsp;&nbsp;</td>
+        <td>Child reference.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
 	<a name="methodgetHostname"></a>
-	<h3>method getHostname <span class="smalllinenumber">[line 422]</span></h3>
+	<h3>method getHostname <span class="smalllinenumber">[line 466]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -995,35 +1084,8 @@ $sHost)</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
-	<a name="methodgetNames"></a>
-	<h3>method getNames <span class="smalllinenumber">[line 393]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void getNames(
-string
-$sChannel)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Request the modes in a channel - used for user modes.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$sChannel</b>&nbsp;&nbsp;</td>
-        <td>Channel name.</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
 	<a name="methodgetNextClone"></a>
-	<h3>method getNextClone <span class="smalllinenumber">[line 434]</span></h3>
+	<h3>method getNextClone <span class="smalllinenumber">[line 478]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1051,7 +1113,7 @@ $sChannel)</code>
   </div>
   <hr />
 	<a name="methodgetNickname"></a>
-	<h3>method getNickname <span class="smalllinenumber">[line 409]</span></h3>
+	<h3>method getNickname <span class="smalllinenumber">[line 453]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1090,7 +1152,7 @@ $sHost)</code>
   </div>
   <hr />
 	<a name="methodgetRealtimeRequest"></a>
-	<h3>method getRealtimeRequest <span class="smalllinenumber">[line 1547]</span></h3>
+	<h3>method getRealtimeRequest <span class="smalllinenumber">[line 1591]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1148,7 +1210,7 @@ $iSleep = 10000])</code>
   </div>
   <hr />
 	<a name="methodgetUserInfoFromChannel"></a>
-	<h3>method getUserInfoFromChannel <span class="smalllinenumber">[line 932]</span></h3>
+	<h3>method getUserInfoFromChannel <span class="smalllinenumber">[line 976]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1193,7 +1255,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodgetWhois"></a>
-	<h3>method getWhois <span class="smalllinenumber">[line 1671]</span></h3>
+	<h3>method getWhois <span class="smalllinenumber">[line 1715]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1247,7 +1309,7 @@ $iDelay = 500000])</code>
   </div>
   <hr />
 	<a name="methodinvokeEvent"></a>
-	<h3>method invokeEvent <span class="smalllinenumber">[line 1103]</span></h3>
+	<h3>method invokeEvent <span class="smalllinenumber">[line 1147]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1289,7 +1351,7 @@ $...)</code>
   </div>
   <hr />
 	<a name="methodisAdmin"></a>
-	<h3>method isAdmin <span class="smalllinenumber">[line 1063]</span></h3>
+	<h3>method isAdmin <span class="smalllinenumber">[line 1107]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1317,7 +1379,7 @@ $...)</code>
   </div>
   <hr />
 	<a name="methodisClone"></a>
-	<h3>method isClone <span class="smalllinenumber">[line 1078]</span></h3>
+	<h3>method isClone <span class="smalllinenumber">[line 1122]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1356,7 +1418,7 @@ $iBot = false])</code>
   </div>
   <hr />
 	<a name="methodisUserAdmin"></a>
-	<h3>method isUserAdmin <span class="smalllinenumber">[line 1025]</span></h3>
+	<h3>method isUserAdmin <span class="smalllinenumber">[line 1069]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1401,7 +1463,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodisUserHalfOp"></a>
-	<h3>method isUserHalfOp <span class="smalllinenumber">[line 985]</span></h3>
+	<h3>method isUserHalfOp <span class="smalllinenumber">[line 1029]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1446,7 +1508,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodisUserInChannel"></a>
-	<h3>method isUserInChannel <span class="smalllinenumber">[line 952]</span></h3>
+	<h3>method isUserInChannel <span class="smalllinenumber">[line 996]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1491,7 +1553,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodisUserOper"></a>
-	<h3>method isUserOper <span class="smalllinenumber">[line 1005]</span></h3>
+	<h3>method isUserOper <span class="smalllinenumber">[line 1049]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1536,7 +1598,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodisUserOwner"></a>
-	<h3>method isUserOwner <span class="smalllinenumber">[line 1045]</span></h3>
+	<h3>method isUserOwner <span class="smalllinenumber">[line 1089]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1581,7 +1643,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodisUserVoice"></a>
-	<h3>method isUserVoice <span class="smalllinenumber">[line 965]</span></h3>
+	<h3>method isUserVoice <span class="smalllinenumber">[line 1009]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1626,7 +1688,7 @@ $sUser)</code>
   </div>
   <hr />
 	<a name="methodMessage"></a>
-	<h3>method Message <span class="smalllinenumber">[line 1207]</span></h3>
+	<h3>method Message <span class="smalllinenumber">[line 1251]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1677,7 +1739,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodNotice"></a>
-	<h3>method Notice <span class="smalllinenumber">[line 1229]</span></h3>
+	<h3>method Notice <span class="smalllinenumber">[line 1273]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1728,7 +1790,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodparseModes"></a>
-	<h3>method parseModes <span class="smalllinenumber">[line 1616]</span></h3>
+	<h3>method parseModes <span class="smalllinenumber">[line 1660]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1767,7 +1829,7 @@ $sMode)</code>
   </div>
   <hr />
 	<a name="methodpluginExists"></a>
-	<h3>method pluginExists <span class="smalllinenumber">[line 1414]</span></h3>
+	<h3>method pluginExists <span class="smalllinenumber">[line 1458]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1806,7 +1868,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginGet"></a>
-	<h3>method pluginGet <span class="smalllinenumber">[line 1365]</span></h3>
+	<h3>method pluginGet <span class="smalllinenumber">[line 1409]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1845,7 +1907,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginLoad"></a>
-	<h3>method pluginLoad <span class="smalllinenumber">[line 1322]</span></h3>
+	<h3>method pluginLoad <span class="smalllinenumber">[line 1366]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1884,7 +1946,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginReload"></a>
-	<h3>method pluginReload <span class="smalllinenumber">[line 1401]</span></h3>
+	<h3>method pluginReload <span class="smalllinenumber">[line 1445]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1923,7 +1985,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodpluginUnload"></a>
-	<h3>method pluginUnload <span class="smalllinenumber">[line 1382]</span></h3>
+	<h3>method pluginUnload <span class="smalllinenumber">[line 1426]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -1962,7 +2024,7 @@ $sPlugin)</code>
   </div>
   <hr />
 	<a name="methodsendAction"></a>
-	<h3>method sendAction <span class="smalllinenumber">[line 1182]</span></h3>
+	<h3>method sendAction <span class="smalllinenumber">[line 1226]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2013,7 +2075,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodsendMessage"></a>
-	<h3>method sendMessage <span class="smalllinenumber">[line 1168]</span></h3>
+	<h3>method sendMessage <span class="smalllinenumber">[line 1212]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2064,7 +2126,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodsendNotice"></a>
-	<h3>method sendNotice <span class="smalllinenumber">[line 1196]</span></h3>
+	<h3>method sendNotice <span class="smalllinenumber">[line 1240]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2115,7 +2177,7 @@ $iSend = SEND_DEF])</code>
   </div>
   <hr />
 	<a name="methodsendRaw"></a>
-	<h3>method sendRaw <span class="smalllinenumber">[line 350]</span></h3>
+	<h3>method sendRaw <span class="smalllinenumber">[line 392]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2157,7 +2219,7 @@ $iSend = SEND_CURR])</code>
   </div>
   <hr />
 	<a name="methodstripAll"></a>
-	<h3>method stripAll <span class="smalllinenumber">[line 1153]</span></h3>
+	<h3>method stripAll <span class="smalllinenumber">[line 1197]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2196,7 +2258,7 @@ $sText)</code>
   </div>
   <hr />
 	<a name="methodstripColour"></a>
-	<h3>method stripColour <span class="smalllinenumber">[line 1141]</span></h3>
+	<h3>method stripColour <span class="smalllinenumber">[line 1185]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2235,7 +2297,7 @@ $sText)</code>
   </div>
   <hr />
 	<a name="methodstripFormat"></a>
-	<h3>method stripFormat <span class="smalllinenumber">[line 1129]</span></h3>
+	<h3>method stripFormat <span class="smalllinenumber">[line 1173]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2274,7 +2336,7 @@ $sText)</code>
   </div>
   <hr />
 	<a name="methodtimerCreate"></a>
-	<h3>method timerCreate <span class="smalllinenumber">[line 1271]</span></h3>
+	<h3>method timerCreate <span class="smalllinenumber">[line 1315]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2331,7 +2393,7 @@ $...)</code>
   </div>
   <hr />
 	<a name="methodtimerGet"></a>
-	<h3>method timerGet <span class="smalllinenumber">[line 1298]</span></h3>
+	<h3>method timerGet <span class="smalllinenumber">[line 1342]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2374,7 +2436,7 @@ $sKey)</code>
   </div>
   <hr />
 	<a name="methodtimerKill"></a>
-	<h3>method timerKill <span class="smalllinenumber">[line 1310]</span></h3>
+	<h3>method timerKill <span class="smalllinenumber">[line 1354]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -2416,7 +2478,7 @@ $sKey)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 05 Sep 2009 15:56:42 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Tue, 15 Sep 2009 19:17:33 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

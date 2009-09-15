@@ -1,7 +1,5 @@
 <?php
-/*
- *	AutoInvite class
- */
+
 
 class AutoInvite extends Plugins
 {

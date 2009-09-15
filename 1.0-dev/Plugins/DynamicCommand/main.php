@@ -1,9 +1,5 @@
 <?php
 
-/*
-	DynamicCommand plugin for Happycat
-*/
-
 
 class DynamicCommand extends Plugins
 {
