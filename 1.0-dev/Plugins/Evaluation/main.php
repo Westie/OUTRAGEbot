@@ -12,6 +12,11 @@ class Evaluation extends Plugins
 	/* Each of the different callbacks. */
 	function onCommand($sNickname, $sChannel, $sCommand, $sArguments)
 	{
+		if($this->isChild())
+		{
+			return false;
+		}
+		
 		if(!strcmp($sCommand, $this->oBot->oConfig->Network['delimiter']))
 		{
 			if(!$this->isAdmin())
@@ -33,6 +38,8 @@ class Evaluation extends Plugins
 			}
 			return true;
 		}
+		
+		return false;
 	}
 	
 	

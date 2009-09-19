@@ -3,6 +3,13 @@
  *	Format class for OUTRAGEbot
  *
  *	All the formatting that that the bot needs, colours and/or otherwise, are all stored here.
+ -
+ -	<html>
+ -
+ *	
+ -
+ -	</html>
+ -
  *
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/

@@ -8,7 +8,7 @@
  *	Note: In this documentation, there are some psuedo types that are used to describe
  *	certain arguments.
  *
- *	- callback => String if non-OOP function, array with 0 => Object and 1 => Func name if OOP.
+ *	- callback <code>$cCallback = array($this, "Message");</code> It is used for binds and timers.
  *
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/
@@ -262,6 +262,9 @@ class Master
 	/**
 	 *	Returns an object of a child from its reference.
 	 *
+	 *	<code>$oChild = $this->childGetObject("OUTRAGEbot");
+	 *	$oChild->Output("PRIVMSG #OUTRAGEbot :Hello from the raw!");</code>
+	 *
 	 *	@param string $sChild Child reference.
 	 *	@return Socket Class of the socket child.
 	 */
@@ -318,7 +321,8 @@ class Master
 				}
 				
 				$oChild->destructBot();
-				unset($this->aBotObjects[$iReference]);
+				unset($this->aBotObjects[$iReference]);				
+				$this->aBotObjects = array_values($this->aBotObjects);
 				
 				return true;
 			}
@@ -371,7 +375,7 @@ class Master
 	
 	
 	/**
-	 *	Returns an object of a child from its reference. Alias of Master::childGetObject.
+	 *	Returns an object of a child from its reference. Alias of Master::childGetObject().
 	 *
 	 *	@param string $sChild Child reference.
 	 *	@return Socket Class of the socket child.
@@ -419,7 +423,7 @@ class Master
 			case SEND_DIST:
 			default:
 			{
-				$this->getNextClone()->Output($sMessage);
+				$this->getNextChild()->Output($sMessage);
 				break;
 			}
 		}
@@ -471,40 +475,13 @@ class Master
 
 	
 	/**
-	 *	Get the next bot along in a multi-bot system
+	 *	This function gets the next child along in the queue.
 	 *
-	 *	@return Socket The instance of the bot
+	 *	@return Socket Child object.
 	 */
-	public function getNextClone()
-	{	
-		static
-			$iCount;
-		
-		if($this->iBotIndex >= sizeof($this->aBotObjects))
-		{
-			$this->iBotIndex = 0;
-		}
-		
-		if((is_object($this->aBotObjects[$this->iBotIndex])) && ($this->aBotObjects[$this->iBotIndex] instanceof Socket))
-		{
-			$pBot = $this->aBotObjects[$this->iBotIndex];
-			++$this->iBotIndex;
-		}
-		else
-		{
-			if($iCount <= sizeof($this->aBotObjects))
-			{
-				++$iCount;
-				return $this->getNextClone();
-			}
-			else
-			{
-				$iCount = 0;
-				$this->iBotIndex = 0;
-				return $this->getNextClone();
-			}
-		}
-		return $pBot;
+	public function getNextChild()
+	{
+		return next($this->aBotObjects) == false ? reset($this->aBotObjects) : current($this->aBotObjects);
 	}
 	
 	
@@ -1114,31 +1091,29 @@ class Master
 	
 	
 	/**
-	 *	Checks if the selected/current bot is a clone.
+	 *	Checks if either the current instance, or a specific instance is actually a child.
 	 *
-	 *	@param $iBot Bot's ID. (Starts from zero)
-	 *	@return bool 'true' on success.
+	 *	@param string $sChild Child reference.
+	 *	@return bool true on success, null if child is non-existant.
 	 */
-	public function isClone($iBot = false)
+	public function isChild($sChild = "")
 	{
-		if($iBot == false)
+		$oChild = ($sChild == "" ? $this->oCurrentBot : $this->childGetObject($sChild));
+		
+		if($oChild == null)
 		{
-			return $this->oCurrentBot->isClone();
-		}
-		else
-		{
-			if(isset($this->aBotObjects[$iBot]))
-			{
-				return $this->aBotObjects[$iBot]->isClone();
-			}
+			return null;
 		}
 		
-		return false;
+		return $oChild->isClone();
 	}
 
 
 	/**
 	 *	Invokes an event/callback from plugins.
+	 *
+	 *	<code>$this->invokeEvent("onTick");
+	 *	$this->invokeEvent("onCommand", $sNickname, $sChannel, $sCommand, $sArguments);</code>
 	 *
 	 *	@param string $sEvent Event to invoke
 	 *	@param mixed $... Arguments to pass to event.

@@ -131,9 +131,14 @@ abstract class Plugins
 	
 	
 	/**
-	 *	Returns the 
+	 *	Returns the configuration that is for the plugin.
 	 *
-	 *	@return array Configuration that is supplied with the bot.
+	 *	<code>$aConfig = $this->getConfig();</code>
+	 *
+	 *	You can test this with the default plugin by requesting this
+	 *	function from the Evaluation plugin.
+	 *
+	 *	@return array Configuration.
 	 */
 	public final function getConfig()
 	{
