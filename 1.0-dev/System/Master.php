@@ -8,7 +8,10 @@
  *	Note: In this documentation, there are some psuedo types that are used to describe
  *	certain arguments.
  *
- *	- callback <code>$cCallback = array($this, "Message");</code> It is used for binds and timers.
+ *	- callback<code>
+ *	$cCallback = array($this, "Function"); // Different class instance
+ *	$cCallback = "callLocalFunction";      // Not available right now.
+ *	</code>It is used for binds and timers.
  *
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/

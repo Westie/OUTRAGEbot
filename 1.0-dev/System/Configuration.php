@@ -93,7 +93,7 @@ class ConfigParser
 	/**
 	 *	Parses a configuration file in any directory in the server (that it is possible to reach
 	 *
-	 *	@param string $sConfig Configuration file location
+	 *	@param string $sConfig Exact configuration file location
 	 */
 	public function parseConfigFile($sConfig)
 	{

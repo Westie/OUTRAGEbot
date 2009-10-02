@@ -67,6 +67,21 @@ class Timers
 		}
 		return array();
 	}
+
+
+	/* Some verification is needed. */
+	static function CheckCall()
+	{
+		foreach(self::$aTimers as $iKey => $aTimer)
+		{
+			if(!is_callable($aTimer['CALLBACK']))
+			{
+				/* 'Preety' obvious no calls here */
+				unset(self::$aTiemrs[$iKey]);
+				continue;
+			}
+		}
+	}
 	
 	
 	/* Function to loop through the timers */
@@ -77,7 +92,7 @@ class Timers
 			return false;
 		}
 		
-		foreach(self::$aTimers as $iKey => &$aTimer)
+		foreach(self::$aTimers as $iKey => $aTimer)
 		{
 			if(time() >= $aTimer['CALLTIME'])
 			{

@@ -102,6 +102,7 @@ abstract class Plugins
 	/**
 	 *	This is called when the plugin tries to get a variable that doesn't exist.
 	 *
+	 *	@todo Get array info from the config if necessary.
 	 *	@ignore
 	 */
 	public final function __get($sKey)
