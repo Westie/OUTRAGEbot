@@ -3,6 +3,11 @@ The contents of this file are covered by my licence, where this
 can be found at http://www.typefish.co.uk/licences/.
 
 
+== DOCUMENTATION ==
+You can find the documentation for all the project at my dedicated docs section,
+found at http://docs.typefish.co.uk/OUTRAGEbot/
+
+
 == CONFIGURATION ==
 In the /Configuration/ folder, 'OUTRAGEbot.ini' is the default configuration file.
 Because all .ini files are parsed in that directory, if you place a ~ before the
