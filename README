@@ -1,0 +1,28 @@
+== LICENCE ==
+The contents of this file are covered by my licence, where this
+can be found at http://www.typefish.co.uk/licences/.
+
+
+== CONFIGURATION ==
+In the /Configuration/ folder, 'OUTRAGEbot.ini' is the default configuration file.
+Because all .ini files are parsed in that directory, if you place a ~ before the
+filename (ie, renaming it to '~OUTRAGEbot.ini', that configuration file will not
+be loaded. Just to tell you!
+
+
+== EXAMPLES ==
+Some examples can be found in the /_Examples/ directory.
+
+
+== STARTING BOT ==
+You can start the bot using PHP, seeing as it is a PHP bot.
+---
+Linux:   `nohup php ./Start.php &`
+Windows: `C:/path/to/php.exe "C:/path/to/bot/Start.php"`
+
+
+== SUPPORT ==
+Support can be found in #OUTRAGEbot in FFSNetwork (irc.ffsnetwork.com).
+
+
+- David Weston
