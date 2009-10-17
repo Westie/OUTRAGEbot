@@ -92,7 +92,7 @@ class Timers
 			return false;
 		}
 		
-		foreach(self::$aTimers as $iKey => $aTimer)
+		foreach(self::$aTimers as $iKey => &$aTimer)
 		{
 			if(time() >= $aTimer['CALLTIME'])
 			{

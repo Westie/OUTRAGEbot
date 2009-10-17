@@ -231,6 +231,7 @@ class Socket
 	/* Shutting down socket - used for restarting, and dying. */
 	public function socketShutdown()
 	{
+		echo "socketShutdown";
 		return @socket_shutdown($this->rSocket);
 	}
 }

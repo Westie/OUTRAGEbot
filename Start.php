@@ -1,4 +1,12 @@
 <?php
+/**
+ *	Starting file for OUTRAGEbot.
+ *	Use this file to start the bot.
+ *
+ *	@ignore
+ *	@author David Weston <westie@typefish.co.uk>
+ *	@licence http://www.typefish.co.uk/licences/
+ */
 
 
 /* Key initiation process. */
@@ -36,5 +44,6 @@ while(true)
 	usleep(CORE_SLEEP);
 }
 
+
+/* And what happens when we want to leave everything behind? */
 exit;
-?>

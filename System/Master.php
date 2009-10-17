@@ -880,7 +880,16 @@ class Master
 			/* Nick already in use. */
 			case 433:
 			{
-				$this->oCurrentBot->setNickname($this->oCurrentBot->aConfig['nickname'].rand(10, 20));
+				if(isset($this->oCurrentBot->aConfig['altnick']))
+				{
+					$sNewNick = $this->oCurrentBot->aConfig['altnick'];
+				}
+				else
+				{
+					$sNewNick = $this->oCurrentBot->aConfig['nickname'].rand(10, 99);
+				}
+				
+				$this->oCurrentBot->setNickname($sNewNick);
 				break;
 			}
 		}
@@ -1348,7 +1357,7 @@ class Master
 			return false;
 		}
 
-		$sDirname = BASE_DIRECTORY."/Plugins/{$sPlugin}/main.php";
+		$sDirname = BASE_DIRECTORY."/Plugins/{$sPlugin}/Default.php";
 
 		if(!file_exists($sDirname))
 		{

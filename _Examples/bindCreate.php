@@ -1,5 +1,14 @@
 <?php
- 
+/**
+ *	Example plugin for OUTRAGEbot.
+ *	This plugin explains how the binds in the bot are created
+ *	and used.
+ *
+ *	@ignore
+ *	@copyright None
+ */
+
+
 class Example extends Plugins
 {
     var
