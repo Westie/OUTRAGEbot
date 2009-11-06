@@ -694,36 +694,33 @@ class Master
 			
 		foreach($this->parseModes($aChunks[3]) as $aMode)
 		{
+			$aUser =& $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'];
+
 			switch($aMode['MODE'])
 			{
 				case 'v':
 				{
-					if($aMode['ACTION'] == '+') $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] |= 1;
-					else $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] ^= 1;
+					$aUser ^= 1;
 					break;
 				}
 				case 'h':
 				{
-					if($aMode['ACTION'] == '+') $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] |= 3;
-					else $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] ^= 3;
+					$aUser ^= 3;
 					break;
 				}
 				case 'o':
 				{
-					if($aMode['ACTION'] == '+') $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] |= 7;
-					else $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] ^= 7;
+					$aUser ^= 7;
 					break;
 				}
 				case 'a':
 				{
-					if($aMode['ACTION'] == '+') $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] |= 15;
-					else $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] ^= 15;
+					$aUser ^= 15;
 					break;
 				}
 				case 'q':
 				{
-					if($aMode['ACTION'] == '+') $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] |= 31;
-					else $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'] ^= 31;
+					$aUser ^= 31;
 					break;
 				}
 			}
@@ -1293,8 +1290,10 @@ class Master
 	/**
 	 *	Creates a timer, note that arguments to be passed to $cCallback to after $iRepeat.
 	 *
+	 *	<code>$this->timerCreate( array($this, 'Message'), '0.5000', '10' );</code>
+	 *
 	 *	@param callback $cCallback Timer callback 
-	 *	@param integer $iInterval <b>Seconds</b> between timer calls.
+	 *	@param float $fInterval <b>Seconds</b> (decimals can be used) between timer calls.
 	 *	@param integer $iRepeat How many times the timer should call before it is destroyed. -1 implies infinite.
 	 *	@param mixed $... Arguments to pass to timer.
 	 *	@return string Timer reference ID.

@@ -19,6 +19,7 @@ class debug02 extends Plugins
 	/* These functions are called when the plugin is loaded or unloaded */
 	public function onConstruct()
 	{
+		$this->sTimerKey = $this->timerCreate(array($this, "TimerTest"), 0.0050, -1, '#OUTRAGEbot');
 	}
 	
 	public function onDestruct()
@@ -125,10 +126,9 @@ class debug02 extends Plugins
 	
 	
 	/* Used with the timer test, look at onConstruct */
-	public function TimerTest($sChannel, $sMessage)
+	public function TimerTest($sChannel)
 	{
-		/* Oh look! Those parameters have been passed from the timer-call function. COOL! */
-		$this->sendMessage($sChannel, $sMessage);
+		$this->sendMessage($sChannel, 'time: '.microtime(true));
 		$this->_("Timer called.");
 	}
 	

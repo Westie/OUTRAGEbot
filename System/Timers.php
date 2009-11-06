@@ -18,7 +18,7 @@ class Timers
 	
 	
 	/* Function to create a function-timer */
-	static function Create($cCallback, $iInterval, $iRepeat, $aArguments = array())
+	static function Create($cCallback, $fInterval, $iRepeat, $aArguments = array())
 	{
 		if(!is_callable($cCallback))
 		{
@@ -30,9 +30,9 @@ class Timers
 		$aTimer['KEY'] = substr(sha1(time()."-".uniqid()), 4, 10);
 		
 		$aTimer['CALLBACK'] = $cCallback;
-		$aTimer['INTERVAL'] = $iInterval;
+		$aTimer['INTERVAL'] = (float) $fInterval;
 		$aTimer['REPEAT'] = $iRepeat;
-		$aTimer['CALLTIME'] = (time() + $iInterval);
+		$aTimer['CALLTIME'] = ((float) microtime(true) + (float) $fInterval);
 		$aTimer['ARGUMENTS'] = (array) $aArguments;
 		
 		self::$aTimers[] = $aTimer;
@@ -77,7 +77,7 @@ class Timers
 			if(!is_callable($aTimer['CALLBACK']))
 			{
 				/* 'Preety' obvious no calls here */
-				unset(self::$aTiemrs[$iKey]);
+				unset(self::$aTimers[$iKey]);
 				continue;
 			}
 		}
@@ -94,7 +94,7 @@ class Timers
 		
 		foreach(self::$aTimers as $iKey => &$aTimer)
 		{
-			if(time() >= $aTimer['CALLTIME'])
+			if(microtime(true) >= $aTimer['CALLTIME'])
 			{
 				call_user_func_array($aTimer['CALLBACK'], (array) $aTimer['ARGUMENTS']);
 				
@@ -106,7 +106,7 @@ class Timers
 					
 					if($iTimes > 0)
 					{
-						$aTimer['CALLTIME'] = (time() + $aTimer['INTERVAL']);
+						$aTimer['CALLTIME'] = ((float) microtime(true) + $aTimer['INTERVAL']);
 						$aTimer['REPEAT'] = $iTimes;
 					}
 					else
@@ -116,7 +116,7 @@ class Timers
 				}
 				else
 				{
-					$aTimer['CALLTIME'] = (time() + $aTimer['INTERVAL']);
+					$aTimer['CALLTIME'] = ((float) microtime(true) + $aTimer['INTERVAL']);
 				}
 			}
 		}
