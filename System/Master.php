@@ -1784,8 +1784,8 @@ class Master
 	 */
 	public function ibcGet()
 	{
-		$aResult = Control::$aBots[$this->sBotGroup];
-		Control::$aBots[$this->sBotGroup] = array();
+		$aResult = Control::$aStack[$this->sBotGroup];
+		Control::$aStack[$this->sBotGroup] = array();
 		return $aResult;
 	}
 }
