@@ -8,7 +8,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0-RC2
+ *	@version 1.0-RC3
  */
 
 
@@ -30,6 +30,12 @@ class Control
 	 *	@ignore
 	 */
 	public static $oGlobals;
+	
+	
+	/**
+	 *	@ignore
+	 */
+	public static $aStack;
 	
 	
 	/**

@@ -54,7 +54,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0-RC2
+ *	@version 1.0-RC3
  */
  
 
@@ -91,7 +91,7 @@ class ConfigParser
 	
 	
 	/**
-	 *	Parses a configuration file in any directory in the server (that it is possible to reach
+	 *	Parses a configuration file in any directory in the server (that it is possible to reach)
 	 *
 	 *	@param string $sConfig Exact configuration file location
 	 */

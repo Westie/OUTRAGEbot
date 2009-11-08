@@ -16,7 +16,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0-RC2
+ *	@version 1.0-RC3
  *	@todo Fix that memory leak. It does my head in. :(
  */
  
@@ -24,6 +24,12 @@
 /* The real code. Woohoo */
 class Master
 {
+	/**
+	 *	@ignore
+	 */
+	public $sBotGroup;
+	
+	
 	/**
 	 *	@ignore
 	 */
@@ -88,6 +94,7 @@ class Master
 	public function __construct($sKey, &$oConfig)
 	{
 		$this->oConfig = $oConfig;
+		$this->sBotGroup = $sKey;
 		$this->oPlugins = new stdClass();
 		$this->oModes = new stdClass();
 
@@ -122,7 +129,7 @@ class Master
 		
 		if(!isset($this->oConfig->Network['version']))
 		{
-			$this->oConfig->Network['version'] = "OUTRAGEbot v1.0-RC2 (rel. BETA); David Weston; http://outrage.typefish.co.uk";
+			$this->oConfig->Network['version'] = "OUTRAGEbot v1.0-RC3 (rel. BETA); David Weston; http://outrage.typefish.co.uk";
 		}
 		
 		foreach(explode(',', $this->oConfig->Network['owners']) as $sAddr)
@@ -1746,6 +1753,38 @@ class Master
 
 		return $aReturn;
 	}
+	
+	
+	/**
+	 *	Send an inter-bot-message to a bot-group. It will remain in the
+	 *	queue until it is retrieved from the stack.
+	 *
+	 *	<code>$this->ibcSend('OUTRAGEbot', array('This', 'is', 'an', 'array'));</code>
+	 *
+	 *	@param string $sBotGroup Bot group to send the message to.
+	 *	@param mixed $mContents Thing to put into the stack.
+	 */
+	public function ibcSend($sBotGroup, $mContents)
+	{
+		if(isset(self::$aBots[$sBotConfig]))
+		{
+			$aControl::$aStack[$sBotGroup][] = $mContents;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	
+	/**
+	 *	Recieve all inter-bot-messages that are in the stack for this
+	 *	particular bot.
+	 *
+	 *	@return array Array of all messages.
+	 */
+	public function ibcGet()
+	{
+		
+	}
 }
 
-?>
