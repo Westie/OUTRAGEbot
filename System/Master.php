@@ -1766,7 +1766,7 @@ class Master
 	 */
 	public function ibcSend($sBotGroup, $mContents)
 	{
-		if(isset(self::$aBots[$sBotConfig]))
+		if(isset(Control::$aBots[$sBotConfig]))
 		{
 			Control::$aStack[$sBotGroup][] = $mContents;
 			return true;
