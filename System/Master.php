@@ -1768,7 +1768,7 @@ class Master
 	{
 		if(isset(self::$aBots[$sBotConfig]))
 		{
-			$aControl::$aStack[$sBotGroup][] = $mContents;
+			Control::$aStack[$sBotGroup][] = $mContents;
 			return true;
 		}
 		
