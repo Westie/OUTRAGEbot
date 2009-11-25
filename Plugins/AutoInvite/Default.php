@@ -27,7 +27,7 @@ class AutoInvite extends Plugins
 	
 	function onInvite($sNickname, $sChannel)
 	{
-		if($sNickname == $this->oBot->oCurrentBot->aConfig['nickname'])
+		if($sNickname == $this->getBotConfig('nickname'))
 		{
 			$this->sendRaw("JOIN {$sChannel}", SEND_DIST);
 		}
