@@ -398,6 +398,27 @@ class Master
 	
 	
 	/**
+	 *	Returns a value from the current bot's configuration.
+	 *
+	 *	<code>
+	 *	echo $this->getBotConfig('nickname');
+	 *	// Returns: OUTRAGEbot</code>
+	 *
+	 *	@param string $sKey Configuration key to lookup.
+	 *	@return mixed Value that is returned.
+	 */
+	public function getBotConfig($sKey)
+	{
+		if(isset($this->oCurrentBot->aConfig[$sKey]))
+		{
+			return $this->oCurrentBot->aConfig[$sKey];
+		}
+		
+		return null;
+	}
+	
+	
+	/**
 	 *	Sends RAW IRC Messages
 	 *
 	 *	@param string $sMessage Raw IRC message you want to send.
@@ -647,7 +668,6 @@ class Master
 		{
 			foreach((array) $this->oConfig->Perform as $sRaw)
 			{
-				$this->sendRaw($sRaw);
 			}
 		}
 		
@@ -677,8 +697,6 @@ class Master
 		$aChunks[3][1] = trim(isset($aChunks[3][1]) ? substr($aChunks[3][1], 1) : "");
 		$this->invokeEvent("onKick", $this->getNickname($aChunks[0]), $aChunks[3][0], $aChunks[2], $aChunks[3][1]);
 		$this->removeUserFromChannel($aChunks[2], $aChunks[3][0]);
-		
-		if($aChunks[2] == $this->oCurrentBot->
 	}
 	
 	
