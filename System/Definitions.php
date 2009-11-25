@@ -13,6 +13,11 @@
 error_reporting(E_ALL | E_STRICT);
 
 
+/* Some bot-brag-relating things. */
+define("BOT_VERSION", "1.0-RC3");
+define("BOT_DELDATE", "21/11/2009");
+
+
 /* How long the bot sleeps between socket calls. */
 define("CORE_SLEEP", 20000);
 

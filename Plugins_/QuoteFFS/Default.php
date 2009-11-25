@@ -1,7 +1,13 @@
 <?php
+/**
+ *	QuoteFFS plugin for OUTRAGEbot.
+ *
+ *	@ignore
+ *	@copyright None
+ *	@package OUTRAGEbot
+ */
 
-
-class QuoteFFS_440a153e13 extends Plugins
+class QuoteFFS extends Plugins
 {
 	public function onCommand($sNickname, $sChannel, $sCommand, $sArguments)
 	{
@@ -13,14 +19,14 @@ class QuoteFFS_440a153e13 extends Plugins
 				return true;
 			}
 			
-			$sWebsite = file_get_contents('http://www.quoteffs.com/?'$sArguments);
+			$sWebsite = file_get_contents('http://www.quoteffs.com/?'.$sArguments);
 			$sRegex = '/<td class="body">(.*?)<\/td>/s';
 			
 			preg_match($sRegex, $sWebsite, $aMatches);
 			
 			$sQuote = html_entity_decode($aMatches[1]);
-			$sQuote = strip_tags($sQuote);
-			$aQuote = explode('\n', $sQuote);
+			$sQuote = str_replace('<br />', '', $sQuote);
+			$aQuote = explode("\n", $sQuote);
 			
 			if(count($aQuote) >= 5)
 			{
@@ -30,7 +36,7 @@ class QuoteFFS_440a153e13 extends Plugins
 			
 			foreach($aQuote as $sQuote)
 			{
-				$this->Message($sChannel, '> '.trim($sQuote));
+				$this->Message($sChannel, trim($sQuote));
 			}
 			
 			return true;

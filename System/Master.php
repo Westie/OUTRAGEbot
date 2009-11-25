@@ -129,7 +129,7 @@ class Master
 		
 		if(!isset($this->oConfig->Network['version']))
 		{
-			$this->oConfig->Network['version'] = "OUTRAGEbot v1.0-RC3 (rel. BETA); David Weston; http://outrage.typefish.co.uk";
+			$this->oConfig->Network['version'] = "OUTRAGEbot ".BOT_VERSION." (rel. ".BOT_RELDATE."); David Weston; http://outrage.typefish.co.uk";
 		}
 		
 		foreach(explode(',', $this->oConfig->Network['owners']) as $sAddr)
@@ -643,6 +643,14 @@ class Master
 	{
 		$this->invokeEvent("onConnect");
 		
+		if(isset($this->oConfig->Perform))
+		{
+			foreach((array) $this->oConfig->Perform as $sRaw)
+			{
+				$this->sendRaw($sRaw);
+			}
+		}
+		
 		foreach((array) explode(',', $this->oConfig->Network['channels']) as $sChannel)
 		{
 			$this->sendRaw("JOIN {$sChannel}");
@@ -669,6 +677,8 @@ class Master
 		$aChunks[3][1] = trim(isset($aChunks[3][1]) ? substr($aChunks[3][1], 1) : "");
 		$this->invokeEvent("onKick", $this->getNickname($aChunks[0]), $aChunks[3][0], $aChunks[2], $aChunks[3][1]);
 		$this->removeUserFromChannel($aChunks[2], $aChunks[3][0]);
+		
+		if($aChunks[2] == $this->oCurrentBot->
 	}
 	
 	
