@@ -26,7 +26,7 @@
  *	channels = #westie, #channel2
  *	plugins = Evaluation, AutoInvite
  *	rotation = SEND_DIST
- *	quitmsg = A quit messag- wait, why are you reading this?
+ *	quitmsg = "A quit messag- wait, why are you reading this?"
  *	delimiter = "!"
  *
  *	<font color="4E009B"><b>[OUTRAGEbot]</b></font>
@@ -104,7 +104,14 @@ class ConfigParser
 			return;
 		}
 		
-		$aConfig = parse_ini_file($sConfig, true);
+		$aConfig = @parse_ini_file($sConfig, true);
+		
+		if(@count($aConfig) <= 1)
+		{
+			echo "Error: Corrupt configuration format - {$sConfig}".PHP_EOL;
+			exit;
+		}
+		
 		$oConfig = new stdClass();
 		
 		foreach($aConfig as $sKey => $aBot)

@@ -668,6 +668,7 @@ class Master
 		{
 			foreach((array) $this->oConfig->Perform as $sRaw)
 			{
+				$this->sendRaw($sRaw);
 			}
 		}
 		
