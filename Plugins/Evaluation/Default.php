@@ -21,9 +21,11 @@ class Evaluation extends Plugins
 		if($this->isChild())
 		{
 			return false;
-		}
+		}		
 		
-		if(!strcmp($sCommand, $this->oBot->oConfig->Network['delimiter']))
+		$aConfig = $this->getMasterConfig('Network');
+		
+		if(!strcmp($sCommand, $aConfig['delimiter']))
 		{
 			if(!$this->isAdmin())
 			{
@@ -32,7 +34,7 @@ class Evaluation extends Plugins
 			
 			if(!$sArguments)
 			{
-				$this->sendNotice($sNickname, "USAGE: {$this->oBot->oConfig->Network['delimiter']}{$this->oBot->oConfig->Network['delimiter']} [PHP eval code]");
+				$this->sendNotice($sNickname, "USAGE: {$aConfig['delimiter']}{$aConfig['delimiter']} [PHP eval code]");
 				return true;
 			}
 			
@@ -40,7 +42,7 @@ class Evaluation extends Plugins
 		
 			foreach((array) $aData as $sData)
 			{
-				$this->sendMessage($sChannel, trim($sData));
+				$this->sendMessage($sChannel, $sData);
 			}
 			return true;
 		}
@@ -52,10 +54,12 @@ class Evaluation extends Plugins
 	function onPrivMessage($sNickname, $sMessage)
 	{
 		$aData = explode(' ', $sMessage, 2);
-		list($sCommand, $sArguments) = $aData;
+		@list($sCommand, $sArguments) = $aData;
 		unset($aData);
 		
-		if(!strcmp($sCommand, $this->oBot->oConfig->Network['delimiter'].$this->oBot->oConfig->Network['delimiter']))
+		$aConfig = $this->getMasterConfig('Network');
+		
+		if(!strcmp($sCommand, $aConfig['delimiter'].$aConfig['delimiter']))
 		{
 			if(!$this->isAdmin())
 			{
@@ -64,7 +68,7 @@ class Evaluation extends Plugins
 			
 			if(!$sArguments)
 			{
-				$this->sendNotice($sNickname, "USAGE: {$this->oBot->oConfig->Network['delimiter']}{$this->oBot->oConfig->Network['delimiter']} [PHP eval code]");
+				$this->sendNotice($sNickname, "USAGE: {$aConfig['delimiter']}{$aConfig['delimiter']} [PHP eval code]");
 				return true;
 			}
 			
@@ -72,7 +76,7 @@ class Evaluation extends Plugins
 		
 			foreach((array) $aData as $sData)
 			{
-				$this->sendMessage($sNickname, trim($sData));
+				$this->sendMessage($sNickname, $sData);
 			}
 			return true;
 		}

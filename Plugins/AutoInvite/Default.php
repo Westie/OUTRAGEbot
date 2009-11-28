@@ -27,7 +27,7 @@ class AutoInvite extends Plugins
 	
 	function onInvite($sNickname, $sChannel)
 	{
-		if($sNickname == $this->getBotConfig('nickname'))
+		if($sNickname == $this->getChildConfig('nickname'))
 		{
 			$this->sendRaw("JOIN {$sChannel}", SEND_DIST);
 		}

@@ -401,17 +401,38 @@ class Master
 	 *	Returns a value from the current bot's configuration.
 	 *
 	 *	<code>
-	 *	echo $this->getBotConfig('nickname');
+	 *	echo $this->getChildConfig('nickname');
 	 *	// Returns: OUTRAGEbot</code>
 	 *
 	 *	@param string $sKey Configuration key to lookup.
 	 *	@return mixed Value that is returned.
 	 */
-	public function getBotConfig($sKey)
+	public function getChildConfig($sKey)
 	{
 		if(isset($this->oCurrentBot->aConfig[$sKey]))
 		{
 			return $this->oCurrentBot->aConfig[$sKey];
+		}
+		
+		return null;
+	}
+	
+	
+	/**
+	 *	Returns a value from the master configuration.
+	 *
+	 *	<code>
+	 *	echo $this->getMasterConfig('nickname');
+	 *	// Returns: OUTRAGEbot</code>
+	 *
+	 *	@param string $sKey Configuration key to lookup.
+	 *	@return mixed Value that is returned.
+	 */
+	public function getMasterConfig($sKey)
+	{
+		if(isset($this->oConfig->$sKey))
+		{
+			return $this->oConfig->$sKey;
 		}
 		
 		return null;
@@ -1018,6 +1039,18 @@ class Master
 	public function isUserInChannel($sChan, $sUser)
 	{
 		return isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) != false;
+	}
+	
+	
+	/**
+	 *	Checks if the current child is in the channel.
+	 *
+	 *	@param string $sChan Channel to check.
+	 *	@return bool 'true' on success.
+	 */
+	public function isBotInChannel($sChan)
+	{
+		return isset($this->oModes->aUsers[$this->getChildConfig('nickname')][strtolower($sChan)]) != false;
 	}
 	
 	
