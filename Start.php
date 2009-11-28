@@ -35,6 +35,8 @@ Control::$oConfig->parseDirectory();
 /* Bot loop */
 while(true)
 {	
+	Timers::Scan();
+	
 	foreach(Control::$aBots as $oMaster)
 	{
 		$oMaster->Loop();
