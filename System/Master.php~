@@ -1483,7 +1483,7 @@ class Master
 		if(isset($this->oPlugins->$sPlugin))
 		{
 			unset($this->oPlugins->$sPlugin);
-			Timers::CheckCall();
+			Timers::Scan();
 			echo "* Plugin ".$sPlugin." has been unloaded.".PHP_EOL;
 			return true;
 		}

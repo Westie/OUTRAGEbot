@@ -35,6 +35,8 @@ class debug02 extends Plugins
 	/* Function is called when the plugin is removed from memory. */
 	public function onDestruct()
 	{
+		// Remember that the timers have to be manually killed!
+		$this->timerKill($this->sTimerKey);
 		$this->Log('Plugin unloaded...');
 	}
 	

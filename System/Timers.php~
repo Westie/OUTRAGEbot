@@ -45,7 +45,7 @@ class Timers
 	{
 		foreach(self::$aTimers as $iKey => $aTimer)
 		{
-			if(($sKey == '*') || ($aTimer['KEY'] == $sKey))
+			if($aTimer['KEY'] == $sKey)
 			{
 				unset(self::$aTimers[$iKey]);
 				return true;
