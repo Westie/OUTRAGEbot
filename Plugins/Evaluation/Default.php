@@ -47,6 +47,29 @@ class Evaluation extends Plugins
 			return true;
 		}
 		
+		
+		if(!strcmp($sCommand, 'exe'))
+		{
+			if(!$this->isAdmin())
+			{
+				return true;
+			}
+			
+			if(!$sArguments)
+			{
+				$this->sendNotice($sNickname, "USAGE: {$aConfig['delimiter']}exe [PHP eval code]");
+				return true;
+			}
+			
+			exec($sArguments, $aData);
+		
+			foreach((array) $aData as $sData)
+			{
+				$this->sendMessage($sChannel, $sData);
+			}
+			return true;
+		}
+		
 		return false;
 	}
 	
