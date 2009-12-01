@@ -143,7 +143,7 @@ abstract class Plugins
 	 */
 	public final function getConfig()
 	{
-		return $this->oBot->oConfig->{$this->aIdentifier[0]};
+		return isset($this->oBot->oConfig->{$this->aIdentifier[0]}) ? $this->oBot->oConfig->{$this->aIdentifier[0]} : null;
 	}
 }
 

@@ -8,15 +8,28 @@
  */
 
 
+
 class DynamicCommand extends Plugins
 {
 	private
+		$sFilename = "",
 		$aCommands = array();
 		
 	
 	/* Called when the plugin loads */
 	public function onConstruct()
 	{
+		$aTemp = $this->getConfig();
+		
+		if($aTemp !== null)
+		{
+			$this->sFilename = $aTemp['file'];
+		}
+		else
+		{
+			$this->sFilename = $this->oConfig->Network['name'];
+		}
+		
 		$this->commandsLoad();
 	}
 	
@@ -143,16 +156,17 @@ class DynamicCommand extends Plugins
 			
 			if(!strcmp($sCommand, "cmdhelp"))
 			{
-				$this->sendNotice($sNickname, $this->oConfig->Delimiter."cmdadd [Command] [Code]");
-				$this->sendNotice($sNickname, $this->oConfig->Delimiter."cmddel [Command]");
-				$this->sendNotice($sNickname, $this->oConfig->Delimiter."cmdset [Command] [Key] [Value]");
-				$this->sendNotice($sNickname, $this->oConfig->Delimiter."cmdget [Command]");
+				$this->sendNotice($sNickname, "cmdadd [Command] [Code]");
+				$this->sendNotice($sNickname, "cmddel [Command]");
+				$this->sendNotice($sNickname, "cmdset [Command] [Key] [Value]");
+				$this->sendNotice($sNickname, "cmdget [Command]");
 				return true;
 			}
 		}
 			
 		/* Deal with the rest */
-		return $this->commandsScan($sNickname, $sChannel, $this->oConfig->Network['delimiter'].$sCommand, $sArguments);
+		$this->commandsScan($sNickname, $sChannel, $this->oConfig->Network['delimiter'].$sCommand, $sArguments);
+		return false;
 	}
 	
 	
@@ -170,7 +184,7 @@ class DynamicCommand extends Plugins
 	/* Load the commands into memory */
 	public function commandsLoad()
 	{
-		$sFile = dirname(__FILE__).'/commands/'.$this->oConfig->Network['name'].'.txt';
+		$sFile = dirname(__FILE__).'/commands/'.$this->sFilename.'.txt';
 		if(file_exists($sFile))
 		{
 			$sText = file_get_contents($sFile);
@@ -184,7 +198,7 @@ class DynamicCommand extends Plugins
 	public function commandsSave()
 	{
 		$sText = serialize($this->aCommands);
-		$sFile = dirname(__FILE__).'/commands/'.$this->oConfig->Network['name'].'.txt';
+		$sFile = dirname(__FILE__).'/commands/'.$this->sFilename.'.txt';
 		file_put_contents($sFile, $sText);
 		return true;
 	}
@@ -252,7 +266,15 @@ class DynamicCommand extends Plugins
 				}
 			}
 
+			ob_start();
 			eval($aCommand['Command']);
+			$sOutput = ob_get_contents(); 
+			ob_end_clean();
+			
+			foreach((array) explode("\n", $sOutput) as $sMessager)
+			{
+				$this->Message($sChannel, $sMessager);
+			}		
 			return true;
 		}
 		return false;

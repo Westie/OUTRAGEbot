@@ -1,1 +1,1 @@
-a:2:{s:5:"!test";a:3:{s:9:"ChanLevel";i:0;s:7:"ChanUse";s:1:"*";s:7:"Command";s:57:"$this->sendMessage($sChannel, "{$sNickname} says hello");";}s:5:"@test";a:3:{s:9:"ChanLevel";i:0;s:7:"ChanUse";s:1:"*";s:7:"Command";s:57:"$this->sendMessage($sChannel, "{$sNickname} says hello");";}}
+a:1:{s:5:"!test";a:3:{s:9:"ChanLevel";i:0;s:7:"ChanUse";s:1:"*";s:7:"Command";s:45:"echo 'This is a test! Test to all you want!';";}}
