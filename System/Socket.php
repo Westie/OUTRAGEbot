@@ -136,7 +136,7 @@ class Socket
 		if($this->iNoReply >= 5)
 		{
 			$this->destructBot();
-			Timers::Create($this, "constructBot", $this->aConfig['timewait'], 0);
+			Timers::Create(array($this, "constructBot"), $this->aConfig['timewait'], 0);
 			
 			$this->isWaiting = true;
 			$this->iNoReply = 0;
@@ -231,7 +231,6 @@ class Socket
 	/* Shutting down socket - used for restarting, and dying. */
 	public function socketShutdown()
 	{
-		echo "socketShutdown";
 		return @socket_shutdown($this->rSocket);
 	}
 }
