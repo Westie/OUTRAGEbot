@@ -10,7 +10,7 @@
  *
  *	- callback<code>
  *	$cCallback = array($this, "Function"); // Different class instance
- *	$cCallback = "callLocalFunction";      // Not available right now.
+ *	$cCallback = "callLocalFunction";      // Only available in plugins
  *	</code>It is used for binds and timers.
  *
  *	@package OUTRAGEbot
@@ -1527,7 +1527,7 @@ class Master
 	 *
 	 *	<code>$this->iBindID = $this->bindCreate("INVITE", array($this, "onInvite"), array(2, 3));</code>
 	 *
-	 *	@example ../_Examples/bindCreate.php A demo plugin that demonstrates how to use it.
+	 *	@example OUTRAGEbot/_Examples/bindCreate.php A demo plugin that demonstrates how to use it.
 	 *	@param string $sInput IRC numeric name
 	 *	@param callback $cCallback Callback to bind handler.
 	 *	@param array $aFormat Array of arguments to pass to the bind handler.

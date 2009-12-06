@@ -2,6 +2,13 @@
 /**
  *	Plugins class for OUTRAGEbot
  *
+ *	This class contains the key plugin functions, plus modified functions
+ *	that are included in the Master class that removes the need for arrays
+ *	when using callbacks.
+ *
+ *	To look at the callbacks that plugins natively recieved, look at the
+ *	'debug02' plugin.
+ *
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
@@ -144,6 +151,37 @@ abstract class Plugins
 	public final function getConfig()
 	{
 		return isset($this->oBot->oConfig->{$this->aIdentifier[0]}) ? $this->oBot->oConfig->{$this->aIdentifier[0]} : null;
+	}
+	
+	
+	/**
+	 *	Creates a timer, framework.
+	 *
+	 *	@see Master::timerCreate()
+	 *	@ignore
+	 */
+	public function timerCreate($cCallback, $iInterval, $iRepeat)
+	{
+		$cCallback = is_array($cCallback) ? $cCallback : array($this, $cCallback);
+		$aArguments = func_get_args();
+		array_shift($aArguments);
+		array_shift($aArguments);
+		array_shift($aArguments);
+		
+		return Timers::Create($sCallback, $iInterval, $iRepeat, (array) $aArguments); 
+	}
+	
+	
+	/**
+	 *	Creates a bind, framework.
+	 *
+	 *	@see Master::bindCreate()
+	 *	@ignore
+	 */
+	public function bindCreate($sInput, $cCallback, $aFormat)
+	{
+		$cCallback = is_array($cCallback) ? $cCallback : array($this, $cCallback);
+		return $this->oBot->bindCreate($sInput, $cCallback, $aFormat);
 	}
 }
 

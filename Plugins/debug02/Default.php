@@ -2,7 +2,7 @@
 /**
  *	Debug class for OUTRAGEbot.
  *
- *	@ignore
+ *	
  *	@copyright None
  *	@package OUTRAGEbot
  */
@@ -21,7 +21,7 @@ class debug02 extends Plugins
 	{
 		$this->sTimerKey = $this->timerCreate
 		(
-			array($this, "TimerTest"),		// Function name
+			"TimerTest",				// Function name
 			0.5,					// Time period (half a second)
 			-1,					// To be called every half second
 			

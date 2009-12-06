@@ -16,7 +16,7 @@ class AutoInvite extends Plugins
 	function onConstruct()
 	{
 		/* Called when the plugin is constructed. */
-		$this->iBindID = $this->bindCreate('INVITE', array($this, 'onInvite'), array(2, 3));
+		$this->iBindID = $this->bindCreate('INVITE', 'onInvite', array(2, 3));
 	}
 	
 	function onDestruct()
