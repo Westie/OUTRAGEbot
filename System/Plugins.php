@@ -168,7 +168,7 @@ abstract class Plugins
 		array_shift($aArguments);
 		array_shift($aArguments);
 		
-		return Timers::Create($sCallback, $iInterval, $iRepeat, (array) $aArguments); 
+		return Timers::Create($cCallback, $iInterval, $iRepeat, (array) $aArguments); 
 	}
 	
 	

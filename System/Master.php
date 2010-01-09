@@ -542,9 +542,9 @@ class Master
 	 *
 	 *	@ignore
 	 */
-	public function getSend(Socket &$oBot, $sMessage)
+	public function getSend(Socket $oBot, $sMessage)
 	{
-		if(strlen($sMessage) < 3) return true;
+		if(strlen($sMessage) < 3) return;
 		
 		/* Deal with the useless crap. */
 		$this->oCurrentBot = &$oBot;
@@ -564,7 +564,7 @@ class Master
 			{
 				$oBot->aMatchQueue[] = $sMessage;
 			}
-			return true;
+			return;
 		}
 
 		/* More taxing crap. Should I improve this one day? I have no idea! */
@@ -577,111 +577,33 @@ class Master
 		if($aChunks[0] == 'PING')
 		{
 			$oBot->Output('PONG '.$aChunks[1]);
-			return true;
+			return;
+		}
+		elseif($aChunks[1] == 'PONG')
+		{
+			$oBot->iNoReply = 0;
+			$oBot->iHasBeenReply = true;
+			return;
 		}
 		
-		/* The infamous switchboard. */
-		switch(strtoupper($aChunks[1]))
+		/* The infamous switchboard, removed! */
+		$sCallback = '_on'.$aChunks[1];
+		
+		if(method_exists($this, $sCallback))
 		{
-			case "PONG":
-			{
-				$oBot->iNoReply = 0;
-				$oBot->iHasBeenReply = true;
-				break;
-			}
-			case "001":
-			{
-				$this->_onConnect($oBot);
-				break;
-			}
-			case "JOIN":
-			{
-				$this->_onJoin($aChunks);
-				break;
-			}
-			case "KICK":
-			{
-				$this->_onKick($aChunks);
-				break;
-			}
-			case "PART":
-			{
-				$this->_onPart($aChunks);
-				break;
-			}
-			case "QUIT":
-			{
-				$this->_onQuit($aChunks);
-				break;
-			}
-			case "MODE":
-			{
-				$this->_onMode($aChunks);
-				break;
-			}
-			case "NICK":
-			{
-				$this->_onNick($aChunks);
-				break;
-			}
-			case "NOTICE":
-			{
-				$this->_onNotice($aChunks);
-				break;
-			}
-			case "PRIVMSG":
-			{
-				if($aChunks[3][0] == Format::CTCP)
-				{
-					$this->_onCTCP($aChunks);
-					break;
-				}
-				switch($aChunks[2][0])
-				{
-					case '&':
-					case '#':
-					{
-						if($aChunks[3][0] == $this->oConfig->Network['delimiter'])
-						{
-							$this->_onCommand($aChunks);
-							break;
-						}
-						
-						$this->_onMessage($aChunks);
-						break;
-					}
-					default:
-					{
-						$this->_onPrivMessage($aChunks);
-						break;
-					}
-				}
-				break;
-			}
-			case "TOPIC":
-			{
-				$this->_onTopic($aChunks);
-				break;
-			}
-			case "ERROR":
-			{
-				$this->_onError($aChunks);
-				break;
-			}
-			default:
-			{
-				$this->_onRaw($aChunks);
-				break;
-			}
+			$this->$sCallback($aChunks);
 		}
-		return true;
+		else
+		{
+			$this->_onRaw($aChunks);
+		}
 	}
 	
 	
 	/**
 	 *	@ignore
 	 */
-	private function _onConnect($oBot)
+	private function _onConnect()
 	{
 		$this->invokeEvent("onConnect");
 		
@@ -849,28 +771,37 @@ class Master
 	/**
 	 *	@ignore
 	 */
-	private function _onCommand($aChunks)
+	private function _onPrivmsg($aChunks)
 	{
-		$aCommand = explode(' ', trim($aChunks[3]), 2);
-		$this->invokeEvent("onCommand", $this->getNickname($aChunks[0]), $aChunks[2], substr($aCommand[0], 1), (isset($aCommand[1]) ? $aCommand[1] : ""));
-	}
-	
-	
-	/**
-	 *	@ignore
-	 */
-	private function _onMessage($aChunks)
-	{
-		$this->invokeEvent("onMessage", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
-	}
-	
-	
-	/**
-	 *	@ignore
-	 */
-	private function _onPrivMessage($aChunks)
-	{
-		$this->invokeEvent("onPrivMessage", $this->getNickname($aChunks[0]), $aChunks[3]);
+		if($aChunks[3][0] == Format::CTCP)
+		{
+			$this->_onCTCP($aChunks);
+			return;
+		}
+		
+		switch($aChunks[2][0])
+		{
+			case '&':
+			case '#':
+			{
+				if($aChunks[3][0] == $this->oConfig->Network['delimiter'])
+				{
+					$aCommand = explode(' ', trim($aChunks[3]), 2);
+					$this->invokeEvent("onCommand", $this->getNickname($aChunks[0]), $aChunks[2],
+						substr($aCommand[0], 1), (isset($aCommand[1]) ? $aCommand[1] : ""));
+						
+					return;
+				}
+				
+				$this->invokeEvent("onMessage", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
+				return;
+			}
+			default:
+			{
+				$this->invokeEvent("onPrivMessage", $this->getNickname($aChunks[0]), $aChunks[3]);
+				return;
+			}
+		}
 	}
 	
 	
@@ -898,6 +829,13 @@ class Master
 	{
 		switch($aChunks[1])
 		{
+			/* When the bot connects */
+			case 001:
+			{
+				$this->_onConnect();
+				return;
+			}
+			
 			/* NAMES reply. */
 			case 353:
 			{
@@ -928,7 +866,7 @@ class Master
 					$this->oModes->aUsers[$sUser][$sChan] = true;
 				}
 				
-				break;
+				return;
 			}
 			
 			/* Nick already in use. */
@@ -944,7 +882,7 @@ class Master
 				}
 				
 				$this->oCurrentBot->setNickname($sNewNick);
-				break;
+				return;
 			}
 		}
 	}

@@ -2,11 +2,9 @@
 /**
  *	Debug class for OUTRAGEbot.
  *
- *	
  *	@copyright None
  *	@package OUTRAGEbot
  */
-
 
 
 class debug02 extends Plugins
@@ -29,6 +27,8 @@ class debug02 extends Plugins
 			
 			'#OUTRAGEbot'				// Argument 0 to send to function
 		);
+		
+		$this->timerKill($this->sTimerKey);
 		
 		$this->Log('Plugin loaded...');
 	}
