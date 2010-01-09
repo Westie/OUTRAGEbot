@@ -14,3 +14,12 @@ class AutoUpdate extends Plugins
 		$pTitle   = "AutoUpdate",
 		$pAuthor  = "Westie",
 		$pVersion = "1.0";
+		
+	private
+		$sWebAddr = "http://outrage.typefish.co.uk/updates/";
+		
+	
+	public function onConstruct()
+	{
+	}
+}

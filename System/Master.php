@@ -1297,7 +1297,10 @@ class Master
 	/**
 	 *	Creates a timer, note that arguments to be passed to $cCallback to after $iRepeat.
 	 *
-	 *	<code>$this->timerCreate( array($this, 'Message'), '0.5000', '10' );</code>
+	 *	<code>
+	 *	$this->timerCreate(array($this, 'Message'), '0.5000', '10', '#OUTRAGEbot', 'Test Message');
+	 *	$this->timerCreate('sampleTimer', '10', '-1');
+	 *	</code>
 	 *
 	 *	@param callback $cCallback Timer callback 
 	 *	@param float $fInterval <b>Seconds</b> (decimals can be used) between timer calls.
@@ -1463,7 +1466,7 @@ class Master
 	 *	If you want the full string, assign $aFormat to be true.
 	 *	Otherwise, when using $aFormat, numeric characters are replaced with their corresponding chunk when called.
 	 *
-	 *	<code>$this->iBindID = $this->bindCreate("INVITE", array($this, "onInvite"), array(2, 3));</code>
+	 *	<code>$this->iBindID = $this->bindCreate("INVITE", "onInvite", array(2, 3));</code>
 	 *
 	 *	@example OUTRAGEbot/_Examples/bindCreate.php A demo plugin that demonstrates how to use it.
 	 *	@param string $sInput IRC numeric name
