@@ -119,8 +119,8 @@ class Socket
 	public function Output($sRaw)
 	{
 		++$this->aStatistics['Output']['Packets'];
-		$this->aStatistics['Output']['Bytes'] += strlen($sRaw.PHP_EOL);
-		return @socket_write($this->rSocket, $sRaw.PHP_EOL);
+		$this->aStatistics['Output']['Bytes'] += strlen($sRaw.IRC_EOL);
+		return @socket_write($this->rSocket, $sRaw.IRC_EOL);
 	}
 	
 	
@@ -175,7 +175,7 @@ class Socket
 			
 			if(($sInput = socket_read($this->rSocket, 4096, PHP_BINARY_READ)))
 			{
-				$aInput = explode("\n", $sInput);
+				$aInput = explode(IRC_EOL, $sInput);
 				
 				foreach($aInput as $sChunk)
 				{

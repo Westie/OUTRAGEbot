@@ -22,6 +22,10 @@ define("BOT_RELDATE", "09/01/2010 23:50:00");
 define("CORE_SLEEP", 20000);
 
 
+/* IRC characters */
+define("IRC_EOL", "\r\n");
+
+
 /* The ways of the bots of sending messages. */
 define("SEND_DEF", 0);
 define("SEND_MAST", 1);

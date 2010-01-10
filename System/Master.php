@@ -568,10 +568,10 @@ class Master
 		}
 
 		/* More taxing crap. Should I improve this one day? I have no idea! */
-		$aChunks[0] = trim(isset($aChunks[0][0]) ? ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]) : "");
-		$aChunks[1] = trim(isset($aChunks[1][0]) ? $aChunks[1] : "");
-		$aChunks[2] = trim(isset($aChunks[2][0]) ? ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]) : "");
-		$aChunks[3] = trim(isset($aChunks[3][0]) ? ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]) : "");
+		$aChunks[0] = isset($aChunks[0][0]) ? ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]) : "";
+		$aChunks[1] = isset($aChunks[1][0]) ? $aChunks[1] : "";
+		$aChunks[2] = isset($aChunks[2][0]) ? ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]) : "";
+		$aChunks[3] = isset($aChunks[3][0]) ? ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]) : "";
 
 		/* Deal with pings */
 		if($aChunks[0] == 'PING')
@@ -851,6 +851,11 @@ class Master
 					$iTemp = 0;
 					$sUser = trim($sUser);
 					
+					if(!isset($sUser[0]))
+					{
+						continue;
+					}
+					
 					switch($sUser[0])
 					{
 						case '+': $iTemp = 1; break;
@@ -858,7 +863,7 @@ class Master
 						case '@': $iTemp = 7; break;
 						case '&': $iTemp = 15; break;
 						case '~': $iTemp = 31; break;
-						default:  break;
+						default: break;
 					}
 					
 					$sUser = preg_replace("/[+%@&~]/", "", $sUser);
