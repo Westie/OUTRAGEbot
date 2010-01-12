@@ -159,31 +159,27 @@ class Socket
 				$this->constructBot();
 			}
 			return true;
-		}
-		else
+		}	
+		
+		if($this->isWaiting) return true;
+		
+		if(count($this->aMsgQueue) && $this->iUseQueue == false)
 		{
-			if($this->isWaiting) return true;
-			
-			if(count($this->aMsgQueue) && $this->iUseQueue == false)
+			foreach($this->aMsgQueue as $iKey => &$sChunk)
 			{
-				foreach($this->aMsgQueue as $iKey => &$sChunk)
-				{
-					$this->oMaster->getSend($this, $sChunk);
-					unset($this->aMsgQueue[$iKey]);
-				}
+				$this->oMaster->getSend($this, $sChunk);
+				unset($this->aMsgQueue[$iKey]);
 			}
-			
-			if(($sInput = socket_read($this->rSocket, 4096, PHP_BINARY_READ)))
-			{
-				$aInput = explode(IRC_EOL, $sInput);
+		}
 				
-				foreach($aInput as $sChunk)
-				{
-					/* Statistics */
-					++$this->aStatistics['Input']['Packets'];
-					$this->aStatistics['Input']['Bytes'] += strlen($sChunk);
-					$this->oMaster->getSend($this, $sChunk);
-				}
+		if(($sInput = socket_read($this->rSocket, 4096, PHP_BINARY_READ)))
+		{
+			$aInput = explode(IRC_EOL, $sInput);
+			foreach($aInput as $sChunk)
+			{	
+				++$this->aStatistics['Input']['Packets'];
+				$this->aStatistics['Input']['Bytes'] += strlen($sChunk);
+				$this->oMaster->getSend($this, $sChunk);
 			}
 		}
 		

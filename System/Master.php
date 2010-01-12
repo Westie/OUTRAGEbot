@@ -566,12 +566,11 @@ class Master
 			}
 			return;
 		}
-
-		/* More taxing crap. Should I improve this one day? I have no idea! */
-		$aChunks[0] = isset($aChunks[0][0]) ? ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]) : "";
-		$aChunks[1] = isset($aChunks[1][0]) ? $aChunks[1] : "";
-		$aChunks[2] = isset($aChunks[2][0]) ? ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]) : "";
-		$aChunks[3] = isset($aChunks[3][0]) ? ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]) : "";
+		
+		/* Let's compare the market, by adding three useless arrays */
+		$aChunks[0] = ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]);
+		$aChunks[2] = ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]);
+		$aChunks[3] = ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]);
 
 		/* Deal with pings */
 		if($aChunks[0] == 'PING')
@@ -877,13 +876,13 @@ class Master
 			/* Nick already in use. */
 			case 433:
 			{
-				if(isset($this->oCurrentBot->aConfig['altnick']))
+				if($this->getChildConfig('altnick') != null)
 				{
-					$sNewNick = $this->oCurrentBot->aConfig['altnick'];
+					$sNewNick = $this->getChildConfig('altnick');
 				}
 				else
 				{
-					$sNewNick = $this->oCurrentBot->aConfig['nickname'].rand(10, 99);
+					$sNewNick = $this->getChildConfig('nickname').rand(10, 99);
 				}
 				
 				$this->oCurrentBot->setNickname($sNewNick);

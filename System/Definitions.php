@@ -19,7 +19,7 @@ define("BOT_RELDATE", "09/01/2010 23:50:00");
 
 
 /* How long the bot sleeps between socket calls. */
-define("CORE_SLEEP", 20000);
+define("CORE_SLEEP", 50000);
 
 
 /* IRC characters */

@@ -10,7 +10,7 @@
 
 
 /* Key initiation process. */
-error_reporting(E_ALL | E_STRICT);
+error_reporting(0);
 date_default_timezone_set("Europe/London"); // Change this to your time zone.
 
 define("BASE_DIRECTORY", dirname(__file__));
