@@ -10,9 +10,9 @@
  *	'debug02' plugin.
  *
  *	@package OUTRAGEbot
- *	@copyright David Weston (c) 2009 -> http://www.typefish.co.uk/licences/
+ *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0-RC3
+ *	@version 1.0.0
  */
 
 abstract class Plugins
