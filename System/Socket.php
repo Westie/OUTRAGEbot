@@ -6,10 +6,10 @@
  *	I suppose.
  *
  *	@ignore
- *	@package OUTRAGEbot
+ *	@package OUTRAGEbot-RC5
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0.0
+ *	@version 1.0.0-RC5
  */
 
 class Socket
@@ -171,7 +171,7 @@ class Socket
 				unset($this->aMsgQueue[$iKey]);
 			}
 		}
-				
+		
 		if(($sInput = socket_read($this->rSocket, 4096, PHP_BINARY_READ)))
 		{
 			$aInput = explode(IRC_EOL, $sInput);

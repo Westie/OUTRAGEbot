@@ -2,10 +2,10 @@
 /**
  *	Definitions for OUTRAGEbot
  *
- *	@package OUTRAGEbot
+ *	@package OUTRAGEbot-RC5
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0.0
+ *	@version 1.0.0-RC5
  */
 
 
@@ -14,8 +14,8 @@ error_reporting(E_ALL | E_STRICT);
 
 
 /* Some bot-brag-relating things. */
-define("BOT_VERSION", "1.0.0");
-define("BOT_RELDATE", "09/01/2010 23:50:00");
+define("BOT_VERSION", "1.0.0-RC5");
+define("BOT_RELDATE", "22/01/2010 22:30:00");
 
 
 /* How long the bot sleeps between socket calls. */

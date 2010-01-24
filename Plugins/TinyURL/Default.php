@@ -31,7 +31,7 @@ class TinyURL extends Plugins
                 {
                         $sRegex = '/http:\/\/tinyurl.com\/(.*)/';
                         preg_match($sRegex, $sMessage, $aMatches);
-                        //print_r($aMatches);
+                        
                         if (!empty($aMatches))
                         {
                                 $sTinycode = trim($aMatches[1]);

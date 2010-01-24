@@ -9,10 +9,10 @@
  *	To look at the callbacks that plugins natively recieved, look at the
  *	'debug02' plugin.
  *
- *	@package OUTRAGEbot
+ *	@package OUTRAGEbot-RC5
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0.0
+ *	@version 1.0.0-RC5
  */
 
 abstract class Plugins
@@ -157,10 +157,10 @@ abstract class Plugins
 	/**
 	 *	Creates a timer, framework.
 	 *
-	 *	@see Master::timerCreate()
+	 *	@see Master::addTimer()
 	 *	@ignore
 	 */
-	public function timerCreate($cCallback, $iInterval, $iRepeat)
+	public function addTimer($cCallback, $iInterval, $iRepeat)
 	{
 		$cCallback = is_array($cCallback) ? $cCallback : array($this, $cCallback);
 		$aArguments = func_get_args();
@@ -175,13 +175,13 @@ abstract class Plugins
 	/**
 	 *	Creates a bind, framework.
 	 *
-	 *	@see Master::bindCreate()
+	 *	@see Master::addHandler()
 	 *	@ignore
 	 */
-	public function bindCreate($sInput, $cCallback, $aFormat)
+	public function addHandler($sInput, $cCallback, $aFormat)
 	{
 		$cCallback = is_array($cCallback) ? $cCallback : array($this, $cCallback);
-		return $this->oBot->bindCreate($sInput, $cCallback, $aFormat);
+		return $this->oBot->addHandler($sInput, $cCallback, $aFormat);
 	}
 }
 

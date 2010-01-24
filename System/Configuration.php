@@ -51,10 +51,10 @@
  *	</pre>
  -	End of epic HTML formatting.
  *
- *	@package OUTRAGEbot
+ *	@package OUTRAGEbot-RC5
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0.0
+ *	@version 1.0.0-RC5
  */
  
 
@@ -119,11 +119,8 @@ class ConfigParser
 			if($sKey[0] == '~')
 			{
 				$sKey = substr($sKey, 1);
+				$oConfig->$sKey = $aBot;
 				
-				if($sKey != "Bots")
-				{
-					$oConfig->$sKey = $aBot;
-				}
 				continue;
 			}
 			

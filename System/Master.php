@@ -5,6 +5,9 @@
  *	This class deals with all the interaction with plugins, how the bot acts, etc.
  *	This class also contains all of the commands, etc.
  *
+ *	In this version, about half of the functions have been renamed, in order
+ *	to be easier to remember, for example. That means, any
+ *
  *	Note: In this documentation, there are some psuedo types that are used to describe
  *	certain arguments.
  *
@@ -13,10 +16,10 @@
  *	$cCallback = "callLocalFunction";      // Only available in plugins
  *	</code>It is used for binds and timers.
  *
- *	@package OUTRAGEbot
+ *	@package OUTRAGEbot-RC5
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0.0
+ *	@version 1.0.0-RC5
  */
  
 
@@ -101,13 +104,13 @@ class Master
 		
 		foreach($this->oConfig->Bots as $aOption)
 		{	
-			$this->_childCreate($aOption['nickname'], $aOption);
+			$this->_addChild($aOption['nickname'], $aOption);
 		}
 		
 		foreach(explode(',', $this->oConfig->Network['plugins']) as $sPlugin)
 		{
 			$sPlugin = trim($sPlugin);
-			$this->pluginLoad($sPlugin);
+			$this->addPlugin($sPlugin);
 		}
 		
 		/* The uncool stuff. This does mean that yeah, you can this in the configs. */
@@ -201,9 +204,9 @@ class Master
 	 *	@param array $aDetails Details of the child.
 	 *	@return bool true on success.
 	 */
-	private function _childCreate($sChild, $aDetails)
+	private function _addChild($sChild, $aDetails)
 	{
-		if($this->childExists($sChild))
+		if($this->doesChildExist($sChild))
 		{
 			return false;
 		}
@@ -228,7 +231,7 @@ class Master
 	 *	This function creates a child. A child is an instance of the Socket,
 	 *	basically an IRC client.
 	 *
-	 *	<code>$this->childCreate("bot4", "OUTRAGEbot|4", "outrage", "OUTRAGEbot");</code> 
+	 *	<code>$this->addChild("bot4", "OUTRAGEbot|4", "outrage", "OUTRAGEbot");</code> 
 	 *
 	 *	@param string $sChild Child reference.
 	 *	@param string $sNickname The child's nickname.
@@ -236,7 +239,7 @@ class Master
 	 *	@param string $sRealname The child's real name.
 	 *	@return bool true on success.
 	 */
-	public function childCreate($sChild, $sNickname, $sUsername, $sRealname)
+	public function addChild($sChild, $sNickname, $sUsername, $sRealname)
 	{
 		$aDetails = array
 		(
@@ -246,16 +249,18 @@ class Master
 			'altnick' => $sNickname.rand(0, 10),
 		);
 		
-		return $this->_childCreate($sChild, $aDetails);
+		return $this->_addChild($sChild, $aDetails);
 	}
 	
 	
 	/**
-	 *	Lists all the children this group has.
+	 *	Returns a list of all the children that the bot has.
 	 *
-	 *	@return array Array of children.
+	 *	<code>$aChildren = $this->getChildren();</code>
+	 *
+	 *	@return array Array of children's names.
 	 */
-	public function childGet()
+	public function getChildren()
 	{
 		$aReturn = array();
 		
@@ -271,13 +276,14 @@ class Master
 	/**
 	 *	Returns an object of a child from its reference.
 	 *
-	 *	<code>$oChild = $this->childGetObject("OUTRAGEbot");
+	 *	<code>
+	 *	$oChild = $this->getChildObject("OUTRAGEbot");
 	 *	$oChild->Output("PRIVMSG #OUTRAGEbot :Hello from the raw!");</code>
 	 *
 	 *	@param string $sChild Child reference.
 	 *	@return Socket Class of the socket child.
 	 */
-	public function childGetObject($sChild)
+	public function getChildObject($sChild)
 	{
 		$aReturn = array();
 		
@@ -297,12 +303,14 @@ class Master
 	 *	This function renames a child by its reference. The reference is (in most cases)
 	 *	the bot's original name. Look in the configuration for more details.
 	 *
+	 *	<code>$this->setNickname('OUTRAGEbot', 'someRandomBotNameHere');</code>
+	 *
 	 *	@param string $sChild Child reference.
 	 *	@param string $sNewNick New nickname of the child.
 	 */
-	public function childRename($sChild, $sNewNick)
+	public function setNickname($sChild, $sNewNick)
 	{
-		if(($oChild = $this->childGetObject($sChild)) === null)
+		if(($oChild = $this->getChildObject($sChild)) === null)
 		{
 			return false;
 		}
@@ -315,10 +323,12 @@ class Master
 	 *	Removes a child from this group.
 	 *	Please note that you cannot remove the master. That would just be pointless.
 	 *
+	 *	<code>$this->removeChild('bot4');
+	 *
 	 *	@param string $sChild Child reference.
 	 *	@return bool true on success.
 	 */
-	public function childRemove($sChild)
+	public function removeChild($sChild)
 	{
 		foreach($this->aBotObjects as $iReference => $oChild)
 		{
@@ -342,13 +352,36 @@ class Master
 	
 	
 	/**
+	 *	Checks if you have to pay the government alimony. (It really check
+	 *	if the child exists.) It's good that someone reads the source,
+	 *	otherwise you wouldn't find this.
+	 *
+	 *	@param string $sChild Child name.
+	 *	@return bool true on success.
+	 *	@ignore
+	 *	@see Master::doesChildExist()
+	 */
+	public function doIHaveToPayAlimony($sChild)
+	{
+		return $this->doesChildExist($sChild);
+	}
+	
+	
+	
+	/**
 	 *	Checks if a child exists. Note that the child name is not necessarily the 
 	 *	IRC nick of the bot, but in most cases it is.
+	 *
+	 *	<code>
+	 *	if($this->doesChildExist('bot4') == true)
+	 *	{
+	 *		...
+	 *	}</code>
 	 *
 	 *	@param string $sChild Child name.
 	 *	@return bool true on success.
 	 */
-	public function childExists($sChild)
+	public function doesChildExist($sChild)
 	{
 		foreach($this->aBotObjects as $oChild)
 		{
@@ -366,12 +399,14 @@ class Master
 	 *	This function reconnects a IRC child. This is useful in cases where IRC bots
 	 *	have to physically disconnect from the network in order to work.
 	 *
+	 *	<code>$this->resetChild('bot4', 'Looks like I need to reconnect to the network!');</code>
+	 *
 	 *	@param string $sChild Child reference.
 	 *	@param string $sMessage Quit message.
 	 */
-	public function childReconnect($sChild, $sMessage = "Rehash!")
+	public function resetChild($sChild, $sMessage = "Rehash!")
 	{
-		if(($oChild = $this->childGetObject($sChild)) === null)
+		if(($oChild = $this->getChildObject($sChild)) === null)
 		{
 			return false;
 		}
@@ -380,19 +415,6 @@ class Master
 		$oChild->constructBot();
 		
 		return true;
-	}
-	
-	
-	/**
-	 *	Returns an object of a child from its reference. Alias of Master::childGetObject().
-	 *
-	 *	@param string $sChild Child reference.
-	 *	@return Socket Class of the socket child.
-	 *	@uses childGetObject
-	 */
-	public function getChildAsObject($sChild)
-	{
-		return $this->childGetObject($sChild);
 	}
 	
 	
@@ -418,7 +440,8 @@ class Master
 	
 	
 	/**
-	 *	Returns a value from the master configuration.
+	 *	Returns a value from the master configuration. The master configuration
+	 *	is anything that is within ~Network.
 	 *
 	 *	<code>
 	 *	echo $this->getMasterConfig('nickname');
@@ -441,8 +464,10 @@ class Master
 	/**
 	 *	Sends RAW IRC Messages
 	 *
+	 *	<code>$this->sendRaw('PRIVMSG #Westie :hai there');</code>
+	 *
 	 *	@param string $sMessage Raw IRC message you want to send.
-	 *	@param integer $iSend How to send the message.
+	 *	@param integer $iSend How to send the message (See definitions)
 	 */
 	public function sendRaw($sMessage, $iSend = SEND_CURR)
 	{
@@ -502,6 +527,8 @@ class Master
 	/**
 	 *	Get the users nickname from a hostname string.
 	 *
+	 *	<code>$this->getNickname("Westie!westie@typefish.co.uk");</code>
+	 *
 	 *	@param string $sHost The hostname string
 	 *	@return string Nickname
 	 */
@@ -515,6 +542,8 @@ class Master
 	/**
 	 *	Get the users hostname from a hostname string.
 	 *
+	 *	<code>$this->getHostname("Westie!westie@typefish.co.uk");</code>
+	 *
 	 *	@param string $sHost The hostname string
 	 *	@return string Hostmask
 	 */
@@ -527,6 +556,10 @@ class Master
 	
 	/**
 	 *	This function gets the next child along in the queue.
+	 *
+	 *	<code>
+	 *	$child = $this->getNextChild();
+	 *	$child->Output('PRIVMSG #Westie :hai!');</code> 
 	 *
 	 *	@return Socket Child object.
 	 */
@@ -550,7 +583,7 @@ class Master
 		$this->sCurrentChunk = $sMessage;
 		
 		$aChunks = explode(' ', $sMessage, 4);
-		$this->bindScan($aChunks);
+		$this->scanHandlers($aChunks);
 		
 		/* Deal with realtime scans */
 		if($oBot->iUseQueue == true)
@@ -567,9 +600,10 @@ class Master
 		}
 		
 		/* Let's compare the market, by adding three useless arrays */
-		$aChunks[0] = ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]);
-		$aChunks[2] = ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]);
-		$aChunks[3] = ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]);
+		$aChunks[0] = isset($aChunks[0]) ? ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]) : "";
+		$aChunks[1] = isset($aChunks[1]) ? $aChunks[1] : "";
+		$aChunks[2] = isset($aChunks[2]) ? ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]) : "";
+		$aChunks[3] = isset($aChunks[3]) ? ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]) : "";
 
 		/* Deal with pings */
 		if($aChunks[0] == 'PING')
@@ -953,6 +987,8 @@ class Master
 	/**
 	 *	Returns user information from a channel.
 	 *
+	 *	<code>$aInfo = $this->getUserInfoFromChannel("#ffs", "Westie");</code>
+	 *
 	 *	@param string $sChan Channel where user is
 	 *	@param string $sUser Nickname to check
 	 *	@return array Returns an array on success, FALSE on failure.
@@ -973,6 +1009,8 @@ class Master
 	/**
 	 *	Checks if that user is actually in that channel.
 	 *
+	 *	<code>$this->isUserInChannel('#ffs', 'Westie');</code>
+	 *
 	 *	@param string $sChan Channel where user is
 	 *	@param string $sUser Nickname to check
 	 *	@return bool 'true' on success.
@@ -986,6 +1024,8 @@ class Master
 	/**
 	 *	Checks if the current child is in the channel.
 	 *
+	 *	<code>$this->isBotInChannel('#ffs');
+	 *
 	 *	@param string $sChan Channel to check.
 	 *	@return bool 'true' on success.
 	 */
@@ -996,7 +1036,10 @@ class Master
 	
 	
 	/**
-	 *	Checks if that user has voice in that channel.
+	 *	Checks if that user has voice in that channel. Voicers have the
+	 *	mode ' + '.
+	 *
+	 *	<code>$this->isUserVoice('#ffs', 'Westie');</code>
 	 *
 	 *	@param string $sChan Channel where user is
 	 *	@param string $sUser Nickname to check
@@ -1016,7 +1059,10 @@ class Master
 	
 	
 	/**
-	 *	Checks if that user has half-op in that channel.
+	 *	Checks if that user has half-op in that channel. Half operators
+	 *	have the mode ' % ', and may not be available on all networks.
+	 *
+	 *	<code>$this->isUserHalfOp('#ffs', 'Westie');</code>
 	 *
 	 *	@param string $sChan Channel where user is
 	 *	@param string $sUser Nickname to check
@@ -1036,7 +1082,10 @@ class Master
 	
 	
 	/**
-	 *	Checks if that user has operator in that channel.
+	 *	Checks if that user has operator in that channel. Operators have
+	 *	the mode ' @ '.
+	 *
+	 *	<code>$this->isUserOper('#ffs', 'Westie');</code>
 	 *
 	 *	@param string $sChan Channel where user is
 	 *	@param string $sUser Nickname to check
@@ -1056,7 +1105,10 @@ class Master
 	
 	
 	/**
-	 *	Checks if that user has admin in that channel.
+	 *	Checks if that user has admin in that channel. Admins have the
+	 *	mode ' & ', and may not be available on all networks.
+	 *
+	 *	<code>$this->isUserAdmin('#ffs', 'Westie');</code>
 	 *
 	 *	@param string $sChan Channel where user is
 	 *	@param string $sUser Nickname to check
@@ -1076,7 +1128,10 @@ class Master
 	
 	
 	/**
-	 *	Checks if that user has owner in that channel.
+	 *	Checks if that user has owner in that channel. Owners have the
+	 *	mode ' ~ ', and may not be available on all networks.
+	 *
+	 *	<code>$this->isUserOwner('#ffs', 'Westie');</code>
 	 *
 	 *	@param string $sChan Channel where user is
 	 *	@param string $sUser Nickname to check
@@ -1096,7 +1151,9 @@ class Master
 		
 	
 	/**
-	 *	Checks if that user is registered as an administrator of the bot.
+	 *	Check if the current, active IRC user is a bot admin.
+	 *
+	 *	<code>$this->isAdmin();</code>
 	 *
 	 *	@return bool 'true' on success.
 	 */
@@ -1110,14 +1167,21 @@ class Master
 	
 	
 	/**
-	 *	Checks if either the current instance, or a specific instance is actually a child.
+	 *	Checks if either the current instance, or a specific instance is
+	 *	actually a child. Children differ from master bots in one variable.
+	 *
+	 *	<code>
+	 *	if($this->isChild() == false)
+	 *	{
+	 *		... // This will only be executed by non-children bots.
+	 *	}</code>
 	 *
 	 *	@param string $sChild Child reference.
 	 *	@return bool true on success, null if child is non-existant.
 	 */
 	public function isChild($sChild = "")
 	{
-		$oChild = ($sChild == "" ? $this->oCurrentBot : $this->childGetObject($sChild));
+		$oChild = ($sChild == "" ? $this->oCurrentBot : $this->getChildObject($sChild));
 		
 		if($oChild == null)
 		{
@@ -1150,10 +1214,14 @@ class Master
 		
 		foreach($this->oPlugins as &$oPlugin)
 		{
-			if(call_user_func_array(array($oPlugin, $sEvent), $aArguments) != false)
+			$rResult = call_user_func_array(array($oPlugin, $sEvent), $aArguments);
+			
+			if($rResult == null || $rResult == true)
 			{
-				break;
+				continue;
 			}
+			
+			break;
 		}
 	}
 	
@@ -1198,7 +1266,9 @@ class Master
 	/**
 	 *	Sends a message to the specified channel.
 	 *
-	 *	@param string $sChannel Channel name
+	 *	<code>$this->sendMessage('#ffs', 'some message here');</code>
+	 *
+	 *	@param string $sChannel Channel name or nickname
 	 *	@param string $sMessage Message to send
 	 *	@param integer $iSend How to send message
 	 *	@see Master::sendRaw()
@@ -1211,6 +1281,8 @@ class Master
 	
 	/**
 	 *	Sends an action to the specified channel.
+	 *
+	 *	<code>$this->sendAction('#ffs', 'likes Westie');</code>
 	 *
 	 *	@param string $sChannel Channel name
 	 *	@param string $sMessage Message to send
@@ -1225,6 +1297,8 @@ class Master
 	
 	/**
 	 *	Sends a notice to the specified channel.
+	 *
+	 *	<code>$this->sendNotice('Westie', 'Here is your password!');</code>
 	 *
 	 *	@param string $sNickname Nickname
 	 *	@param string $sMessage Message to send
@@ -1273,6 +1347,8 @@ class Master
 	/**
 	 *	Sends a CTCP reply.
 	 *
+	 *	<code>$this->ctcpReply('Westie', 'COMMAND something here');</code>
+	 *
 	 *	@param string $sNickname Nickname
 	 *	@param string $sMessage CTCP reply
 	 *	@see Master::sendRaw()
@@ -1285,6 +1361,8 @@ class Master
 	
 	/**
 	 *	Sends a CTCP request.
+	 *
+	 *	<code>$this->ctcpRequest('deLUX', 'VERSION');</code>
 	 *
 	 *	@param string $sNickname Nickname
 	 *	@param string $sRequest CTCP request
@@ -1301,8 +1379,8 @@ class Master
 	 *	Creates a timer, note that arguments to be passed to $cCallback to after $iRepeat.
 	 *
 	 *	<code>
-	 *	$this->timerCreate(array($this, 'Message'), '0.5000', '10', '#OUTRAGEbot', 'Test Message');
-	 *	$this->timerCreate('sampleTimer', '10', '-1');
+	 *	$sKey = $this->addTimer(array($this, 'Message'), '0.5000', '10', '#OUTRAGEbot', 'Test Message');
+	 *	$sKey = $this->addTimer('sampleTimer', '10', '-1');
 	 *	</code>
 	 *
 	 *	@param callback $cCallback Timer callback 
@@ -1311,7 +1389,7 @@ class Master
 	 *	@param mixed $... Arguments to pass to timer.
 	 *	@return string Timer reference ID.
 	 */
-	public function timerCreate($cCallback, $iInterval, $iRepeat)
+	public function addTimer($cCallback, $iInterval, $iRepeat)
 	{
 		$aArguments = func_get_args();
 		array_shift($aArguments);
@@ -1335,22 +1413,26 @@ class Master
 	 *	<b>ARGUMENTS</b> -> Array of arguments that will be passed to the timer.
 	 *	</pre>
 	 *
+	 *	<code>$aTimer = $this->getTimer($sKey);</code>
+	 *
 	 *	@param string $sKey Timer reference ID.
 	 *	@return array Array of timer information.
 	 */
-	public function timerGet($sKey)
+	public function getTimer($sKey)
 	{
 		return Timers::Get($sKey);
 	}
 	
 	
 	/**
-	 *	Creates a timer, note that arguments to be passed to $cCallback to after $iRepeat.
+	 *	Removes a timer from memory.
+	 *
+	 *	<code>$this->removeTimer($sKey);</code>
 	 *
 	 *	@param string $sKey Timer reference ID.
 	 *	@return bool 'true' on success.
 	 */
-	public function timerKill($sKey)
+	public function removeTimer($sKey)
 	{
 		return Timers::Delete($sKey);
 	}
@@ -1359,10 +1441,12 @@ class Master
 	/**
 	 *	Loads a plugin from the plugin directory.
 	 *
+	 *	<code>$this->addPlugin('AutoInvite');</code>
+	 *
 	 *	@param string $sPlugin
 	 *	@return bool 'true' on success.
 	 */
-	public function pluginLoad($sPlugin)
+	public function addPlugin($sPlugin)
 	{
 		if(array_key_exists($sPlugin, $this->oPlugins))
 		{
@@ -1402,10 +1486,12 @@ class Master
 	/**
 	 *	Gets the instance of the plugin if it exists.
 	 *
+	 *	<code>$this->getPlugin('Callbacks')->getCode();</code>
+	 *
 	 *	@param string $sPlugin Plugin name
 	 *	@return Plugin Object of the plugin.
 	 */
-	public function pluginGet($sPlugin)
+	public function getPlugin($sPlugin)
 	{
 		if(isset($this->oPlugins->$sPlugin))
 		{
@@ -1419,10 +1505,12 @@ class Master
 	/**
 	 *	Unloads an active plugin from memory.
 	 *
+	 *	<code>$this->removePlugin('AutoInvite');</code>
+	 *
 	 *	@param string $sPlugin
 	 *	@return bool 'true' on success.
 	 */
-	public function pluginUnload($sPlugin)
+	public function removePlugin($sPlugin)
 	{
 		if(isset($this->oPlugins->$sPlugin))
 		{
@@ -1439,45 +1527,54 @@ class Master
 	/**
 	 *	Unloads and reloads a plugin.
 	 *
+	 *	<code>$this->reloadPlugin('AutoInvite');</code>
+	 *
 	 *	@param string $sPlugin
 	 *	@return bool 'true' on success.
 	 */
-	public function pluginReload($sPlugin)
+	public function reloadPlugin($sPlugin)
 	{
-		$this->pluginUnload($sPlugin);
-		return $this->pluginLoad($sPlugin);
+		$this->removePlugin($sPlugin);
+		return $this->addPlugin($sPlugin);
 	}
 	
 	
 	/**
 	 *	Check if a plugin is loaded into memory.
 	 *
+	 *	<code>
+	 *	if($this->isPluginLoaded('AutoInvite'))
+	 *	{
+	 *		...
+	 *	}</code>
+	 *
 	 *	@param string $sPlugin
 	 *	@return bool 'true' on success.
 	 */
-	public function pluginExists($sPlugin)
+	public function isPluginLoaded($sPlugin)
 	{
 		return isset($this->oPlugins->$sPlugin);
 	}
 		
 	
 	/**
-	 *	Create a bind handler for IRC numerics/commands.
+	 *	Create a command handler for IRC numerics/commands.
 	 *
 	 *	If you are passing arguments to the bind handler, then <b>must</b> $aFormat must be populated.
 	 *	If you do not want to pass arguments, you can either assign $aFormat to false or a blank array.
 	 *	If you want the full string, assign $aFormat to be true.
 	 *	Otherwise, when using $aFormat, numeric characters are replaced with their corresponding chunk when called.
+	 *	For a detailed explanation, please check the example _link_.
 	 *
-	 *	<code>$this->iBindID = $this->bindCreate("INVITE", "onInvite", array(2, 3));</code>
+	 *	<code>$this->iBindID = $this->addHandler("INVITE", "onInvite", array(2, 3));</code>
 	 *
-	 *	@example OUTRAGEbot/_Examples/bindCreate.php A demo plugin that demonstrates how to use it.
+	 *	@example OUTRAGEbot/~Examples/addHandler.php A demo plugin that demonstrates how to use it.
 	 *	@param string $sInput IRC numeric name
 	 *	@param callback $cCallback Callback to bind handler.
 	 *	@param array $aFormat Array of arguments to pass to the bind handler.
 	 *	@return string Bind resource ID.
 	 */
-	public function bindCreate($sInput, $cCallback, $aFormat)
+	public function addHandler($sInput, $cCallback, $aFormat)
 	{
 		$sHandle = substr(sha1(time()."-".uniqid()), 2, 10);
 		
@@ -1497,14 +1594,16 @@ class Master
 	 *	These are the contents of the array that is returned when this function is invoked.
 	 *	<pre>
 	 *	<b>CALLBACK</b> -> Callback which the bind calls when invoked.
-	 *	<b>FORMAT</b>   -> Arguments to pass to the event. See bindCreate.
+	 *	<b>FORMAT</b>   -> Arguments to pass to the event. See addHandler.
 	 *	<b>INPUT</b>    -> The IRC command matches the bind.
 	 *	</pre>
+	 *
+	 *	<code>$this->getHandler($sKey);</code>
 	 *
 	 *	@param string $sKey Bind reference ID.
 	 *	@return array Array of bind information.
 	 */
-	public function bindGet($sKey)
+	public function getHandler($sKey)
 	{
 		if(isset($this->aBinds[$sKey]))
         {
@@ -1518,10 +1617,12 @@ class Master
 	/**
 	 *	Delete a reference to a bind handler.
 	 *
+	 *	<code>$this->removeHandler($sKey);</code>
+	 *
 	 *	@param string $sKey
 	 *	@return bool 'true' on success.
 	 */
-	public function bindDelete($sKey)
+	public function removeHandler($sKey)
 	{
 		if(isset($this->aBinds[$sKey]))
 		{
@@ -1539,7 +1640,7 @@ class Master
 	 *	@param string $sKey
 	 *	@ignore
 	 */
-	public function bindScan($aChunks)
+	public function scanHandlers($aChunks)
 	{
 		foreach($this->aBinds as &$aSection)
 		{
@@ -1575,7 +1676,7 @@ class Master
 	 *	The data that are you requesting (for instance, what is in $mSearch) will not be parsed by the bot.
 	 *	This essentially means it is the job of the code using that request to deal with parsing it properly.
 	 *
-	 *	<code>$aMatches = $this->getRealtimeRequest("NAMES #westie", array(353, 366), 4);
+	 *	<code>$aMatches = $this->getRequest("NAMES #westie", array(353, 366), 4);
 	 *
 	 *	// Array
 	 *	// (
@@ -1588,7 +1689,7 @@ class Master
 	 *	@param integer $iSleep <i>Microseconds</i> to sleep before getting input.
 	 *	@return array The response matched to the data in $aSearch.
 	 */
-	public function getRealtimeRequest($sRequest, $mSearch, $iSleep = 10000)
+	public function getRequest($sRequest, $mSearch, $iSleep = 10000)
 	{
 		$this->oCurrentBot->iUseQueue = true;
 		$this->oCurrentBot->aSearch = (array) $mSearch;
@@ -1605,11 +1706,13 @@ class Master
 	/**
 	 *	Invites a user to a channel.
 	 *
+	 *	<code>$this->Invite("#ffs", "Westie");</code>
+	 *
 	 *	@param string $sChannel Channel name.
 	 *	@param string $sNickname Nickname of the person to kick.
 	 *	@param string $sReason Reason of the kick.
 	 */
-	public function channelInvite($sChannel, $sNickname)
+	public function Invite($sChannel, $sNickname)
 	{
 		return $this->sendRaw("INVITE {$sNickname} {$sChannel}");
 	}
@@ -1618,11 +1721,13 @@ class Master
 	/**
 	 *	Kicks a user from a channel.
 	 *
+	 *	<code>$this->Kick("#ffs", "Woet", "Dutchy");</code>
+	 *
 	 *	@param string $sChannel Channel name.
 	 *	@param string $sNickname Nickname of the person to kick.
 	 *	@param string $sReason Reason of the kick.
 	 */
-	public function channelKick($sChannel, $sNickname, $sReason = "Kick")
+	public function Kick($sChannel, $sNickname, $sReason = "Kick")
 	{
 		return $this->sendRaw("KICK {$sChannel} :{$sReason}");
 	}
@@ -1631,9 +1736,11 @@ class Master
 	/**
 	 *	Allows the bot to join a channel.
 	 *
+	 *	<code>$this->Join("#OUTRAGEbot");</code>
+	 *
 	 *	@param string $sChannel Channel name (IRC format applies!).
 	 */
-	public function channelJoin($sChannel)
+	public function Join($sChannel)
 	{
 		return $this->sendRaw("JOIN $sChannel");
 	}
@@ -1642,10 +1749,12 @@ class Master
 	/**
 	 *	Allows the bot to part a channel.
 	 *
+	 *	<code>$this->Part("#ffs");</code>
+	 *
 	 *	@param string $sChannel Channel name.
 	 *	@param string $sReason Reason for leaving
 	 */
-	public function channelPart($sChannel, $sReason = false)
+	public function Part($sChannel, $sReason = false)
 	{
 		return $this->sendRaw("PART $sChannel".($sReason == false ? "" : " :{$sReason}"));
 	}
@@ -1653,6 +1762,8 @@ class Master
 	
 	/**
 	 *	Parses a mode string into a usable array.
+	 *
+	 *	<code>$this->parseModes('+o Westie');</code>
 	 *
 	 *	@param $sModes Mode that has just been set.
 	 *	@return array Array of modes.
@@ -1708,13 +1819,15 @@ class Master
 	 *	<b>CHANNELS</b> -> An array of all the channels (with modes) that the user is in.
 	 *	</pre>
 	 *
-	 *	@param $sNickname Nickname of the user.
-	 *	@param $iDelay Microseconds to wait before fetching input.
+	 *	<code>$this->getWhois('Westie');</code>
+	 *
+	 *	@param string $sNickname Nickname of the user.
+	 *	@param integer $iDelay Microseconds to wait before fetching input.
 	 *	@return array Array of modes.
 	 */
 	public function getWhois($sNickname, $iDelay = 500000)
 	{
-		$aMatches = $this->getRealtimeRequest("WHOIS {$sNickname}", array('311', '312', '318', '319'), $iDelay);
+		$aMatches = $this->getRequest("WHOIS {$sNickname}", array('311', '312', '318', '319'), $iDelay);
 		$aReturn = array();
 		$aReturn['CHANNELS'] = array();
 	
@@ -1763,15 +1876,15 @@ class Master
 	
 	
 	/**
-	 *	Send an inter-bot-message to a bot-group. It will remain in the
-	 *	queue until it is retrieved from the stack.
+	 *	Send an inter-bot-communication message to a bot-group. It will
+	 *	remain in the queue until it is retrieved from the stack.
 	 *
-	 *	<code>$this->ibcSend('OUTRAGEbot', array('This', 'is', 'an', 'array'));</code>
+	 *	<code>$this->sendIBCMessage('OUTRAGEbot', array('This', 'is', 'an', 'array'));</code>
 	 *
 	 *	@param string $sBotGroup Bot group to send the message to.
 	 *	@param mixed $mContents Thing to put into the stack.
 	 */
-	public function ibcSend($sBotGroup, $mContents)
+	public function sendIBCMessage($sBotGroup, $mContents)
 	{
 		if(isset(Control::$aBots[$sBotGroup]))
 		{
@@ -1784,12 +1897,14 @@ class Master
 	
 	
 	/**
-	 *	Recieve all inter-bot-messages that are in the stack for this
-	 *	particular bot.
+	 *	Recieve all inter-bot-communication messages that are in the
+	 *	stack for this particular bot.
+	 *
+	 *	<code>$aQueue = $this->getIBCMessages();</code>
 	 *
 	 *	@return array Array of all messages.
 	 */
-	public function ibcGet()
+	public function getIBCMessages()
 	{
 		$aResult = Control::$aStack[$this->sBotGroup];
 		Control::$aStack[$this->sBotGroup] = array();

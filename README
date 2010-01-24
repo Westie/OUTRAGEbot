@@ -16,12 +16,12 @@ be loaded. Just to tell you!
 
 
 == EXAMPLES ==
-Some examples can be found in the /_Examples/ directory.
+Some examples can be found in the /~Examples/ directory.
 
 
 == STARTING BOT ==
 You can start the bot using PHP, seeing as it is a PHP bot.
----
+
 Linux:   `nohup php ./Start.php &`
 Windows: `C:/path/to/php.exe "C:/path/to/bot/Start.php"`
 

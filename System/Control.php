@@ -5,10 +5,10 @@
  *	The real brain of the bot, this controls everything. This static hosts all of the bots, and all their files.
  *	If you want to access a bot, this is the class to use.
  *
- *	@package OUTRAGEbot
+ *	@package OUTRAGEbot-RC5
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0.0
+ *	@version 1.0.0-RC5
  */
 
 
@@ -97,42 +97,52 @@ class Control
 	static function botGetInfo($sConfig = false)
 	{
 		$aReturn = array();
-		
-		if($sConfig == false)
+
+		foreach(self::$aBots as $sBotGroup => $oBot)
 		{
-			foreach(self::$aBots as $sBotGroup => $oBot)
+			if($sConfig != false && $sConfig != $sBotGroup)
 			{
-				$aTemp = array();
-				
-				foreach($oBot->aBotObjects as $iReference => $oSocket)
-				{
-					$aTemp['Socket.'.$iReference] = array
-					(
-						"NICKNAME" => $oSocket->aConfig['nickname'],
-						"USERNAME" => $oSocket->aConfig['username'],
-						"REALNAME" => $oSocket->aConfig['realname'],
-						"STATISTICS" => $oSocket->aStatistics,
-					);
-				}
-				
-				$aReturn[$sBotGroup] = $aTemp;
+				break;
 			}
+			
+			$aTemp = array();
+			
+			foreach($oBot->aBotObjects as $iReference => $oSocket)
+			{
+				$aTemp['Socket.'.$iReference] = array
+				(
+					"NICKNAME" => $oSocket->aConfig['nickname'],
+					"USERNAME" => $oSocket->aConfig['username'],
+					"REALNAME" => $oSocket->aConfig['realname'],
+					"STATISTICS" => $oSocket->aStatistics,
+				);
+			}
+			
+			$aReturn[$sBotGroup] = $aTemp;
 		}
-		else
+		
+		return $aReturn;
+	}
+	
+	
+	/**
+	 *	Retrieve the bot-groups as objects.
+	 *
+	 *	@param string $sConfig Bot-group - optional.
+	 *	@return array Array of objects.
+	 */
+	static function botGetObjects($sConfig = false)
+	{
+		$aReturn = array();
+
+		foreach(self::$aBots as $sBotGroup => $oBot)
 		{
-			if(isset(self::$aBots[$sConfig]))
-			{		
-				foreach(self::$aBots[$sConfig]->aBotObjects as $iReference => $oSocket)
-				{
-					$aReturn['Socket.'.$iReference] = array
-					(
-						"NICKNAME" => $oSocket->aConfig['nickname'],
-						"USERNAME" => $oSocket->aConfig['username'],
-						"REALNAME" => $oSocket->aConfig['realname'],
-						"STATISTICS" => $oSocket->aStatistics,
-					);
-				}
+			if($sConfig != false && $sConfig != $sBotGroup)
+			{
+				break;
 			}
+			
+			$aReturn[$sBotGroup] = $oBot;
 		}
 		
 		return $aReturn;

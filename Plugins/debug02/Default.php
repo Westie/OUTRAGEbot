@@ -19,16 +19,14 @@ class debug02 extends Plugins
 	 */
 	public function onConstruct()
 	{
-		$this->sTimerKey = $this->timerCreate
+		$this->sTimerKey = $this->addTimer
 		(
 			"TimerTest",				// Function name
-			0.5,					// Time period (half a second)
+			3.5,					// Time period (every 3.5 seconds)
 			-1,					// To be called every half second
 			
 			'#OUTRAGEbot'				// Argument 0 to send to function
 		);
-		
-		$this->timerKill($this->sTimerKey);
 		
 		$this->Log('Plugin loaded...');
 	}
@@ -40,7 +38,7 @@ class debug02 extends Plugins
 	public function onDestruct()
 	{
 		// Remember that the timers have to be manually killed!
-		$this->timerKill($this->sTimerKey);
+		$this->removeTimer($this->sTimerKey);
 		$this->Log('Plugin unloaded...');
 	}
 	
