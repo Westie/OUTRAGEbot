@@ -9,9 +9,13 @@
 
 class debug02 extends Plugins
 {
-	/* Variables to store the timer in */
+	/* Variables to store the timer etc. in */
 	private
-		$sTimerKey;
+		$sTimerKey,
+		$sFunction;
+	
+	public
+		$pLogLevel = 4;
 		
 		
 	/**
@@ -28,6 +32,13 @@ class debug02 extends Plugins
 			'#OUTRAGEbot'				// Argument 0 to send to function
 		);
 		
+		$this->sFunction = $this->addHandler
+		(
+			'Command',
+			'command_TestFunc',
+			'testing'
+		);
+		
 		$this->Log('Plugin loaded...');
 	}
 	
@@ -40,6 +51,15 @@ class debug02 extends Plugins
 		// Remember that the timers have to be manually killed!
 		$this->removeTimer($this->sTimerKey);
 		$this->Log('Plugin unloaded...');
+	}
+	
+	
+	/**
+	 *	Testing the command handler functions.
+	 */
+	public function command_TestFunc($sNickname, $sChannel, $sArguments)
+	{
+		$this->Message('#OUTRAGEbot', 'Hai, I say hai!');
 	}
 	
 	
@@ -163,7 +183,7 @@ class debug02 extends Plugins
 		/* Stopping the test timer */
 		if(!strcmp($sCommand, "stoptimer"))
 		{
-			$this->sendMessage($sChannel, ($this->timerKill($this->sTimerKey) ? "Timer has been killed" : "Invalid timer ID"));
+			$this->sendMessage($sChannel, ($this->removeTimer($this->sTimerKey) ? "Timer has been killed" : "Invalid timer ID"));
 			return true;
 		}
 	}

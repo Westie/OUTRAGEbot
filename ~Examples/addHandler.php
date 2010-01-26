@@ -12,13 +12,15 @@
 class Example extends Plugins
 {
 	public
-		$sBindID;
+		$sBindID,
+		$aFunctions = array();
 		
 	
 	/* Called when the plugin is loaded. */
 	public function onConstruct()
 	{
 		/*
+			-- IRC Numeric handlers --
 			Because 'onInvite' is in this plugin, you don't have to
 			pass argument 2 as an array.
 			
@@ -40,6 +42,20 @@ class Example extends Plugins
 			Any invalid indicies will just return NULL values.
 		*/
 		$this->sBindID = $this->addHandler("INVITE", "onInvite", array(2, 3, "Westie"));
+		
+		
+		/*
+			-- IRC command handlers --
+			These command handlers have nothing to do with the IRC protocol, you cannot
+			define what role they will have in life, what arguments they carry. You can
+			however, define what function name they carry, and the command they alias
+			for.
+			
+			Its argument list is the same as the onCommand() callback, except for the
+			absent $sCommand (argument 3).
+		*/
+		
+		$this->aFunctions[0] = $this->addHandler('');
 	}
 	
 	

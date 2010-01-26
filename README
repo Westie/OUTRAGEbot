@@ -15,6 +15,10 @@ filename (ie, renaming it to '~OUTRAGEbot.ini', that configuration file will not
 be loaded. Just to tell you!
 
 
+== CREATING PLUGINS ==
+Just look at all the plugins, they'll help you.
+
+
 == EXAMPLES ==
 Some examples can be found in the /~Examples/ directory.
 

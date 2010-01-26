@@ -581,14 +581,12 @@ class Master
 		/* Deal with the useless crap. */
 		$this->oCurrentBot = &$oBot;
 		$this->sCurrentChunk = $sMessage;
-		
-		$aChunks = explode(' ', $sMessage, 4);
-		$this->scanHandlers($aChunks);
+		$aRaw = explode(' ', $sMessage, 4);
 		
 		/* Deal with realtime scans */
 		if($oBot->iUseQueue == true)
 		{
-			if(array_search($aChunks[1], $oBot->aSearch) === false)
+			if(array_search($aRaw[1], $oBot->aSearch) === false)
 			{
 				$oBot->aMsgQueue[] = $sMessage;
 			}
@@ -600,10 +598,8 @@ class Master
 		}
 		
 		/* Let's compare the market, by adding three useless arrays */
-		$aChunks[0] = isset($aChunks[0]) ? ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]) : "";
-		$aChunks[1] = isset($aChunks[1]) ? $aChunks[1] : "";
-		$aChunks[2] = isset($aChunks[2]) ? ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]) : "";
-		$aChunks[3] = isset($aChunks[3]) ? ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]) : "";
+		$aChunks = $this->sortChunks($aRaw);
+		$this->scanHandlers(&$aChunks, &$aRaw);
 
 		/* Deal with pings */
 		if($aChunks[0] == 'PING')
@@ -629,6 +625,21 @@ class Master
 		{
 			$this->_onRaw($aChunks);
 		}
+	}
+	
+	
+	/**
+	 *	Parsing and sorting the chunks.
+	 *	@ignore
+	 */
+	public function sortChunks($aChunks)
+	{
+		$aChunks[0] = isset($aChunks[0]) ? ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]) : "";
+		$aChunks[1] = isset($aChunks[1]) ? $aChunks[1] : "";
+		$aChunks[2] = isset($aChunks[2]) ? ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]) : "";
+		$aChunks[3] = isset($aChunks[3]) ? ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]) : "";
+		
+		return $aChunks;
 	}
 	
 	
@@ -1558,7 +1569,7 @@ class Master
 		
 	
 	/**
-	 *	Create a command handler for IRC numerics/commands.
+	 *	Create a command or event handler for IRC numerics/commands.
 	 *
 	 *	If you are passing arguments to the bind handler, then <b>must</b> $aFormat must be populated.
 	 *	If you do not want to pass arguments, you can either assign $aFormat to false or a blank array.
@@ -1568,19 +1579,25 @@ class Master
 	 *
 	 *	<code>$this->iBindID = $this->addHandler("INVITE", "onInvite", array(2, 3));</code>
 	 *
+	 *	You can use this function to add a handler for commands. In this case, the $sCommand argument becomes
+	 *	'COMMAND', the $cCallback argument remains the same, and $aFormat has a different meaning in this context,
+	 *	it is the name of the function (as a string) that is associated with the handler. For a detailed example,
+	 *	check the bottom link.
+	 *
+	 *	<code>$this->aCommand['info'] = $this->addHandler('COMMAND', 'test_func', 'test-func');
+	 *
 	 *	@example OUTRAGEbot/~Examples/addHandler.php A demo plugin that demonstrates how to use it.
-	 *	@param string $sInput IRC numeric name
+	 *	@param string $sCommand either: IRC command/numeric name, or: 'COMMAND' for a text-based channel command.
 	 *	@param callback $cCallback Callback to bind handler.
 	 *	@param array $aFormat Array of arguments to pass to the bind handler.
 	 *	@return string Bind resource ID.
 	 */
-	public function addHandler($sInput, $cCallback, $aFormat)
+	public function addHandler($sInput, $cCallback, $aFormat = array())
 	{
 		$sHandle = substr(sha1(time()."-".uniqid()), 2, 10);
-		
 		$this->aBinds[$sHandle] = array
 		(
-			"INPUT" => $sInput,
+			"INPUT" => strtoupper($sInput),
 			"CALLBACK" => $cCallback,
 			"FORMAT" => $aFormat,
 		);
@@ -1640,11 +1657,27 @@ class Master
 	 *	@param string $sKey
 	 *	@ignore
 	 */
-	public function scanHandlers($aChunks)
+	public function scanHandlers(&$aChunks, &$aRaw)
 	{
-		foreach($this->aBinds as &$aSection)
+		$aChunks[1] = strtoupper($aChunks[1]);
+	
+		foreach($this->aBinds as $aSection)
 		{
 			if(!isset($aChunks[1])) return;
+			
+			if($aChunks[1] == 'PRIVMSG')
+			{
+				if($aSection['INPUT'] == 'COMMAND')
+				{
+					$aCommand = explode(' ', $aChunks[3], 2);
+
+					if($aCommand[0] == $this->oConfig->Network['delimiter'].$aSection['FORMAT'])
+					{
+						call_user_func($aSection['CALLBACK'], $this->getNickname($aChunks[0]),
+							$aChunks[2], (isset($aCommand[1]) ? $aCommand[1] : ""));
+					}
+				}
+			}
 			
 			if($aSection['INPUT'] != $aChunks[1])
 			{

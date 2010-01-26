@@ -18,6 +18,13 @@
 abstract class Plugins
 {
 	/**
+	 *	Log level - the higher the level, the more severe the problem that
+	 *	is allowed to get logged.
+	 */
+	public $pLogLevel = 1;
+	
+	
+	/**
 	 *	Title of the plugin.
 	 *
 	 *	@var string
@@ -130,10 +137,15 @@ abstract class Plugins
 	 *
 	 *	@todo Might enable printing to a file.
 	 *	@param string $sString String to echo.
+	 *	@param integer $iLogLevel Log level.
 	 */
-	public final function Log($sString)
+	public final function Log($sString, $iLogLevel = 1)
 	{
-		echo "[{$this->aIdentifier[0]}]: {$sString}".PHP_EOL;
+		if($iLogLevel >= $this->pLogLevel)
+		{
+			echo "[{$this->aIdentifier[0]}]: {$sString}".PHP_EOL;
+		}
+		
 		return true;
 	}
 	

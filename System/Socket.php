@@ -149,7 +149,7 @@ class Socket
 	
 	/* Recieving data from socket */
 	public function Input()
-	{	
+	{
 		if(!$this->isSocketActive())
 		{
 			if(!$this->isWaiting)
@@ -171,12 +171,18 @@ class Socket
 				unset($this->aMsgQueue[$iKey]);
 			}
 		}
-		
-		if(($sInput = socket_read($this->rSocket, 4096, PHP_BINARY_READ)))
+	
+		if(($sInput = socket_read($this->rSocket, 8192, PHP_BINARY_READ)))
 		{
 			$aInput = explode(IRC_EOL, $sInput);
+			
 			foreach($aInput as $sChunk)
-			{	
+			{
+				if ($sChunk == '')
+				{
+					continue;
+				}
+
 				++$this->aStatistics['Input']['Packets'];
 				$this->aStatistics['Input']['Bytes'] += strlen($sChunk);
 				$this->oMaster->getSend($this, $sChunk);
