@@ -21,12 +21,19 @@ class GoogleCalc extends Plugins
 	/* Called when the plugin is loaded into memory. */
 	public function onConstruct()
 	{
-		$this->rHandler = $this->addHandler('Command', 'getCalc', 'calc');
+		/*
+			This function creates the command handle 'calc'.
+
+			Argument 1: Denotes that this is a command handler.
+			         2: The (local) method to call when invoked.
+				 3: Function name that invokes the method.
+		*/
+		$this->rHandler = $this->addHandler('Command', 'doCalc', 'calc');
 	}
 
 
 	/* Called when someone does ~calc (or w/e) */
-	public function getCalc($sNickname, $sChannel, $sArguments)
+	public function doCalc($sNickname, $sChannel, $sArguments)
 	{
 		if(!$sArguments)
 		{
