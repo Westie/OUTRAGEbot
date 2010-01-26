@@ -1,6 +1,6 @@
 <?php
 /**
- *      Youtube example made by MaVe.
+ *      Google Calculator example made by Westie.
  *      @ignore
  *      @copyright None
  *      @package OUTRAGEbot
