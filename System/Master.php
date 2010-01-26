@@ -41,7 +41,7 @@ class Master
 	/**
 	 *	@ignore
 	 */
-	public $aBinds = array();
+	public $aHandlers = array();
 	
 	
 	/**
@@ -1527,6 +1527,7 @@ class Master
 		{
 			unset($this->oPlugins->$sPlugin);
 			Timers::CheckCall();
+			$this->checkHandlers();
 			echo "* Plugin ".$sPlugin." has been unloaded.".PHP_EOL;
 			return true;
 		}
@@ -1595,7 +1596,7 @@ class Master
 	public function addHandler($sInput, $cCallback, $aFormat = array())
 	{
 		$sHandle = substr(sha1(time()."-".uniqid()), 2, 10);
-		$this->aBinds[$sHandle] = array
+		$this->aHandlers[$sHandle] = array
 		(
 			"INPUT" => strtoupper($sInput),
 			"CALLBACK" => $cCallback,
@@ -1622,9 +1623,9 @@ class Master
 	 */
 	public function getHandler($sKey)
 	{
-		if(isset($this->aBinds[$sKey]))
+		if(isset($this->aHandlers[$sKey]))
         {
-			return $this->aBinds[$sKey];
+			return $this->aHandlers[$sKey];
 		}
 
 		return null;
@@ -1641,9 +1642,9 @@ class Master
 	 */
 	public function removeHandler($sKey)
 	{
-		if(isset($this->aBinds[$sKey]))
+		if(isset($this->aHandlers[$sKey]))
 		{
-			unset($this->aBinds[$sKey]);
+			unset($this->aHandlers[$sKey]);
 			return true;
 		}
 		
@@ -1661,7 +1662,7 @@ class Master
 	{
 		$aChunks[1] = strtoupper($aChunks[1]);
 	
-		foreach($this->aBinds as $aSection)
+		foreach($this->aHandlers as $aSection)
 		{
 			if(!isset($aChunks[1])) return;
 			
@@ -1702,6 +1703,22 @@ class Master
 		}
 	}
 	
+	
+	/**
+	 *	This function loops through all current handlers, and if they are not callable (plugin instance
+	 *	is removed, eg.), then the handler is removed. 
+	 */
+	public function checkHandlers()
+	{
+		foreach($this->aHandlers as $sKey => $aHandle)
+		{
+			if(!is_callable($aHandle['CALLBACK']))
+			{
+				unset($this->aHandlers[$sKey]);
+			}
+		}
+	}
+		
 	
 	/**
 	 *	Request information realtime.

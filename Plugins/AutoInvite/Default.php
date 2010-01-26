@@ -20,11 +20,6 @@ class AutoInvite extends Plugins
 		$this->iBindID = $this->addHandler('INVITE', 'onInvite', array(2, 3));
 	}
 	
-	function onDestruct()
-	{
-		/* Called when the plugin is destructed. */
-		$this->removeHandler($this->iBindID);
-	}
 	
 	function onInvite($sNickname, $sChannel)
 	{

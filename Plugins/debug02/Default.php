@@ -48,7 +48,7 @@ class debug02 extends Plugins
 	 */
 	public function onDestruct()
 	{
-		// Remember that the timers have to be manually killed!
+		// Timers don't have to be removed manually now.
 		$this->removeTimer($this->sTimerKey);
 		$this->Log('Plugin unloaded...');
 	}

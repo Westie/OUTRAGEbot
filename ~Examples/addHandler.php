@@ -41,7 +41,7 @@ class Example extends Plugins
 				  
 			Any invalid indicies will just return NULL values.
 		*/
-		$this->sBindID = $this->addHandler("INVITE", "onInvite", array(2, 3, "Westie"));
+		$this->sBindID = $this->addHandler("Invite", "onInvite", array(2, 3, "Westie"));
 		
 		
 		/*
@@ -51,25 +51,36 @@ class Example extends Plugins
 			however, define what function name they carry, and the command they alias
 			for.
 			
-			Its argument list is the same as the onCommand() callback, except for the
-			absent $sCommand (argument 3).
+			Its argument list (that is used in the called function) is the same as the
+			onCommand() callback, except for the absent $sCommand (argument 3). Look at
+			doTime() for details.
+			
+			Argument 1:         'Command'        Denoting that this is a command bind.
+			         2:         'doTime'         Callback (can be in a different class)
+			         3:         'time'           CaSe SenSiTiVe function name.
+			         
 		*/
+		$this->aFunctions[0] = $this->addHandler('Command', 'doTime', 'time');
 		
-		$this->aFunctions[0] = $this->addHandler('');
+		
+		/*
+			When the plugin is unloaded, the system will automatically unload, and remove
+			the zombie handlers.
+		*/
 	}
 	
 	
-	/* Called when the plugin is unloaded. */
-	public function onDestruct()
-	{
-		$this->removeHandler($this->sBindID);
-	}
-	
-	
-	/* This gets called when that bind matches. */
-	function onInvite($sNickname, $sChannel, $sOther)
+	/* This gets called when the INVITE handler is invoked. */
+	public function onInvite($sNickname, $sChannel, $sOther)
 	{
 		$this->Log($sNickname." has been invited to ".$sChannel.". And to prove it to you, ".$sOther." is the other!");
 		// Will output: 'Username has been invited to #channel. And to prove it to you, Westie is the other!'
+	}
+	
+	
+	/* This gets called when the command handler has been invoked. */
+	public function doTime($sNickname, $sChannel, $sArguments)
+	{
+		$this->Message($sChannel, 'Current time is: '.date(DATE_RFC822));
 	}
 }
