@@ -34,9 +34,9 @@ class debug02 extends Plugins
 		
 		$this->sFunction = $this->addHandler
 		(
-			'Command',
-			'command_TestFunc',
-			'testing'
+			'Command',				// Denote it's a command handler
+			'command_TestFunc',			// Callback to call when invoked
+			'testing'				// Command in IRC to invoke with
 		);
 		
 		$this->Log('Plugin loaded...');
