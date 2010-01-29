@@ -323,12 +323,13 @@ class Master
 	 *	Removes a child from this group.
 	 *	Please note that you cannot remove the master. That would just be pointless.
 	 *
-	 *	<code>$this->removeChild('bot4');
+	 *	<code>$this->removeChild('bot4', 'bai bai!');
 	 *
 	 *	@param string $sChild Child reference.
+	 *	@param string $sReason Reason for quitting channel.
 	 *	@return bool true on success.
 	 */
-	public function removeChild($sChild)
+	public function removeChild($sChild, $sReason)
 	{
 		foreach($this->aBotObjects as $iReference => $oChild)
 		{
@@ -339,7 +340,7 @@ class Master
 					return false;
 				}
 				
-				$oChild->destructBot();
+				$oChild->destructBot($sReason);
 				unset($this->aBotObjects[$iReference]);				
 				$this->aBotObjects = array_values($this->aBotObjects);
 				
