@@ -329,7 +329,7 @@ class Master
 	 *	@param string $sReason Reason for quitting channel.
 	 *	@return bool true on success.
 	 */
-	public function removeChild($sChild, $sReason)
+	public function removeChild($sChild, $sReason = false)
 	{
 		foreach($this->aBotObjects as $iReference => $oChild)
 		{
