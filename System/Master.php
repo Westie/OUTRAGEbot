@@ -239,14 +239,15 @@ class Master
 	 *	@param string $sRealname The child's real name.
 	 *	@return bool true on success.
 	 */
-	public function addChild($sChild, $sNickname, $sUsername, $sRealname)
+	public function addChild($sChild, $sNickname, $sUsername = false, $sRealname = false)
 	{
 		$aDetails = array
 		(
 			'nickname' => $sNickname,
-			'username' => $sUsername,
-			'realname' => $sRealname,
+			'username' => ($sUsername == false ? $sChild : $sUsername),
+			'realname' => ($sRealname == false ? $sNickname : $sRealname),
 			'altnick' => $sNickname.rand(0, 10),
+			'reactevent' => 'false',
 		);
 		
 		return $this->_addChild($sChild, $aDetails);
@@ -600,7 +601,10 @@ class Master
 		
 		/* Let's compare the market, by adding three useless arrays */
 		$aChunks = $this->sortChunks($aRaw);
-		$this->scanHandlers(&$aChunks, &$aRaw);
+		
+		if($this->getChildConfig('reactevent') != 'false')
+		{
+		}
 
 		/* Deal with pings */
 		if($aChunks[0] == 'PING')
@@ -615,7 +619,14 @@ class Master
 			return;
 		}
 		
+		if($this->getChildConfig('reactevent') == 'false')
+		{
+			$this->_onRaw($aChunks);
+			return;
+		}
+		
 		/* The infamous switchboard, removed! */
+		$this->scanHandlers(&$aChunks, &$aRaw);
 		$sCallback = '_on'.$aChunks[1];
 		
 		if(method_exists($this, $sCallback))
@@ -933,6 +944,13 @@ class Master
 				$this->oCurrentBot->setNickname($sNewNick);
 				return;
 			}
+		}
+		
+		/* Other stuff */
+		if($aChunks[3][0] == Format::CTCP)
+		{
+			$this->_onCTCP($aChunks);
+			return;
 		}
 	}
 	
