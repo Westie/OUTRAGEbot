@@ -728,33 +728,33 @@ class Master
 			
 		foreach($this->parseModes($aChunks[3]) as $aMode)
 		{
-			$aUser =& $this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'];
-
+			$iMode = &$this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'];
+			
 			switch($aMode['MODE'])
 			{
 				case 'v':
 				{
-					$aUser ^= 1;
+					$iMode ^= 1;
 					break;
 				}
 				case 'h':
 				{
-					$aUser ^= 3;
+					$iMode ^= 3;
 					break;
 				}
 				case 'o':
 				{
-					$aUser ^= 7;
+					$iMode ^= 7;
 					break;
 				}
 				case 'a':
 				{
-					$aUser ^= 15;
+					$iMode ^= 15;
 					break;
 				}
 				case 'q':
 				{
-					$aUser ^= 31;
+					$iMode ^= 31;
 					break;
 				}
 			}
@@ -1033,6 +1033,83 @@ class Master
 		}
 		
 		return $this->oModes->aChannels[$sChan][$sUser];
+	}
+	
+	
+	/**
+	 *	Returns information about the user in an OOP format. This only
+	 *	currently retrieves channel information.
+	 *
+	 *	<code>$oUser = $this->getUser('Westie');</code>
+	 *
+	 *	<code>
+	 *	stdClass Object
+	 *	(
+	 *		[Channels] => Array
+	 *			(
+	 *				[#westie] => Array
+	 *				(
+	 *					[CHANNEL] => #westie
+	 *					[USERMODE] => ~
+	 *				)
+	 *				...
+	 *			)
+	 *	)</code>
+	 *
+	 *	@param string $sNickname Nickname you want to get data for.
+	 *	@return stdClass Class with information.
+	 */
+	public function getUser($sNickname)
+	{
+		$oUser = new stdClass();
+		$oUser->Channels = array();
+		
+		foreach($this->oModes->aUsers[$sNickname] as $sChannel => $uVoid)
+		{
+			$iUserMode = $this->oModes->aChannels[$sChannel][$sNickname]['iMode'];
+			$sUserMode = "";
+			
+			switch($iUserMode)
+			{
+				case 1:
+				{
+					$sUserMode = "+";
+					break;
+				}
+				case 3:
+				{
+					$sUserMode = "%";
+					break;
+				}
+				case 7:
+				{
+					$sUserMode = "@";
+					break;
+				}
+				case 15:
+				{
+					$sUserMode = "&";
+					break;
+				}
+				case 31:
+				{
+					$sUserMode = "~";
+					break;
+				}
+				default:
+				{
+					$sUserMode = "-";
+				}
+			}
+			
+			$oUser->Channels[$sChannel] = array
+			(
+				"CHANNEL" => $sChannel,
+				"USERMODE" => $sUserMode,
+			);
+		}
+		
+		return $oUser;
 	}
 	
 	
@@ -1888,6 +1965,8 @@ class Master
 	 *	<b>CHANNELS</b> -> An array of all the channels (with modes) that the user is in.
 	 *	</pre>
 	 *
+	 *
+	 *
 	 *	<code>$this->getWhois('Westie');</code>
 	 *
 	 *	@param string $sNickname Nickname of the user.
@@ -1939,6 +2018,8 @@ class Master
 				}
 			}
 		}
+
+		print_r($aReturn);
 
 		return $aReturn;
 	}
