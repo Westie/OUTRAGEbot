@@ -5,10 +5,10 @@
  *	The real brain of the bot, this controls everything. This static hosts all of the bots, and all their files.
  *	If you want to access a bot, this is the class to use.
  *
- *	@package OUTRAGEbot-RC5
+ *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0.0-RC5
+ *	@version 1.0.0
  */
 
 

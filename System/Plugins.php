@@ -9,10 +9,10 @@
  *	To look at the callbacks that plugins natively recieved, look at the
  *	'debug02' plugin.
  *
- *	@package OUTRAGEbot-RC5
+ *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0.0-RC5
+ *	@version 1.0.0
  */
 
 abstract class Plugins
