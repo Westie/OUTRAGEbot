@@ -1684,7 +1684,7 @@ class Master
 	 *	<code>$this->aCommand['info'] = $this->addHandler('COMMAND', 'test_func', 'test-func');
 	 *
 	 *	@example OUTRAGEbot/~Examples/addHandler.php A demo plugin that demonstrates how to use it.
-	 *	@param string $sCommand either: IRC command/numeric name, or: 'COMMAND' for a text-based channel command.
+	 *	@param string $sInput either: IRC command/numeric name, or: 'COMMAND' for a text-based channel command.
 	 *	@param callback $cCallback Callback to bind handler.
 	 *	@param array $aFormat Array of arguments to pass to the bind handler.
 	 *	@return string Bind resource ID.
