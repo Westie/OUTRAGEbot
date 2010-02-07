@@ -67,7 +67,7 @@ class Socket
 		socket_connect($this->rSocket, $oConfig->Network['host'], $oConfig->Network['port']);
 		if(!isset($_SERVER['WINDIR']) && !isset($_SERVER['windir']))
 		{
-			socket_set_nonblock($this->rSocket);
+		 	socket_set_nonblock($this->rSocket);
 		}
 		
 		if(isset($this->aConfig['password']))
@@ -76,7 +76,7 @@ class Socket
 		}
 		
 		$this->Output("NICK {$this->aConfig['nickname']}");
-		$this->Output("USER {$this->aConfig['username']} x x :{$this->aConfig['username']}");
+		$this->Output("USER {$this->aConfig['username']} x x :{$this->aConfig['realname']}");
 		
 		$this->Active = true;
 		$this->isWaiting = false;
@@ -171,7 +171,7 @@ class Socket
 				unset($this->aMsgQueue[$iKey]);
 			}
 		}
-	
+		
 		if(($sInput = socket_read($this->rSocket, 8192, PHP_BINARY_READ)))
 		{
 			$aInput = explode(IRC_EOL, $sInput);

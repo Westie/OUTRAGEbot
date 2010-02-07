@@ -496,7 +496,7 @@ class Master
 	 *	@param string $sMessage Raw IRC message you want to send.
 	 *	@param mixed $mSend How to send the message (Look above).
 	 */
-	public function sendRaw($sMessage, $mSend = SEND_DEF)
+	public function sendRaw($sMessage, $mSend = SEND_CURR)
 	{
 		if(is_int($mSend))
 		{
@@ -935,6 +935,44 @@ class Master
 	/**
 	 *	@ignore
 	 */
+	private function _on353($aChunks)
+	{
+		$aData = explode(" ", $aChunks[3], 3);
+		$aData[2] = substr($aData[2], 1);
+		$aUsers = explode(" ", $aData[2]);
+		$sChan = strtolower($aData[1]);
+				
+		/* Great, we now parse the users... */
+		foreach($aUsers as $sUser)
+		{
+			$iTemp = 0;
+			$sUser = trim($sUser);
+				
+			if(!isset($sUser[0]))
+			{
+				continue;
+			}
+				
+			switch($sUser[0])
+			{
+				case '+': $iTemp = 1; break;
+				case '%': $iTemp = 3; break;
+				case '@': $iTemp = 7; break;
+				case '&': $iTemp = 15; break;
+				case '~': $iTemp = 31; break;
+				default: break;
+			}
+					
+			$sUser = preg_replace("/[+%@&~]/", "", $sUser);
+			$this->oModes->aChannels[$sChan][$sUser]['iMode'] = $iTemp;
+			$this->oModes->aUsers[$sUser][$sChan] = true;
+		}
+	}
+	
+	
+	/**
+	 *	@ignore
+	 */
 	private function _onRaw($aChunks)
 	{
 		switch($aChunks[1])
@@ -943,44 +981,6 @@ class Master
 			case 001:
 			{
 				$this->_onConnect();
-				return;
-			}
-			
-			/* NAMES reply. */
-			case 353:
-			{
-				/* Dirty arrays are dirty. I hate them. */
-				$aData = explode(" ", $aChunks[3], 3);
-				$aData[2] = substr($aData[2], 1);
-				$aUsers = explode(" ", $aData[2]);
-				$sChan = strtolower($aData[1]);
-				
-				/* Great, we now parse the users... */
-				foreach($aUsers as $sUser)
-				{
-					$iTemp = 0;
-					$sUser = trim($sUser);
-					
-					if(!isset($sUser[0]))
-					{
-						continue;
-					}
-					
-					switch($sUser[0])
-					{
-						case '+': $iTemp = 1; break;
-						case '%': $iTemp = 3; break;
-						case '@': $iTemp = 7; break;
-						case '&': $iTemp = 15; break;
-						case '~': $iTemp = 31; break;
-						default: break;
-					}
-					
-					$sUser = preg_replace("/[+%@&~]/", "", $sUser);
-					$this->oModes->aChannels[$sChan][$sUser]['iMode'] = $iTemp;
-					$this->oModes->aUsers[$sUser][$sChan] = true;
-				}
-				
 				return;
 			}
 			
