@@ -464,48 +464,103 @@ class Master
 	
 	
 	/**
-	 *	Sends RAW IRC Messages
+	 *	Sends RAW IRC Messages to the server.
 	 *
-	 *	<code>$this->sendRaw('PRIVMSG #Westie :hai there');</code>
+	 *	There are many different ways of sending a message with this
+	 *	function - this covers all outbound functions. There are three
+	 *	different ways, using the definitions, a string of a child name,
+	 *	or an array of children's names.
+	 *
+	 *	<b>as Definitions:</b>
+	 *	 - SEND_MAST: Sends a message from the master child.
+	 *	 - SEND_CURR: Sends a message from the current child.
+	 *	 - SEND_DIST: Sends a message from each child in succession.
+	 *	 - SEND_ALL: Send a message from all children at the same time.
+	 *
+	 *	<b>as a String:</b>
+	 *	You can send a message from a child's name. For children that
+	 *	are defined in the configuration, it will be their original
+	 *	nickname, whilst for bots created later, it will be name you
+	 *	give them.
+	 *
+	 *	<b>as an Array:</b>
+	 *	You can send messages only from selected children. The same note
+	 *	above applies.
+	 *
+	 *	<code>
+	 *	$this->sendRaw('PRIVMSG #Westie :hai there');		                   // Use default settings.
+	 *	$this->sendRaw('PRIVMSG #Westie :Everyone says hai!', SEND_ALL);           // All children.
+	 *	$this->sendRaw('PRIVMSG #Westie :OUTRAGEbot says hai!', 'OUTRAGEbot');     // From the OUTRAGEbot child.
+	 *	</code>
 	 *
 	 *	@param string $sMessage Raw IRC message you want to send.
-	 *	@param integer $iSend How to send the message (See definitions)
+	 *	@param mixed $mSend How to send the message (Look above).
 	 */
-	public function sendRaw($sMessage, $iSend = SEND_CURR)
+	public function sendRaw($sMessage, $mSend = SEND_DEF)
 	{
-		if($iSend == SEND_DEF)
+		if(is_int($mSend))
 		{
-			$iSend = $this->oConfig->Network['rotation'];
-		}
-		
-		switch($iSend)
-		{
-			case SEND_MAST:
+			if($mSend == SEND_DEF)
 			{
-				$this->aBotObjects[0]->Output($sMessage);
-				break;
+				$mSend = $this->oConfig->Network['rotation'];
 			}
-			case SEND_CURR:
+
+			switch($mSend)
 			{
-				$this->oCurrentBot->Output($sMessage);
-				break;
-			}
-			case SEND_ALL:
-			{
-				foreach($this->aBotObjects as $oBot)
+				case SEND_MAST:
 				{
-					$oBot->Output($sMessage);
+					$this->aBotObjects[0]->Output($sMessage);
+					break;
 				}
-				break;
+				case SEND_CURR:
+				{
+					$this->oCurrentBot->Output($sMessage);
+					break;
+				}
+				case SEND_ALL:
+				{
+					foreach($this->aBotObjects as $oBot)
+					{
+						$oBot->Output($sMessage);
+					}
+					break;
+				}
+				case SEND_DIST:
+				default:
+				{
+					$this->getNextChild()->Output($sMessage);
+					break;
+				}
 			}
-			case SEND_DIST:
-			default:
-			{
-				$this->getNextChild()->Output($sMessage);
-				break;
-			}
+			
+			return true;
 		}
-		return true;
+		elseif(is_string($mSend))
+		{
+			$oChild = $this->getChildObject($mSend);
+			
+			if($oChild != null)
+			{
+				$oChild->Output($sMessage);
+				return true;
+			}
+			
+			return false;
+		}
+		elseif(is_array($mSend))
+		{
+			foreach($mSend as $sSend)
+			{
+				$oChild = $this->getChildObject($mSend);
+			
+				if($oChild != null)
+				{
+					$oChild->Output($sMessage);
+				}
+			}
+			
+			return true;
+		}
 	}
 	
 		
@@ -1373,81 +1428,92 @@ class Master
 	/**
 	 *	Sends a message to the specified channel.
 	 *
-	 *	<code>$this->sendMessage('#ffs', 'some message here');</code>
+	 *	<code>$this->Message('#ffs', 'some message here');</code>
 	 *
 	 *	@param string $sChannel Channel name or nickname
 	 *	@param string $sMessage Message to send
-	 *	@param integer $iSend How to send message
+	 *	@param integer $mSend Method to send messages (see sendRaw() for details)
 	 *	@see Master::sendRaw()
 	 */
-	public function sendMessage($sChannel, $sMessage, $iSend = SEND_DEF)
+	public function Message($sChannel, $sMessage, $mSend = SEND_DEF)
 	{
-		return $this->sendRaw("PRIVMSG {$sChannel} :{$sMessage}", $iSend);
+		return $this->sendRaw("PRIVMSG {$sChannel} :{$sMessage}", $mSend);
 	}
 	
 	
 	/**
 	 *	Sends an action to the specified channel.
 	 *
-	 *	<code>$this->sendAction('#ffs', 'likes Westie');</code>
+	 *	<code>$this->Action('#ffs', 'likes Westie');</code>
 	 *
 	 *	@param string $sChannel Channel name
 	 *	@param string $sMessage Message to send
-	 *	@param integer $iSend How to send message
+	 *	@param integer $mSend Method to send messages (see sendRaw() for details)
 	 *	@see Master::sendRaw()
 	 */
-	public function sendAction($sChannel, $sMessage, $iSend = SEND_DEF)
+	public function Action($sChannel, $sMessage, $mSend = SEND_DEF)
 	{
-		return $this->sendRaw("PRIVMSG {$sChannel} :".chr(1)."ACTION {$sMessage}".chr(1), $iSend);
+		return $this->sendRaw("PRIVMSG {$sChannel} :".chr(1)."ACTION {$sMessage}".chr(1), $mSend);
+	}
+	
+	
+	/**
+	 *	Sends a raw IRC message.
+	 *
+	 *	@ignore
+	 */
+	public function Raw($sMessage, $mSend = SEND_DEF)
+	{
+		return $this->sendRaw($sMessage, $mSend);
 	}
 	
 	
 	/**
 	 *	Sends a notice to the specified channel.
 	 *
-	 *	<code>$this->sendNotice('Westie', 'Here is your password!');</code>
+	 *	<code>$this->Notice('Westie', 'Here is your password!');</code>
 	 *
 	 *	@param string $sNickname Nickname
 	 *	@param string $sMessage Message to send
-	 *	@param integer $iSend How to send message
+	 *	@param integer $mSend Method to send messages (see sendRaw() for details)
 	 *	@see Master::sendRaw()
 	 */
-	public function sendNotice($sNickname, $sMessage, $iSend = SEND_DEF)
+	public function Notice($sNickname, $sMessage, $mSend = SEND_DEF)
 	{
-		return $this->sendRaw("NOTICE {$sNickname} :{$sMessage}", $iSend);
+		return $this->sendRaw("NOTICE {$sNickname} :{$sMessage}", $mSend);
 	}
 	
 	
 	/**
 	 *	Sends a message to the specified channel.
 	 *
-	 *	@see Master::sendMessage()
+	 *	@ignore
 	 */
-	public function Message($sChannel, $sMessage, $iSend = SEND_DEF)
+	public function sendMessage($sChannel, $sMessage, $mSend = SEND_DEF)
 	{
-		return $this->sendRaw("PRIVMSG {$sChannel} :{$sMessage}", $iSend);
+		return $this->sendRaw("PRIVMSG {$sChannel} :{$sMessage}", $mSend);
 	}
 	
 	
 	/**
 	 *	Sends an action to the specified channel.
 	 *
-	 *	@see Master::sendAction()
+	 *	@ignore
 	 */
-	public function Action($sChannel, $sMessage, $iSend = SEND_DEF)
+	public function sendAction($sChannel, $sMessage, $mSend = SEND_DEF)
 	{
-		return $this->sendRaw("PRIVMSG {$sChannel} :".chr(1)."ACTION {$sMessage}".chr(1), $iSend);
+		return $this->sendRaw("PRIVMSG {$sChannel} :".chr(1)."ACTION {$sMessage}".chr(1), $mSend);
 	}
 	
 	
 	/**
 	 *	Sends a notice to the specified channel.
 	 *
-	 *	@see Master::sendNotice()
+	 *	@ignore
 	 */
-	public function Notice($sNickname, $sMessage, $iSend = SEND_DEF)
+	public function sendNotice($sNickname, $sMessage, $mSend = SEND_DEF)
 	{
-		return $this->sendRaw("NOTICE {$sNickname} :{$sMessage}", $iSend);
+		return $this->sendRaw("NOTICE {$sNickname} :{$sMessage}", $mSend);
 	}
 	
 	
@@ -1473,12 +1539,12 @@ class Master
 	 *
 	 *	@param string $sNickname Nickname
 	 *	@param string $sRequest CTCP request
-	 *	@param integer $iSend How to send message
+	 *	@param integer $mSend Method to send messages (see sendRaw() for details)
 	 *	@see Master::sendRaw()
 	 */
-	public function ctcpRequest($sNickname, $sRequest, $iSend = SEND_DEF)
+	public function ctcpRequest($sNickname, $sRequest, $mSend = SEND_DEF)
 	{
-		return $this->sendRaw("PRIVMSG {$sNickname} :".chr(1).trim($sRequest).chr(1), $iSend);
+		return $this->sendRaw("PRIVMSG {$sNickname} :".chr(1).trim($sRequest).chr(1), $mSend);
 	}
 
 
