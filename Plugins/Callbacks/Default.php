@@ -15,7 +15,7 @@ class Callbacks extends Plugins
 
 	public function onConstruct()
 	{
-		$this->_getCode();
+		$this->_Callbacks_getCode();
 	}
 
 
@@ -25,7 +25,7 @@ class Callbacks extends Plugins
 		{
 			if($oBot->isPluginLoaded('Callbacks'))
 			{
-				$oBot->getPlugin('Callbacks')->_getCode();
+				$oBot->getPlugin('Callbacks')->_Callbacks_getCode();
 				echo "HAI".PHP_EOL;
 			}
 		}

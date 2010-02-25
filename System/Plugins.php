@@ -90,7 +90,12 @@ abstract class Plugins
 	public final function __destruct()
 	{
 		call_user_func(array($this, 'onDestruct'));
-		$this->oBot = null;
+		
+		foreach($this as $sKey => $sValue)
+		{
+			$this->$sKey = NULL;
+		}
+		
 		return true;
 	}
 	

@@ -1687,6 +1687,7 @@ class Master
 	{
 		if(isset($this->oPlugins->$sPlugin))
 		{
+			$this->oPlugins->$sPlugin->__destruct();
 			unset($this->oPlugins->$sPlugin);
 			Timers::CheckCall();
 			$this->checkHandlers();
@@ -1876,6 +1877,7 @@ class Master
 		{
 			if(!is_callable($aHandle['CALLBACK']))
 			{
+				echo 'TWO';
 				unset($this->aHandlers[$sKey]);
 			}
 		}
@@ -1969,6 +1971,20 @@ class Master
 	public function Part($sChannel, $sReason = false)
 	{
 		return $this->sendRaw("PART $sChannel".($sReason == false ? "" : " :{$sReason}"));
+	}
+	
+	
+	/**
+	 *	Set the modes on a channel.
+	 *
+	 *	<code>$this->Mode('#OUTRAGEbot', '+o Westie');</code>
+	 *
+	 *	@param string $sChannel Channel name
+	 *	@param string $sMode Mode to be set
+	 */
+	public function Mode($sChannel, $sMode)
+	{
+		return $this->Raw('MODE '.$sMessage.' '.$sMode);
 	}
 	
 	
