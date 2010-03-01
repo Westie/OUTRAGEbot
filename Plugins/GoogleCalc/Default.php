@@ -1,6 +1,7 @@
 <?php
 /**
  *      Google Calculator example made by Westie.
+ *
  *      @ignore
  *      @copyright None
  *      @package OUTRAGEbot

@@ -1,0 +1,12 @@
+# Version 1.0.1 (In development)
+@ Added $sChannel (opt) parameter to all IBC functions
++ Added Master.getIBCCount()
+- Removed Master.getMasterConfig()
++ Added Master.getNetworkConfig()
++ Added Control::botGetNames()
+@ Updated Evaluation, DynamicCommand plugins
++ Added Delay plugin
+
+
+# Version 1.0.0 (05/02/2010)
+> Yeah, this log started.

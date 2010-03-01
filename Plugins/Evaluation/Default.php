@@ -23,9 +23,9 @@ class Evaluation extends Plugins
 			return false;
 		}		
 		
-		$aConfig = $this->getMasterConfig('Network');
+		$sDelimiter = $this->getNetworkConfig('delimiter');
 		
-		if(!strcmp($sCommand, $aConfig['delimiter']))
+		if(!strcmp($sCommand, $sDelimiter))
 		{
 			if(!$this->isAdmin())
 			{
@@ -34,7 +34,7 @@ class Evaluation extends Plugins
 			
 			if(!$sArguments)
 			{
-				$this->sendNotice($sNickname, "USAGE: {$aConfig['delimiter']}{$aConfig['delimiter']} [PHP eval code]");
+				$this->sendNotice($sNickname, "USAGE: {$sDelimiter}{$sDelimiter} [PHP eval code]");
 				return true;
 			}
 			
@@ -57,7 +57,7 @@ class Evaluation extends Plugins
 			
 			if(!$sArguments)
 			{
-				$this->sendNotice($sNickname, "USAGE: {$aConfig['delimiter']}exe [PHP eval code]");
+				$this->sendNotice($sNickname, "USAGE: {$sDelimiter}exe [PHP eval code]");
 				return true;
 			}
 			
@@ -80,9 +80,9 @@ class Evaluation extends Plugins
 		@list($sCommand, $sArguments) = $aData;
 		unset($aData);
 		
-		$aConfig = $this->getMasterConfig('Network');
+		$sDelimiter = $this->getNetworkConfig('delimiter');
 		
-		if(!strcmp($sCommand, $aConfig['delimiter'].$aConfig['delimiter']))
+		if(!strcmp($sCommand, $sDelimiter.$sDelimiter))
 		{
 			if(!$this->isAdmin())
 			{
@@ -91,7 +91,7 @@ class Evaluation extends Plugins
 			
 			if(!$sArguments)
 			{
-				$this->sendNotice($sNickname, "USAGE: {$aConfig['delimiter']}{$aConfig['delimiter']} [PHP eval code]");
+				$this->sendNotice($sNickname, "USAGE: {$sDelimiter}{$sDelimiter} [PHP eval code]");
 				return true;
 			}
 			

@@ -2,6 +2,7 @@
 /**
  *	Callbacks class for OUTRAGEbot.
  *
+ *	@ignore
  *	@copyright None
  *	@package OUTRAGEbot
  */

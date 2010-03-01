@@ -5,9 +5,6 @@
  *	This class allows the usage of OUTRAGEbot as a simple framework, to send
  *	a message from a forum, or as a plugin for another PHP based deamon.
  *
- *	To look at the callbacks that plugins natively recieved, look at the
- *	'debug02' plugin.
- *
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
@@ -16,9 +13,13 @@
 
 class Framework
 {
-	public function __construct()
+	private
+		$aStack = array();
+		
+		
+	public function __construct($sFile)
 	{
-		define("BASE_DIRECTORY", dirname(__file__));
+		define("BASE_DIRECTORY", realpath(__file__.'/../..'));
 		require "Definitions.php";
 
 		include "Format.php";
@@ -30,8 +31,39 @@ class Framework
 		include "Configuration.php";
 		
 		Control::$oConfig = new ConfigParser();
-		Control::$oConfig->parseDirectory();
+		Control::$oConfig->parseConfig($sFile);
+	}
+	
+
+	public function Loop(&$bVar, $mInput = array())
+	{
+		$this->aStack = (array) $mInput;
+		
+		while($bVar)
+		{
+	        	Timers::Scan();
+			
+			foreach(Control::$aBots as $oMaster)
+			{
+				$oMaster->Loop();
+			}
+			
+			Timers::Scan();
+			usleep(CORE_SLEEP);
+		}
+	}
+
+
+	public function Over()
+	{
+		foreach(Control::$aBots as $sKey => $oMaster)
+		{
+			unset(Control::$aBots[$sKey]);
+		}
+
+		foreach(Control as $sKey => $mSomething)
+		{
+			unset(Control::$sKey);
+		}
 	}
 }
-
-?>

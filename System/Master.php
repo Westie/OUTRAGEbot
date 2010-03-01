@@ -99,6 +99,8 @@ class Master
 		$this->sBotGroup = $sKey;
 		$this->oPlugins = new stdClass();
 		$this->oModes = new stdClass();
+		
+		Control::$aStack[$this->sBotGroup] = array();
 
 		echo PHP_EOL." Creating '{$this->oConfig->Network['name']}' at {$this->oConfig->Network['host']}:{$this->oConfig->Network['port']}".PHP_EOL;
 		
@@ -442,21 +444,22 @@ class Master
 	
 	
 	/**
-	 *	Returns a value from the master configuration. The master configuration
-	 *	is anything that is within ~Network.
+	 *	Returns a value from the network configuration. This
+	 *	is anything that is within [~Network].
 	 *
 	 *	<code>
-	 *	echo $this->getMasterConfig('nickname');
-	 *	// Returns: OUTRAGEbot</code>
+	 *	echo $this->getNetworkConfig('name');
+	 *	// Returns: FFSNetwork
+	 *	</code>
 	 *
 	 *	@param string $sKey Configuration key to lookup.
 	 *	@return mixed Value that is returned.
 	 */
-	public function getMasterConfig($sKey)
+	public function getNetworkConfig($sKey)
 	{
-		if(isset($this->oConfig->$sKey))
+		if(isset($this->oConfig->Network[$sKey]))
 		{
-			return $this->oConfig->$sKey;
+			return $this->oConfig->Network[$sKey];
 		}
 		
 		return null;
@@ -1877,7 +1880,6 @@ class Master
 		{
 			if(!is_callable($aHandle['CALLBACK']))
 			{
-				echo 'TWO';
 				unset($this->aHandlers[$sKey]);
 			}
 		}
@@ -2115,16 +2117,12 @@ class Master
 	 *
 	 *	@param string $sBotGroup Bot group to send the message to.
 	 *	@param mixed $mContents Thing to put into the stack.
+	 *	@param string $sChannel Channel name
 	 */
-	public function sendIBCMessage($sBotGroup, $mContents)
+	public function sendIBCMessage($sBotGroup, $mContents, $sChannel = "Default")
 	{
-		if(isset(Control::$aBots[$sBotGroup]))
-		{
-			Control::$aStack[$sBotGroup][] = $mContents;
-			return true;
-		}
-		
-		return false;
+		Control::$aStack[$sBotGroup][$sChannel][] = $mContents;
+		return true;
 	}
 	
 	
@@ -2134,13 +2132,33 @@ class Master
 	 *
 	 *	<code>$aQueue = $this->getIBCMessages();</code>
 	 *
+	 *	@param string $sChannel Channel name
 	 *	@return array Array of all messages.
 	 */
-	public function getIBCMessages()
+	public function getIBCMessages($sChannel = "Default")
 	{
-		$aResult = Control::$aStack[$this->sBotGroup];
-		Control::$aStack[$this->sBotGroup] = array();
+		$aResult = Control::$aStack[$this->sBotGroup][$sChannel];
+		Control::$aStack[$this->sBotGroup][$sChannel] = array();
+		
 		return $aResult;
+	}
+	
+	
+	/**
+	 *	Counts the amount of messages in the stack for the current
+	 *	bot group.
+	 *
+	 *	@param string $sChannel Channel name
+	 *	@return integer Amount of messages in the stack.
+	 */
+	public function getIBCCount($sChannel = "Default")
+	{
+		if(isset(Control::$aStack[$this->sBotGroup][$sChannel]))
+		{
+			return count(Control::$aStack[$this->sBotGroup][$sChannel]);
+		}
+		
+		return 0;
 	}
 }
 

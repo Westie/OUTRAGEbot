@@ -1,6 +1,7 @@
 <?php
 /**
  *	TinyURL example made by MaVe.
+ *
  *	@ignore
  *	@copyright None
  *	@package OUTRAGEbot

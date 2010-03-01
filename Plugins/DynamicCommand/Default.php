@@ -27,7 +27,7 @@ class DynamicCommand extends Plugins
 		}
 		else
 		{
-			$this->sFilename = $this->oConfig->Network['name'];
+			$this->sFilename = $this->getNetworkConfig('name');
 		}
 		
 		$this->commandsLoad();

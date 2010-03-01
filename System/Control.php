@@ -126,6 +126,17 @@ class Control
 	
 	
 	/**
+	 *	Retrieves the names of all the bot groups loaded.
+	 *
+	 *	@return array List of all bot groups.
+	 */
+	static function botGetNames()
+	{
+		return array_keys(self::$aBots);
+	} 
+	
+	
+	/**
 	 *	Retrieve the bot-groups as objects.
 	 *
 	 *	@param string $sConfig Bot-group - optional.

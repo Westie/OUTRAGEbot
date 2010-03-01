@@ -1,6 +1,7 @@
 <?php
 /**
  *	Youtube example made by MaVe.
+ *
  *	@ignore
  *	@copyright None
  *	@package OUTRAGEbot
