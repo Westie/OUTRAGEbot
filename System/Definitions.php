@@ -14,8 +14,8 @@ error_reporting(E_ALL | E_STRICT);
 
 
 /* Some bot-brag-relating things. */
-define("BOT_VERSION", "1.0.1-Dev");
-define("BOT_RELDATE", "26/02/2010 15:00:00");
+define("BOT_VERSION", "1.0.1");
+define("BOT_RELDATE", "04/03/2010 23:10:00");
 
 
 /* How long the bot sleeps between socket calls. */

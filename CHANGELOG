@@ -1,11 +1,13 @@
-# Version 1.0.1 (In development)
+# Version 1.0.1 (04/03/2010)
 @ Added $sChannel (opt) parameter to all IBC functions
 + Added Master.getIBCCount()
 - Removed Master.getMasterConfig()
 + Added Master.getNetworkConfig()
 + Added Control::botGetNames()
 @ Updated Evaluation, DynamicCommand plugins
-+ Added Delay plugin
++ Added Relay plugin
++ Added UPTIME in CTCP
++ Quietly added Master.dateSince(), to be documented further
 
 
 # Version 1.0.0 (05/02/2010)

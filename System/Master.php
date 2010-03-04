@@ -874,7 +874,17 @@ class Master
 			}
 			case 'UPTIME':
 			{
-				$this->ctcpReply($this->getNickname($aChunks[0]), "UPTIME ".date("d/m/Y H:i:s", $this->oCurrentBot->aStatistics['StartTime']));
+				$aSince = $this->dateSince($this->oCurrentBot->aStatistics['StartTime']);
+				
+				$sString = "{$aSince['WEEKS']} weeks, {$aSince['DAYS']} days, {$aSince['HOURS']} hours, ".
+				"{$aSince['MINUTES']} minutes, {$aSince['SECONDS']} seconds.";
+				
+				$this->ctcpReply($this->getNickname($aChunks[0]), "UPTIME ".$sString);
+				break;
+			}
+			case 'START':
+			{
+				$this->ctcpReply($this->getNickname($aChunks[0]), "START ".date("d/m/Y H:i:s", $this->oCurrentBot->aStatistics['StartTime']));
 				break;
 			}
 		}
@@ -2159,6 +2169,68 @@ class Master
 		}
 		
 		return 0;
+	}
+	
+	
+	/**
+	 *	Function to get the date since something.
+	 *
+	 *	@ignore
+	 */
+	public function dateSince($iDate1, $iDate2 = 0)
+	{
+		if(!$iDate2)
+		{
+			$iDate2 = mktime();
+		}
+
+   		$aDifferences = array
+		(
+			'SECONDS' => 0,
+			'MINUTES'=> 0,
+			'HOURS' => 0,
+			'DAYS' => 0,
+			'WEEKS' => 0,
+			
+			'TOTAL_SECONDS' => 0,
+			'TOTAL_MINUTES' => 0,
+			'TOTAL_HOURS' => 0,
+			'TOTAL_DAYS' => 0,
+			'TOTAL_WEEKS' => 0,
+		);
+
+		if($iDate2 > $iDate1)
+		{
+			$iTemp = $iDate2 - $iDate1;
+		}
+		else
+		{
+			$iTemp = $iDate1 - $iDate2;
+		}
+
+		$iSeconds = $iTemp;
+
+		$aDifferences['WEEKS'] = floor($iTemp / 604800);
+		$iTemp -= $aDifferences['WEEKS'] * 604800;
+
+		$aDifferences['DAYS'] = floor($iTemp / 86400);
+		$iTemp -= $aDifferences['DAYS'] * 86400;
+
+		$aDifferences['HOURS'] = floor($iTemp / 3600);
+		$iTemp -= $aDifferences['HOURS'] * 3600;
+
+		$aDifferences['MINUTES'] = floor($iTemp / 60);
+		$iTemp -= $aDifferences['MINUTES'] * 60;
+
+		$aDifferences['SECONDS'] = $iTemp;
+		
+		$aDifferences['TOTAL_WEEKS'] = floor($seconds/604800);
+		$aDifferences['TOTAL_DAYS'] = floor($seconds/86400);
+		$aDifferences['TOTAL_HOURS'] = floor($seconds/3600);
+		$aDifferences['TOTAL_MINUTES'] = floor($seconds/60);
+		$aDifferences['TOTAL_SECONDS'] =$iSeconds;
+
+		return $aDifferences;
 	}
 }
 
