@@ -1,8 +1,13 @@
-# Version 1.0.2 (In development)
-+ Added INI handler
+Version 1.0.2 (In development)
+-------------------------------
++ In the process of adding INI handler
++ Created Master.getChannel()
 + Added more info to Master.getUser()
+@ Tweaked the docs, fixed some commenting stuff.
 
-# Version 1.0.1 (04/03/2010)
+
+Version 1.0.1 (04/03/2010)
+--------------------------
 @ Added $sChannel (opt) parameter to all IBC functions - note, /NOT/ IRC
 	channels, it's different communication channels
 + Added Master.getIBCCount()
@@ -15,5 +20,6 @@
 + Quietly added Master.dateSince(), to be documented further
 
 
-# Version 1.0.0 (05/02/2010)
-> Yeah, this log started.
+Version 1.0.0 (05/02/2010)
+--------------------------
+> Yeah, this log started. Just take everything is read, eh?

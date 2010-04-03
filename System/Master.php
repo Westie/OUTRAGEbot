@@ -1765,7 +1765,7 @@ class Master
 			
 		include($sFile);
 		unlink($sFile);
-				
+		
 		$this->oPlugins->$sPlugin = new $sIdentifier($this, array($sPlugin, $sIdentifier));
 		echo "* Plugin ".$sPlugin." has been loaded.".PHP_EOL;
 		
@@ -1957,7 +1957,6 @@ class Master
 	/**
 	 *	Scans through the bind handlers.
 	 *
-	 *	@param string $sKey
 	 *	@ignore
 	 */
 	public function scanHandlers(&$aChunks, &$aRaw)
@@ -1997,13 +1996,12 @@ class Master
 			{
 				foreach($aSection['FORMAT'] as $mFormat)
 				{
-					$aArguments[] = (is_integer($mFormat) ? $aChunks[$mFormat] : $mFormat);					
+					$aArguments[] = (is_integer($mFormat) ? $aChunks[$mFormat] : $mFormat);
 				}
 			}
 			
 			if($aMatches['MATCHES'] !== false)
 			{
-			
 				foreach($aMatches['MATCHES'] as $iValue => $sValue)
 				{
 					if(preg_match($sValue, $aChunks[$iValue]) == false)
@@ -2020,7 +2018,9 @@ class Master
 	
 	/**
 	 *	This function loops through all current handlers, and if they are not callable (plugin instance
-	 *	is removed, eg.), then the handler is removed. 
+	 *	is removed, eg.), then the handler is removed.
+	 *
+	 *	@ignore
 	 */
 	public function checkHandlers()
 	{
@@ -2073,8 +2073,7 @@ class Master
 	 *	<code>$this->Invite("#ffs", "Westie");</code>
 	 *
 	 *	@param string $sChannel Channel name.
-	 *	@param string $sNickname Nickname of the person to kick.
-	 *	@param string $sReason Reason of the kick.
+	 *	@param string $sNickname Nickname of the person to invite
 	 */
 	public function Invite($sChannel, $sNickname)
 	{
@@ -2256,7 +2255,9 @@ class Master
 	
 	
 	/**
-	 *	Returns 
+	 *	Returns nothing, yet.
+	 *
+	 *	@ignore
 	 */
 	public function getWhoList($sChannel, $iDelay = 500000)
 	{
