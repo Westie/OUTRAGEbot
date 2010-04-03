@@ -245,4 +245,10 @@ class debug02 extends Plugins
 		$this->sendMessage($sChannel, 'time: '.microtime());
 		$this->Log("Timer called.");
 	}
+	
+	
+	function test($m)
+	{
+		echo "hai: $m";
+	}
 }

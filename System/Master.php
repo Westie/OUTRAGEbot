@@ -684,7 +684,7 @@ class Master
 		}
 		
 		/* The infamous switchboard, removed! */
-		$this->scanHandlers(&$aChunks, &$aRaw);
+		$this->scanHandlers($aChunks, $aRaw);
 		$sCallback = '_on'.$aChunks[1];
 		
 		if(method_exists($this, $sCallback))
@@ -740,8 +740,11 @@ class Master
 	 */
 	private function _onJoin($aChunks)
 	{
-		$this->invokeEvent("onJoin", $this->getNickname($aChunks[0]), $aChunks[2]);
-		$this->addUserToChannel($aChunks[2], $this->getNickname($aChunks[0]));
+		$sNickname = $this->getNickname($aChunks[0]);
+		
+		$this->oModes->aUserInfo[strtolower($sNickname)]['Hostname'] = $this->getHostname($aChunks[0]);
+		$this->invokeEvent("onJoin", $sNickname, $aChunks[2]);
+		$this->addUserToChannel($aChunks[2], $sNickname);
 	}
 	
 	
@@ -933,7 +936,13 @@ class Master
 	 */
 	private function _onTopic($aChunks)
 	{
-		$this->invokeEvent("onTopic", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
+		$sNickname = $this->getNickname($aChunks[0]);
+		
+		$this->oModes->aChannelInfo[strtolower($aChunks[2])]['TopicString'] = $aChunks[3];
+		$this->oModes->aChannelInfo[strtolower($aChunks[2])]['TopicSetTime'] = time();
+		$this->oModes->aChannelInfo[strtolower($aChunks[2])]['TopicSetBy'] = $sNickname;
+	
+		$this->invokeEvent("onTopic", $sNickname, $aChunks[2], $aChunks[3]);
 	}
 	
 	
@@ -1010,6 +1019,23 @@ class Master
 				}
 				
 				$this->oCurrentBot->setNickname($sNewNick);
+				return;
+			}
+			
+			/* Topic information */
+			case 332:
+			{
+				$aData = explode(' :', $aChunks[3], 2);
+				$this->oModes->aChannelInfo[strtolower($aData[0])]['TopicString'] = $aData[1];
+				$this->getWhoList($aData[0]);
+				return;
+			}
+			
+			case 333:
+			{
+				$aData = explode(' ', $aChunks[3], 3);				
+				$this->oModes->aChannelInfo[strtolower($aData[0])]['TopicSetTime'] = $aData[2];
+				$this->oModes->aChannelInfo[strtolower($aData[0])]['TopicSetBy'] = $aData[1];
 				return;
 			}
 		}
@@ -1129,8 +1155,8 @@ class Master
 	 */
 	public function getUser($sNickname)
 	{
-		$oUser = new stdClass();
-		$oUser->Channels = array();
+		$pUser = new stdClass();
+		$pUser->Channels = array();
 		
 		foreach($this->oModes->aUsers[$sNickname] as $sChannel => $uVoid)
 		{
@@ -1170,14 +1196,92 @@ class Master
 				}
 			}
 			
-			$oUser->Channels[$sChannel] = array
+			$pUser->Channels[$sChannel] = array
 			(
 				"CHANNEL" => $sChannel,
 				"USERMODE" => $sUserMode,
 			);
 		}
 		
-		return $oUser;
+		$aWhois = $this->getWhois($sNickname);
+		
+		$pUser->Connection = array
+		(
+			'Server' => $aWhois['SERVER']['SERVER'],
+			'Information' => $aWhois['SERVER']['INFO'],
+		);
+		
+		$pUser->Information = array
+		(
+			'Nickname' => $sNickname,
+			'Username' => $aWhois['INFO']['USERNAME'],
+			'Realname' => $aWhois['INFO']['REALNAME'],
+			'Hostname' => $aWhois['INFO']['HOSTNAME'],
+		);
+		
+		return $pUser;
+	}
+	
+	
+	/**
+	 *	Returns a stdClass instance of the information about a channel.
+	 *
+	 *	@param string $sChannel Channel name
+	 *	@return stdClass Channel information
+	 */
+	public function getChannel($sChannel)
+	{
+		$pChannel = new stdClass();
+		$sChannel = strtolower($sChannel);
+		
+		$pChannel->Users = array();
+		
+		foreach($this->oModes->aChannels[$sChannel] as $sKey => $aUser)
+		{
+			$iUserMode = $aUser['iMode'];
+			$sUserMode = "";
+			
+			switch($iUserMode)
+			{
+				case 1:
+				{
+					$sUserMode = "+";
+					break;
+				}
+				case 3:
+				{
+					$sUserMode = "%";
+					break;
+				}
+				case 7:
+				{
+					$sUserMode = "@";
+					break;
+				}
+				case 15:
+				{
+					$sUserMode = "&";
+					break;
+				}
+				case 31:
+				{
+					$sUserMode = "~";
+					break;
+				}
+				default:
+				{
+					$sUserMode = "-";
+				}
+			}
+			
+			$pChannel->Users[] = array
+			(
+				"NICKNAME" => $sKey,
+				"USERMODE" => $sUserMode,
+			);
+		}
+		
+		return $pChannel;
 	}
 	
 	
@@ -1575,14 +1679,14 @@ class Master
 	 *	@param mixed $... Arguments to pass to timer.
 	 *	@return string Timer reference ID.
 	 */
-	public function addTimer($cCallback, $iInterval, $iRepeat)
+	public function addTimer($cCallback, $fInterval, $iRepeat)
 	{
 		$aArguments = func_get_args();
 		array_shift($aArguments);
 		array_shift($aArguments);
 		array_shift($aArguments);
 		
-		return Timers::Create($cCallback, $iInterval, $iRepeat, (array) $aArguments); 
+		return Timers::Create($cCallback, $fInterval, $iRepeat, (array) $aArguments); 
 	}
 
 		
@@ -1772,15 +1876,37 @@ class Master
 	public function addHandler($sInput, $cCallback, $aFormat = array())
 	{
 		$sHandle = substr(sha1(time()."-".uniqid()), 2, 10);
+		
 		$this->aHandlers[$sHandle] = array
 		(
 			"INPUT" => strtoupper($sInput),
 			"CALLBACK" => $cCallback,
 			"FORMAT" => $aFormat,
+			"MATCHES" => false,
 		);
 		
 		return $sHandle;
 	}
+	
+	
+	/**
+	 *	Create a regex handler.
+	 */
+	public function addComplexHandler($sInput, $aMatches, $cCallback, $aFormat = array())
+	{
+		$sHandle = substr(sha1(time()."-".uniqid()), 2, 10);
+		
+		$this->aHandlers[$sHandle] = array
+		(
+			"INPUT" => strtoupper($sInput),
+			"CALLBACK" => $cCallback,
+			"FORMAT" => $aFormat,
+			"MATCHES" => $aMatches,
+		);
+		
+		return $sHandle;
+	}
+	
 	   
 	/**
 	 *	Gets the information of a bind from its reference ID.
@@ -1872,6 +1998,18 @@ class Master
 				foreach($aSection['FORMAT'] as $mFormat)
 				{
 					$aArguments[] = (is_integer($mFormat) ? $aChunks[$mFormat] : $mFormat);					
+				}
+			}
+			
+			if($aMatches['MATCHES'] !== false)
+			{
+			
+				foreach($aMatches['MATCHES'] as $iValue => $sValue)
+				{
+					if(preg_match($sValue, $aChunks[$iValue]) == false)
+					{
+						continue;
+					}
 				}
 			}
 			
@@ -2113,9 +2251,15 @@ class Master
 			}
 		}
 
-		print_r($aReturn);
-
 		return $aReturn;
+	}
+	
+	
+	/**
+	 *	Returns 
+	 */
+	public function getWhoList($sChannel, $iDelay = 500000)
+	{
 	}
 	
 	

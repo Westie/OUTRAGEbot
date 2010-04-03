@@ -14,8 +14,8 @@ error_reporting(E_ALL | E_STRICT);
 
 
 /* Some bot-brag-relating things. */
-define("BOT_VERSION", "1.0.1");
-define("BOT_RELDATE", "04/03/2010 23:10:00");
+define("BOT_VERSION", "1.0.2");
+define("BOT_RELDATE", "03/04/2010 23:10:00 (devStart)");
 
 
 /* How long the bot sleeps between socket calls. */
@@ -48,3 +48,17 @@ define("MODE_USER_HOPER", 2);
 define("MODE_USER_OPER", 4);
 define("MODE_USER_ADMIN", 8);
 define("MODE_USER_OWNER", 16);
+
+
+/* Handler definitions */
+define("IRC_HOSTMASK", 0);
+define("IRC_COMMAND", 1);
+
+define("IRC_PRIVMSG_CHANNEL", 2);
+define("IRC_PRIVMSG_MESSAGE", 3);
+
+define("IRC_INVITE_CHANNEL", 3);
+define("IRC_INVITE_NICKNAME", 2);
+
+define("IRC_JOIN_CHANNEL", -1);
+define("IRC_JOIN_NICKNAME", -1); 

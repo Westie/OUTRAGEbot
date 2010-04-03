@@ -1,5 +1,10 @@
+# Version 1.0.2 (In development)
++ Added INI handler
++ Added more info to Master.getUser()
+
 # Version 1.0.1 (04/03/2010)
-@ Added $sChannel (opt) parameter to all IBC functions
+@ Added $sChannel (opt) parameter to all IBC functions - note, /NOT/ IRC
+	channels, it's different communication channels
 + Added Master.getIBCCount()
 - Removed Master.getMasterConfig()
 + Added Master.getNetworkConfig()
