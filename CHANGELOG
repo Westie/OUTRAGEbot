@@ -1,9 +1,12 @@
-Version 1.0.2 (In development)
+Version 1.1.0 (In development)
 -------------------------------
-+ In the process of adding INI handler
-+ Created Master.getChannel()
-+ Added more info to Master.getUser()
-@ Tweaked the docs, fixed some commenting stuff.
++ Added Master.getChannel()
++ Put more info to Master.getUser()
++ Added Master.parseHostmask()
++ Added Master.getUsername()
+$ Renamed Master.activatePlugin() to Master.activatePlugin()
+$ Renamed Master.deactivatePlugin() to Master.deactivatePlugin()
+$ Renamed Master.reloadPlugin() to Master.reactivatePlugin()
 
 
 Version 1.0.1 (04/03/2010)
@@ -14,7 +17,7 @@ Version 1.0.1 (04/03/2010)
 - Removed Master.getMasterConfig()
 + Added Master.getNetworkConfig()
 + Added Control::botGetNames()
-@ Updated Evaluation, DynamicCommand plugins
+$ Updated Evaluation, DynamicCommand plugins
 + Added Relay plugin
 + Added UPTIME in CTCP
 + Quietly added Master.dateSince(), to be documented further

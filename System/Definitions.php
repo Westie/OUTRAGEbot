@@ -5,7 +5,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0.1
+ *	@version 1.1.0
  */
 
 
@@ -14,7 +14,7 @@ error_reporting(E_ALL | E_STRICT);
 
 
 /* Some bot-brag-relating things. */
-define("BOT_VERSION", "1.0.2");
+define("BOT_VERSION", "1.1.0");
 define("BOT_RELDATE", "03/04/2010 23:10:00 (devStart)");
 
 

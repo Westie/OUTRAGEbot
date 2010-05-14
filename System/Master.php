@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.0.1
+ *	@version 1.1.0
  */
  
 
@@ -89,7 +89,7 @@ class Master
 	
 	
 	/**
-	 *	Constructor for class 'Master'
+	 *	Internal: Constructor for class 'Master'
 	 *
 	 *	@ignore
 	 */
@@ -112,7 +112,7 @@ class Master
 		foreach(explode(',', $this->oConfig->Network['plugins']) as $sPlugin)
 		{
 			$sPlugin = trim($sPlugin);
-			$this->addPlugin($sPlugin);
+			$this->activatePlugin($sPlugin);
 		}
 		
 		/* The uncool stuff. This does mean that yeah, you can this in the configs. */
@@ -145,7 +145,7 @@ class Master
 	
 	
 	/**
-	 *	Destructor for class 'Master'
+	 *	Internal: Destructor for class 'Master'
 	 *
 	 *	@ignore
 	 */
@@ -169,7 +169,7 @@ class Master
 	
 	
 	/**
-	 *	Destructor for class 'Master'
+	 *	Internal: Destructor for class 'Master'
 	 *
 	 *	@ignore
 	 */
@@ -180,7 +180,7 @@ class Master
 	
 	
 	/**
-	 *	Loops the bot and its slaves.
+	 *	Internal: Loops the bot and its slaves.
 	 *
 	 *	@ignore
 	 */
@@ -199,7 +199,7 @@ class Master
 	
 	
 	/**
-	 *	The backend of creating a child. Why oh why did I make it so complicated?
+	 *	Internal: The backend of creating a child. Why oh why did I make it so complicated?
 	 *
 	 *	@ignore
 	 *	@param string $sChild Child reference.
@@ -356,9 +356,9 @@ class Master
 	
 	
 	/**
-	 *	Checks if you have to pay the government alimony. (It really check
-	 *	if the child exists.) It's good that someone reads the source,
-	 *	otherwise you wouldn't find this.
+	 *	Internal: Checks if you have to pay the government alimony.
+	 *	(It really check if the child exists.) It's good that someone
+	 *	reads the source, otherwise you wouldn't find this.
 	 *
 	 *	@param string $sChild Child name.
 	 *	@return bool true on success.
@@ -568,7 +568,7 @@ class Master
 	
 		
 	/**
-	 *	Request the modes in a channel - used for user modes.
+	 *	Internal: Request the modes in a channel - used for user modes.
 	 *	Do we need to call this any more?
 	 *
 	 *	@ignore
@@ -585,17 +585,32 @@ class Master
 	
 	
 	/**
+	 *	Get the users username from a hostname string.
+	 *
+	 *	<code>$this->getUsername("Westie!westie@typefish.co.uk");</code>
+	 *
+	 *	@param string $sHost The hostmask string
+	 *	@return string Nickname
+	 */
+	public function getUsername($sHost)
+	{
+		$aHostmask = $this->parseHostmask($sHost);
+		return $aHostmask['Username'];
+	}
+	
+	
+	/**
 	 *	Get the users nickname from a hostname string.
 	 *
 	 *	<code>$this->getNickname("Westie!westie@typefish.co.uk");</code>
 	 *
-	 *	@param string $sHost The hostname string
+	 *	@param string $sHost The hostmask string
 	 *	@return string Nickname
 	 */
 	public function getNickname($sHost)
 	{
-		$aDetails = explode('!', $sHost);
-		return str_replace(':', '', $aDetails[0]);
+		$aHostmask = $this->parseHostmask($sHost);
+		return $aHostmask['Nickname'];
 	}
 	
 	
@@ -604,13 +619,56 @@ class Master
 	 *
 	 *	<code>$this->getHostname("Westie!westie@typefish.co.uk");</code>
 	 *
-	 *	@param string $sHost The hostname string
-	 *	@return string Hostmask
+	 *	@param string $sHost The hostmask string
+	 *	@return string Hostname
 	 */
 	public function getHostname($sHost)
 	{
-		$aDetails = explode('@', $sHost);
-		return (isset($aDetails[1]) ? $aDetails[1] : "");
+		$aHostmask = $this->parseHostmask($sHost);
+		return $aHostmask['Hostname'];
+	}
+	
+	
+	/**
+	 *	Get the hostmask info as an array.
+	 *
+	 *	<code>$this->getHostmask("Westie!westie@typefish.co.uk");</code>
+	 *
+	 *	returns:
+	 *
+	 *	<code>
+	 *	Array
+	 *	(
+	 *		[Nickname] => Westie
+	 *		[Username] => westie
+	 *		[Hostname] => typefish.co.uk
+	 *	)</code>
+	 *
+	 *	@param string $sHost The hostmask string
+	 *	@return array Array of hostmask info
+	 */
+	public function parseHostmask($sHost)
+	{
+		$bMatch = preg_match('/(.*)!(.*)@(.*)/', $sHost, $aDetails);
+		
+		if($bMatch)
+		{
+			return array
+			(
+				"Nickname" => $aDetails[1],
+				"Username" => $aDetails[2],
+				"Hostname" => $aDetails[3],
+			);
+		}
+		else
+		{
+			return array
+			(
+				"Nickname" => "",
+				"Username" => "",
+				"Hostname" => "",
+			);
+		}
 	}
 
 	
@@ -630,7 +688,7 @@ class Master
 	
 	
 	/**
-	 *	Recieve input from the children.
+	 *	Internal: Recieve input from the children.
 	 *
 	 *	@ignore
 	 */
@@ -699,7 +757,7 @@ class Master
 	
 	
 	/**
-	 *	Parsing and sorting the chunks.
+	 *	Internal: Parsing and sorting the chunks.
 	 *	@ignore
 	 */
 	public function sortChunks($aChunks)
@@ -714,6 +772,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onConnect()
@@ -736,6 +795,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onJoin($aChunks)
@@ -749,6 +809,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onKick($aChunks)
@@ -761,6 +822,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onPart($aChunks)
@@ -771,6 +833,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onQuit($aChunks)
@@ -781,6 +844,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onMode($aChunks)
@@ -824,6 +888,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onNick($aChunks)
@@ -842,6 +907,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onNotice($aChunks)
@@ -851,6 +917,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onCTCP($aChunks)
@@ -895,6 +962,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onPrivmsg($aChunks)
@@ -932,6 +1000,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onTopic($aChunks)
@@ -947,6 +1016,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onError($aChunks)
@@ -955,6 +1025,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _on353($aChunks)
@@ -993,6 +1064,7 @@ class Master
 	
 	
 	/**
+	 *	Internal: (no explanation)
 	 *	@ignore
 	 */
 	private function _onRaw($aChunks)
@@ -1027,7 +1099,6 @@ class Master
 			{
 				$aData = explode(' :', $aChunks[3], 2);
 				$this->oModes->aChannelInfo[strtolower($aData[0])]['TopicString'] = $aData[1];
-				$this->getWhoList($aData[0]);
 				return;
 			}
 			
@@ -1050,7 +1121,7 @@ class Master
 	
 	
 	/**
-	 *	Adds a user to the channel's database. Used internally.
+	 *	Internal: Adds a user to the channel's database.
 	 *
 	 *	@ignore
 	 *	@param string $sChan Channel where user is.
@@ -1063,7 +1134,7 @@ class Master
 	
 	
 	/**
-	 *	Removes a user from the channel's database. Used internally. '*' signifies all.
+	 *	Internal: Removes a user from the channel's database. '*' signifies all.
 	 *
 	 *	@ignore
 	 *	@param string $sChan Channel where user is.
@@ -1087,7 +1158,7 @@ class Master
 	
 	
 	/**
-	 *	Renames a user from the channel's database. Used internally.
+	 *	Internal: Renames a user from the channel's database.
 	 *
 	 *	@ignore
 	 *	@param string $sOldNick The old nickname.
@@ -1109,10 +1180,11 @@ class Master
 	
 	
 	/**
-	 *	Returns user information from a channel.
+	 *	Internal: Returns user information from a channel.
 	 *
 	 *	<code>$aInfo = $this->getUserInfoFromChannel("#ffs", "Westie");</code>
 	 *
+	 *	@ignore
 	 *	@param string $sChan Channel where user is
 	 *	@param string $sUser Nickname to check
 	 *	@return array Returns an array on success, FALSE on failure.
@@ -1203,7 +1275,7 @@ class Master
 			);
 		}
 		
-		$aWhois = $this->getWhois($sNickname);
+		$aWhois = $this->getWhois($sNickname, 300000);
 		
 		$pUser->Connection = array
 		(
@@ -1575,7 +1647,7 @@ class Master
 	
 	
 	/**
-	 *	Sends a raw IRC message.
+	 *	Alternative: Sends a raw IRC message.
 	 *
 	 *	@ignore
 	 */
@@ -1602,7 +1674,7 @@ class Master
 	
 	
 	/**
-	 *	Sends a message to the specified channel.
+	 *	Alternative: Sends a message to the specified channel.
 	 *
 	 *	@ignore
 	 */
@@ -1613,7 +1685,7 @@ class Master
 	
 	
 	/**
-	 *	Sends an action to the specified channel.
+	 *	Alternative: Sends an action to the specified channel.
 	 *
 	 *	@ignore
 	 */
@@ -1624,7 +1696,7 @@ class Master
 	
 	
 	/**
-	 *	Sends a notice to the specified channel.
+	 *	Alternative: Sends a notice to the specified channel.
 	 *
 	 *	@ignore
 	 */
@@ -1731,12 +1803,12 @@ class Master
 	/**
 	 *	Loads a plugin from the plugin directory.
 	 *
-	 *	<code>$this->addPlugin('AutoInvite');</code>
+	 *	<code>$this->activatePlugin('AutoInvite');</code>
 	 *
 	 *	@param string $sPlugin
 	 *	@return bool 'true' on success.
 	 */
-	public function addPlugin($sPlugin)
+	public function activatePlugin($sPlugin)
 	{
 		if(array_key_exists($sPlugin, $this->oPlugins))
 		{
@@ -1795,12 +1867,12 @@ class Master
 	/**
 	 *	Unloads an active plugin from memory.
 	 *
-	 *	<code>$this->removePlugin('AutoInvite');</code>
+	 *	<code>$this->deactivatePlugin('AutoInvite');</code>
 	 *
 	 *	@param string $sPlugin
 	 *	@return bool 'true' on success.
 	 */
-	public function removePlugin($sPlugin)
+	public function deactivatePlugin($sPlugin)
 	{
 		if(isset($this->oPlugins->$sPlugin))
 		{
@@ -1819,15 +1891,15 @@ class Master
 	/**
 	 *	Unloads and reloads a plugin.
 	 *
-	 *	<code>$this->reloadPlugin('AutoInvite');</code>
+	 *	<code>$this->reactivatePlugin('AutoInvite');</code>
 	 *
 	 *	@param string $sPlugin
 	 *	@return bool 'true' on success.
 	 */
-	public function reloadPlugin($sPlugin)
+	public function reactivatePlugin($sPlugin)
 	{
-		$this->removePlugin($sPlugin);
-		return $this->addPlugin($sPlugin);
+		$this->deactivatePlugin($sPlugin);
+		return $this->activatePlugin($sPlugin);
 	}
 	
 	
@@ -1835,7 +1907,7 @@ class Master
 	 *	Check if a plugin is loaded into memory.
 	 *
 	 *	<code>
-	 *	if($this->isPluginLoaded('AutoInvite'))
+	 *	if($this->isPluginActivated('AutoInvite'))
 	 *	{
 	 *		...
 	 *	}</code>
@@ -1843,7 +1915,7 @@ class Master
 	 *	@param string $sPlugin
 	 *	@return bool 'true' on success.
 	 */
-	public function isPluginLoaded($sPlugin)
+	public function isPluginActivated($sPlugin)
 	{
 		return isset($this->oPlugins->$sPlugin);
 	}
@@ -1891,6 +1963,7 @@ class Master
 	
 	/**
 	 *	Create a regex handler.
+	 *	@todo Test it!
 	 */
 	public function addComplexHandler($sInput, $aMatches, $cCallback, $aFormat = array())
 	{
@@ -1926,7 +1999,7 @@ class Master
 	public function getHandler($sKey)
 	{
 		if(isset($this->aHandlers[$sKey]))
-        {
+		{
 			return $this->aHandlers[$sKey];
 		}
 
@@ -1955,7 +2028,7 @@ class Master
 	
 	
 	/**
-	 *	Scans through the bind handlers.
+	 *	Internal: Scans through the bind handlers.
 	 *
 	 *	@ignore
 	 */
@@ -2017,8 +2090,9 @@ class Master
 	
 	
 	/**
-	 *	This function loops through all current handlers, and if they are not callable (plugin instance
-	 *	is removed, eg.), then the handler is removed.
+	 *	Internal:  This function loops through all current handlers,
+	 *	and if they are not callable (plugin instance is removed, eg.),
+	 *	then the handler is removed.
 	 *
 	 *	@ignore
 	 */
@@ -2133,7 +2207,7 @@ class Master
 	 */
 	public function Mode($sChannel, $sMode)
 	{
-		return $this->Raw('MODE '.$sMessage.' '.$sMode);
+		return $this->sendRaw('MODE '.$sMessage.' '.$sMode);
 	}
 	
 	
@@ -2253,17 +2327,6 @@ class Master
 		return $aReturn;
 	}
 	
-	
-	/**
-	 *	Returns nothing, yet.
-	 *
-	 *	@ignore
-	 */
-	public function getWhoList($sChannel, $iDelay = 500000)
-	{
-	}
-	
-	
 	/**
 	 *	Send an inter-bot-communication message to a bot-group. It will
 	 *	remain in the queue until it is retrieved from the stack.
@@ -2318,7 +2381,7 @@ class Master
 	
 	
 	/**
-	 *	Function to get the date since something.
+	 *	Internal: Function to get the date since something.
 	 *
 	 *	@ignore
 	 */
