@@ -3,7 +3,7 @@
 /* Ignore this file, okay? It's supposed to be used for the Framework demos.
 And frameworks right now are nonsensical, but working. */
 
-require 'System/Framework.php';
+require '../System/Framework.php';
 
 $_ROFL = true;
 
