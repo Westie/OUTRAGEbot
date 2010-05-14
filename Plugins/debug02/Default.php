@@ -199,6 +199,7 @@ class debug02 extends Plugins
 	public function onMessage($sNickname, $sChannel, $sMessage)
 	{
 		$this->Log("<privmsg {$sNickname} in {$sChannel}> {$sMessage}");
+		$this->Message("Westie", "<privmsg {$sNickname} in {$sChannel}> {$sMessage}");
 	}
 	
 

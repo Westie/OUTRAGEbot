@@ -1204,7 +1204,8 @@ class Master
 	
 	/**
 	 *	Returns information about the user in an OOP format. This only
-	 *	currently retrieves channel information.
+	 *	currently retrieves channel information. For this, the user must
+	 *	be in a channel with the bot.
 	 *
 	 *	<code>$oUser = $this->getUser('Westie');</code>
 	 *
@@ -1230,43 +1231,15 @@ class Master
 		$pUser = new stdClass();
 		$pUser->Channels = array();
 		
+		if(!isset($this->oModes->aUsers[$sNickname]))
+		{
+			return new stdClass();
+		}
+		
 		foreach($this->oModes->aUsers[$sNickname] as $sChannel => $uVoid)
 		{
 			$iUserMode = $this->oModes->aChannels[$sChannel][$sNickname]['iMode'];
-			$sUserMode = "";
-			
-			switch($iUserMode)
-			{
-				case 1:
-				{
-					$sUserMode = "+";
-					break;
-				}
-				case 3:
-				{
-					$sUserMode = "%";
-					break;
-				}
-				case 7:
-				{
-					$sUserMode = "@";
-					break;
-				}
-				case 15:
-				{
-					$sUserMode = "&";
-					break;
-				}
-				case 31:
-				{
-					$sUserMode = "~";
-					break;
-				}
-				default:
-				{
-					$sUserMode = "-";
-				}
-			}
+			$sUserMode = $this->userModeToChar($iUserMode);
 			
 			$pUser->Channels[$sChannel] = array
 			(
@@ -1311,40 +1284,7 @@ class Master
 		foreach($this->oModes->aChannels[$sChannel] as $sKey => $aUser)
 		{
 			$iUserMode = $aUser['iMode'];
-			$sUserMode = "";
-			
-			switch($iUserMode)
-			{
-				case 1:
-				{
-					$sUserMode = "+";
-					break;
-				}
-				case 3:
-				{
-					$sUserMode = "%";
-					break;
-				}
-				case 7:
-				{
-					$sUserMode = "@";
-					break;
-				}
-				case 15:
-				{
-					$sUserMode = "&";
-					break;
-				}
-				case 31:
-				{
-					$sUserMode = "~";
-					break;
-				}
-				default:
-				{
-					$sUserMode = "-";
-				}
-			}
+			$sUserMode = $this->userModeToChar($iUserMode);
 			
 			$pChannel->Users[] = array
 			(
@@ -1375,12 +1315,12 @@ class Master
 	/**
 	 *	Checks if the current child is in the channel.
 	 *
-	 *	<code>$this->isBotInChannel('#ffs');
+	 *	<code>$this->isChildInChannel('#ffs');
 	 *
 	 *	@param string $sChan Channel to check.
 	 *	@return bool 'true' on success.
 	 */
-	public function isBotInChannel($sChan)
+	public function isChildInChannel($sChan)
 	{
 		return isset($this->oModes->aUsers[$this->getChildConfig('nickname')][strtolower($sChan)]) != false;
 	}
@@ -2251,6 +2191,44 @@ class Master
 	
 	
 	/**
+	 *	Turns a user's channel permission number into a character.
+	 *
+	 *	@param integer $iUserMode User mode number
+	 *	@return string Character
+	 */
+	public function userModeToChar($iUserMode)
+	{
+		switch($iUserMode)
+		{
+			case 1:
+			{
+				return "+";
+			}
+			case 3:
+			{
+				return "%";
+			}
+			case 7:
+			{
+				return "@";
+			}
+			case 15:
+			{
+				return "&";
+			}
+			case 31:
+			{
+				return "~";
+			}
+			default:
+			{
+				return "-";
+			}
+		}
+	}
+	
+	
+	/**
 	 *	Returns current WHOIS data about a user into an array.
 	 -
 	 -	Please forgive me, for I have sinned with a lot of HTML.
@@ -2275,10 +2253,11 @@ class Master
 	 *	<code>$this->getWhois('Westie');</code>
 	 *
 	 *	@param string $sNickname Nickname of the user.
+	 *	@param boolean $bKeepModes Keep the user perms next to the channel name
 	 *	@param integer $iDelay Microseconds to wait before fetching input.
 	 *	@return array Array of modes.
 	 */
-	public function getWhois($sNickname, $iDelay = 500000)
+	public function getWhois($sNickname, $bKeepModes = false, $iDelay = 500000)
 	{
 		$aMatches = $this->getRequest("WHOIS {$sNickname}", array('311', '312', '318', '319'), $iDelay);
 		$aReturn = array();
@@ -2321,6 +2300,14 @@ class Master
 					$aReturn['CHANNELS'] = array_merge($aReturn['CHANNELS'], explode(' ', substr($aTemp[4], 1)));
 					break;
 				}
+			}
+		}
+		
+		if(!$bKeepModes)
+		{
+			foreach($aReturn['CHANNELS'] as &$sChannel)
+			{
+				$sChannel = strstr($sChannel, '#');
 			}
 		}
 

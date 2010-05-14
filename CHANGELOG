@@ -7,11 +7,13 @@ Version 1.1.0 (In development)
 $ Renamed Master.activatePlugin() to Master.activatePlugin()
 $ Renamed Master.deactivatePlugin() to Master.deactivatePlugin()
 $ Renamed Master.reloadPlugin() to Master.reactivatePlugin()
+$ Added $bKeepModes (before $iDelay) to Master.getWhois()
+$ Renamed Master.isBotInChannel() to Master.IsChildInChannel()
 
 
 Version 1.0.1 (04/03/2010)
 --------------------------
-@ Added $sChannel (opt) parameter to all IBC functions - note, /NOT/ IRC
+$ Added $sChannel (opt) parameter to all IBC functions - note, /NOT/ IRC
 	channels, it's different communication channels
 + Added Master.getIBCCount()
 - Removed Master.getMasterConfig()
