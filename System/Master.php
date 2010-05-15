@@ -65,7 +65,7 @@ class Master
 	/**
 	 *	@ignore
 	 */
-	public $iBotIndex = 0;
+	public $pBotItter = false;
 	
 	
 	/**
@@ -93,10 +93,11 @@ class Master
 	 *
 	 *	@ignore
 	 */
-	public function __construct($sKey, &$oConfig)
+	public function __construct($sKey, $oConfig)
 	{
 		$this->oConfig = $oConfig;
 		$this->sBotGroup = $sKey;
+		
 		$this->oPlugins = new stdClass();
 		$this->oModes = new stdClass();
 		
@@ -683,7 +684,7 @@ class Master
 	 */
 	public function getNextChild()
 	{
-		return next($this->aBotObjects) == false ? reset($this->aBotObjects) : current($this->aBotObjects);
+		return new stdClass();
 	}
 	
 	
@@ -697,30 +698,41 @@ class Master
 		if(strlen($sMessage) < 3) return;
 		
 		/* Deal with the useless crap. */
-		$this->oCurrentBot = &$oBot;
+		$this->oCurrentBot = $oBot;
 		$this->sCurrentChunk = $sMessage;
 		$aRaw = explode(' ', $sMessage, 4);
 		
 		/* Deal with realtime scans */
 		if($oBot->iUseQueue == true)
 		{
-			if(array_search($aRaw[1], $oBot->aSearch) === false)
+			if($oBot->aRequestConfig['TIMEOUT'] !== false)
+			{				
+				if(array_search($aRaw[1], $oBot->aRequestConfig['ENDNUM']) !== false)
+				{
+					$oBot->aMessageQueue[] = $sMessage;
+					$oBot->iUseQueue = false;
+				}
+				elseif($oBot->aRequestConfig['TIMEOUT'] < time())
+				{
+					$oBot->aMessageQueue[] = $sMessage;
+					$oBot->iUseQueue = false;
+				}
+			}
+			
+			if(array_search($aRaw[1], $oBot->aRequestConfig['SEARCH']) === false)
 			{
-				$oBot->aMsgQueue[] = $sMessage;
+				$oBot->aMessageQueue[] = $sMessage;
 			}
 			else
 			{
-				$oBot->aMatchQueue[] = $sMessage;
+				$oBot->aRequestOutput[] = $sMessage;
 			}
+			
 			return;
 		}
 		
 		/* Let's compare the market, by adding three useless arrays */
 		$aChunks = $this->sortChunks($aRaw);
-		
-		if($this->getChildConfig('reactevent') != 'false')
-		{
-		}
 
 		/* Deal with pings */
 		if($aChunks[0] == 'PING')
@@ -1112,7 +1124,7 @@ class Master
 		}
 		
 		/* Other stuff */
-		if($aChunks[3][0] == Format::CTCP)
+		if(isset($aChunks[3]) && $aChunks[3][0] == Format::CTCP)
 		{
 			$this->_onCTCP($aChunks);
 			return;
@@ -1270,6 +1282,8 @@ class Master
 	
 	/**
 	 *	Returns a stdClass instance of the information about a channel.
+	 *	Will only work if the bot is in the channel, otherwise a blank
+	 *	object will be returned.
 	 *
 	 *	@param string $sChannel Channel name
 	 *	@return stdClass Channel information
@@ -1278,6 +1292,11 @@ class Master
 	{
 		$pChannel = new stdClass();
 		$sChannel = strtolower($sChannel);
+		
+		if(!isset($this->oModes->aChannels[$sChannel]))
+		{
+			return $pChannel;
+		}
 		
 		$pChannel->Users = array();
 		
@@ -1293,7 +1312,107 @@ class Master
 			);
 		}
 		
+		$pChannel->Topic = new stdClass();
+		
+		if(isset($this->oModes->aChannelInfo[$sChannel]['TopicString']))
+		{
+			$pChannel->Topic->String = $this->oModes->aChannelInfo[$sChannel]['TopicString'];
+			$pChannel->Topic->Time = $this->oModes->aChannelInfo[$sChannel]['TopicSetTime'];
+			$pChannel->Topic->SetBy = $this->oModes->aChannelInfo[$sChannel]['TopicSetBy'];
+		}
+		else
+		{
+			$pChannel->Topic->String = "";
+			$pChannel->Topic->Time = "";
+			$pChannel->Topic->SetBy = "";
+		}
+		
+		$pChannel->BanList = $this->getChannelBanList($sChannel);
+		$pChannel->InviteList = $this->getChannelInviteList($sChannel);
+		$pChannel->ExceptList = $this->getChannelExceptList($sChannel);
+		
 		return $pChannel;
+	}
+	
+	
+	/**
+	 *	Returns the active bans in the channel requested.
+	 *
+	 *	@param string $sChannel Channel name
+	 *	@return array List of bans
+	 */
+	public function getChannelBanList($sChannel)
+	{
+		$aBans = $this->getRequest("MODE {$sChannel} +b", '367', '368');
+		$aBanList = array();
+		
+		foreach($aBans as $sBan)
+		{
+			$aBan = explode(' ', $sBan, 7);
+			
+			$aBanList[] = array
+			(
+				"Hostmask" => trim($aBan[4]),
+				"AddedBy" => trim($aBan[5]),
+				"Time" => trim($aBan[6]),
+			);
+		}
+		
+		return $aBanList;
+	}
+	
+	
+	/**
+	 *	Returns the active invite list in the channel requested.
+	 *
+	 *	@param string $sChannel Channel name
+	 *	@return array List of exceptions
+	 */
+	public function getChannelInviteList($sChannel)
+	{
+		$aInvites = $this->getRequest("MODE {$sChannel} +I", '346', '347');
+		$aInviteList = array();
+		
+		foreach($aInvites as $sInvite)
+		{
+			$aInvite = explode(' ', $sInvite, 7);
+			
+			$aInviteList[] = array
+			(
+				"Hostmask" => trim($aInvite[4]),
+				"AddedBy" => trim($aInvite[5]),
+				"Time" => trim($aInvite[6]),
+			);
+		}
+		
+		return $aInviteList;
+	}
+	
+	
+	/**
+	 *	Returns the active exceptions in the channel requested.
+	 *
+	 *	@param string $sChannel Channel name
+	 *	@return array List of exceptions
+	 */
+	public function getChannelExceptList($sChannel)
+	{
+		$aExcepts = $this->getRequest("MODE {$sChannel} +e", '348', '349');
+		$aExceptList = array();
+		
+		foreach($aExcepts as $sExcept)
+		{
+			$aExcept = explode(' ', $sExcept, 7);
+			
+			$aExceptList[] = array
+			(
+				"Hostmask" => trim($aExcept[4]),
+				"AddedBy" => trim($aExcept[5]),
+				"Time" => trim($aExcept[6]),
+			);
+		}
+		
+		return $aExceptList;
 	}
 	
 	
@@ -2054,7 +2173,7 @@ class Master
 	 *	The data that are you requesting (for instance, what is in $mSearch) will not be parsed by the bot.
 	 *	This essentially means it is the job of the code using that request to deal with parsing it properly.
 	 *
-	 *	<code>$aMatches = $this->getRequest("NAMES #westie", array(353, 366), 4);
+	 *	<code>$aMatches = $this->getTimedRequest("NAMES #westie", array(353, 366), 4);
 	 *
 	 *	// Array
 	 *	// (
@@ -2065,21 +2184,75 @@ class Master
 	 *	@param string $sRequest Message to send to the server.
 	 *	@param mixed $mSearch IRC numerics to cache.
 	 *	@param integer $iSleep <i>Microseconds</i> to sleep before getting input.
-	 *	@return array The response matched to the data in $aSearch.
+	 *	@return array The response matched to the data in $mSearch.
 	 */
-	public function getRequest($sRequest, $mSearch, $iSleep = 10000)
+	public function getTimedRequest($sRequest, $mSearch, $iSleep = 10000)
 	{
 		$this->oCurrentBot->iUseQueue = true;
-		$this->oCurrentBot->aSearch = (array) $mSearch;
-		$this->oCurrentBot->aMatchQueue = array();
+		$this->oCurrentBot->aRequestOutput = array();
+		
+		$this->oCurrentBot->aRequestConfig = array
+		(
+			"SEARCH" => (array) $mSearch,
+			"ENDNUM" => false,
+			"TIMEOUT" => false,
+		);
+		
 		$this->oCurrentBot->Output($sRequest);
 		usleep($iSleep);
+		
 		$this->oCurrentBot->Input();
 		$this->oCurrentBot->iUseQueue = false;
+		$aReturn = $this->oCurrentBot->aRequestOutput;
+		$this->oCurrentBot->aRequestOutput = array();
 		
-		return $this->oCurrentBot->aMatchQueue;
+		return $aReturn;
 	}
 	
+	
+	/**
+	 *	Request information realtime.
+	 *
+	 *	The data that are you requesting (for instance, what is in $mSearch) will not be parsed by the bot.
+	 *	This essentially means it is the job of the code using that request to deal with parsing it properly.
+	 *
+	 *	<code>$aMatches = $this->getRequest("NAMES #westie", '353', '366');
+	 *
+	 *	// Array
+	 *	// (
+	 *	//	 [0] => :ircd 353 OUTRAGEbot = #westie :OUTRAGEbot ~Westie
+	 *	//	 [1] => :ircd 366 OUTRAGEbot #westie :End of /NAMES list.
+	 *	// )</code>
+	 *
+	 *	@param string $sRequest Message to send to the server.
+	 *	@param mixed $mSearch IRC numerics to cache.
+	 *	@param mixed $mEndNumeric IRC numerics that signify end of stream
+	 *	@param mixed $iTimeout Seconds to timeout
+	 *	@param integer $iSleep <i>Seconds</i> to sleep before getting input.
+	 *	@return array The response matched to the data in $mSearch.
+	 */
+	public function getRequest($sRequest, $mSearch, $mEndNumeric, $iTimeout = 4, $iSleep = 0.2)
+	{
+		$this->oCurrentBot->iUseQueue = true;
+		$this->oCurrentBot->aRequestOutput = array();
+		
+		$this->oCurrentBot->aRequestConfig = array
+		(
+			"SEARCH" => (array) $mSearch,
+			"ENDNUM" => (array) $mEndNumeric,
+			"TIMEOUT" => (time() + $iSleep + $iTimeout),
+		);
+		
+		$this->oCurrentBot->Output($sRequest);
+		usleep($iSleep * 1000000);
+		
+		$this->oCurrentBot->Input();
+		$this->oCurrentBot->iUseQueue = false;
+		$aReturn = $this->oCurrentBot->aRequestOutput;
+		$this->oCurrentBot->aRequestOutput = array();
+		
+		return $aReturn;
+	}	
 	
 	/**
 	 *	Invites a user to a channel.
@@ -2259,9 +2432,8 @@ class Master
 	 */
 	public function getWhois($sNickname, $bKeepModes = false, $iDelay = 500000)
 	{
-		$aMatches = $this->getRequest("WHOIS {$sNickname}", array('311', '312', '318', '319'), $iDelay);
-		$aReturn = array();
-		$aReturn['CHANNELS'] = array();
+		$aMatches = $this->getRequest("WHOIS {$sNickname}", array('311', '312', '319'), '318');
+		$aReturn = array('CHANNELS' => array(), 'INFO' => array(), 'SERVER' => array());
 	
 		foreach($aMatches as $sMatch)
 		{

@@ -1,0 +1,33 @@
+<?php
+/**
+ *	AutoInvite class for OUTRAGEbot.
+ *
+ *	@ignore
+ *	@copyright None
+ *	@package OUTRAGEbot
+ */
+
+
+class AutoInvi_d49cb7c18e extends Plugins
+{
+	private
+		$iBindID = -1;
+	
+	
+	function onConstruct()
+	{
+		/* Called when the plugin is constructed. */
+		$this->iBindID = $this->addHandler('INVITE', 'onInvite', array(2, 3));
+	}
+	
+	
+	function onInvite($sNickname, $sChannel)
+	{
+		if($sNickname == $this->getChildConfig('nickname'))
+		{
+			$this->sendRaw("JOIN {$sChannel}", SEND_DIST);
+		}
+	}
+}
+		
+?>

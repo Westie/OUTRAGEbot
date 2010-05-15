@@ -28,11 +28,11 @@ class Socket
 		$isActive = false,
 		$isRemove = false,
 		
-		$iUseQueue = false,
 		$sChild = "",
-		$aSearch = array(),
-		$aMsgQueue = array(),
-		$aMatchQueue = array();
+		$iUseQueue = false,
+		$aMessageQueue = array(),
+		$aRequestConfig = array(),
+		$aRequestOutput = array();
 	
 	
 	/* Constructing the class */
@@ -163,12 +163,12 @@ class Socket
 		
 		if($this->isWaiting) return true;
 		
-		if(count($this->aMsgQueue) && $this->iUseQueue == false)
+		if(count($this->aMessageQueue) && $this->iUseQueue == false)
 		{
-			foreach($this->aMsgQueue as $iKey => &$sChunk)
+			foreach($this->aMessageQueue as $iKey => $sChunk)
 			{
 				$this->oMaster->getSend($this, $sChunk);
-				unset($this->aMsgQueue[$iKey]);
+				unset($this->aMessageQueue[$iKey]);
 			}
 		}
 		
