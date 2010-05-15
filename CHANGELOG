@@ -1,6 +1,9 @@
 Version 1.1.0 (In development)
 -------------------------------
 + Added Master.getChannel()
++ Added Master.getChannelBanList()
++ Added Master.getChannelInviteList()
++ Added Master.getChannelExceptList()
 + Put more info to Master.getUser()
 + Added Master.parseHostmask()
 + Added Master.getUsername()

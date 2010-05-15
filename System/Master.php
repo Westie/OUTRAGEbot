@@ -101,6 +101,10 @@ class Master
 		$this->oPlugins = new stdClass();
 		$this->oModes = new stdClass();
 		
+		$this->pBotItter = new stdClass();
+		$this->pBotItter->iIndex = 0;
+		$this->pBotItter->iCount = 0;
+		
 		Control::$aStack[$this->sBotGroup] = array();
 
 		echo PHP_EOL." Creating '{$this->oConfig->Network['name']}' at {$this->oConfig->Network['host']}:{$this->oConfig->Network['port']}".PHP_EOL;
@@ -226,6 +230,7 @@ class Master
 		$aDetails['loadtime'] = (time() + $aDetails['timewait']);
 		
 		$this->aBotObjects[] = new Socket($this, $sChild, $aDetails);
+		$this->pBotItter->iCount = count($this->aBotObjects);
 		return true;
 	}
 	
@@ -345,8 +350,9 @@ class Master
 				}
 				
 				$oChild->destructBot($sReason);
-				unset($this->aBotObjects[$iReference]);				
+				unset($this->aBotObjects[$iReference]);			
 				$this->aBotObjects = array_values($this->aBotObjects);
+				$this->pBotItter->iCount = count($this->aBotObjects);
 				
 				return true;
 			}
@@ -683,8 +689,16 @@ class Master
 	 *	@return Socket Child object.
 	 */
 	public function getNextChild()
-	{
-		return new stdClass();
+	{		
+		if($this->pBotItter->iIndex >= $this->pBotItter->iCount)
+		{
+			$this->pBotItter->iIndex = 0;
+		}
+		
+		$pBot = $this->aBotObjects[$this->pBotItter->iIndex];
+		++$this->pBotItter->iIndex;
+		
+		return $pBot;
 	}
 	
 	
@@ -776,8 +790,8 @@ class Master
 	{
 		$aChunks[0] = isset($aChunks[0]) ? ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]) : "";
 		$aChunks[1] = isset($aChunks[1]) ? $aChunks[1] : "";
-		$aChunks[2] = isset($aChunks[2]) ? ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]) : "";
-		$aChunks[3] = isset($aChunks[3]) ? ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]) : "";
+		$aChunks[2] = isset($aChunks[2][0]) ? ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]) : "";
+		$aChunks[3] = isset($aChunks[3][0]) ? ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]) : "";
 		
 		return $aChunks;
 	}
@@ -1124,10 +1138,13 @@ class Master
 		}
 		
 		/* Other stuff */
-		if(isset($aChunks[3]) && $aChunks[3][0] == Format::CTCP)
+		if(isset($aChunks[3][0]))
 		{
-			$this->_onCTCP($aChunks);
-			return;
+			if($aChunks[3][0] == Format::CTCP)
+			{
+				$this->_onCTCP($aChunks);
+				return;
+			}
 		}
 	}
 	
