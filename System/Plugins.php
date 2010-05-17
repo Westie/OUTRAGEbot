@@ -12,7 +12,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.0
+ *	@version 1.1.1
  */
 
 abstract class Plugins
@@ -113,7 +113,12 @@ abstract class Plugins
 		}
 		else
 		{
-			return;
+			if(isset($this->oBot->aFunctions[$sFunction]))
+			{
+				return call_user_func_array($this->oBot->aFunctions[$sFunction], $aArguments);
+			}
+			
+			return null;
 		}
 	}
 	

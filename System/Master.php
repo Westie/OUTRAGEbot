@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.0
+ *	@version 1.1.1
  */
  
 
@@ -54,6 +54,12 @@ class Master
 	 *	@ignore
 	 */
 	public $aBotObjects = array();
+	
+	
+	/**
+	 *	@ignore
+	 */
+	public $aFunctions = array();
 	
 	
 	/**
@@ -1995,7 +2001,51 @@ class Master
 	{
 		return isset($this->oPlugins->$sPlugin);
 	}
+	
+	
+	/**
+	 *	Adds a function handler.
+	 *
+	 *	@param string $sFunction Function name
+	 *	@param callback $cCallback Callback
+	 *	@return boolean True on success
+	 */
+	public function addFunction($sFunction, $cCallback)
+	{
+		if(isset($this->aFunctions[$sFunction]))
+		{
+			return false;
+		}
 		
+		$this->aFunctions[$sFunction] = $cCallback;
+		return true;
+	}
+	
+	
+	/**
+	 *	Checks if a function handler exists.
+	 *
+	 *	@param string $sFunction Function name
+	 *	@return boolean True on success
+	 */
+	public function isFunction($sFunction)
+	{
+		return isset($this->aFunctions[$sFunction]);
+	}
+	
+	
+	/**
+	 *	Remove a function handler.
+	 *
+	 *	@param string $sFunction Function name
+	 *	@return void
+	 */
+	public function removeFunction($sFunction)
+	{
+		unset($this->aFunctions[$sFunction]);
+		return;
+	}
+	
 	
 	/**
 	 *	Create a command or event handler for IRC numerics/commands.
@@ -2565,7 +2615,7 @@ class Master
 	{
 		if(!$iDate2)
 		{
-			$iDate2 = mktime();
+			$iDate2 = time();
 		}
 
    		$aDifferences = array
@@ -2608,11 +2658,11 @@ class Master
 
 		$aDifferences['SECONDS'] = $iTemp;
 		
-		$aDifferences['TOTAL_WEEKS'] = floor($seconds/604800);
-		$aDifferences['TOTAL_DAYS'] = floor($seconds/86400);
-		$aDifferences['TOTAL_HOURS'] = floor($seconds/3600);
-		$aDifferences['TOTAL_MINUTES'] = floor($seconds/60);
-		$aDifferences['TOTAL_SECONDS'] =$iSeconds;
+		$aDifferences['TOTAL_WEEKS'] = floor($iSeconds / 604800);
+		$aDifferences['TOTAL_DAYS'] = floor($iSeconds / 86400);
+		$aDifferences['TOTAL_HOURS'] = floor($iSeconds / 3600);
+		$aDifferences['TOTAL_MINUTES'] = floor($iSeconds / 60);
+		$aDifferences['TOTAL_SECONDS'] = $iSeconds;
 
 		return $aDifferences;
 	}

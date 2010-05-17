@@ -1,5 +1,12 @@
+Version 1.1.1 (16/05/2010 Start)
+--------------------------------
++ Added Master.addFunction()
++ Added Master.isFunction()
++ Added Master.removeFunction()
+
+
 Version 1.1.0 (15/05/2010)
--------------------------------
+--------------------------
 + Added Master.getChannel()
 + Added Master.getChannelBanList()
 + Added Master.getChannelInviteList()

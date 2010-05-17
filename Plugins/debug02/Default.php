@@ -39,6 +39,8 @@ class debug02 extends Plugins
 			'testing'				// Command in IRC to invoke with
 		);
 		
+		$this->addFunction("Alarm", array($this, "Alarm"));
+		
 		$this->Log('Plugin loaded...');
 	}
 	
@@ -48,8 +50,6 @@ class debug02 extends Plugins
 	 */
 	public function onDestruct()
 	{
-		// Timers don't have to be removed manually now.
-		$this->removeTimer($this->sTimerKey);
 		$this->Log('Plugin unloaded...');
 	}
 	
@@ -96,14 +96,7 @@ class debug02 extends Plugins
 	{
 		$this->Log("{$sNickname} has left {$sChannel}, because of '{$sReason}'");
 	}
-	/**
-	 *	Called when someone has requested a command
-	 *
-	 *	@param string $sNickname Command sender
-	 *	@param string $sChannel Channel which recieved command
-	 *	@param string $sCommand Command name
-	 *	@param string $sArguments String of arguments
-	 */
+	
 	
 	/**
 	 *	Called when a user is kicked from a channel.
@@ -199,7 +192,6 @@ class debug02 extends Plugins
 	public function onMessage($sNickname, $sChannel, $sMessage)
 	{
 		$this->Log("<privmsg {$sNickname} in {$sChannel}> {$sMessage}");
-		$this->Message("Westie", "<privmsg {$sNickname} in {$sChannel}> {$sMessage}");
 	}
 	
 
@@ -248,8 +240,8 @@ class debug02 extends Plugins
 	}
 	
 	
-	function test($m)
+	function Alarm($sChannel, $sMessage)
 	{
-		echo "hai: $m";
+		$this->addTimer(array($this, "Message"), 5, 1, $sChannel, $sMessage);
 	}
 }

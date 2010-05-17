@@ -22,14 +22,7 @@ class Callbacks extends Plugins
 
 	public function getCode()
 	{
-		foreach(Control::botGetObjects() as $oBot)
-		{
-			if($oBot->isPluginLoaded('Callbacks'))
-			{
-				$oBot->getPlugin('Callbacks')->_Callbacks_getCode();
-				echo "HAI".PHP_EOL;
-			}
-		}
+		$this->_Callbacks_getCode();
 	}
 
 	
