@@ -1,8 +1,19 @@
 Version 1.1.1 (16/05/2010 Start)
 --------------------------------
-+ Added Master.addFunction()
++ Added Master.introduceFunction()
 + Added Master.isFunction()
 + Added Master.removeFunction()
+$ Changed the default sleep on getRequest to 0.3 seconds
+$ Fixed bugs with Master.dateSince()
+$ Fixed bug with Master.Raw()
+$ Changed internal mechanism for timers, handlers and functions
+$ Renamed Master.invokeEvent() to Master.triggerEvent()
++ Added Master.getPluginName()
+- Removed alt Plugins.addHandler(), now Master.addHandler()
+- Removed alt Plugins.addTimer(), now Master.addTimer()
++ Added Master.getActiveTimer()
++ Added Master.triggerSingleEvent()
++ Added Master.triggerSingleEventArray()
 
 
 Version 1.1.0 (15/05/2010)

@@ -54,7 +54,7 @@ abstract class Plugins
 	 *	@ignore
 	 *	@var string
 	 */
-	public $oBot = false;
+	public $pBot = false;
 	
 	
 	/**
@@ -74,7 +74,7 @@ abstract class Plugins
 	 */
 	public final function __construct($oResource, $aIdentifier)
 	{
-		$this->oBot = $oResource;
+		$this->pBot = $oResource;
 		$this->aIdentifier = $aIdentifier;
 		
 		call_user_func(array($this, 'onConstruct'));
@@ -107,15 +107,18 @@ abstract class Plugins
 	 */
 	public final function __call($sFunction, $aArguments)
 	{
-		if(is_callable($aFunction = array($this->oBot, $sFunction)))
+		$this->pBot->sLastAccessedPlugin = $this->aIdentifier[0];
+		
+		if(is_callable($aFunction = array($this->pBot, $sFunction)))
 		{
 			return call_user_func_array($aFunction, $aArguments);
 		}
 		else
 		{
-			if(isset($this->oBot->aFunctions[$sFunction]))
+			if(isset($this->pBot->aFunctions[$sFunction]))
 			{
-				return call_user_func_array($this->oBot->aFunctions[$sFunction], $aArguments);
+				$cCallback = array($this->pBot->getPlugin($this->pBot->aFunctions[$sFunction][0]), $this->pBot->aFunctions[$sFunction][1]);
+				return call_user_func_array($cCallback, $aArguments);
 			}
 			
 			return null;
@@ -131,9 +134,9 @@ abstract class Plugins
 	 */
 	public final function __get($sKey)
 	{
-		if(isset($this->oBot->$sKey))
+		if(isset($this->pBot->$sKey))
 		{
-			return $this->oBot->$sKey;
+			return $this->pBot->$sKey;
 		}
 		else
 		{
@@ -172,38 +175,16 @@ abstract class Plugins
 	 */
 	public final function getConfig()
 	{
-		return isset($this->oBot->oConfig->{$this->aIdentifier[0]}) ? $this->oBot->oConfig->{$this->aIdentifier[0]} : null;
+		return isset($this->pBot->oConfig->{$this->aIdentifier[0]}) ? $this->pBot->oConfig->{$this->aIdentifier[0]} : null;
 	}
 	
-	
 	/**
-	 *	Creates a timer, framework.
-	 *
-	 *	@see Master::addTimer()
-	 *	@ignore
+	 *	Returns plugin name.
+	 *	@see Master::getPluginName
 	 */
-	public function addTimer($cCallback, $iInterval, $iRepeat)
+	public final function __getName()
 	{
-		$cCallback = is_array($cCallback) ? $cCallback : array($this, $cCallback);
-		$aArguments = func_get_args();
-		array_shift($aArguments);
-		array_shift($aArguments);
-		array_shift($aArguments);
-		
-		return Timers::Create($cCallback, $iInterval, $iRepeat, (array) $aArguments); 
-	}
-	
-	
-	/**
-	 *	Creates a bind, framework.
-	 *
-	 *	@see Master::addHandler()
-	 *	@ignore
-	 */
-	public function addHandler($sInput, $cCallback, $aFormat)
-	{
-		$cCallback = is_array($cCallback) ? $cCallback : array($this, $cCallback);
-		return $this->oBot->addHandler($sInput, $cCallback, $aFormat);
+		return $this->aIdentifier[0];
 	}
 }
 

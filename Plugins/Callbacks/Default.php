@@ -16,17 +16,12 @@ class Callbacks extends Plugins
 
 	public function onConstruct()
 	{
-		$this->_Callbacks_getCode();
+		$this->introduceFunction("getCallbacksCode", array($this, "getCode"));
+		$this->getCode();
 	}
 
 
 	public function getCode()
-	{
-		$this->_Callbacks_getCode();
-	}
-
-	
-	public function _Callbacks_getCode()
 	{
 		$this->aModules = array();
 
@@ -39,6 +34,8 @@ class Callbacks extends Plugins
 			
 			$this->aModules[$sFile] = $sCode;
 		}
+		
+		echo "* Updated callbacks code.\r\n";
 	}
 	
 	

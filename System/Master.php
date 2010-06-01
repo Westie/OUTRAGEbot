@@ -35,7 +35,7 @@ class Master
 	/**
 	 *	@ignore
 	 */
-	public $oPlugins;
+	public $pPlugins;
 	
 	
 	/**
@@ -95,6 +95,13 @@ class Master
 	
 	
 	/**
+	 *	Contains the current (or last) accessed plugin.
+	 *	@ignore
+	 */
+	public $sLastAccessedPlugin;
+	
+	
+	/**
 	 *	Internal: Constructor for class 'Master'
 	 *
 	 *	@ignore
@@ -104,7 +111,7 @@ class Master
 		$this->oConfig = $oConfig;
 		$this->sBotGroup = $sKey;
 		
-		$this->oPlugins = new stdClass();
+		$this->pPlugins = new stdClass();
 		$this->oModes = new stdClass();
 		
 		$this->pBotItter = new stdClass();
@@ -162,15 +169,15 @@ class Master
 	 */
 	public function _onDestruct()
 	{
-		foreach($this->oPlugins as $sReference => $oPlugin)
+		foreach($this->pPlugins as $sReference => $pPlugin)
 		{
-			call_user_func(array($this->oPlugins->$sReference, "onDestruct"));
-			unset($this->oPlugins->$sReference);
+			call_user_func(array($this->pPlugins->$sReference, "onDestruct"));
+			unset($this->pPlugins->$sReference);
 		}
 		
-		foreach($this->aBotObjects as $iReference => $oBotObject)
+		foreach($this->aBotObjects as $iReference => $pBotObject)
 		{
-			$oBotObject->destructBot();
+			$pBotObject->destructBot();
 			unset($this->aBotObjects[$iReference]);
 		}
 		
@@ -203,7 +210,7 @@ class Master
 			
 			if($oClones->isClone() == false)
 			{
-				$this->invokeEvent("onTick");
+				$this->triggerEvent("onTick");
 			}
 		}
 	}
@@ -535,9 +542,9 @@ class Master
 				}
 				case SEND_ALL:
 				{
-					foreach($this->aBotObjects as $oBot)
+					foreach($this->aBotObjects as $pBot)
 					{
-						$oBot->Output($sMessage);
+						$pBot->Output($sMessage);
 					}
 					break;
 				}
@@ -567,7 +574,7 @@ class Master
 		{
 			foreach($mSend as $sSend)
 			{
-				$oChild = $this->getChildObject($mSend);
+				$oChild = $this->getChildObject($sSend);
 			
 				if($oChild != null)
 				{
@@ -713,39 +720,39 @@ class Master
 	 *
 	 *	@ignore
 	 */
-	public function getSend(Socket $oBot, $sMessage)
+	public function getSend(Socket $pBot, $sMessage)
 	{
 		if(strlen($sMessage) < 3) return;
 		
 		/* Deal with the useless crap. */
-		$this->oCurrentBot = $oBot;
+		$this->oCurrentBot = $pBot;
 		$this->sCurrentChunk = $sMessage;
 		$aRaw = explode(' ', $sMessage, 4);
 		
 		/* Deal with realtime scans */
-		if($oBot->iUseQueue == true)
+		if($pBot->iUseQueue == true)
 		{
-			if($oBot->aRequestConfig['TIMEOUT'] !== false)
+			if($pBot->aRequestConfig['TIMEOUT'] !== false)
 			{				
-				if(array_search($aRaw[1], $oBot->aRequestConfig['ENDNUM']) !== false)
+				if(array_search($aRaw[1], $pBot->aRequestConfig['ENDNUM']) !== false)
 				{
-					$oBot->aMessageQueue[] = $sMessage;
-					$oBot->iUseQueue = false;
+					$pBot->aMessageQueue[] = $sMessage;
+					$pBot->iUseQueue = false;
 				}
-				elseif($oBot->aRequestConfig['TIMEOUT'] < time())
+				elseif($pBot->aRequestConfig['TIMEOUT'] < time())
 				{
-					$oBot->aMessageQueue[] = $sMessage;
-					$oBot->iUseQueue = false;
+					$pBot->aMessageQueue[] = $sMessage;
+					$pBot->iUseQueue = false;
 				}
 			}
 			
-			if(array_search($aRaw[1], $oBot->aRequestConfig['SEARCH']) === false)
+			if(array_search($aRaw[1], $pBot->aRequestConfig['SEARCH']) === false)
 			{
-				$oBot->aMessageQueue[] = $sMessage;
+				$pBot->aMessageQueue[] = $sMessage;
 			}
 			else
 			{
-				$oBot->aRequestOutput[] = $sMessage;
+				$pBot->aRequestOutput[] = $sMessage;
 			}
 			
 			return;
@@ -757,13 +764,13 @@ class Master
 		/* Deal with pings */
 		if($aChunks[0] == 'PING')
 		{
-			$oBot->Output('PONG '.$aChunks[1]);
+			$pBot->Output('PONG '.$aChunks[1]);
 			return;
 		}
 		elseif($aChunks[1] == 'PONG')
 		{
-			$oBot->iNoReply = 0;
-			$oBot->iHasBeenReply = true;
+			$pBot->iNoReply = 0;
+			$pBot->iHasBeenReply = true;
 			return;
 		}
 		
@@ -809,7 +816,7 @@ class Master
 	 */
 	private function _onConnect()
 	{
-		$this->invokeEvent("onConnect");
+		$this->triggerEvent("onConnect");
 		
 		if(isset($this->oConfig->Perform))
 		{
@@ -835,7 +842,7 @@ class Master
 		$sNickname = $this->getNickname($aChunks[0]);
 		
 		$this->oModes->aUserInfo[strtolower($sNickname)]['Hostname'] = $this->getHostname($aChunks[0]);
-		$this->invokeEvent("onJoin", $sNickname, $aChunks[2]);
+		$this->triggerEvent("onJoin", $sNickname, $aChunks[2]);
 		$this->addUserToChannel($aChunks[2], $sNickname);
 	}
 	
@@ -848,7 +855,7 @@ class Master
 	{
 		$aChunks[3] = explode(' ', $aChunks[3], 2);
 		$aChunks[3][1] = trim(isset($aChunks[3][1]) ? substr($aChunks[3][1], 1) : "");
-		$this->invokeEvent("onKick", $this->getNickname($aChunks[0]), $aChunks[3][0], $aChunks[2], $aChunks[3][1]);
+		$this->triggerEvent("onKick", $this->getNickname($aChunks[0]), $aChunks[3][0], $aChunks[2], $aChunks[3][1]);
 		$this->removeUserFromChannel($aChunks[2], $aChunks[3][0]);
 	}
 	
@@ -859,7 +866,7 @@ class Master
 	 */
 	private function _onPart($aChunks)
 	{
-		$this->invokeEvent("onPart", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
+		$this->triggerEvent("onPart", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
 		$this->removeUserFromChannel($aChunks[2], $this->getNickname($aChunks[0]));
 	}
 	
@@ -870,7 +877,7 @@ class Master
 	 */
 	private function _onQuit($aChunks)
 	{
-		$this->invokeEvent("onQuit", $this->getNickname($aChunks[0]), $aChunks[3]);
+		$this->triggerEvent("onQuit", $this->getNickname($aChunks[0]), $aChunks[3]);
 		$this->removeUserFromChannel('*', $this->getNickname($aChunks[0]));
 	}
 	
@@ -881,7 +888,7 @@ class Master
 	 */
 	private function _onMode($aChunks)
 	{
-		$this->invokeEvent("onMode", $aChunks[2], $aChunks[3]);
+		$this->triggerEvent("onMode", $aChunks[2], $aChunks[3]);
 			
 		foreach($this->parseModes($aChunks[3]) as $aMode)
 		{
@@ -933,7 +940,7 @@ class Master
 			$this->oCurrentBot->aConfig['nickname'] = $sNickname;
 		}
 		
-		$this->invokeEvent("onNick", $sNickname, $aChunks[2]);
+		$this->triggerEvent("onNick", $sNickname, $aChunks[2]);
 		$this->renameUserFromChannel($sNickname, $aChunks[2]);
 	}
 	
@@ -944,7 +951,7 @@ class Master
 	 */
 	private function _onNotice($aChunks)
 	{
-		$this->invokeEvent("onNotice", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
+		$this->triggerEvent("onNotice", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
 	}
 	
 	
@@ -955,7 +962,7 @@ class Master
 	private function _onCTCP($aChunks)
 	{
 		$aChunks[3] = explode(' ', str_replace("\001", "", $aChunks[3]), 2);
-		$this->invokeEvent("onCTCP", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3][0], (isset($aChunks[3][1]) ? $aChunks[3][1] : ""));
+		$this->triggerEvent("onCTCP", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3][0], (isset($aChunks[3][1]) ? $aChunks[3][1] : ""));
 		
 		switch(strtoupper($aChunks[3][0]))
 		{
@@ -1013,18 +1020,18 @@ class Master
 				if($aChunks[3][0] == $this->oConfig->Network['delimiter'])
 				{
 					$aCommand = explode(' ', trim($aChunks[3]), 2);
-					$this->invokeEvent("onCommand", $this->getNickname($aChunks[0]), $aChunks[2],
+					$this->triggerEvent("onCommand", $this->getNickname($aChunks[0]), $aChunks[2],
 						substr($aCommand[0], 1), (isset($aCommand[1]) ? $aCommand[1] : ""));
 						
 					return;
 				}
 				
-				$this->invokeEvent("onMessage", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
+				$this->triggerEvent("onMessage", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
 				return;
 			}
 			default:
 			{
-				$this->invokeEvent("onPrivMessage", $this->getNickname($aChunks[0]), $aChunks[3]);
+				$this->triggerEvent("onPrivMessage", $this->getNickname($aChunks[0]), $aChunks[3]);
 				return;
 			}
 		}
@@ -1043,7 +1050,7 @@ class Master
 		$this->oModes->aChannelInfo[strtolower($aChunks[2])]['TopicSetTime'] = time();
 		$this->oModes->aChannelInfo[strtolower($aChunks[2])]['TopicSetBy'] = $sNickname;
 	
-		$this->invokeEvent("onTopic", $sNickname, $aChunks[2], $aChunks[3]);
+		$this->triggerEvent("onTopic", $sNickname, $aChunks[2], $aChunks[3]);
 	}
 	
 	
@@ -1628,14 +1635,14 @@ class Master
 	/**
 	 *	Invokes an event/callback from plugins.
 	 *
-	 *	<code>$this->invokeEvent("onTick");
-	 *	$this->invokeEvent("onCommand", $sNickname, $sChannel, $sCommand, $sArguments);</code>
+	 *	<code>$this->triggerEvent("onTick");
+	 *	$this->triggerEvent("onCommand", $sNickname, $sChannel, $sCommand, $sArguments);</code>
 	 *
 	 *	@param string $sEvent Event to invoke
 	 *	@param mixed $... Arguments to pass to event.
 	 *	@return void
 	 */
-	public function invokeEvent($sEvent)
+	public function triggerEvent($sEvent)
 	{
 		if(func_num_args() == 0)
 		{
@@ -1645,8 +1652,9 @@ class Master
 		$aArguments = func_get_args();
 		array_shift($aArguments);
 		
-		foreach($this->oPlugins as &$oPlugin)
+		foreach($this->pPlugins as &$oPlugin)
 		{
+			$this->sLastAccessedPlugin = $this->getPluginName($oPlugin);
 			$rResult = call_user_func_array(array($oPlugin, $sEvent), $aArguments);
 			
 			if($rResult == null || $rResult == true)
@@ -1656,6 +1664,55 @@ class Master
 			
 			break;
 		}
+	}
+	
+	
+	/**
+	 *	Invokes an event from one plugin only.
+	 *
+	 *	@param string $sPlugin Plugin name
+	 *	@param string $sEvent Event to invoke
+	 *	@param mixed $... Arguments to pass to event.
+	 */
+	public function triggerSingleEvent($sPlugin, $sEvent)
+	{
+		$aArguments = func_get_args();
+		
+		array_shift($aArguments);
+		array_shift($aArguments);
+		
+		return $this->triggerSingleEventArray($sPlugin, $sEvent, $aArguments);
+	}
+	
+	
+	/**
+	 *	Invokes an event from one plugin only, but arguments are an array
+	 *
+	 *	@param string $sPlugin Plugin name
+	 *	@param string $sEvent Event to invoke
+	 *	@param array $aArguments Arguments to pass to event.
+	 */
+	public function triggerSingleEventArray($sPlugin, $sEvent, $aArguments, $iTimerCalled = false)
+	{
+		if(func_num_args() == 0)
+		{
+			return false;
+		}
+		
+		$cCallback = array($this->getPlugin($sPlugin), $sEvent);
+		
+		if(!is_callable($cCallback))
+		{
+			if($iTimerCalled === true)
+			{
+				$this->removeTimer($this->getActiveTimer());
+			}
+			
+			return;
+		}
+
+		$this->sLastAccessedPlugin = $sPlugin;
+		return call_user_func_array($cCallback, $aArguments);
 	}
 	
 	
@@ -1835,12 +1892,42 @@ class Master
 	 */
 	public function addTimer($cCallback, $fInterval, $iRepeat)
 	{
+		$aArguments = array();
+		
+		if(is_array($cCallback))
+		{
+			if(!($cCallback[0] instanceof Master))
+			{
+				$aArguments = func_get_args();
+				array_shift($aArguments);
+				array_shift($aArguments);
+				array_shift($aArguments);
+			
+				$aArguments = array($this->getPluginName($cCallback[0]), $cCallback[1], $aArguments, true);
+				$cCallback = array($this, "triggerSingleEventArray");
+			
+				return Timers::Create($cCallback, $fInterval, $iRepeat, $aArguments); 
+			}
+		}
+		else
+		{
+			$aArguments = func_get_args();
+			array_shift($aArguments);
+			array_shift($aArguments);
+			array_shift($aArguments);
+			
+			$aArguments = array($this->sLastAccessedPlugin, $cCallback, $aArguments, true);
+			$cCallback = array($this, "triggerSingleEventArray");
+			
+			return Timers::Create($cCallback, $fInterval, $iRepeat, $aArguments); 
+		}
+		
 		$aArguments = func_get_args();
 		array_shift($aArguments);
 		array_shift($aArguments);
 		array_shift($aArguments);
 		
-		return Timers::Create($cCallback, $fInterval, $iRepeat, (array) $aArguments); 
+		return Timers::Create($cCallback, $fInterval, $iRepeat, $aArguments); 
 	}
 
 		
@@ -1869,6 +1956,16 @@ class Master
 	
 	
 	/**
+	 *	Gets the active timer ID.
+	 *
+	 *	@return string Timer ID
+	 */
+	public function getActiveTimer()
+	{
+		return Timers::$sCurrentTimer;
+	}
+	
+	/**
 	 *	Removes a timer from memory.
 	 *
 	 *	<code>$this->removeTimer($sKey);</code>
@@ -1892,7 +1989,7 @@ class Master
 	 */
 	public function activatePlugin($sPlugin)
 	{
-		if(array_key_exists($sPlugin, $this->oPlugins))
+		if(array_key_exists($sPlugin, $this->pPlugins))
 		{
 			return false;
 		}
@@ -1920,8 +2017,8 @@ class Master
 		include($sFile);
 		unlink($sFile);
 		
-		$this->oPlugins->$sPlugin = new $sIdentifier($this, array($sPlugin, $sIdentifier));
-		echo "* Plugin ".$sPlugin." has been loaded.".PHP_EOL;
+		$this->pPlugins->$sPlugin = new $sIdentifier($this, array($sPlugin, $sIdentifier));
+		echo "* Plugin ".$sPlugin." has been activated.".PHP_EOL;
 		
 		return true;
 	}
@@ -1937,12 +2034,29 @@ class Master
 	 */
 	public function getPlugin($sPlugin)
 	{
-		if(isset($this->oPlugins->$sPlugin))
+		if(isset($this->pPlugins->$sPlugin))
 		{
-			return $this->oPlugins->$sPlugin;
+			return $this->pPlugins->$sPlugin;
 		}
 
 		return null;
+	}
+	
+	
+	/**
+	 *	Get the name of the plugin from the instance
+	 *
+	 *	@param class $pInstance Instance of plugin
+	 *	@return string Plugin name, or if not Plugin class, the object.
+	 */
+	public function getPluginName($pInstance)
+	{
+		if(method_exists($pInstance, "__getName"))
+		{
+			return $pInstance->__getName();
+		}
+		
+		return $pInstance;
 	}
 
 
@@ -1956,13 +2070,20 @@ class Master
 	 */
 	public function deactivatePlugin($sPlugin)
 	{
-		if(isset($this->oPlugins->$sPlugin))
+		if(isset($this->pPlugins->$sPlugin))
 		{
-			$this->oPlugins->$sPlugin->__destruct();
-			unset($this->oPlugins->$sPlugin);
+			foreach($this->pPlugins->$sPlugin as $sKey => $mVar)
+			{
+				unset($this->pPlugins->$sPlugin->$sKey);
+			}
+			
 			Timers::CheckCall();
-			$this->checkHandlers();
-			echo "* Plugin ".$sPlugin." has been unloaded.".PHP_EOL;
+			$this->checkHandlers($sPlugin);
+			$this->checkFunctions($sPlugin);
+			
+			unset($this->pPlugins->$sPlugin);
+			
+			echo "* Plugin ".$sPlugin." has been deactivated.".PHP_EOL;
 			return true;
 		}
 		
@@ -1999,25 +2120,33 @@ class Master
 	 */
 	public function isPluginActivated($sPlugin)
 	{
-		return isset($this->oPlugins->$sPlugin);
+		return isset($this->pPlugins->$sPlugin);
 	}
 	
 	
 	/**
-	 *	Adds a function handler.
+	 *	Introduces a function handler.
 	 *
 	 *	@param string $sFunction Function name
 	 *	@param callback $cCallback Callback
 	 *	@return boolean True on success
 	 */
-	public function addFunction($sFunction, $cCallback)
+	public function introduceFunction($sFunction, $cCallback)
 	{
 		if(isset($this->aFunctions[$sFunction]))
 		{
 			return false;
 		}
 		
-		$this->aFunctions[$sFunction] = $cCallback;
+		if(is_array($cCallback))
+		{
+			$this->aFunctions[$sFunction] = array($this->getPluginName($cCallback[0]), $cCallback[1]);
+		}
+		else
+		{
+			$this->aFunctions[$sFunction] = array($this->sLastAccessedPlugin, $cCallback);
+		}
+		
 		return true;
 	}
 	
@@ -2048,6 +2177,22 @@ class Master
 	
 	
 	/**
+	 *	Checks for inactive function handlers.
+	 *	@ignore
+	 */
+	public function checkFunctions($sPlugin)
+	{
+		foreach($this->aFunctions as $sKey => $cCallback)
+		{
+			if($sPlugin == $cCallback[0])
+			{
+				unset($this->aFunctions[$sKey]);
+			}
+		}
+	}
+	
+	
+	/**
 	 *	Create a command or event handler for IRC numerics/commands.
 	 *
 	 *	If you are passing arguments to the bind handler, then <b>must</b> $aFormat must be populated.
@@ -2073,6 +2218,15 @@ class Master
 	 */
 	public function addHandler($sInput, $cCallback, $aFormat = array())
 	{
+		if(is_array($cCallback))
+		{
+			$cCallback[0] = $this->getPluginName($cCallback[0]);
+		}
+		else
+		{
+			$cCallback = array($this->sLastAccessedPlugin, $cCallback);
+		}
+		
 		$sHandle = substr(sha1(time()."-".uniqid()), 2, 10);
 		
 		$this->aHandlers[$sHandle] = array
@@ -2080,27 +2234,6 @@ class Master
 			"INPUT" => strtoupper($sInput),
 			"CALLBACK" => $cCallback,
 			"FORMAT" => $aFormat,
-			"MATCHES" => false,
-		);
-		
-		return $sHandle;
-	}
-	
-	
-	/**
-	 *	Create a regex handler.
-	 *	@todo Test it!
-	 */
-	public function addComplexHandler($sInput, $aMatches, $cCallback, $aFormat = array())
-	{
-		$sHandle = substr(sha1(time()."-".uniqid()), 2, 10);
-		
-		$this->aHandlers[$sHandle] = array
-		(
-			"INPUT" => strtoupper($sInput),
-			"CALLBACK" => $cCallback,
-			"FORMAT" => $aFormat,
-			"MATCHES" => $aMatches,
 		);
 		
 		return $sHandle;
@@ -2174,9 +2307,10 @@ class Master
 
 					if($aCommand[0] == $this->oConfig->Network['delimiter'].$aSection['FORMAT'])
 					{
-						call_user_func($aSection['CALLBACK'], $this->getNickname($aChunks[0]),
-							$aChunks[2], (isset($aCommand[1]) ? $aCommand[1] : ""));
+						$this->triggerSingleEvent($aSection['CALLBACK'][0], $aSection['CALLBACK'][1], $this->getNickname($aChunks[0]), $aChunks[2], (isset($aCommand[1]) ? $aCommand[1] : ""));
 					}
+					
+					continue;
 				}
 			}
 			
@@ -2199,18 +2333,7 @@ class Master
 				}
 			}
 			
-			if($aMatches['MATCHES'] !== false)
-			{
-				foreach($aMatches['MATCHES'] as $iValue => $sValue)
-				{
-					if(preg_match($sValue, $aChunks[$iValue]) == false)
-					{
-						continue;
-					}
-				}
-			}
-			
-			call_user_func_array($aSection['CALLBACK'], $aArguments);
+			$this->triggerSingleEventArray($aSection['CALLBACK'][0], $aSection['CALLBACK'][1], $aArguments);
 		}
 	}
 	
@@ -2222,11 +2345,11 @@ class Master
 	 *
 	 *	@ignore
 	 */
-	public function checkHandlers()
+	public function checkHandlers($sPlugin)
 	{
 		foreach($this->aHandlers as $sKey => $aHandle)
 		{
-			if(!is_callable($aHandle['CALLBACK']))
+			if($aHandle['CALLBACK'][0] == $sPlugin)
 			{
 				unset($this->aHandlers[$sKey]);
 			}
@@ -2298,7 +2421,7 @@ class Master
 	 *	@param integer $iSleep <i>Seconds</i> to sleep before getting input.
 	 *	@return array The response matched to the data in $mSearch.
 	 */
-	public function getRequest($sRequest, $mSearch, $mEndNumeric, $iTimeout = 4, $iSleep = 0.2)
+	public function getRequest($sRequest, $mSearch, $mEndNumeric, $iTimeout = 4, $iSleep = 0.3)
 	{
 		$this->oCurrentBot->iUseQueue = true;
 		$this->oCurrentBot->aRequestOutput = array();

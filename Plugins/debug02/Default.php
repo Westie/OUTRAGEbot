@@ -27,7 +27,7 @@ class debug02 extends Plugins
 		(
 			"TimerTest",				// Function name
 			3.5,					// Time period (every 3.5 seconds)
-			-1,					// To be called every half second
+			5,					// To be called every half second
 			
 			'#OUTRAGEbot'				// Argument 0 to send to function
 		);
@@ -39,7 +39,11 @@ class debug02 extends Plugins
 			'testing'				// Command in IRC to invoke with
 		);
 		
-		$this->addFunction("Alarm", array($this, "Alarm"));
+		$this->introduceFunction
+		(
+			"Alarm",
+			"AlarmFunction"
+		);
 		
 		$this->Log('Plugin loaded...');
 	}
@@ -59,7 +63,7 @@ class debug02 extends Plugins
 	 */
 	public function command_TestFunc($sNickname, $sChannel, $sArguments)
 	{
-		$this->Message('#OUTRAGEbot', 'Hai, I say hai!');
+		$this->Message($sChannel, 'Hai, I say hai!');
 	}
 	
 	
@@ -176,7 +180,7 @@ class debug02 extends Plugins
 		/* Stopping the test timer */
 		if(!strcmp($sCommand, "stoptimer"))
 		{
-			$this->sendMessage($sChannel, ($this->removeTimer($this->sTimerKey) ? "Timer has been killed" : "Invalid timer ID"));
+			$this->Message($sChannel, ($this->removeTimer($this->sTimerKey) ? "Timer has been killed" : "Invalid timer ID"));
 			return true;
 		}
 	}
@@ -235,13 +239,14 @@ class debug02 extends Plugins
 	 */
 	public function TimerTest($sChannel)
 	{
-		$this->sendMessage($sChannel, 'time: '.microtime());
-		$this->Log("Timer called.");
+		$this->Message($sChannel, 'time: '.microtime());
+		//$this->Log("Timer called.");
 	}
 	
 	
-	function Alarm($sChannel, $sMessage)
+	function AlarmFunction($sChannel, $sMessage)
 	{
+		$this->Message($sChannel, "Timer set for 5 seconds");
 		$this->addTimer(array($this, "Message"), 5, 1, $sChannel, $sMessage);
 	}
 }

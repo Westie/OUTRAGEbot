@@ -16,15 +16,13 @@ class Timers
 	private static
 		$aTimers = array();
 	
+	public static
+		$sCurrentTimer;
+	
 	
 	/* Function to create a function-timer */
 	static function Create($cCallback, $fInterval, $iRepeat, $aArguments = array())
 	{
-		if(!is_callable($cCallback))
-		{
-			return false;
-		}
-
 		$aTimer = array();
 		
 		$aTimer['KEY'] = substr(sha1(time()."-".uniqid()), 4, 10);
@@ -43,11 +41,11 @@ class Timers
 	/* Function to delete a timer */
 	static function Delete($sKey)
 	{
-		foreach(self::$aTimers as $iKey => $aTimer)
+		foreach(self::$aTimers as $sKey => $aTimer)
 		{
 			if(($sKey == '*') || ($aTimer['KEY'] == $sKey))
 			{
-				unset(self::$aTimers[$iKey]);
+				unset(self::$aTimers[$sKey]);
 				return true;
 			}
 		}
@@ -72,12 +70,12 @@ class Timers
 	/* Some verification is needed. */
 	static function CheckCall()
 	{
-		foreach(self::$aTimers as $iKey => $aTimer)
+		foreach(self::$aTimers as $sKey => $aTimer)
 		{
 			if(!is_callable($aTimer['CALLBACK']))
 			{
 				/* 'Preety' obvious no calls here */
-				unset(self::$aTimers[$iKey]);
+				unset(self::$aTimers[$sKey]);
 				continue;
 			}
 		}
@@ -92,10 +90,11 @@ class Timers
 			return;
 		}
 		
-		foreach(self::$aTimers as $iKey => &$aTimer)
+		foreach(self::$aTimers as $sKey => &$aTimer)
 		{
 			if(microtime(true) >= $aTimer['CALLTIME'])
 			{
+				self::$sCurrentTimer = $sKey;
 				call_user_func_array($aTimer['CALLBACK'], (array) $aTimer['ARGUMENTS']);
 				
 				$iTimes = (isset($aTimer['REPEAT']) ? (int) $aTimer['REPEAT'] : 0);
@@ -111,7 +110,7 @@ class Timers
 					}
 					else
 					{
-						unset(self::$aTimers[$iKey]);
+						unset(self::$aTimers[$sKey]);
 					}
 				}
 				else
@@ -120,6 +119,8 @@ class Timers
 				}
 			}
 		}
+		
+		self::$sCurrentTimer = "";
 	}
 }
 

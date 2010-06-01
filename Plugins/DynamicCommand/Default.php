@@ -31,6 +31,9 @@ class DynamicCommand extends Plugins
 		}
 		
 		$this->commandsLoad();
+		
+		$this->introduceFunction("getDynamicCommands", array($this, "commandsLoad"));
+		$this->introduceFunction("saveDynamicCommands", array($this, "commandsSave"));
 	}
 	
 	
@@ -190,7 +193,8 @@ class DynamicCommand extends Plugins
 			$sText = file_get_contents($sFile);
 			$this->aCommands = unserialize($sText);
 		}
-		return true;
+		
+		echo "* Loaded dynamic commands.\r\n";
 	}
 	
 	
@@ -200,7 +204,8 @@ class DynamicCommand extends Plugins
 		$sText = serialize($this->aCommands);
 		$sFile = dirname(__FILE__).'/commands/'.$this->sFilename.'.txt';
 		file_put_contents($sFile, $sText);
-		return true;
+		
+		echo "* Saved dynamic commands.\r\n";
 	}
 	
 	
