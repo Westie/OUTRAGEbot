@@ -1392,7 +1392,7 @@ class Master
 	 */
 	public function syncChannelLists($sChannel)
 	{
-		$this->Raw("WHO {$sChannel}");
+		$this->Raw("NAMES {$sChannel}");
 	}
 	
 	
