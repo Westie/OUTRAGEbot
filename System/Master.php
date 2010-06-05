@@ -1171,7 +1171,10 @@ class Master
 	 */
 	public function addUserToChannel($sChan, $sUser)
 	{
-		$this->pModes->aUsers[$sUser][strtolower($sChan)] = true;
+		$sChan = strtolower($sChan);
+		
+		$this->pModes->aUsers[$sUser][$sChan] = true;
+		$this->pModes->aChannels[$sChan][$sUser] = array('iMode');
 	}
 	
 	
@@ -1190,11 +1193,12 @@ class Master
 			return;
 		}
 		
-		foreach($this->pModes->aUsers[$sUser] as $sChannel => $mUnused)
+		foreach(array_keys($this->pModes->aUsers[$sUser]) as $sChannel)
 		{
 			unset($this->pModes->aChannels[$sChannel][$sUser]);
 			unset($this->pModes->aUsers[$sUser][$sChannel]);
 		}
+		
 		return;
 	}
 	
@@ -1208,7 +1212,7 @@ class Master
 	 */
 	public function renameUserFromChannel($sOldNick, $sNewNick)
 	{
-		foreach($this->pModes->aUsers[$sOldNick] as $sChannel => $mUnused)
+		foreach(array_keys($this->pModes->aUsers[$sOldNick]) as $sChannel)
 		{
 			$this->pModes->aChannels[$sChannel][$sNewNick] = $this->pModes->aChannels[$sChannel][$sOldNick];
 			unset($this->pModes->aChannels[$sChannel][$sOldNick]);
