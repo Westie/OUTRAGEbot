@@ -65,7 +65,7 @@ class Master
 	/**
 	 *	@ignore
 	 */
-	public $oModes;
+	public $pModes;
 	
 	
 	/**
@@ -112,7 +112,7 @@ class Master
 		$this->sBotGroup = $sKey;
 		
 		$this->pPlugins = new stdClass();
-		$this->oModes = new stdClass();
+		$this->pModes = new stdClass();
 		
 		$this->pBotItter = new stdClass();
 		$this->pBotItter->iIndex = 0;
@@ -181,7 +181,7 @@ class Master
 			unset($this->aBotObjects[$iReference]);
 		}
 		
-		unset($this->oModes);
+		unset($this->pModes);
 		unset($this->oConfig);
 	}
 	
@@ -841,7 +841,7 @@ class Master
 	{
 		$sNickname = $this->getNickname($aChunks[0]);
 		
-		$this->oModes->aUserInfo[strtolower($sNickname)]['Hostname'] = $this->getHostname($aChunks[0]);
+		$this->pModes->aUserInfo[strtolower($sNickname)]['Hostname'] = $this->getHostname($aChunks[0]);
 		$this->triggerEvent("onJoin", $sNickname, $aChunks[2]);
 		$this->addUserToChannel($aChunks[2], $sNickname);
 	}
@@ -892,7 +892,7 @@ class Master
 			
 		foreach($this->parseModes($aChunks[3]) as $aMode)
 		{
-			$iMode = &$this->oModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'];
+			$iMode = &$this->pModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'];
 			
 			switch($aMode['MODE'])
 			{
@@ -1046,9 +1046,9 @@ class Master
 	{
 		$sNickname = $this->getNickname($aChunks[0]);
 		
-		$this->oModes->aChannelInfo[strtolower($aChunks[2])]['TopicString'] = $aChunks[3];
-		$this->oModes->aChannelInfo[strtolower($aChunks[2])]['TopicSetTime'] = time();
-		$this->oModes->aChannelInfo[strtolower($aChunks[2])]['TopicSetBy'] = $sNickname;
+		$this->pModes->aChannelInfo[strtolower($aChunks[2])]['TopicString'] = $aChunks[3];
+		$this->pModes->aChannelInfo[strtolower($aChunks[2])]['TopicSetTime'] = time();
+		$this->pModes->aChannelInfo[strtolower($aChunks[2])]['TopicSetBy'] = $sNickname;
 	
 		$this->triggerEvent("onTopic", $sNickname, $aChunks[2], $aChunks[3]);
 	}
@@ -1096,8 +1096,8 @@ class Master
 			}
 					
 			$sUser = preg_replace("/[+%@&~]/", "", $sUser);
-			$this->oModes->aChannels[$sChan][$sUser]['iMode'] = $iTemp;
-			$this->oModes->aUsers[$sUser][$sChan] = true;
+			$this->pModes->aChannels[$sChan][$sUser]['iMode'] = $iTemp;
+			$this->pModes->aUsers[$sUser][$sChan] = true;
 		}
 	}
 	
@@ -1137,15 +1137,15 @@ class Master
 			case 332:
 			{
 				$aData = explode(' :', $aChunks[3], 2);
-				$this->oModes->aChannelInfo[strtolower($aData[0])]['TopicString'] = $aData[1];
+				$this->pModes->aChannelInfo[strtolower($aData[0])]['TopicString'] = $aData[1];
 				return;
 			}
 			
 			case 333:
 			{
 				$aData = explode(' ', $aChunks[3], 3);				
-				$this->oModes->aChannelInfo[strtolower($aData[0])]['TopicSetTime'] = $aData[2];
-				$this->oModes->aChannelInfo[strtolower($aData[0])]['TopicSetBy'] = $aData[1];
+				$this->pModes->aChannelInfo[strtolower($aData[0])]['TopicSetTime'] = $aData[2];
+				$this->pModes->aChannelInfo[strtolower($aData[0])]['TopicSetBy'] = $aData[1];
 				return;
 			}
 		}
@@ -1171,7 +1171,7 @@ class Master
 	 */
 	public function addUserToChannel($sChan, $sUser)
 	{
-		$this->oModes->aUsers[$sUser][strtolower($sChan)] = true;
+		$this->pModes->aUsers[$sUser][strtolower($sChan)] = true;
 	}
 	
 	
@@ -1186,14 +1186,14 @@ class Master
 	{
 		if($sChan != '*')
 		{
-			unset($this->oModes->aChannels[strtolower($sChan)][$sUser]);
+			unset($this->pModes->aChannels[strtolower($sChan)][$sUser]);
 			return;
 		}
 		
-		foreach($this->oModes->aUsers[$sUser] as $sChannel => $mUnused)
+		foreach($this->pModes->aUsers[$sUser] as $sChannel => $mUnused)
 		{
-			unset($this->oModes->aChannels[$sChannel][$sUser]);
-			unset($this->oModes->aUsers[$sUser][$sChannel]);
+			unset($this->pModes->aChannels[$sChannel][$sUser]);
+			unset($this->pModes->aUsers[$sUser][$sChannel]);
 		}
 		return;
 	}
@@ -1208,14 +1208,14 @@ class Master
 	 */
 	public function renameUserFromChannel($sOldNick, $sNewNick)
 	{
-		foreach($this->oModes->aUsers[$sOldNick] as $sChannel => $mUnused)
+		foreach($this->pModes->aUsers[$sOldNick] as $sChannel => $mUnused)
 		{
-			$this->oModes->aChannels[$sChannel][$sNewNick] = $this->oModes->aChannels[$sChannel][$sOldNick];
-			unset($this->oModes->aChannels[$sChannel][$sOldNick]);
+			$this->pModes->aChannels[$sChannel][$sNewNick] = $this->pModes->aChannels[$sChannel][$sOldNick];
+			unset($this->pModes->aChannels[$sChannel][$sOldNick]);
 		}
 		
-		$this->oModes->aUsers[$sNewNick] = $this->oModes->aUsers[$sOldNick];	
-		unset($this->oModes->aUsers[$sOldNick]);
+		$this->pModes->aUsers[$sNewNick] = $this->pModes->aUsers[$sOldNick];	
+		unset($this->pModes->aUsers[$sOldNick]);
 		
 		return;
 	}
@@ -1235,12 +1235,12 @@ class Master
 	{
 		$sChan = strtolower($sChan);
 		
-		if(!isset($this->oModes->aChannels[$sChan][$sUser]))
+		if(!isset($this->pModes->aChannels[$sChan][$sUser]))
 		{
 			return false;
 		}
 		
-		return $this->oModes->aChannels[$sChan][$sUser];
+		return $this->pModes->aChannels[$sChan][$sUser];
 	}
 	
 	
@@ -1273,14 +1273,14 @@ class Master
 		$pUser = new stdClass();
 		$pUser->Channels = array();
 		
-		if(!isset($this->oModes->aUsers[$sNickname]))
+		if(!isset($this->pModes->aUsers[$sNickname]))
 		{
 			return new stdClass();
 		}
 		
-		foreach($this->oModes->aUsers[$sNickname] as $sChannel => $uVoid)
+		foreach($this->pModes->aUsers[$sNickname] as $sChannel => $uVoid)
 		{
-			$iUserMode = $this->oModes->aChannels[$sChannel][$sNickname]['iMode'];
+			$iUserMode = $this->pModes->aChannels[$sChannel][$sNickname]['iMode'];
 			$sUserMode = $this->userModeToChar($iUserMode);
 			
 			$pUser->Channels[$sChannel] = array
@@ -1323,14 +1323,14 @@ class Master
 		$pChannel = new stdClass();
 		$sChannel = strtolower($sChannel);
 		
-		if(!isset($this->oModes->aChannels[$sChannel]))
+		if(!isset($this->pModes->aChannels[$sChannel]))
 		{
 			return $pChannel;
 		}
 		
 		$pChannel->Users = array();
 		
-		foreach($this->oModes->aChannels[$sChannel] as $sKey => $aUser)
+		foreach($this->pModes->aChannels[$sChannel] as $sKey => $aUser)
 		{
 			$iUserMode = $aUser['iMode'];
 			$sUserMode = $this->userModeToChar($iUserMode);
@@ -1344,11 +1344,11 @@ class Master
 		
 		$pChannel->Topic = new stdClass();
 		
-		if(isset($this->oModes->aChannelInfo[$sChannel]['TopicString']))
+		if(isset($this->pModes->aChannelInfo[$sChannel]['TopicString']))
 		{
-			$pChannel->Topic->String = $this->oModes->aChannelInfo[$sChannel]['TopicString'];
-			$pChannel->Topic->Time = $this->oModes->aChannelInfo[$sChannel]['TopicSetTime'];
-			$pChannel->Topic->SetBy = $this->oModes->aChannelInfo[$sChannel]['TopicSetBy'];
+			$pChannel->Topic->String = $this->pModes->aChannelInfo[$sChannel]['TopicString'];
+			$pChannel->Topic->Time = $this->pModes->aChannelInfo[$sChannel]['TopicSetTime'];
+			$pChannel->Topic->SetBy = $this->pModes->aChannelInfo[$sChannel]['TopicSetBy'];
 		}
 		else
 		{
@@ -1362,6 +1362,37 @@ class Master
 		$pChannel->ExceptList = $this->getChannelExceptList($sChannel);
 		
 		return $pChannel;
+	}
+	
+	
+	/**
+	 *	Returns the amount of users in the channel.
+	 *
+	 *	@param string $sChannel Channel name
+	 *	@return integer Amount of users in channel
+	 */
+	public function getChannelUserCount($sChannel)
+	{
+		$sChannel = strtolower($sChannel);
+		
+		if(isset($this->pModes->aChannels[$sChannel]))
+		{
+			return count($this->pModes->aChannels[$sChannel]);
+		}
+		
+		return 0;
+	}
+	
+	
+	/**
+	 *	Syncs the internal channel lists. Useful if there happens
+	 *	to be a mistake.
+	 *
+	 *	@param string $sChannel Channel name
+	 */
+	public function syncChannelLists($sChannel)
+	{
+		$this->Raw("WHO {$sChannel}");
 	}
 	
 	
@@ -1457,7 +1488,7 @@ class Master
 	 */
 	public function isUserInChannel($sChan, $sUser)
 	{
-		return isset($this->oModes->aUsers[$sUser][strtolower($sChan)]) != false;
+		return isset($this->pModes->aUsers[$sUser][strtolower($sChan)]) != false;
 	}
 	
 	
@@ -1471,7 +1502,7 @@ class Master
 	 */
 	public function isChildInChannel($sChan)
 	{
-		return isset($this->oModes->aUsers[$this->getChildConfig('nickname')][strtolower($sChan)]) != false;
+		return isset($this->pModes->aUsers[$this->getChildConfig('nickname')][strtolower($sChan)]) != false;
 	}
 	
 	
