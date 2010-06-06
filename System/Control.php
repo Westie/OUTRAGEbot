@@ -8,7 +8,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1
+ *	@version 1.1.0
  */
 
 
@@ -44,7 +44,7 @@ class Control
 	 *	@param string $sConfig Bot-group 
 	 *	@uses ConfigParser::parseConfigFile()
 	 */
-	static function botCreate($sConfig)
+	static function createBot($sConfig)
 	{
 		if(file_exists(BASE_DIRECTORY."/Configuration/{$sConfig}.ini"))
 		{
@@ -59,7 +59,7 @@ class Control
 	 *	@param string $sConfig Bot-group
 	 *	@return bool 'true' on success.
 	 */
-	static function botRemove($sConfig)
+	static function removeBot($sConfig)
 	{
 		if(isset(self::$aBots[$sConfig]))
 		{
@@ -78,7 +78,7 @@ class Control
 	 *	@param string $sConfig Bot-group
 	 *	@param string $sMessage IRC message to send from that bot.
 	 */
-	static function botSend($sConfig, $sMessage)
+	static function sendFromBot($sConfig, $sMessage)
 	{
 		if(isset(self::$aBots[$sConfig]))
 		{
@@ -94,7 +94,7 @@ class Control
 	 *	@param string $sConfig Bot-group - optional.
 	 *	@return array Array of details.
 	 */
-	static function botGetInfo($sConfig = false)
+	static function getBotInfo($sConfig = false)
 	{
 		$aReturn = array();
 
@@ -130,7 +130,7 @@ class Control
 	 *
 	 *	@return array List of all bot groups.
 	 */
-	static function botGetNames()
+	static function getBotNames()
 	{
 		return array_keys(self::$aBots);
 	} 
@@ -142,7 +142,7 @@ class Control
 	 *	@param string $sConfig Bot-group - optional.
 	 *	@return array Array of objects.
 	 */
-	static function botGetObjects($sConfig = false)
+	static function getBotObjects($sConfig = false)
 	{
 		$aReturn = array();
 
@@ -159,4 +159,3 @@ class Control
 		return $aReturn;
 	}
 }
-	

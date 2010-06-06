@@ -15,7 +15,7 @@
 class Socket
 {
 	public
-		$oMaster = null,
+		$pMaster = null,
 		$aConfig = array(),
 		$aStatistics = array(),
 		$rSocket = null,
@@ -55,7 +55,7 @@ class Socket
 		);
 		
 		/* Shortcut, eh? */
-		$oConfig = $this->oMaster->oConfig;
+		$oConfig = $this->pMaster->oConfig;
 		
 		$this->rSocket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 		
@@ -65,6 +65,7 @@ class Socket
 		}
 		
 		socket_connect($this->rSocket, $oConfig->Network['host'], $oConfig->Network['port']);
+		
 		if(!isset($_SERVER['WINDIR']) && !isset($_SERVER['windir']))
 		{
 		 	socket_set_nonblock($this->rSocket);
@@ -87,7 +88,7 @@ class Socket
 	/* The socket gets shutdown by unsetting the class. */
 	public function destructBot($sMessage = false)
 	{
-		$this->Output('QUIT :'.($sMessage == false ? $this->oMaster->oConfig->Network['quitmsg'] : $sMessage));
+		$this->Output('QUIT :'.($sMessage == false ? $this->pMaster->oConfig->Network['quitmsg'] : $sMessage));
 		Timers::Delete($this->iPingTimer);
 		
 		@socket_clear_error();
@@ -99,10 +100,10 @@ class Socket
 	
 	
 	/* The real constructor. */
-	public function __construct($oMaster, $sChild, $aBasic)
+	public function __construct($pMaster, $sChild, $aBasic)
 	{
 		$this->aConfig = $aBasic;
-		$this->oMaster = $oMaster;
+		$this->pMaster = $pMaster;
 		$this->sChild = $sChild;
 		
 		$this->constructBot();
@@ -158,16 +159,16 @@ class Socket
 				$this->isWaiting = true;
 				$this->constructBot();
 			}
-			return true;
+			return;
 		}	
 		
-		if($this->isWaiting) return true;
+		if($this->isWaiting) return;
 		
 		if(count($this->aMessageQueue) && $this->iUseQueue == false)
 		{
 			foreach($this->aMessageQueue as $iKey => $sChunk)
 			{
-				$this->oMaster->getSend($this, $sChunk);
+				$this->pMaster->getSend($this, $sChunk);
 				unset($this->aMessageQueue[$iKey]);
 			}
 		}
@@ -185,11 +186,11 @@ class Socket
 
 				++$this->aStatistics['Input']['Packets'];
 				$this->aStatistics['Input']['Bytes'] += strlen($sChunk);
-				$this->oMaster->getSend($this, $sChunk);
+				$this->pMaster->getSend($this, $sChunk);
 			}
 		}
 		
-		return true;
+		return;
 	}
 	
 	

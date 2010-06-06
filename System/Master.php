@@ -586,23 +586,6 @@ class Master
 		}
 	}
 	
-		
-	/**
-	 *	Internal: Request the modes in a channel - used for user modes.
-	 *	Do we need to call this any more?
-	 *
-	 *	@ignore
-	 *	@param string $sChannel Channel name.
-	 */
-	function getNames($sChannel)
-	{
-		if(!$sChannel) return false;
-		if($this->oCurrentBot->isClone()) return false;
-		
-		$this->sendRaw("NAMES {$sChannel}");
-		return true;
-	}
-	
 	
 	/**
 	 *	Get the users username from a hostname string.
@@ -1198,8 +1181,6 @@ class Master
 			unset($this->pModes->aChannels[$sChannel][$sUser]);
 			unset($this->pModes->aUsers[$sUser][$sChannel]);
 		}
-		
-		return;
 	}
 	
 	
@@ -1220,8 +1201,6 @@ class Master
 		
 		$this->pModes->aUsers[$sNewNick] = $this->pModes->aUsers[$sOldNick];	
 		unset($this->pModes->aUsers[$sOldNick]);
-		
-		return;
 	}
 	
 	
@@ -1691,13 +1670,6 @@ class Master
 		{
 			$this->sLastAccessedPlugin = $this->getPluginName($oPlugin);
 			$rResult = call_user_func_array(array($oPlugin, $sEvent), $aArguments);
-			
-			if($rResult == null || $rResult == true)
-			{
-				continue;
-			}
-			
-			break;
 		}
 	}
 	
@@ -1944,7 +1916,7 @@ class Master
 				return Timers::Create($cCallback, $fInterval, $iRepeat, $aArguments); 
 			}
 		}
-		else
+		elseif(is_string($cCallback))
 		{
 			$aArguments = func_get_args();
 			array_shift($aArguments);
@@ -2207,7 +2179,6 @@ class Master
 	public function removeFunction($sFunction)
 	{
 		unset($this->aFunctions[$sFunction]);
-		return;
 	}
 	
 	
