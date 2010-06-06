@@ -137,25 +137,18 @@ class Control
 	
 	
 	/**
-	 *	Retrieve the bot-groups as objects.
+	 *	Retrieve the bot-group as an object.
 	 *
-	 *	@param string $sConfig Bot-group - optional.
-	 *	@return array Array of objects.
+	 *	@param string $sConfig.
+	 *	@return object
 	 */
-	static function getBotObjects($sConfig = false)
+	static function getBotObject($sConfig)
 	{
-		$aReturn = array();
-
-		foreach(self::$aBots as $sBotGroup => $oBot)
+		if(isset(self::$aBots[$sConfig]))
 		{
-			if($sConfig != false && $sConfig != $sBotGroup)
-			{
-				break;
-			}
-			
-			$aReturn[$sBotGroup] = $oBot;
+			return self::$aBots[$sConfig];
 		}
 		
-		return $aReturn;
+		return null;
 	}
 }
