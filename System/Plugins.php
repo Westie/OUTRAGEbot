@@ -146,6 +146,17 @@ abstract class Plugins
 	
 	
 	/**
+	 *	Called when you try and call an object.
+	 *
+	 *	@param string $sRawString Raw IRC output
+	 */
+	public final function __invoke($sRawString)
+	{
+		$this->pBot->Raw($sRawString);
+	}
+	
+	
+	/**
 	 *	Function that is used to write to print to console.
 	 *
 	 *	@todo Might enable printing to a file.
