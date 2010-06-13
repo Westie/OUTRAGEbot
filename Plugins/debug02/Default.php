@@ -27,7 +27,7 @@ class debug02 extends Plugins
 		(
 			"TimerTest",				// Function name
 			3.5,					// Time period (every 3.5 seconds)
-			5,					// To be called every half second
+			5,					// How many times to be called
 			
 			'#OUTRAGEbot'				// Argument 0 to send to function
 		);

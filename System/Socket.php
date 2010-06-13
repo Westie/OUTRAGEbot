@@ -55,16 +55,16 @@ class Socket
 		);
 		
 		/* Shortcut, eh? */
-		$oConfig = $this->pMaster->oConfig;
+		$pConfig = $this->pMaster->pConfig;
 		
 		$this->rSocket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 		
-		if(isset($oConfig->Network['bind']))
+		if(isset($pConfig->Network['bind']))
 		{
-			socket_bind($this->rSocket, $oConfig->Network['bind']);
+			socket_bind($this->rSocket, $pConfig->Network['bind']);
 		}
 		
-		socket_connect($this->rSocket, $oConfig->Network['host'], $oConfig->Network['port']);
+		socket_connect($this->rSocket, $pConfig->Network['host'], $pConfig->Network['port']);
 		
 		if(!isset($_SERVER['WINDIR']) && !isset($_SERVER['windir']))
 		{
@@ -88,7 +88,7 @@ class Socket
 	/* The socket gets shutdown by unsetting the class. */
 	public function destructBot($sMessage = false)
 	{
-		$this->Output('QUIT :'.($sMessage == false ? $this->pMaster->oConfig->Network['quitmsg'] : $sMessage));
+		$this->Output('QUIT :'.($sMessage == false ? $this->pMaster->pConfig->Network['quitmsg'] : $sMessage));
 		Timers::Delete($this->iPingTimer);
 		
 		@socket_clear_error();

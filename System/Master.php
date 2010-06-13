@@ -77,7 +77,7 @@ class Master
 	/**
 	 *	@ignore
 	 */
-	public $oConfig;
+	public $pConfig;
 	
 	
 	/**
@@ -106,9 +106,9 @@ class Master
 	 *
 	 *	@ignore
 	 */
-	public function __construct($sKey, $oConfig)
+	public function __construct($sKey, $pConfig)
 	{
-		$this->oConfig = $oConfig;
+		$this->pConfig = $pConfig;
 		$this->sBotGroup = $sKey;
 		
 		$this->pPlugins = new stdClass();
@@ -120,44 +120,44 @@ class Master
 		
 		Control::$aStack[$this->sBotGroup] = array();
 
-		echo PHP_EOL." Creating '{$this->oConfig->Network['name']}' at {$this->oConfig->Network['host']}:{$this->oConfig->Network['port']}".PHP_EOL;
+		echo PHP_EOL." Creating '{$this->pConfig->Network['name']}' at {$this->pConfig->Network['host']}:{$this->pConfig->Network['port']}".PHP_EOL;
 		
-		foreach($this->oConfig->Bots as $aOption)
+		foreach($this->pConfig->Bots as $aOption)
 		{	
 			$this->_addChild($aOption['nickname'], $aOption);
 		}
 		
-		foreach(explode(',', $this->oConfig->Network['plugins']) as $sPlugin)
+		foreach(explode(',', $this->pConfig->Network['plugins']) as $sPlugin)
 		{
 			$sPlugin = trim($sPlugin);
 			$this->activatePlugin($sPlugin);
 		}
 		
 		/* The uncool stuff. This does mean that yeah, you can this in the configs. */
-		if(!isset($this->oConfig->Network['delimiter']))
+		if(!isset($this->pConfig->Network['delimiter']))
 		{
-			$this->oConfig->Network['delimiter'] = "!";
+			$this->pConfig->Network['delimiter'] = "!";
 		}
 		
-		if(!isset($this->oConfig->Network['rotation']))
+		if(!isset($this->pConfig->Network['rotation']))
 		{
-			$this->oConfig->Network['rotation'] = SEND_DEF;
+			$this->pConfig->Network['rotation'] = SEND_DEF;
 		}
 		
-		if(!isset($this->oConfig->Network['quitmsg']))
+		if(!isset($this->pConfig->Network['quitmsg']))
 		{
-			$this->oConfig->Network['quitmsg'] = "OUTRAGEbot is going to bed :(";
+			$this->pConfig->Network['quitmsg'] = "OUTRAGEbot is going to bed :(";
 		}
 		
-		if(!isset($this->oConfig->Network['version']))
+		if(!isset($this->pConfig->Network['version']))
 		{
-			$this->oConfig->Network['version'] = "OUTRAGEbot ".BOT_VERSION." (rel. ".BOT_RELDATE."); David Weston; http://outrage.typefish.co.uk";
+			$this->pConfig->Network['version'] = "OUTRAGEbot ".BOT_VERSION." (rel. ".BOT_RELDATE."); David Weston; http://outrage.typefish.co.uk";
 		}
 		
-		foreach(explode(',', $this->oConfig->Network['owners']) as $sAddr)
+		foreach(explode(',', $this->pConfig->Network['owners']) as $sAddr)
 		{
 			$sAddr = trim($sAddr);
-			$this->oConfig->Network['_owners'][] = $sAddr;
+			$this->pConfig->Network['_owners'][] = $sAddr;
 		}
 	}
 	
@@ -182,7 +182,7 @@ class Master
 		}
 		
 		unset($this->pModes);
-		unset($this->oConfig);
+		unset($this->pConfig);
 	}
 	
 	
@@ -376,23 +376,6 @@ class Master
 	
 	
 	/**
-	 *	Internal: Checks if you have to pay the government alimony.
-	 *	(It really check if the child exists.) It's good that someone
-	 *	reads the source, otherwise you wouldn't find this.
-	 *
-	 *	@param string $sChild Child name.
-	 *	@return bool true on success.
-	 *	@ignore
-	 *	@see Master::doesChildExist()
-	 */
-	public function doIHaveToPayAlimony($sChild)
-	{
-		return $this->doesChildExist($sChild);
-	}
-	
-	
-	
-	/**
 	 *	Checks if a child exists. Note that the child name is not necessarily the 
 	 *	IRC nick of the bot, but in most cases it is.
 	 *
@@ -477,9 +460,9 @@ class Master
 	 */
 	public function getNetworkConfig($sKey)
 	{
-		if(isset($this->oConfig->Network[$sKey]))
+		if(isset($this->pConfig->Network[$sKey]))
 		{
-			return $this->oConfig->Network[$sKey];
+			return $this->pConfig->Network[$sKey];
 		}
 		
 		return null;
@@ -525,7 +508,7 @@ class Master
 		{
 			if($mSend == SEND_DEF)
 			{
-				$mSend = $this->oConfig->Network['rotation'];
+				$mSend = $this->pConfig->Network['rotation'];
 			}
 
 			switch($mSend)
@@ -801,15 +784,15 @@ class Master
 	{
 		$this->triggerEvent("onConnect");
 		
-		if(isset($this->oConfig->Perform))
+		if(isset($this->pConfig->Perform))
 		{
-			foreach((array) $this->oConfig->Perform as $sRaw)
+			foreach((array) $this->pConfig->Perform as $sRaw)
 			{
 				$this->sendRaw($sRaw);
 			}
 		}
 		
-		foreach((array) explode(',', $this->oConfig->Network['channels']) as $sChannel)
+		foreach((array) explode(',', $this->pConfig->Network['channels']) as $sChannel)
 		{
 			$this->sendRaw("JOIN {$sChannel}");
 		}
@@ -951,7 +934,7 @@ class Master
 		{
 			case "VERSION":
 			{
-				$this->ctcpReply($this->getNickname($aChunks[0]), "VERSION {$this->oConfig->Network['version']}");
+				$this->ctcpReply($this->getNickname($aChunks[0]), "VERSION {$this->pConfig->Network['version']}");
 				break;
 			}
 			case "TIME":
@@ -1000,7 +983,7 @@ class Master
 			case '&':
 			case '#':
 			{
-				if($aChunks[3][0] == $this->oConfig->Network['delimiter'])
+				if($aChunks[3][0] == $this->pConfig->Network['delimiter'])
 				{
 					$aCommand = explode(' ', trim($aChunks[3]), 2);
 					$this->triggerEvent("onCommand", $this->getNickname($aChunks[0]), $aChunks[2],
@@ -1349,6 +1332,17 @@ class Master
 	
 	
 	/**
+	 *	Returns the channels that the bot is in.
+	 *
+	 *	@return array Array of channels
+	 */
+	public function getChannelList()
+	{
+		return array_keys($this->pModes->aChannels);
+	}
+	
+	
+	/**
 	 *	Returns the amount of users in the channel.
 	 *
 	 *	@param string $sChannel Channel name
@@ -1616,7 +1610,7 @@ class Master
 		$aChunks = explode(' ', $this->sCurrentChunk, 4);
 		$sHostname = $this->getHostname($aChunks[0]);
 		
-		return (in_array($sHostname, $this->oConfig->Network['_owners']) !== false);
+		return (in_array($sHostname, $this->pConfig->Network['_owners']) !== false);
 	}
 	
 	
@@ -2311,7 +2305,7 @@ class Master
 				{
 					$aCommand = explode(' ', $aChunks[3], 2);
 
-					if($aCommand[0] == $this->oConfig->Network['delimiter'].$aSection['FORMAT'])
+					if($aCommand[0] == $this->pConfig->Network['delimiter'].$aSection['FORMAT'])
 					{
 						$this->triggerSingleEvent($aSection['CALLBACK'][0], $aSection['CALLBACK'][1], $this->getNickname($aChunks[0]), $aChunks[2], (isset($aCommand[1]) ? $aCommand[1] : ""));
 					}
@@ -2488,7 +2482,7 @@ class Master
 	 */
 	public function Join($sChannel)
 	{
-		return $this->sendRaw("JOIN $sChannel");
+		return $this->sendRaw("JOIN {$sChannel}");
 	}
 	
 	
@@ -2502,7 +2496,7 @@ class Master
 	 */
 	public function Part($sChannel, $sReason = false)
 	{
-		return $this->sendRaw("PART $sChannel".($sReason == false ? "" : " :{$sReason}"));
+		return $this->sendRaw("PART {$sChannel}".($sReason == false ? "" : " :{$sReason}"));
 	}
 	
 	
@@ -2516,7 +2510,7 @@ class Master
 	 */
 	public function Mode($sChannel, $sMode)
 	{
-		return $this->sendRaw('MODE '.$sMessage.' '.$sMode);
+		return $this->sendRaw('MODE '.$sChannel.' '.$sMode);
 	}
 	
 	
