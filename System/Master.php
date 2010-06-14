@@ -784,12 +784,14 @@ class Master
 	{
 		$this->triggerEvent("onConnect");
 		
-		if(isset($this->pConfig->Perform))
+		foreach((array) $this->getNetworkConfig('perform') as $sRaw)
 		{
-			foreach((array) $this->pConfig->Perform as $sRaw)
-			{
-				$this->sendRaw($sRaw);
-			}
+			$this->sendRaw($sRaw);
+		}
+		
+		foreach((array) $this->getChildConfig('perform') as $sRaw)
+		{
+			$this->sendRaw($sRaw);
 		}
 		
 		foreach((array) explode(',', $this->pConfig->Network['channels']) as $sChannel)
