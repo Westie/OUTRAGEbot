@@ -4,8 +4,9 @@
  *	Use this file to start the bot.
  *
  *	@ignore
+ *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@licence http://www.typefish.co.uk/licences/
+ *	@version 1.1.1 (commit here)
  */
 
 
