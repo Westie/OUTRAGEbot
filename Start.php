@@ -6,7 +6,7 @@
  *	@ignore
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1 (commit here)
+ *	@version 1.1.1-RC1 (Git commit: HAI)
  */
 
 
