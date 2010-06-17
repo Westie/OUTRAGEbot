@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC1 (Git commit: b15eb09a2ff34c17fcd4910b772f1ad9eb17d0a5)
+ *	@version 1.1.1-RC1 (Git commit: 81ab23ac872fb1a8c0ecbfe32a31b6bd7576c833)
  */
  
 
@@ -932,21 +932,23 @@ class Master
 		$aChunks[3] = explode(' ', str_replace("\001", "", $aChunks[3]), 2);
 		$this->triggerEvent("onCTCP", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3][0], (isset($aChunks[3][1]) ? $aChunks[3][1] : ""));
 		
+		$sNickname = $this->getNickname($aChunks[0]);
+
 		switch(strtoupper($aChunks[3][0]))
 		{
 			case "VERSION":
 			{
-				$this->ctcpReply($this->getNickname($aChunks[0]), "VERSION {$this->pConfig->Network['version']}");
+				$this->ctcpReply($sNickname, "VERSION {$this->pConfig->Network['version']}");
 				break;
 			}
 			case "TIME":
 			{
-				$this->ctcpReply($this->getNickname($aChunks[0]), "TIME ".date("d/m/Y H:i:s", time()));
+				$this->ctcpReply($sNickname, "TIME ".date("d/m/Y H:i:s", time()));
 				break;
 			}
 			case "PING":
 			{
-				$this->ctcpReply($this->getNickname($aChunks[0]), "PING {$aChunks[3][1]}");
+				$this->ctcpReply($sNickname, "PING {$aChunks[3][1]}");
 				break;
 			}
 			case 'UPTIME':
@@ -956,12 +958,17 @@ class Master
 				$sString = "{$aSince['WEEKS']} weeks, {$aSince['DAYS']} days, {$aSince['HOURS']} hours, ".
 				"{$aSince['MINUTES']} minutes, {$aSince['SECONDS']} seconds.";
 				
-				$this->ctcpReply($this->getNickname($aChunks[0]), "UPTIME ".$sString);
+				$this->ctcpReply($sNickname, "UPTIME ".$sString);
 				break;
 			}
 			case 'START':
 			{
-				$this->ctcpReply($this->getNickname($aChunks[0]), "START ".date("d/m/Y H:i:s", $this->oCurrentBot->aStatistics['StartTime']));
+				$this->ctcpReply($sNickname, "START ".date("d/m/Y H:i:s", $this->oCurrentBot->aStatistics['StartTime']));
+				break;
+			}
+			case 'SOURCE':
+			{
+				$this->ctcpReply($sNickname, "SOURCE http://outrage.typefish.co.uk");
 				break;
 			}
 		}
