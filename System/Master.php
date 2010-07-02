@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC1 (Git commit: b039a2452d78bd14378d0cec38581f03d9f002fc)
+ *	@version 1.1.1-RC2 (Git commit: e44cb25f995a4d05aff0e3843cce98d36f8d1436)
  */
  
 
@@ -2137,14 +2137,13 @@ class Master
 	 */
 	public function removeEventHandler($sHandlerID)
 	{
-		foreach(array_keys($this->aEvents) as $sEvent)
+		foreach($this->aEvents as $sEvent => $aEvents)
 		{
-			foreach(array_keys($this->aEvents->$sEvent) as $sHandler)
+			foreach(array_keys($aEvents) as $sHandler)
 			{
 				if($sHandlerID == $sHandler)
 				{
 					unset($this->aEvents[$sEvent][$sHandler]);
-					echo "FOUND";
 				}
 			}
 		}
