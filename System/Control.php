@@ -8,7 +8,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC1 (Git commit: b15eb09a2ff34c17fcd4910b772f1ad9eb17d0a5)
+ *	@version 1.1.1-RC1 (Git commit: 81ab23ac872fb1a8c0ecbfe32a31b6bd7576c833)
  */
 
 
@@ -23,13 +23,13 @@ class Control
 	/**
 	 *	@ignore
 	 */
-	public static $oConfig;
+	public static $pConfig;
 	
 	
 	/**
 	 *	@ignore
 	 */
-	public static $oGlobals;
+	public static $pGlobals;
 	
 	
 	/**
@@ -48,7 +48,7 @@ class Control
 	{
 		if(file_exists(BASE_DIRECTORY."/Configuration/{$sConfig}.ini"))
 		{
-			self::$oConfig->parseConfigFile(BASE_DIRECTORY."/Configuration/{$sConfig}.ini");
+			self::$pConfig->parseConfigFile(BASE_DIRECTORY."/Configuration/{$sConfig}.ini");
 		}
 	}
 	
@@ -98,23 +98,23 @@ class Control
 	{
 		$aReturn = array();
 
-		foreach(self::$aBots as $sBotGroup => $oBot)
+		foreach(self::$aBots as $sBotGroup => $pBot)
 		{
 			if($sConfig != false && $sConfig != $sBotGroup)
 			{
-				break;
+				continue;
 			}
 			
 			$aTemp = array();
 			
-			foreach($oBot->aBotObjects as $iReference => $oSocket)
+			foreach($pBot->aBotObjects as $iReference => $pSocket)
 			{
 				$aTemp['Socket.'.$iReference] = array
 				(
-					"NICKNAME" => $oSocket->aConfig['nickname'],
-					"USERNAME" => $oSocket->aConfig['username'],
-					"REALNAME" => $oSocket->aConfig['realname'],
-					"STATISTICS" => $oSocket->aStatistics,
+					"NICKNAME" => $pSocket->aConfig['nickname'],
+					"USERNAME" => $pSocket->aConfig['username'],
+					"REALNAME" => $pSocket->aConfig['realname'],
+					"STATISTICS" => $pSocket->aStatistics,
 				);
 			}
 			

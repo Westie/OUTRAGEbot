@@ -6,7 +6,7 @@
  *	@ignore
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC1 (Git commit: HAI)
+ *	@version 1.1.1-RC1 (Git commit: d11a86d7263068cdab8a74af6e9def63b1a1076c)
  */
 
 
@@ -28,8 +28,8 @@ include "System/Configuration.php";
 
 
 /* Set up the controlling classes */
-Control::$oConfig = new ConfigParser();
-Control::$oConfig->parseDirectory();
+Control::$pConfig = new ConfigParser();
+Control::$pConfig->parseDirectory();
 
 
 /* Bot loop */
@@ -37,9 +37,9 @@ while(true)
 {	
 	Timers::Scan();
 	
-	foreach(Control::$aBots as $oMaster)
+	foreach(Control::$aBots as $pMaster)
 	{
-		$oMaster->Loop();
+		$pMaster->Loop();
 	}
 	
 	Timers::Scan();

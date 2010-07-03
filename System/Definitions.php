@@ -19,7 +19,7 @@ define("BOT_RELDATE", "19/06/2010");
 
 
 /* How long the bot sleeps between socket calls. */
-define("CORE_SLEEP", 25000);
+define("CORE_SLEEP", 45000);
 
 
 /* IRC characters */
@@ -48,17 +48,3 @@ define("MODE_USER_HOPER", 2);
 define("MODE_USER_OPER", 4);
 define("MODE_USER_ADMIN", 8);
 define("MODE_USER_OWNER", 16);
-
-
-/* Handler definitions */
-define("IRC_HOSTMASK", 0);
-define("IRC_COMMAND", 1);
-
-define("IRC_PRIVMSG_CHANNEL", 2);
-define("IRC_PRIVMSG_MESSAGE", 3);
-
-define("IRC_INVITE_CHANNEL", 3);
-define("IRC_INVITE_NICKNAME", 2);
-
-define("IRC_JOIN_CHANNEL", -1);
-define("IRC_JOIN_NICKNAME", -1); 
