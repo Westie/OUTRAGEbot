@@ -9,7 +9,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC1 (Git commit: b15eb09a2ff34c17fcd4910b772f1ad9eb17d0a5)
+ *	@version 1.1.1-RC1 (Git commit: 81ab23ac872fb1a8c0ecbfe32a31b6bd7576c833)
  */
 
 class Socket
@@ -96,6 +96,10 @@ class Socket
 		$this->socketShutdown();
 		$this->Active = false;
 		$this->isWaiting = false;
+
+		if($iShutdown === true)
+		{
+		}
 	}
 	
 	
@@ -113,6 +117,13 @@ class Socket
 	/* The real destructor. */
 	public function __destruct()
 	{
+	}
+	
+	
+	/* No idea. */
+	public function __toString()
+	{
+		return "{$this->pMaster->temp_Iter} - ".$this->sChild;
 	}
 	
 	
@@ -168,7 +179,7 @@ class Socket
 		{
 			foreach($this->aMessageQueue as $iKey => $sChunk)
 			{
-				$this->pMaster->getSend($this, $sChunk);
+				$this->pMaster->getInput($this, $sChunk);
 				unset($this->aMessageQueue[$iKey]);
 			}
 		}
@@ -186,7 +197,7 @@ class Socket
 
 				++$this->aStatistics['Input']['Packets'];
 				$this->aStatistics['Input']['Bytes'] += strlen($sChunk);
-				$this->pMaster->getSend($this, $sChunk);
+				$this->pMaster->getInput($this, $sChunk);
 			}
 		}
 		

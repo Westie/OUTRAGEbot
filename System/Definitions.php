@@ -5,7 +5,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC1 (Git commit: 226f883a0ae5bd7bfcf24c4d057868b65da49cbf)
+ *	@version 1.1.1-RC2 (Git commit: 0fc9065d63d82bf7c612750a88ed798fed99fe65)
  */
 
 
@@ -14,8 +14,8 @@ error_reporting(E_ALL | E_STRICT);
 
 
 /* Some bot-brag-relating things. */
-define("BOT_VERSION", "1.1.1-RC1-226f883");
-define("BOT_RELDATE", "19/06/2010");
+define("BOT_VERSION", "1.1.1-RC2-0fc9065");
+define("BOT_RELDATE", "03/07/2010");
 
 
 /* How long the bot sleeps between socket calls. */

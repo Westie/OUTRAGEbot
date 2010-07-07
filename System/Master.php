@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC2 (Git commit: 0e98f755876d1edc136785f24347829e0f7c2a97)
+ *	@version 1.1.1-RC2 (Git commit: 0fc9065d63d82bf7c612750a88ed798fed99fe65)
  */
  
 
@@ -90,7 +90,7 @@ class Master
 	 *	Contains the instance of the current bot.
 	 *	@var Socket
 	 */
-	public $oCurrentBot;
+	public $pCurrentBot;
 	
 	
 	/**
@@ -227,11 +227,13 @@ class Master
 	 */
 	public function Loop()
 	{
-		foreach($this->aBotObjects as $oClones)
-		{	
-			$oClones->Input();
+		$this->temp_Iter = 0;
+		
+		foreach($this->aBotObjects as $pClones)
+		{
+			$pClones->Input();
 			
-			if($oClones->isClone() == false)
+			if($pClones->isClone() == false)
 			{
 				$this->triggerEvent("onTick");
 			}
@@ -289,7 +291,6 @@ class Master
 			'username' => ($sUsername == false ? $sChild : $sUsername),
 			'realname' => ($sRealname == false ? $sNickname : $sRealname),
 			'altnick' => $sNickname.rand(0, 10),
-			'reactevent' => 'false',
 		);
 		
 		return $this->_addChild($sChild, $aDetails);
@@ -437,9 +438,9 @@ class Master
 	 */
 	public function getChildConfig($sKey)
 	{
-		if(isset($this->oCurrentBot->aConfig[$sKey]))
+		if(isset($this->pCurrentBot->aConfig[$sKey]))
 		{
-			return $this->oCurrentBot->aConfig[$sKey];
+			return $this->pCurrentBot->aConfig[$sKey];
 		}
 		
 		return null;
@@ -515,7 +516,7 @@ class Master
 				}
 				case SEND_CURR:
 				{
-					$this->oCurrentBot->Output($sMessage);
+					$this->pCurrentBot->Output($sMessage);
 					break;
 				}
 				case SEND_ALL:
@@ -659,12 +660,12 @@ class Master
 	 *
 	 *	@ignore
 	 */
-	public function getSend(Socket $pBot, $sMessage)
+	public function getInput(Socket $pBot, $sMessage)
 	{
 		if(strlen($sMessage) < 3) return;
 		
 		/* Deal with the useless crap. */
-		$this->oCurrentBot = $pBot;
+		$this->pCurrentBot = $pBot;
 		$this->sCurrentChunk = $sMessage;
 		$aRaw = explode(' ', $sMessage, 4);
 		
@@ -712,8 +713,8 @@ class Master
 			$pBot->iHasBeenReply = true;
 			return;
 		}
-		
-		if($this->getChildConfig('reactevent') == 'false')
+				
+		if($pBot->isClone())
 		{
 			$this->_onRaw($aChunks);
 			return;
@@ -880,10 +881,10 @@ class Master
 	{
 		$sNickname = $this->getNickname($aChunks[0]);
 		
-		if(!strcmp($sNickname, $this->oCurrentBot->aConfig['nickname']))
+		if(!strcmp($sNickname, $this->pCurrentBot->aConfig['nickname']))
 		{
 			/* God, this IRCnet sucks. :( */
-			$this->oCurrentBot->aConfig['nickname'] = $sNickname;
+			$this->pCurrentBot->aConfig['nickname'] = $sNickname;
 		}
 		
 		$this->triggerEvent("onNick", $sNickname, $aChunks[2]);
@@ -931,7 +932,7 @@ class Master
 			}
 			case 'UPTIME':
 			{
-				$aSince = $this->dateSince($this->oCurrentBot->aStatistics['StartTime']);
+				$aSince = $this->dateSince($this->pCurrentBot->aStatistics['StartTime']);
 				
 				$sString = "{$aSince['WEEKS']} weeks, {$aSince['DAYS']} days, {$aSince['HOURS']} hours, ".
 				"{$aSince['MINUTES']} minutes, {$aSince['SECONDS']} seconds.";
@@ -941,7 +942,7 @@ class Master
 			}
 			case 'START':
 			{
-				$this->ctcpReply($sNickname, "START ".date("d/m/Y H:i:s", $this->oCurrentBot->aStatistics['StartTime']));
+				$this->ctcpReply($sNickname, "START ".date("d/m/Y H:i:s", $this->pCurrentBot->aStatistics['StartTime']));
 				break;
 			}
 			case 'SOURCE':
@@ -1082,7 +1083,7 @@ class Master
 					$sNewNick = $this->getChildConfig('nickname').rand(10, 99);
 				}
 				
-				$this->oCurrentBot->setNickname($sNewNick);
+				$this->pCurrentBot->setNickname($sNewNick);
 				return;
 			}
 			
@@ -1576,7 +1577,7 @@ class Master
 	 */
 	public function isChild($sChild = "")
 	{
-		$oChild = ($sChild == "" ? $this->oCurrentBot : $this->getChildObject($sChild));
+		$oChild = ($sChild == "" ? $this->pCurrentBot : $this->getChildObject($sChild));
 		
 		if($oChild == null)
 		{
@@ -2302,23 +2303,23 @@ class Master
 	 */
 	public function getTimedRequest($sRequest, $mSearch, $iSleep = 10000)
 	{
-		$this->oCurrentBot->iUseQueue = true;
-		$this->oCurrentBot->aRequestOutput = array();
+		$this->pCurrentBot->iUseQueue = true;
+		$this->pCurrentBot->aRequestOutput = array();
 		
-		$this->oCurrentBot->aRequestConfig = array
+		$this->pCurrentBot->aRequestConfig = array
 		(
 			"SEARCH" => (array) $mSearch,
 			"ENDNUM" => false,
 			"TIMEOUT" => false,
 		);
 		
-		$this->oCurrentBot->Output($sRequest);
+		$this->pCurrentBot->Output($sRequest);
 		usleep($iSleep);
 		
-		$this->oCurrentBot->Input();
-		$this->oCurrentBot->iUseQueue = false;
-		$aReturn = $this->oCurrentBot->aRequestOutput;
-		$this->oCurrentBot->aRequestOutput = array();
+		$this->pCurrentBot->Input();
+		$this->pCurrentBot->iUseQueue = false;
+		$aReturn = $this->pCurrentBot->aRequestOutput;
+		$this->pCurrentBot->aRequestOutput = array();
 		
 		return $aReturn;
 	}
@@ -2339,23 +2340,23 @@ class Master
 	 */
 	public function getRequest($sRequest, $mSearch, $mEndNumeric, $iTimeout = 4, $iSleep = 0.3)
 	{
-		$this->oCurrentBot->iUseQueue = true;
-		$this->oCurrentBot->aRequestOutput = array();
+		$this->pCurrentBot->iUseQueue = true;
+		$this->pCurrentBot->aRequestOutput = array();
 		
-		$this->oCurrentBot->aRequestConfig = array
+		$this->pCurrentBot->aRequestConfig = array
 		(
 			"SEARCH" => (array) $mSearch,
 			"ENDNUM" => (array) $mEndNumeric,
 			"TIMEOUT" => (time() + $iSleep + $iTimeout),
 		);
 		
-		$this->oCurrentBot->Output($sRequest);
+		$this->pCurrentBot->Output($sRequest);
 		usleep($iSleep * 1000000);
 		
-		$this->oCurrentBot->Input();
-		$this->oCurrentBot->iUseQueue = false;
-		$aReturn = $this->oCurrentBot->aRequestOutput;
-		$this->oCurrentBot->aRequestOutput = array();
+		$this->pCurrentBot->Input();
+		$this->pCurrentBot->iUseQueue = false;
+		$aReturn = $this->pCurrentBot->aRequestOutput;
+		$this->pCurrentBot->aRequestOutput = array();
 		
 		return $aReturn;
 	}	

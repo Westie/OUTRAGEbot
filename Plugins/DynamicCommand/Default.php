@@ -168,7 +168,7 @@ class DynamicCommand extends Plugins
 		}
 			
 		/* Deal with the rest */
-		$this->commandsScan($sNickname, $sChannel, $this->oConfig->Network['delimiter'].$sCommand, $sArguments);
+		$this->commandsScan($sNickname, $sChannel, $this->getNetworkConfig('delimiter').$sCommand, $sArguments);
 		return false;
 	}
 	

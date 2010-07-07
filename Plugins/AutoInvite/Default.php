@@ -25,7 +25,21 @@ class AutoInvite extends Plugins
 	{
 		if($sNickname == $this->getChildConfig('nickname'))
 		{
-			$this->sendRaw("JOIN {$sChannel}", SEND_DIST);
+			$this->Join($sChannel);
+		}
+		else
+		{
+			$aChildren = $this->getChildren();
+			
+			foreach($aChildren as $sChild)
+			{
+				$pChild = $this->getChildObject($sChild);
+				
+				if($pChild->aConfig['nickname'] == $sNickname)
+				{
+					$pChild->Output('JOIN '.$sChannel);
+				}
+			}
 		}
 	}
 }
