@@ -5,7 +5,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC2 (Git commit: 0fc9065d63d82bf7c612750a88ed798fed99fe65)
+ *	@version 1.1.1-RC3 (Git commit: d345006a9ed412c6eff8eae7f117a68a0618bbdf)
  */
 
 
@@ -14,7 +14,7 @@ error_reporting(E_ALL | E_STRICT);
 
 
 /* Some bot-brag-relating things. */
-define("BOT_VERSION", "1.1.1-RC2-0fc9065");
+define("BOT_VERSION", "1.1.1-RC3-d345006");
 define("BOT_RELDATE", "03/07/2010");
 
 

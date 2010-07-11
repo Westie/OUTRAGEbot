@@ -1675,6 +1675,18 @@ class Master
 	
 	
 	/**
+	 *	Adds formatting to the text.
+	 *
+	 *	@param string $sText Text to format
+	 *	@return string Formatted text
+	 */
+	public function Format($sInputText)
+	{
+		return Format($sInputText);
+	}
+	
+	
+	/**
 	 *	Strips the text of formatting.
 	 *
 	 *	@param string $sText Text to strip
