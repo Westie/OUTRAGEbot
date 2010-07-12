@@ -35,6 +35,30 @@ class Socket
 		$aRequestOutput = array();
 	
 	
+	/* The real constructor. */
+	public function __construct($pMaster, $sChild, $aBasic)
+	{
+		$this->aConfig = $aBasic;
+		$this->pMaster = $pMaster;
+		$this->sChild = $sChild;
+		
+		$this->constructBot();
+	}
+	
+	
+	/* The real destructor. */
+	public function __destruct()
+	{
+	}
+	
+	
+	/* No idea. */
+	public function __toString()
+	{
+		return $this->sChild;
+	}
+	
+	
 	/* Constructing the class */
 	public function constructBot()
 	{
@@ -103,30 +127,6 @@ class Socket
 	}
 	
 	
-	/* The real constructor. */
-	public function __construct($pMaster, $sChild, $aBasic)
-	{
-		$this->aConfig = $aBasic;
-		$this->pMaster = $pMaster;
-		$this->sChild = $sChild;
-		
-		$this->constructBot();
-	}
-	
-	
-	/* The real destructor. */
-	public function __destruct()
-	{
-	}
-	
-	
-	/* No idea. */
-	public function __toString()
-	{
-		return "{$this->pMaster->temp_Iter} - ".$this->sChild;
-	}
-	
-	
 	/* Sending data from socket */
 	public function Output($sRaw)
 	{
@@ -170,36 +170,17 @@ class Socket
 				$this->isWaiting = true;
 				$this->constructBot();
 			}
+			
 			return;
 		}	
 		
-		if($this->isWaiting) return;
-		
-		if(count($this->aMessageQueue) && $this->iUseQueue == false)
+		if($this->isWaiting)
 		{
-			foreach($this->aMessageQueue as $iKey => $sChunk)
-			{
-				$this->pMaster->getInput($this, $sChunk);
-				unset($this->aMessageQueue[$iKey]);
-			}
+			return;
 		}
 		
-		if(($sInput = socket_read($this->rSocket, 8192, PHP_BINARY_READ)))
-		{
-			$aInput = explode(IRC_EOL, $sInput);
-			
-			foreach($aInput as $sChunk)
-			{
-				if ($sChunk == '')
-				{
-					continue;
-				}
-
-				++$this->aStatistics['Input']['Packets'];
-				$this->aStatistics['Input']['Bytes'] += strlen($sChunk);
-				$this->pMaster->getInput($this, $sChunk);
-			}
-		}
+		$this->scanMessageQueues();
+		$this->scanSocket();
 		
 		return;
 	}
@@ -246,6 +227,37 @@ class Socket
 	public function socketShutdown()
 	{
 		return @socket_shutdown($this->rSocket);
+	}
+	
+	
+	/* Dealing with the message queues. */
+	private function scanMessageQueues()
+	{
+		if(count($this->aMessageQueue) && $this->iUseQueue == false)
+		{
+			foreach($this->aMessageQueue as $iKey => $sChunk)
+			{
+				$this->pMaster->getInput($this, $sChunk);
+				unset($this->aMessageQueue[$iKey]);
+			}
+		}
+	}
+	
+	
+	/* Check the sockets for stupid crap */
+	private function scanSocket()
+	{		
+		while(($sString = socket_read($this->rSocket, 4096, PHP_BINARY_READ)))
+		{
+			if($sString == "")
+			{
+				break;
+			}
+			
+			++$this->aStatistics['Input']['Packets'];
+			$this->aStatistics['Input']['Bytes'] += strlen($sString);
+			$this->pMaster->getInput($this, $sString);
+		}
 	}
 }
 

@@ -14,7 +14,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC1 (Git commit: b15eb09a2ff34c17fcd4910b772f1ad9eb17d0a5)
+ *	@version 1.1.1-RC3 (Git commit: d345006a9ed412c6eff8eae7f117a68a0618bbdf)
  */
 
 class Format

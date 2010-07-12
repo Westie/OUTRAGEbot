@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC3 (Git commit: 6df8cf90ef2c2265334093c9ce86642ab66bdca9)
+ *	@version 1.1.1-RC3 (Git commit: 79e2d1487a9d84116719f429079092c72cf417e9)
  */
  
 
@@ -662,7 +662,12 @@ class Master
 	 */
 	public function getInput(Socket $pBot, $sMessage)
 	{
-		if(strlen($sMessage) < 3) return;
+		if(strlen($sMessage) < 3)
+		{
+			return;
+		}
+		
+		$sMessage = trim($sMessage);
 		
 		/* Deal with the useless crap. */
 		$this->pCurrentBot = $pBot;
@@ -672,30 +677,7 @@ class Master
 		/* Deal with realtime scans */
 		if($pBot->iUseQueue == true)
 		{
-			if($pBot->aRequestConfig['TIMEOUT'] !== false)
-			{				
-				if(array_search($aRaw[1], $pBot->aRequestConfig['ENDNUM']) !== false)
-				{
-					$pBot->aMessageQueue[] = $sMessage;
-					$pBot->iUseQueue = false;
-				}
-				elseif($pBot->aRequestConfig['TIMEOUT'] < time())
-				{
-					$pBot->aMessageQueue[] = $sMessage;
-					$pBot->iUseQueue = false;
-				}
-			}
-			
-			if(array_search($aRaw[1], $pBot->aRequestConfig['SEARCH']) === false)
-			{
-				$pBot->aMessageQueue[] = $sMessage;
-			}
-			else
-			{
-				$pBot->aRequestOutput[] = $sMessage;
-			}
-			
-			return;
+			$this->sortQueue();
 		}
 		
 		/* Let's compare the market, by adding three useless arrays */
@@ -731,6 +713,38 @@ class Master
 		else
 		{
 			$this->_onRaw($aChunks);
+		}
+	}
+	
+	
+	/**
+	 *	Internal: To do with the parsing of the queues
+	 *
+	 *	@ignore
+	 */
+	private function sortQueue()
+	{
+		if($this->pCurrentBot->aRequestConfig['TIMEOUT'] !== false)
+		{				
+			if(array_search($aRaw[1], $this->pCurrentBot->aRequestConfig['ENDNUM']) !== false)
+			{
+				$this->pCurrentBot->aMessageQueue[] = $sMessage;
+				$this->pCurrentBot->iUseQueue = false;
+			}
+			elseif($this->pCurrentBot->aRequestConfig['TIMEOUT'] < time())
+			{
+				$this->pCurrentBot->aMessageQueue[] = $sMessage;
+				$this->pCurrentBot->iUseQueue = false;
+			}
+		}
+		
+		if(array_search($aRaw[1], $pBot->aRequestConfig['SEARCH']) === false)
+		{
+			$this->pCurrentBot->aMessageQueue[] = $sMessage;
+		}
+		else
+		{
+			$this->pCurrentBot->aRequestOutput[] = $sMessage;
 		}
 	}
 	
