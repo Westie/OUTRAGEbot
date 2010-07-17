@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC3 (Git commit: c81a80d0bc6b5ee074fb0f9ea5c0376d00ed5bca)
+ *	@version 1.1.1-RC3 (Git commit: b0f1599bcdc8aa2b6652c3585f4db555d9d29713)
  */
  
 
@@ -1901,28 +1901,12 @@ class Master
 			return false;
 		}
 
-		$sDirname = BASE_DIRECTORY."/Plugins/{$sPlugin}/Default.php";
-
-		if(!file_exists($sDirname))
+		$sIdentifier = StaticLibrary::getPluginIdentifier($sPlugin);
+		
+		if($sIdentifier == false)
 		{
 			return false;
 		}
-
-		$sIdentifier = substr($sPlugin, 0, 8).'_'.substr(sha1(time()."-".uniqid()), 2, 10);
-		$sClass = file_get_contents($sDirname); // Ouch, this has gotta hurt.
-
-		if(!preg_match("/class[\s]+?".$sPlugin."[\s]+?extends[\s]+?Plugins[\s]+?{/", $sClass))
-		{
-			return false;
-		}
-			
-		$sClass = preg_replace("/(class[\s]+?)".$sPlugin."([\s]+?extends[\s]+?Plugins[\s]+?{)/", "\\1".$sIdentifier."\\2", $sClass);
-		$sFile = tempnam(dirname($sDirname), "mod"); // Stops the __FILE__ bugs.
-		file_put_contents($sFile, $sClass);				
-		unset($sClass); // Weight off the shoulders anyone?
-			
-		include($sFile);
-		unlink($sFile);
 		
 		$this->pPlugins->$sPlugin = new $sIdentifier($this, array($sPlugin, $sIdentifier));
 		echo "* Plugin ".$sPlugin." has been activated.".PHP_EOL;

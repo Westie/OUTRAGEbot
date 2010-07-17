@@ -6,7 +6,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC1 (Git commit: 81ab23ac872fb1a8c0ecbfe32a31b6bd7576c833)
+ *	@version 1.1.1-RC3 (Git commit: 65be068b5593bd12cfbc84c4727a9758a672c0a7)
  */
 
 
@@ -55,5 +55,56 @@ class StaticLibrary
 		{
 			$pBot->aRequestOutput[] = $sMessage;
 		}
+	}
+	
+	
+	/**
+	 *	Internal: Parsing and modifying the plugin files.
+	 *
+	 *	@ignore
+	 */
+	static function getPluginIdentifier($sPluginName)
+	{
+		$sDirname = BASE_DIRECTORY."/Plugins/{$sPluginName}/Default.php";
+
+		if(!file_exists($sDirname))
+		{
+			return false;
+		}
+		
+		if(isset(Control::$aPluginCache[$sPluginName]))
+		{
+			$aPluginCache = Control::$aPluginCache[$sPluginName];
+			
+			if($aPluginCache['MTIME'] <= filemtime($sDirname))
+			{
+				return $aPluginCache['IDENT'];
+			}
+		}
+
+		$sIdentifier = substr($sPluginName, 0, 8).'_'.substr(sha1(microtime()."-".uniqid()), 2, 10);
+		$sClass = file_get_contents($sDirname); // Ouch, this has gotta hurt.
+
+		if(!preg_match("/class[\s]+?".$sPluginName."[\s]+?extends[\s]+?Plugins[\s]+?{/", $sClass))
+		{
+			return false;
+		}
+			
+		$sClass = preg_replace("/(class[\s]+?)".$sPluginName."([\s]+?extends[\s]+?Plugins[\s]+?{)/", "\\1".$sIdentifier."\\2", $sClass);
+		$sFile = tempnam(dirname($sDirname), "nat"); // Stops the __FILE__ bugs.
+		
+		file_put_contents($sFile, $sClass);				
+		unset($sClass); // Weight off the shoulders anyone?
+			
+		include $sFile;
+		unlink($sFile);
+		
+		Control::$aPluginCache[$sPluginName] = array
+		(
+			'MTIME' => filemtime($sDirname),
+			'IDENT' => $sIdentifier,
+		);
+		
+		return $sIdentifier;
 	}
 }

@@ -35,7 +35,13 @@ class Control
 	/**
 	 *	@ignore
 	 */
-	public static $aStack;
+	public static $aStack = array();
+	
+	
+	/**
+	 *	@ignore
+	 */
+	public static $aPluginCache = array();
 	
 	
 	/**

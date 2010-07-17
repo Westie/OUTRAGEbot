@@ -9,7 +9,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC3 (Git commit: c81a80d0bc6b5ee074fb0f9ea5c0376d00ed5bca)
+ *	@version 1.1.1-RC3 (Git commit: b0f1599bcdc8aa2b6652c3585f4db555d9d29713)
  */
 
 class Socket
