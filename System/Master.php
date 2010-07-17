@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC3 (Git commit: 79e2d1487a9d84116719f429079092c72cf417e9)
+ *	@version 1.1.1-RC3 (Git commit: c81a80d0bc6b5ee074fb0f9ea5c0376d00ed5bca)
  */
  
 
@@ -661,14 +661,7 @@ class Master
 	 *	@ignore
 	 */
 	public function getInput(Socket $pBot, $sMessage)
-	{
-		if(strlen($sMessage) < 3)
-		{
-			return;
-		}
-		
-		$sMessage = trim($sMessage);
-		
+	{		
 		/* Deal with the useless crap. */
 		$this->pCurrentBot = $pBot;
 		$this->sCurrentChunk = $sMessage;
@@ -677,11 +670,10 @@ class Master
 		/* Deal with realtime scans */
 		if($pBot->iUseQueue == true)
 		{
-			$this->sortQueue();
+			StaticLibrary::sortQueue($pBot, $aRaw, $sMessage);
 		}
 		
-		/* Let's compare the market, by adding three useless arrays */
-		$aChunks = $this->sortChunks($aRaw);
+		$aChunks = StaticLibrary::sortChunks($aRaw);
 
 		/* Deal with pings */
 		if($aChunks[0] == 'PING')
@@ -714,53 +706,6 @@ class Master
 		{
 			$this->_onRaw($aChunks);
 		}
-	}
-	
-	
-	/**
-	 *	Internal: To do with the parsing of the queues
-	 *
-	 *	@ignore
-	 */
-	private function sortQueue()
-	{
-		if($this->pCurrentBot->aRequestConfig['TIMEOUT'] !== false)
-		{				
-			if(array_search($aRaw[1], $this->pCurrentBot->aRequestConfig['ENDNUM']) !== false)
-			{
-				$this->pCurrentBot->aMessageQueue[] = $sMessage;
-				$this->pCurrentBot->iUseQueue = false;
-			}
-			elseif($this->pCurrentBot->aRequestConfig['TIMEOUT'] < time())
-			{
-				$this->pCurrentBot->aMessageQueue[] = $sMessage;
-				$this->pCurrentBot->iUseQueue = false;
-			}
-		}
-		
-		if(array_search($aRaw[1], $pBot->aRequestConfig['SEARCH']) === false)
-		{
-			$this->pCurrentBot->aMessageQueue[] = $sMessage;
-		}
-		else
-		{
-			$this->pCurrentBot->aRequestOutput[] = $sMessage;
-		}
-	}
-	
-	
-	/**
-	 *	Internal: Parsing and sorting the chunks.
-	 *	@ignore
-	 */
-	public function sortChunks($aChunks)
-	{
-		$aChunks[0] = isset($aChunks[0]) ? ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]) : "";
-		$aChunks[1] = isset($aChunks[1]) ? $aChunks[1] : "";
-		$aChunks[2] = isset($aChunks[2][0]) ? ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]) : "";
-		$aChunks[3] = isset($aChunks[3][0]) ? ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]) : "";
-		
-		return $aChunks;
 	}
 	
 	
@@ -1079,14 +1024,14 @@ class Master
 		switch($aChunks[1])
 		{
 			/* When the bot connects */
-			case 001:
+			case "001":
 			{
 				$this->_onConnect();
 				return;
 			}
 			
 			/* Nick already in use. */
-			case 433:
+			case "433":
 			{
 				if($this->getChildConfig('altnick') != null)
 				{
@@ -1102,14 +1047,14 @@ class Master
 			}
 			
 			/* Topic information */
-			case 332:
+			case "332":
 			{
 				$aData = explode(' :', $aChunks[3], 2);
 				$this->pModes->aChannelInfo[strtolower($aData[0])]['TopicString'] = $aData[1];
 				return;
 			}
 			
-			case 333:
+			case "333":
 			{
 				$aData = explode(' ', $aChunks[3], 3);				
 				$this->pModes->aChannelInfo[strtolower($aData[0])]['TopicSetTime'] = $aData[2];

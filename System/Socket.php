@@ -9,7 +9,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC1 (Git commit: 81ab23ac872fb1a8c0ecbfe32a31b6bd7576c833)
+ *	@version 1.1.1-RC3 (Git commit: c81a80d0bc6b5ee074fb0f9ea5c0376d00ed5bca)
  */
 
 class Socket
@@ -120,10 +120,6 @@ class Socket
 		$this->socketShutdown();
 		$this->Active = false;
 		$this->isWaiting = false;
-
-		if($iShutdown === true)
-		{
-		}
 	}
 	
 	
@@ -246,13 +242,17 @@ class Socket
 	
 	/* Check the sockets for stupid crap */
 	private function scanSocket()
-	{		
-		while(($sString = socket_read($this->rSocket, 4096, PHP_BINARY_READ)))
-		{
-			if($sString == "")
+	{
+		$sInputString = socket_read($this->rSocket, 4096, PHP_BINARY_READ);
+		
+		foreach(explode("\n", $sInputString) as $sString)
+		{		
+			if(strlen($sString) < 3)
 			{
-				break;
+				continue;
 			}
+			
+			$sString = trim($sString);
 			
 			++$this->aStatistics['Input']['Packets'];
 			$this->aStatistics['Input']['Bytes'] += strlen($sString);
