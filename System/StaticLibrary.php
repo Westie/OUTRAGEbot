@@ -6,7 +6,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC3 (Git commit: 65be068b5593bd12cfbc84c4727a9758a672c0a7)
+ *	@version 1.1.1-RC3 (Git commit: 3680b512117ca9f7b49a25ff505a0cf6ae7df747)
  */
 
 
@@ -17,10 +17,20 @@ class StaticLibrary
 	 */
 	static function sortChunks($aChunks)
 	{
-		$aChunks[0] = isset($aChunks[0]) ? ($aChunks[0][0] == ":" ? substr($aChunks[0], 1) : $aChunks[0]) : "";
-		$aChunks[1] = isset($aChunks[1]) ? $aChunks[1] : "";
-		$aChunks[2] = isset($aChunks[2][0]) ? ($aChunks[2][0] == ":" ? substr($aChunks[2], 1) : $aChunks[2]) : "";
-		$aChunks[3] = isset($aChunks[3][0]) ? ($aChunks[3][0] == ":" ? substr($aChunks[3], 1) : $aChunks[3]) : "";
+		for($iIndex = 0; $iIndex < 4; ++$iIndex)
+		{
+			if(isset($aChunks[$iIndex]))
+			{
+				if($aChunks[$iIndex][0] == ":")
+				{
+					$aChunks[$iIndex] = substr($aChunks[$iIndex], 1);
+				}
+			}
+			else
+			{
+				$aChunks[$iIndex] = "";
+			}
+		}
 		
 		return $aChunks;
 	}
@@ -106,5 +116,67 @@ class StaticLibrary
 		);
 		
 		return $sIdentifier;
+	}
+	
+	
+	/**
+	 *	Internal: Function to get the date since something.
+	 *
+	 *	@ignore
+	 */
+	static function dateSince($iDate1, $iDate2 = 0)
+	{
+		if(!$iDate2)
+		{
+			$iDate2 = time();
+		}
+
+   		$aDifferences = array
+		(
+			'SECONDS' => 0,
+			'MINUTES'=> 0,
+			'HOURS' => 0,
+			'DAYS' => 0,
+			'WEEKS' => 0,
+			
+			'TOTAL_SECONDS' => 0,
+			'TOTAL_MINUTES' => 0,
+			'TOTAL_HOURS' => 0,
+			'TOTAL_DAYS' => 0,
+			'TOTAL_WEEKS' => 0,
+		);
+
+		if($iDate2 > $iDate1)
+		{
+			$iTemp = $iDate2 - $iDate1;
+		}
+		else
+		{
+			$iTemp = $iDate1 - $iDate2;
+		}
+
+		$iSeconds = $iTemp;
+
+		$aDifferences['WEEKS'] = floor($iTemp / 604800);
+		$iTemp -= $aDifferences['WEEKS'] * 604800;
+
+		$aDifferences['DAYS'] = floor($iTemp / 86400);
+		$iTemp -= $aDifferences['DAYS'] * 86400;
+
+		$aDifferences['HOURS'] = floor($iTemp / 3600);
+		$iTemp -= $aDifferences['HOURS'] * 3600;
+
+		$aDifferences['MINUTES'] = floor($iTemp / 60);
+		$iTemp -= $aDifferences['MINUTES'] * 60;
+
+		$aDifferences['SECONDS'] = $iTemp;
+		
+		$aDifferences['TOTAL_WEEKS'] = floor($iSeconds / 604800);
+		$aDifferences['TOTAL_DAYS'] = floor($iSeconds / 86400);
+		$aDifferences['TOTAL_HOURS'] = floor($iSeconds / 3600);
+		$aDifferences['TOTAL_MINUTES'] = floor($iSeconds / 60);
+		$aDifferences['TOTAL_SECONDS'] = $iSeconds;
+
+		return $aDifferences;
 	}
 }

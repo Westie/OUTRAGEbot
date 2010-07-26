@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC3 (Git commit: b0f1599bcdc8aa2b6652c3585f4db555d9d29713)
+ *	@version 1.1.1-RC3 (Git commit: 3680b512117ca9f7b49a25ff505a0cf6ae7df747)
  */
  
 
@@ -790,6 +790,9 @@ class Master
 	private function _onMode($aChunks)
 	{
 		$this->triggerEvent("onMode", $aChunks[2], $aChunks[3]);
+		
+		$sChannel = strtolower($aChunks[2]);
+		$aModes = array('v' => 1, 'h' => 3, 'o' => 7, 'a' => 15, 'q' => 31);
 			
 		foreach($this->parseModes($aChunks[3]) as $aMode)
 		{
@@ -798,36 +801,10 @@ class Master
 				continue;
 			}
 			
-			$iMode = &$this->pModes->aChannels[strtolower($aChunks[2])][$aMode['PARAM']]['iMode'];
+			$sMode = $aMode['MODE'];
+			$sParam = $aMode['PARAM'];
 			
-			switch($aMode['MODE'])
-			{
-				case 'v':
-				{
-					$iMode ^= 1;
-					break;
-				}
-				case 'h':
-				{
-					$iMode ^= 3;
-					break;
-				}
-				case 'o':
-				{
-					$iMode ^= 7;
-					break;
-				}
-				case 'a':
-				{
-					$iMode ^= 15;
-					break;
-				}
-				case 'q':
-				{
-					$iMode ^= 31;
-					break;
-				}
-			}
+			$this->pModes->aChannels[$sChannel][$sParam]['iMode'] = $aModes[$sMode];
 		}
 	}
 	
@@ -891,7 +868,7 @@ class Master
 			}
 			case 'UPTIME':
 			{
-				$aSince = $this->dateSince($this->pCurrentBot->aStatistics['StartTime']);
+				$aSince = StaticLibrary::dateSince($this->pCurrentBot->aStatistics['StartTime']);
 				
 				$sString = "{$aSince['WEEKS']} weeks, {$aSince['DAYS']} days, {$aSince['HOURS']} hours, ".
 				"{$aSince['MINUTES']} minutes, {$aSince['SECONDS']} seconds.";
@@ -2561,68 +2538,6 @@ class Master
 		}
 		
 		return 0;
-	}
-	
-	
-	/**
-	 *	Internal: Function to get the date since something.
-	 *
-	 *	@ignore
-	 */
-	public function dateSince($iDate1, $iDate2 = 0)
-	{
-		if(!$iDate2)
-		{
-			$iDate2 = time();
-		}
-
-   		$aDifferences = array
-		(
-			'SECONDS' => 0,
-			'MINUTES'=> 0,
-			'HOURS' => 0,
-			'DAYS' => 0,
-			'WEEKS' => 0,
-			
-			'TOTAL_SECONDS' => 0,
-			'TOTAL_MINUTES' => 0,
-			'TOTAL_HOURS' => 0,
-			'TOTAL_DAYS' => 0,
-			'TOTAL_WEEKS' => 0,
-		);
-
-		if($iDate2 > $iDate1)
-		{
-			$iTemp = $iDate2 - $iDate1;
-		}
-		else
-		{
-			$iTemp = $iDate1 - $iDate2;
-		}
-
-		$iSeconds = $iTemp;
-
-		$aDifferences['WEEKS'] = floor($iTemp / 604800);
-		$iTemp -= $aDifferences['WEEKS'] * 604800;
-
-		$aDifferences['DAYS'] = floor($iTemp / 86400);
-		$iTemp -= $aDifferences['DAYS'] * 86400;
-
-		$aDifferences['HOURS'] = floor($iTemp / 3600);
-		$iTemp -= $aDifferences['HOURS'] * 3600;
-
-		$aDifferences['MINUTES'] = floor($iTemp / 60);
-		$iTemp -= $aDifferences['MINUTES'] * 60;
-
-		$aDifferences['SECONDS'] = $iTemp;
-		
-		$aDifferences['TOTAL_WEEKS'] = floor($iSeconds / 604800);
-		$aDifferences['TOTAL_DAYS'] = floor($iSeconds / 86400);
-		$aDifferences['TOTAL_HOURS'] = floor($iSeconds / 3600);
-		$aDifferences['TOTAL_MINUTES'] = floor($iSeconds / 60);
-		$aDifferences['TOTAL_SECONDS'] = $iSeconds;
-
-		return $aDifferences;
 	}
 }
 
