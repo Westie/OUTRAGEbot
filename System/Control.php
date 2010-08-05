@@ -8,7 +8,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC1 (Git commit: 81ab23ac872fb1a8c0ecbfe32a31b6bd7576c833)
+ *	@version 1.1.1-RC3 (Git commit: 3680b512117ca9f7b49a25ff505a0cf6ae7df747)
  */
 
 

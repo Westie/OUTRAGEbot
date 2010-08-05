@@ -24,6 +24,8 @@ include "System/Socket.php";
 include "System/Plugins.php";
 include "System/Timers.php";
 include "System/Control.php";
+include "System/Channel.php";
+include "System/StaticLibrary.php";
 include "System/Configuration.php";
 
 

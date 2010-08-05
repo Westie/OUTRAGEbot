@@ -6,7 +6,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC3 (Git commit: 3680b512117ca9f7b49a25ff505a0cf6ae7df747)
+ *	@version 1.1.1-RC3 (Git commit: d9fcaef03f6125f84e4d034ed311754e9a2dad6d)
  */
 
 
@@ -50,7 +50,7 @@ class StaticLibrary
 				$pBot->aMessageQueue[] = $sMessage;
 				$pBot->iUseQueue = false;
 			}
-			elseif($$pBot->aRequestConfig['TIMEOUT'] < time())
+			elseif($pBot->aRequestConfig['TIMEOUT'] < time())
 			{
 				$pBot->aMessageQueue[] = $sMessage;
 				$pBot->iUseQueue = false;
@@ -178,5 +178,43 @@ class StaticLibrary
 		$aDifferences['TOTAL_SECONDS'] = $iSeconds;
 
 		return $aDifferences;
+	}
+	
+	
+	/**
+	 *	Turns a user's channel permission number into a character.
+	 *
+	 *	@param integer $iUserMode User mode number
+	 *	@return string Character
+	 */
+	static function userModeToChar($iUserMode)
+	{
+		switch($iUserMode)
+		{
+			case 1:
+			{
+				return "+";
+			}
+			case 3:
+			{
+				return "%";
+			}
+			case 7:
+			{
+				return "@";
+			}
+			case 15:
+			{
+				return "&";
+			}
+			case 31:
+			{
+				return "~";
+			}
+			default:
+			{
+				return "-";
+			}
+		}
 	}
 }

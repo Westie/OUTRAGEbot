@@ -64,7 +64,7 @@ abstract class Plugins
 	 *	@ignore
 	 *	@var array
 	 */
-	private $aIdentifier = array();
+	public $aIdentifier = array();
 	
 	
 	/**

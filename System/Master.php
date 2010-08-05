@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC3 (Git commit: 3680b512117ca9f7b49a25ff505a0cf6ae7df747)
+ *	@version 1.1.1-RC3 (Git commit: d9fcaef03f6125f84e4d034ed311754e9a2dad6d)
  */
  
 
@@ -226,9 +226,7 @@ class Master
 	 *	@ignore
 	 */
 	public function Loop()
-	{
-		$this->temp_Iter = 0;
-		
+	{		
 		foreach($this->aBotObjects as $pClones)
 		{
 			$pClones->Input();
@@ -1153,7 +1151,7 @@ class Master
 		foreach($this->pModes->aUsers[$sNickname] as $sChannel => $uVoid)
 		{
 			$iUserMode = $this->pModes->aChannels[$sChannel][$sNickname]['iMode'];
-			$sUserMode = $this->userModeToChar($iUserMode);
+			$sUserMode = StaticLibrary::userModeToChar($iUserMode);
 			
 			$pUser->Channels[$sChannel] = array
 			(
@@ -1188,52 +1186,11 @@ class Master
 	 *	object will be returned.
 	 *
 	 *	@param string $sChannel Channel name
-	 *	@return stdClass Channel information
+	 *	@return Channel Channel information
 	 */
 	public function getChannel($sChannel)
 	{
-		$pChannel = new stdClass();
-		$sChannel = strtolower($sChannel);
-		
-		if(!isset($this->pModes->aChannels[$sChannel]))
-		{
-			return $pChannel;
-		}
-		
-		$pChannel->Users = array();
-		
-		foreach($this->pModes->aChannels[$sChannel] as $sKey => $aUser)
-		{
-			$iUserMode = $aUser['iMode'];
-			$sUserMode = $this->userModeToChar($iUserMode);
-			
-			$pChannel->Users[] = array
-			(
-				"NICKNAME" => $sKey,
-				"USERMODE" => $sUserMode,
-			);
-		}
-		
-		$pChannel->Topic = new stdClass();
-		
-		if(isset($this->pModes->aChannelInfo[$sChannel]['TopicString']))
-		{
-			$pChannel->Topic->String = $this->pModes->aChannelInfo[$sChannel]['TopicString'];
-			$pChannel->Topic->Time = $this->pModes->aChannelInfo[$sChannel]['TopicSetTime'];
-			$pChannel->Topic->SetBy = $this->pModes->aChannelInfo[$sChannel]['TopicSetBy'];
-		}
-		else
-		{
-			$pChannel->Topic->String = "";
-			$pChannel->Topic->Time = "";
-			$pChannel->Topic->SetBy = "";
-		}
-		
-		$pChannel->BanList = $this->getChannelBanList($sChannel);
-		$pChannel->InviteList = $this->getChannelInviteList($sChannel);
-		$pChannel->ExceptList = $this->getChannelExceptList($sChannel);
-		
-		return $pChannel;
+		return new Channel($this, $sChannel);
 	}
 	
 	
@@ -1357,6 +1314,32 @@ class Master
 		}
 		
 		return $aExceptList;
+	}
+	
+	
+	/**
+	 *	Returns the channel topic in the channel requested.
+	 *
+	 *	@param string $sChannel Channel name
+	 *	@return array Topic information
+	 */
+	public function getChannelTopic($sChannel)
+	{
+		$sChannel = strtolower($sChannel);
+		
+		if(isset($this->pModes->aChannelInfo[$sChannel]['TopicString']))
+		{
+			return array
+			(
+				"String" => $this->pModes->aChannelInfo[$sChannel]['TopicString'],
+				"SetBy" => $this->pModes->aChannelInfo[$sChannel]['TopicSetBy'],
+				"Time" => $this->pModes->aChannelInfo[$sChannel]['TopicSetTime'],
+			);
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	
@@ -1792,17 +1775,15 @@ class Master
 	 */
 	public function addTimer($cCallback, $fInterval, $iRepeat)
 	{
-		$aArguments = array();
+		$aArguments = func_get_args();
+		array_shift($aArguments);
+		array_shift($aArguments);
+		array_shift($aArguments);
 		
 		if(is_array($cCallback))
 		{
 			if(!($cCallback[0] instanceof Master))
 			{
-				$aArguments = func_get_args();
-				array_shift($aArguments);
-				array_shift($aArguments);
-				array_shift($aArguments);
-			
 				$aArguments = array($this->getPluginName($cCallback[0]), $cCallback[1], $aArguments, true);
 				$cCallback = array($this, "triggerSingleEventArray");
 			
@@ -1810,22 +1791,12 @@ class Master
 			}
 		}
 		elseif(is_string($cCallback))
-		{
-			$aArguments = func_get_args();
-			array_shift($aArguments);
-			array_shift($aArguments);
-			array_shift($aArguments);
-			
+		{	
 			$aArguments = array($this->sLastAccessedPlugin, $cCallback, $aArguments, true);
 			$cCallback = array($this, "triggerSingleEventArray");
 			
 			return Timers::Create($cCallback, $fInterval, $iRepeat, $aArguments); 
 		}
-		
-		$aArguments = func_get_args();
-		array_shift($aArguments);
-		array_shift($aArguments);
-		array_shift($aArguments);
 		
 		return Timers::Create($cCallback, $fInterval, $iRepeat, $aArguments); 
 	}
@@ -2387,44 +2358,6 @@ class Master
 		}
 		
 		return $aReturn;
-	}
-	
-	
-	/**
-	 *	Turns a user's channel permission number into a character.
-	 *
-	 *	@param integer $iUserMode User mode number
-	 *	@return string Character
-	 */
-	public function userModeToChar($iUserMode)
-	{
-		switch($iUserMode)
-		{
-			case 1:
-			{
-				return "+";
-			}
-			case 3:
-			{
-				return "%";
-			}
-			case 7:
-			{
-				return "@";
-			}
-			case 15:
-			{
-				return "&";
-			}
-			case 31:
-			{
-				return "~";
-			}
-			default:
-			{
-				return "-";
-			}
-		}
 	}
 	
 	
