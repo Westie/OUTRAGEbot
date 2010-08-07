@@ -256,6 +256,7 @@ class Socket
 			
 			++$this->aStatistics['Input']['Packets'];
 			$this->aStatistics['Input']['Bytes'] += strlen($sString);
+			
 			$this->pMaster->getInput($this, $sString);
 		}
 	}

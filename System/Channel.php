@@ -37,6 +37,60 @@ class Channel
 	
 	
 	/**
+	 *	Properties: accessing psuedo properties.
+	 *	@ignore
+	 */
+	public function __get($sKey)
+	{
+		$sKey = "prop".$sKey;
+		
+		if(method_exists($this, $sKey))
+		{
+			return $this->$sKey();
+		}
+		
+		return null;
+	}
+	
+	
+	/**
+	 *	Properties: setting psuedo properties
+	 *	@ignore
+	 */
+	public function __set($sKey, $mValue)
+	{
+		$sKey = "prop".$sKey;
+		
+		if(method_exists($this, $sKey))
+		{
+			return $this->$sKey($mValue);
+		}
+		
+		return null;
+	}
+	
+	
+	/**
+	 *	Get the channel user count.
+	 *	@ignore
+	 */
+	private function propCount($mValue = null)
+	{
+		return $this->pMaster->getChannelUserCount($this->sChannel);
+	}
+	
+	
+	/**
+	 *	Get the channel topic.
+	 *	@ignore
+	 */
+	private function propTopic($mValue = null)
+	{
+		return $this->pMaster->pModes->aChannelInfo[$this->sChannel]['TopicString'];
+	}
+	
+	
+	/**
 	 *	Called when the object is invoked.
 	 */
 	public function __invoke($sMessage)

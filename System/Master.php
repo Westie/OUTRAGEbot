@@ -665,34 +665,37 @@ class Master
 		$this->sCurrentChunk = $sMessage;
 		$aRaw = explode(' ', $sMessage, 4);
 		
+		/* A ping check */
+		if($aRaw[0] == 'PING')
+		{
+			$pBot->Output('PONG '.$aRaw[1]);
+			return;
+		}
+		elseif($aRaw[1] == 'PONG')
+		{
+			$pBot->iNoReply = 0;
+			$pBot->iHasBeenReply = true;
+			
+			return;
+		}
+		
 		/* Deal with realtime scans */
 		if($pBot->iUseQueue == true)
 		{
 			StaticLibrary::sortQueue($pBot, $aRaw, $sMessage);
+			return;
 		}
 		
 		$aChunks = StaticLibrary::sortChunks($aRaw);
 
-		/* Deal with pings */
-		if($aChunks[0] == 'PING')
-		{
-			$pBot->Output('PONG '.$aChunks[1]);
-			return;
-		}
-		elseif($aChunks[1] == 'PONG')
-		{
-			$pBot->iNoReply = 0;
-			$pBot->iHasBeenReply = true;
-			return;
-		}
-				
+		/* Real code now! */	
 		if($pBot->isClone())
 		{
 			$this->_onRaw($aChunks);
 			return;
 		}
 		
-		/* The infamous switchboard, removed! */
+		/* The infamous switchboard is removed! */
 		$this->scanHandlers($aChunks, $aRaw);
 		$sCallback = '_on'.$aChunks[1];
 		
@@ -1136,47 +1139,11 @@ class Master
 	 *	be in a channel with the bot.
 	 *
 	 *	@param string $sNickname Nickname you want to get data for.
-	 *	@return stdClass Class with information.
+	 *	@return User Class with information.
 	 */
 	public function getUser($sNickname)
 	{
-		$pUser = new stdClass();
-		$pUser->Channels = array();
-		
-		if(!isset($this->pModes->aUsers[$sNickname]))
-		{
-			return new stdClass();
-		}
-		
-		foreach($this->pModes->aUsers[$sNickname] as $sChannel => $uVoid)
-		{
-			$iUserMode = $this->pModes->aChannels[$sChannel][$sNickname]['iMode'];
-			$sUserMode = StaticLibrary::userModeToChar($iUserMode);
-			
-			$pUser->Channels[$sChannel] = array
-			(
-				"CHANNEL" => $sChannel,
-				"USERMODE" => $sUserMode,
-			);
-		}
-		
-		$aWhois = $this->getWhois($sNickname, 300000);
-		
-		$pUser->Connection = array
-		(
-			'Server' => $aWhois['SERVER']['SERVER'],
-			'Information' => $aWhois['SERVER']['INFO'],
-		);
-		
-		$pUser->Information = array
-		(
-			'Nickname' => $sNickname,
-			'Username' => $aWhois['INFO']['USERNAME'],
-			'Realname' => $aWhois['INFO']['REALNAME'],
-			'Hostname' => $aWhois['INFO']['HOSTNAME'],
-		);
-		
-		return $pUser;
+		return new User($this, $sNickname);
 	}
 	
 	
@@ -2369,10 +2336,20 @@ class Master
 	 *	@param integer $iDelay Microseconds to wait before fetching input.
 	 *	@return array Array of modes.
 	 */
-	public function getWhois($sNickname, $bKeepModes = false, $iDelay = 500000)
+	public function getWhois($sNickname, $bKeepModes = false)
 	{
-		$aMatches = $this->getRequest("WHOIS {$sNickname}", array('311', '312', '319'), '318');
-		$aReturn = array('CHANNELS' => array(), 'INFO' => array(), 'SERVER' => array());
+		$aMatches = $this->getRequest("WHOIS {$sNickname}", array(301, 310, 311, 312, 313, 319), '318', 2, 0);
+		
+		$aReturn = array
+		(
+			'Channels' => array(),
+			'Details' => array(),
+			'Connection' => array(),
+			
+			'Away' => '',
+			
+			'IRCOp' => false,
+		);
 	
 		foreach($aMatches as $sMatch)
 		{
@@ -2381,34 +2358,49 @@ class Master
 			
 			switch($aTemp[1])
 			{
+				case '301':
+				{
+					$aReturn['Away'] = $aTemp[4];
+					break;
+				}
+				
 				case '311':
 				{
 					$aChunks = explode(' ', $aTemp[4], 4);
-					$aReturn['INFO'] = array
+					$aReturn['Details'] = array
 					(
-						"USERNAME" => $aChunks[0],
-						"HOSTNAME" => $aChunks[1],
-						"REALNAME" => substr($aChunks[3], 1),
+						"Username" => $aChunks[0],
+						"Hostname" => $aChunks[1],
+						"Realname" => substr($aChunks[3], 1),
 					);
 					break;
 				}
+				
 				case '312':
 				{
 					$aChunks = explode(' ', $aTemp[4], 2);
-					$aReturn['SERVER'] = array
+					$aReturn['Connection'] = array
 					(
-						"SERVER" => $aChunks[0],
-						"INFO" => substr($aChunks[1], 1),
+						"Address" => $aChunks[0],
+						"Network" => substr($aChunks[1], 1),
 					);
 					break;
 				}
+				
+				case 313:
+				{
+					$aReturn['IRCOp'] = true;
+					break;
+				}
+				
 				case '318':
 				{
 					break;
 				}
+				
 				case '319':
 				{
-					$aReturn['CHANNELS'] = array_merge($aReturn['CHANNELS'], explode(' ', substr($aTemp[4], 1)));
+					$aReturn['Channels'] = array_merge($aReturn['Channels'], explode(' ', substr($aTemp[4], 1)));
 					break;
 				}
 			}
@@ -2416,7 +2408,7 @@ class Master
 		
 		if(!$bKeepModes)
 		{
-			foreach($aReturn['CHANNELS'] as &$sChannel)
+			foreach($aReturn['Channels'] as &$sChannel)
 			{
 				$sChannel = strstr($sChannel, '#');
 			}

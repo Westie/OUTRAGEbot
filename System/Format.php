@@ -73,6 +73,7 @@ class Format
 	/* Parser: get formatting reference */
 	static function getFormat($sFormat, $sNamespace = "")
 	{
+		$sFormat = strtolower($sFormat);
 		$sFormat = ucwords($sFormat);
 		$sNamespace = ucwords($sNamespace);
 		
