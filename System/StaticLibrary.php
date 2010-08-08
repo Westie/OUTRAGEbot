@@ -182,39 +182,67 @@ class StaticLibrary
 	
 	
 	/**
-	 *	Turns a user's channel permission number into a character.
+	 *	Replaces the character with a letter in a mode string.
 	 *
-	 *	@param integer $iUserMode User mode number
-	 *	@return string Character
+	 *	@param string Characters
+	 *	@return string Letters
 	 */
-	static function userModeToChar($iUserMode)
+	static function modeCharToLetter($sModeString)
 	{
-		switch($iUserMode)
-		{
-			case 1:
-			{
-				return "+";
-			}
-			case 3:
-			{
-				return "%";
-			}
-			case 7:
-			{
-				return "@";
-			}
-			case 15:
-			{
-				return "&";
-			}
-			case 31:
-			{
-				return "~";
-			}
-			default:
-			{
-				return "-";
-			}
-		}
+		return str_replace
+		(
+			array
+			(
+				'+',
+				'%',
+				'@',
+				'&',
+				'~',
+			),
+			
+			array
+			(
+				'v',
+				'h',
+				'o',
+				'a',
+				'q',
+			),
+			
+			$sModeString
+		);
+	}
+	
+	
+	/**
+	 *	Replaces the letter with a character in a mode string.
+	 *
+	 *	@param string Letters
+	 *	@return string Characters
+	 */
+	static function modeLetterToChar($sModeString)
+	{
+		return str_replace
+		(
+			array
+			(
+				'v',
+				'h',
+				'o',
+				'a',
+				'q',
+			),
+			
+			array
+			(
+				'+',
+				'%',
+				'@',
+				'&',
+				'~',
+			),
+			
+			$sModeString
+		);
 	}
 }

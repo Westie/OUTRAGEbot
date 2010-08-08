@@ -5,7 +5,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version <new>
+ *	@version 1.1.1-RC5 (Git commit: 71ffa89548593a9066881715aa480eca94c5675a)
  */
 
 
@@ -42,7 +42,7 @@ class User
 	 */
 	public function __get($sKey)
 	{
-		$sKey = "prop".$sKey;
+		$sKey = "propGet".$sKey;
 		
 		if(method_exists($this, $sKey))
 		{
@@ -54,12 +54,12 @@ class User
 	
 	
 	/**
-	 *	Properties: setting psuedo properties
+	 *	Properties: setting psuedo properties.
 	 *	@ignore
 	 */
 	public function __set($sKey, $mValue)
 	{
-		$sKey = "prop".$sKey;
+		$sKey = "propSet".$sKey;
 		
 		if(method_exists($this, $sKey))
 		{
@@ -73,7 +73,7 @@ class User
 	/**
 	 *	Get the connection settings
 	 */
-	private function propConnection($mValue = null)
+	private function propGetConnection()
 	{
 		$aWhois = $this->pMaster->getWhois($this->sNickname);
 		
@@ -88,7 +88,7 @@ class User
 	/**
 	 *	Get the user's details
 	 */
-	private function propDetails($mValue = null)
+	private function propGetDetails()
 	{
 		$aWhois = $this->pMaster->getWhois($this->sNickname);
 		
@@ -99,5 +99,34 @@ class User
 			'Realname' => $aWhois['Details']['Realname'],
 			'Hostname' => $aWhois['Details']['Hostname'],
 		);
+	}
+	
+	
+	/**
+	 *	Get the user's active channels
+	 */
+	private function propGetChannels()
+	{
+		$aWhois = $this->pMaster->getWhois($this->sNickname);
+		return $aWhois['Channels'];
+	}
+	
+	
+	/**
+	 *	Get the user's hostname
+	 */
+	private function propGetHostname()
+	{
+		$aWhois = $this->pMaster->getWhois($this->sNickname);
+		return $aWhois['Details']['Hostname'];
+	}
+	
+	
+	/**
+	 *	Get the user's nickname
+	 */
+	public function name()
+	{
+		return $this->sNickname;
 	}
 }

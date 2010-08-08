@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC3 (Git commit: d9fcaef03f6125f84e4d034ed311754e9a2dad6d)
+ *	@version 1.1.1-RC5 (Git commit: 71ffa89548593a9066881715aa480eca94c5675a)
  */
  
 
@@ -71,7 +71,7 @@ class Master
 	/**
 	 *	@ignore
 	 */
-	public $pModes;
+	public $aChannelObjects = array();
 	
 	
 	/**
@@ -742,10 +742,9 @@ class Master
 	private function _onJoin($aChunks)
 	{
 		$sNickname = $this->getNickname($aChunks[0]);
-		
-		$this->pModes->aUserInfo[strtolower($sNickname)]['Hostname'] = $this->getHostname($aChunks[0]);
+
 		$this->triggerEvent("onJoin", $sNickname, $aChunks[2]);
-		$this->addUserToChannel($aChunks[2], $sNickname);
+		$this->getChannel($aChunks[2])->addUserToChannel($sNickname);
 	}
 	
 	
@@ -757,8 +756,9 @@ class Master
 	{
 		$aChunks[3] = explode(' ', $aChunks[3], 2);
 		$aChunks[3][1] = trim(isset($aChunks[3][1]) ? substr($aChunks[3][1], 1) : "");
+		
 		$this->triggerEvent("onKick", $this->getNickname($aChunks[0]), $aChunks[3][0], $aChunks[2], $aChunks[3][1]);
-		$this->removeUserFromChannel($aChunks[2], $aChunks[3][0]);
+		$this->getChannel($aChunks[2])->removeUserFromChannel($aChunks[3][0]);
 	}
 	
 	
@@ -768,8 +768,10 @@ class Master
 	 */
 	private function _onPart($aChunks)
 	{
-		$this->triggerEvent("onPart", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
-		$this->removeUserFromChannel($aChunks[2], $this->getNickname($aChunks[0]));
+		$sNickname = $this->getNickname($aChunks[0]);
+		
+		$this->triggerEvent("onPart", $sNickname, $aChunks[2], $aChunks[3]);
+		$this->getChannel($aChunks[2])->removeUserFromChannel($sNickname);
 	}
 	
 	
@@ -780,7 +782,6 @@ class Master
 	private function _onQuit($aChunks)
 	{
 		$this->triggerEvent("onQuit", $this->getNickname($aChunks[0]), $aChunks[3]);
-		$this->removeUserFromChannel('*', $this->getNickname($aChunks[0]));
 	}
 	
 	
@@ -793,7 +794,6 @@ class Master
 		$this->triggerEvent("onMode", $aChunks[2], $aChunks[3]);
 		
 		$sChannel = strtolower($aChunks[2]);
-		$aModes = array('v' => 1, 'h' => 3, 'o' => 7, 'a' => 15, 'q' => 31);
 			
 		foreach($this->parseModes($aChunks[3]) as $aMode)
 		{
@@ -803,9 +803,9 @@ class Master
 			}
 			
 			$sMode = $aMode['MODE'];
-			$sParam = $aMode['PARAM'];
+			$sNickname = $aMode['PARAM'];
 			
-			$this->pModes->aChannels[$sChannel][$sParam]['iMode'] = $aModes[$sMode];
+			$this->getChannel($sChannel)->modifyUserInChannel($sNickname, $aMode['ACTION'], $sMode);
 		}
 	}
 	
@@ -825,7 +825,7 @@ class Master
 		}
 		
 		$this->triggerEvent("onNick", $sNickname, $aChunks[2]);
-		$this->renameUserFromChannel($sNickname, $aChunks[2]);
+		$this->getChannel($sChannel)->renameUserInChannel($aChunks[2], $sNickname);
 	}
 	
 	
@@ -937,9 +937,9 @@ class Master
 	{
 		$sNickname = $this->getNickname($aChunks[0]);
 		
-		$this->pModes->aChannelInfo[strtolower($aChunks[2])]['TopicString'] = $aChunks[3];
-		$this->pModes->aChannelInfo[strtolower($aChunks[2])]['TopicSetTime'] = time();
-		$this->pModes->aChannelInfo[strtolower($aChunks[2])]['TopicSetBy'] = $sNickname;
+		$this->getChannel($aChunks[2])->aTopicInformation['String'] = $aChunks[3];
+		$this->getChannel($aChunks[2])->aTopicInformation['Time'] = time();
+		$this->getChannel($aChunks[2])->aTopicInformation['SetBy'] = $sNickname;
 	
 		$this->triggerEvent("onTopic", $sNickname, $aChunks[2], $aChunks[3]);
 	}
@@ -962,33 +962,27 @@ class Master
 	{
 		$aData = explode(" ", $aChunks[3], 3);
 		$aData[2] = substr($aData[2], 1);
+		
 		$aUsers = explode(" ", $aData[2]);
 		$sChannel = strtolower($aData[1]);
+		
+		$pChannel = $this->getChannel($sChannel);
 				
 		/* Great, we now parse the users... */
 		foreach($aUsers as $sUser)
 		{
-			$iTemp = 0;
 			$sUser = trim($sUser);
 				
-			if(!isset($sUser[0]))
+			if(!preg_match("/[+%@&~]/", $sUser, $aModes))
 			{
 				continue;
 			}
-				
-			switch($sUser[0])
-			{
-				case '+': $iTemp = 1; break;
-				case '%': $iTemp = 3; break;
-				case '@': $iTemp = 7; break;
-				case '&': $iTemp = 15; break;
-				case '~': $iTemp = 31; break;
-				default: break;
-			}
-					
+			
+			$sModeLetter = implode("", $aModes);
+			$sModeLetter = StaticLibrary::modeCharToLetter($sModeLetter);
+			
 			$sUser = preg_replace("/[+%@&~]/", "", $sUser);
-			$this->pModes->aChannels[$sChannel][$sUser]['iMode'] = $iTemp;
-			$this->pModes->aUsers[$sUser][$sChannel] = true;
+			$pChannel->addUserToChannel($sUser, $sModeLetter);
 		}
 	}
 	
@@ -1001,6 +995,13 @@ class Master
 	{
 		switch($aChunks[1])
 		{
+			/* The NAMEX protocol */
+			case "005":
+			{
+				$this->pCurrentBot->Output("PROTOCTL NAMESX");
+				return;
+			}
+			
 			/* When the bot connects */
 			case "001":
 			{
@@ -1028,15 +1029,19 @@ class Master
 			case "332":
 			{
 				$aData = explode(' :', $aChunks[3], 2);
-				$this->pModes->aChannelInfo[strtolower($aData[0])]['TopicString'] = $aData[1];
+			
+				$this->getChannel($aData[0])->aTopicInformation['String'] = $aData[1];
+				
 				return;
 			}
 			
 			case "333":
 			{
-				$aData = explode(' ', $aChunks[3], 3);				
-				$this->pModes->aChannelInfo[strtolower($aData[0])]['TopicSetTime'] = $aData[2];
-				$this->pModes->aChannelInfo[strtolower($aData[0])]['TopicSetBy'] = $aData[1];
+				$aData = explode(' ', $aChunks[3], 3);		
+				
+				$this->getChannel($aData[0])->aTopicInformation['Time'] = $aData[2];
+				$this->getChannel($aData[0])->aTopicInformation['SetBy'] = $aData[1];
+				
 				return;
 			}
 		}
@@ -1050,86 +1055,6 @@ class Master
 				return;
 			}
 		}
-	}
-	
-	
-	/**
-	 *	Internal: Adds a user to the channel's database.
-	 *
-	 *	@ignore
-	 *	@param string $sChannel Channel where user is.
-	 *	@param string $sUser Nickname to remove from list.
-	 */
-	public function addUserToChannel($sChannel, $sUser)
-	{
-		$sChannel = strtolower($sChannel);
-		
-		$this->pModes->aUsers[$sUser][$sChannel] = true;
-		$this->pModes->aChannels[$sChannel][$sUser] = array('iMode');
-	}
-	
-	
-	/**
-	 *	Internal: Removes a user from the channel's database. '*' signifies all.
-	 *
-	 *	@ignore
-	 *	@param string $sChannel Channel where user is.
-	 *	@param string $sUser Nickname to remove from list.
-	 */
-	public function removeUserFromChannel($sChannel, $sUser)
-	{
-		if($sChannel != '*')
-		{
-			unset($this->pModes->aChannels[strtolower($sChannel)][$sUser]);
-			return;
-		}
-		
-		foreach(array_keys($this->pModes->aUsers[$sUser]) as $sChannel)
-		{
-			unset($this->pModes->aChannels[$sChannel][$sUser]);
-			unset($this->pModes->aUsers[$sUser][$sChannel]);
-		}
-	}
-	
-	
-	/**
-	 *	Internal: Renames a user from the channel's database.
-	 *
-	 *	@ignore
-	 *	@param string $sOldNick The old nickname.
-	 *	@param string $sNewNick The new nickname.
-	 */
-	public function renameUserFromChannel($sOldNick, $sNewNick)
-	{
-		foreach(array_keys($this->pModes->aUsers[$sOldNick]) as $sChannel)
-		{
-			$this->pModes->aChannels[$sChannel][$sNewNick] = $this->pModes->aChannels[$sChannel][$sOldNick];
-			unset($this->pModes->aChannels[$sChannel][$sOldNick]);
-		}
-		
-		$this->pModes->aUsers[$sNewNick] = $this->pModes->aUsers[$sOldNick];	
-		unset($this->pModes->aUsers[$sOldNick]);
-	}
-	
-	
-	/**
-	 *	Internal: Returns user information from a channel.
-	 *
-	 *	@ignore
-	 *	@param string $sChannel Channel where user is
-	 *	@param string $sUser Nickname to check
-	 *	@return array Returns an array on success, FALSE on failure.
-	 */
-	public function getUserInfoFromChannel($sChannel, $sUser)
-	{
-		$sChannel = strtolower($sChannel);
-		
-		if(!isset($this->pModes->aChannels[$sChannel][$sUser]))
-		{
-			return false;
-		}
-		
-		return $this->pModes->aChannels[$sChannel][$sUser];
 	}
 	
 	
@@ -1157,7 +1082,14 @@ class Master
 	 */
 	public function getChannel($sChannel)
 	{
-		return new Channel($this, $sChannel);
+		$sChannel = strtolower($sChannel);
+		
+		if(!isset($this->aChannelObjects[$sChannel]))
+		{
+			$this->aChannelObjects[$sChannel] = new Channel($this, $sChannel);
+		}
+		
+		return $this->aChannelObjects[$sChannel];
 	}
 	
 	
@@ -1168,7 +1100,7 @@ class Master
 	 */
 	public function getChannelList()
 	{
-		return array_keys($this->pModes->aChannels);
+		return array_keys($this->aChannelObjects);
 	}
 	
 	
@@ -1180,14 +1112,7 @@ class Master
 	 */
 	public function getChannelUserCount($sChannel)
 	{
-		$sChannel = strtolower($sChannel);
-		
-		if(isset($this->pModes->aChannels[$sChannel]))
-		{
-			return count($this->pModes->aChannels[$sChannel]);
-		}
-		
-		return 0;
+
 	}
 	
 	
@@ -1292,21 +1217,7 @@ class Master
 	 */
 	public function getChannelTopic($sChannel)
 	{
-		$sChannel = strtolower($sChannel);
-		
-		if(isset($this->pModes->aChannelInfo[$sChannel]['TopicString']))
-		{
-			return array
-			(
-				"String" => $this->pModes->aChannelInfo[$sChannel]['TopicString'],
-				"SetBy" => $this->pModes->aChannelInfo[$sChannel]['TopicSetBy'],
-				"Time" => $this->pModes->aChannelInfo[$sChannel]['TopicSetTime'],
-			);
-		}
-		else
-		{
-			return null;
-		}
+		return $this->getChannel($sChannel)->aTopicInformation;
 	}
 	
 	
@@ -1319,7 +1230,7 @@ class Master
 	 */
 	public function isUserInChannel($sChannel, $sUser)
 	{
-		return isset($this->pModes->aUsers[$sUser][strtolower($sChannel)]) != false;
+		return $this->getChannel($sChannel)->isUserInChannel($sUser);
 	}
 	
 	
@@ -1331,7 +1242,7 @@ class Master
 	 */
 	public function isChildInChannel($sChannel)
 	{
-		return isset($this->pModes->aUsers[$this->getChildConfig('nickname')][strtolower($sChannel)]) != false;
+	
 	}
 	
 	
@@ -1345,14 +1256,14 @@ class Master
 	 */
 	public function isUserVoice($sChannel, $sUser)
 	{
-		$aUser = $this->getUserInfoFromChannel($sChannel, $sUser);
+		$pChannel = $this->getChannel($sChannel);
 		
-		if($aUser === false)
+		if(!isset($pChannel->aUsers[$sUser]))
 		{
 			return false;
 		}
 		
-		return ($aUser['iMode'] & MODE_USER_VOICE) != 0; 
+		return preg_match('/[qaohv]/', $pChannel->aUsers[$sUser]);
 	}
 	
 	
@@ -1366,14 +1277,14 @@ class Master
 	 */
 	public function isUserHalfOp($sChannel, $sUser)
 	{
-		$aUser = $this->getUserInfoFromChannel($sChannel, $sUser);
+		$pChannel = $this->getChannel($sChannel);
 		
-		if($aUser === false)
+		if(!isset($pChannel->aUsers[$sUser]))
 		{
 			return false;
 		}
 		
-		return ($aUser['iMode'] & MODE_USER_HOPER) != 0; 
+		return preg_match('/[qaoh]/', $pChannel->aUsers[$sUser]);
 	}
 	
 	
@@ -1387,14 +1298,14 @@ class Master
 	 */
 	public function isUserOper($sChannel, $sUser)
 	{
-		$aUser = $this->getUserInfoFromChannel($sChannel, $sUser);
+		$pChannel = $this->getChannel($sChannel);
 		
-		if($aUser === false)
+		if(!isset($pChannel->aUsers[$sUser]))
 		{
 			return false;
 		}
 		
-		return ($aUser['iMode'] & MODE_USER_OPER) != 0; 
+		return preg_match('/[qao]/', $pChannel->aUsers[$sUser]);
 	}
 	
 	
@@ -1408,14 +1319,14 @@ class Master
 	 */
 	public function isUserAdmin($sChannel, $sUser)
 	{
-		$aUser = $this->getUserInfoFromChannel($sChannel, $sUser);
+		$pChannel = $this->getChannel($sChannel);
 		
-		if($aUser === false)
+		if(!isset($pChannel->aUsers[$sUser]))
 		{
 			return false;
 		}
 		
-		return ($aUser['iMode'] & MODE_USER_ADMIN) != 0; 
+		return preg_match('/[qa]/', $pChannel->aUsers[$sUser]);
 	}
 	
 	
@@ -1429,14 +1340,14 @@ class Master
 	 */
 	public function isUserOwner($sChannel, $sUser)
 	{	
-		$aUser = $this->getUserInfoFromChannel($sChannel, $sUser);
+		$pChannel = $this->getChannel($sChannel);
 		
-		if($aUser === false)
+		if(!isset($pChannel->aUsers[$sUser]))
 		{
 			return false;
 		}
 		
-		return ($aUser['iMode'] & MODE_USER_OWNER) != 0; 
+		return preg_match('/[q]/', $pChannel->aUsers[$sUser]);
 	}
 		
 	
@@ -2157,41 +2068,6 @@ class Master
 				unset($this->aHandlers[$sKey]);
 			}
 		}
-	}
-		
-	
-	/**
-	 *	Request information realtime.
-	 *
-	 *	The data that are you requesting (for instance, what is in $mSearch) will not be parsed by the bot.
-	 *	This essentially means it is the job of the code using that request to deal with parsing it properly.
-
-	 *	@param string $sRequest Message to send to the server.
-	 *	@param mixed $mSearch IRC numerics to cache.
-	 *	@param integer $iSleep <i>Microseconds</i> to sleep before getting input.
-	 *	@return array The response matched to the data in $mSearch.
-	 */
-	public function getTimedRequest($sRequest, $mSearch, $iSleep = 10000)
-	{
-		$this->pCurrentBot->iUseQueue = true;
-		$this->pCurrentBot->aRequestOutput = array();
-		
-		$this->pCurrentBot->aRequestConfig = array
-		(
-			"SEARCH" => (array) $mSearch,
-			"ENDNUM" => false,
-			"TIMEOUT" => false,
-		);
-		
-		$this->pCurrentBot->Output($sRequest);
-		usleep($iSleep);
-		
-		$this->pCurrentBot->Input();
-		$this->pCurrentBot->iUseQueue = false;
-		$aReturn = $this->pCurrentBot->aRequestOutput;
-		$this->pCurrentBot->aRequestOutput = array();
-		
-		return $aReturn;
 	}
 	
 	

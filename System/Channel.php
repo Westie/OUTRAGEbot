@@ -5,7 +5,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version <new>
+ *	@version 1.1.1-RC5 (Git commit: 71ffa89548593a9066881715aa480eca94c5675a)
  */
 
 
@@ -15,6 +15,15 @@ class Channel
 	private
 		$pMaster = null,
 		$sChannel = null;
+		
+	public
+		$aUsers = array(),
+		$aTopicInformation = array
+		(
+			'String' => '',
+			'SetBy' => '',
+			'Time' => 0
+		);
 	
 	
 	/**
@@ -42,7 +51,7 @@ class Channel
 	 */
 	public function __get($sKey)
 	{
-		$sKey = "prop".$sKey;
+		$sKey = "propGet".$sKey;
 		
 		if(method_exists($this, $sKey))
 		{
@@ -54,12 +63,12 @@ class Channel
 	
 	
 	/**
-	 *	Properties: setting psuedo properties
+	 *	Properties: setting psuedo properties.
 	 *	@ignore
 	 */
 	public function __set($sKey, $mValue)
 	{
-		$sKey = "prop".$sKey;
+		$sKey = "propSet".$sKey;
 		
 		if(method_exists($this, $sKey))
 		{
@@ -71,22 +80,107 @@ class Channel
 	
 	
 	/**
-	 *	Get the channel user count.
+	 *	Users: Checks if a user is in the database
 	 *	@ignore
 	 */
-	private function propCount($mValue = null)
+	public function isUserInChannel($sNickname)
 	{
-		return $this->pMaster->getChannelUserCount($this->sChannel);
+		return isset($this->aUsers[$sNickname]);
+	}
+	
+	
+	/**
+	 *	Users: Add user to the internal database
+	 *	@ignore
+	 */
+	public function addUserToChannel($sNickname, $sChannelMode = "")
+	{
+		$this->aUsers[$sNickname] = $sChannelMode;
+	}
+	
+	
+	/**
+	 *	Users: Rename a user from the internal database
+	 *	@ignore
+	 */
+	public function renameUserInChannel($sOldNickname, $sNewNickname)
+	{
+		$this->aUsers[$sNewNickname] = $this->aUsers[$sOldNickname];
+		unset($this->aUsers[$sOldNickname]);
+	}
+	
+	
+	/**
+	 *	Users: Add user to the internal database
+	 *	@ignore
+	 */
+	public function modifyUserInChannel($sNickname, $sMode, $sChannelMode = "")
+	{		
+		if($sMode == '+')
+		{
+			$this->aUsers[$sNickname] .= $sChannelMode;
+		}
+		else
+		{
+			$this->aUsers[$sNickname] = str_replace($sChannelMode, "", $this->aUsers[$sNickname]);
+		}
+	}
+	
+	
+	/**
+	 *	Users: Remove a user from the internal database
+	 *	@ignore
+	 */
+	public function removeUserFromChannel($sNickname)
+	{
+		unset($this->aUsers[$sNickname]);
+	}
+	
+	
+	/**
+	 *	Get the channel user count.
+	 */
+	private function propGetCount()
+	{
+		return count($this->aUsers);
 	}
 	
 	
 	/**
 	 *	Get the channel topic.
-	 *	@ignore
 	 */
-	private function propTopic($mValue = null)
+	private function propGetTopic()
 	{
-		return $this->pMaster->pModes->aChannelInfo[$this->sChannel]['TopicString'];
+		return $this->aTopicInformation['String'];
+	}
+	
+	
+	/**
+	 *	Set the channel topic
+	 */
+	private function propSetTopic($sString)
+	{
+		return $this->pMaster->Raw("TOPIC {$this->sChannel} :{$sString}");
+	}
+	
+	
+	/**
+	 *	Get the users in the channel
+	 */
+	public function propGetUsers()
+	{
+		$aUsers = array();
+		
+		foreach($this->aUsers as $sNickname => $sChannelMode)
+		{		
+			$aUsers[] = array
+			(
+				"Nickname" => $sNickname,
+				"Usermode" => $sChannelMode,
+			);
+		}
+		
+		return $aUsers;
 	}
 	
 	
@@ -131,29 +225,6 @@ class Channel
 	 */
 	public function getTopic()
 	{
-		return $this->pMaster->getChannelTopic($this->sChannel);
-	}
-	
-	
-	/**
-	 *	Get the users in the channel
-	 */
-	public function getUsers()
-	{
-		$aUsers = array();
-		
-		foreach($this->pMaster->pModes->aChannels[$this->sChannel] as $sKey => $aUser)
-		{
-			$iUserMode = $aUser['iMode'];
-			$sUserMode = StaticLibrary::userModeToChar($iUserMode);
-			
-			$aUsers[] = array
-			(
-				"Nickname" => $sKey,
-				"Usermode" => $sUserMode,
-			);
-		}
-		
-		return $aUsers;
+		return $this->aTopicInformation;
 	}
 }
