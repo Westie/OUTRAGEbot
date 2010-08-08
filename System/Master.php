@@ -781,7 +781,14 @@ class Master
 	 */
 	private function _onQuit($aChunks)
 	{
-		$this->triggerEvent("onQuit", $this->getNickname($aChunks[0]), $aChunks[3]);
+		$sNickname = $this->getNickname($aChunks[0]);
+		
+		$this->triggerEvent("onQuit", $sNickname, $aChunks[3]);
+		
+		foreach($this->aChannelObjects as $pChannel)
+		{
+			$pChannel->removeUserFromChannel($sNickname);
+		}
 	}
 	
 	
@@ -1112,7 +1119,8 @@ class Master
 	 */
 	public function getChannelUserCount($sChannel)
 	{
-
+		$pChannel = $this->getChannel($sChannel);
+		return count($pChannel->aUsers);
 	}
 	
 	
@@ -1242,7 +1250,7 @@ class Master
 	 */
 	public function isChildInChannel($sChannel)
 	{
-	
+		return $this->getChannel($sChannel)->isUserInChannel($this->getChildConfig('nickname'));
 	}
 	
 	
@@ -2214,7 +2222,7 @@ class Master
 	 */
 	public function getWhois($sNickname, $bKeepModes = false)
 	{
-		$aMatches = $this->getRequest("WHOIS {$sNickname}", array(301, 310, 311, 312, 313, 319), '318', 2, 0);
+		$aMatches = $this->getRequest("WHOIS {$sNickname}", array(301, 310, 311, 312, 313, 319), '318', 4, 1);
 		
 		$aReturn = array
 		(
