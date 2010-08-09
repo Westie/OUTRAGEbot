@@ -18,6 +18,9 @@ $ Renamed Master.invokeEvent() to Master.triggerEvent()
 + Added a parser for colours and formatting
 + Added Channel class
 + Added Master.getChannelTopic()
++ Added User class
+$ Recoded entire user management system
+$ Made the socket core more efficient
 
 
 Version 1.1.0 (15/05/2010)
