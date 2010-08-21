@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC5 (Git commit: 270ef40a47f5596acbfc33a3066714c63b05ec47)
+ *	@version 1.1.1-RC5 (Git commit: d3cd3c1a3a00d481505e1e0dbdae87da64b874ed)
  */
  
 
@@ -974,16 +974,14 @@ class Master
 		$sChannel = strtolower($aData[1]);
 		
 		$pChannel = $this->getChannel($sChannel);
-				
+		
 		/* Great, we now parse the users... */
 		foreach($aUsers as $sUser)
 		{
 			$sUser = trim($sUser);
-				
-			if(!preg_match("/[+%@&~]/", $sUser, $aModes))
-			{
-				continue;
-			}
+			$aModes = array();
+			
+			preg_match("/[+%@&~]/", $sUser, $aModes);
 			
 			$sModeLetter = implode("", $aModes);
 			$sModeLetter = StaticLibrary::modeCharToLetter($sModeLetter);
