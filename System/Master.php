@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC5 (Git commit: d3cd3c1a3a00d481505e1e0dbdae87da64b874ed)
+ *	@version 1.1.1-RC6 (Git commit: 09eae40a2d1115ab2c6e5a45c9734a09722196b1)
  */
  
 
@@ -281,13 +281,13 @@ class Master
 	 *	@param string $sRealname The child's real name.
 	 *	@return bool true on success.
 	 */
-	public function addChild($sChild, $sNickname, $sUsername = false, $sRealname = false)
+	public function addChild($sChild, $sNickname, $sUsername = null, $sRealname = null)
 	{
 		$aDetails = array
 		(
 			'nickname' => $sNickname,
-			'username' => ($sUsername == false ? $sChild : $sUsername),
-			'realname' => ($sRealname == false ? $sNickname : $sRealname),
+			'username' => ($sUsername == null ? $sChild : $sUsername),
+			'realname' => ($sRealname == null ? $sNickname : $sRealname),
 			'altnick' => $sNickname.rand(0, 10),
 		);
 		
@@ -361,7 +361,7 @@ class Master
 	 *	@param string $sReason Reason for quitting channel.
 	 *	@return bool true on success.
 	 */
-	public function removeChild($sChild, $sReason = false)
+	public function removeChild($sChild, $sReason = null)
 	{
 		foreach($this->aBotObjects as $iReference => $oChild)
 		{
@@ -496,7 +496,7 @@ class Master
 	 *	@param string $sMessage Raw IRC message you want to send.
 	 *	@param mixed $mSend How to send the message (Look above).
 	 */
-	public function sendRaw($sMessage, $mSend = SEND_CURR)
+	public function sendRaw($sMessage, $mSend = SEND_DEF)
 	{
 		if(is_int($mSend))
 		{
@@ -832,7 +832,11 @@ class Master
 		}
 		
 		$this->triggerEvent("onNick", $sNickname, $aChunks[2]);
-		$this->getChannel($sChannel)->renameUserInChannel($aChunks[2], $sNickname);
+		
+		foreach($this->aChannelObjects as $pChannel)
+		{
+			$pChannel->renameUserInChannel($aChunks[2], $sNickname);
+		}
 	}
 	
 	
@@ -2142,10 +2146,11 @@ class Master
 	 *	Allows the bot to join a channel.
 	 *
 	 *	@param string $sChannel Channel name (IRC format applies!).
+	 *	@param mixed $mSend Output flags
 	 */
-	public function Join($sChannel)
+	public function Join($sChannel, $mSend = SEND_DEF)
 	{
-		return $this->sendRaw("JOIN {$sChannel}");
+		return $this->sendRaw("JOIN {$sChannel}", $mSend);
 	}
 	
 	
@@ -2154,10 +2159,11 @@ class Master
 	 *
 	 *	@param string $sChannel Channel name.
 	 *	@param string $sReason Reason for leaving
+	 *	@param mixed $mSend Method for sending messages
 	 */
-	public function Part($sChannel, $sReason = false)
+	public function Part($sChannel, $sReason = null, $mSend = SEND_DEF)
 	{
-		return $this->sendRaw("PART {$sChannel}".($sReason == false ? "" : " :{$sReason}"));
+		return $this->sendRaw("PART {$sChannel}".($sReason == null ? "" : " :{$sReason}"));
 	}
 	
 	
