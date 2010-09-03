@@ -45,6 +45,12 @@ class Control
 	
 	
 	/**
+	 *	@ignore
+	 */
+	public static $iDeathCount;
+	
+	
+	/**
 	 *	Creates a bot from an INI file in the config folder.
 	 *	
 	 *	@param string $sConfig Bot-group 
@@ -156,5 +162,19 @@ class Control
 		}
 		
 		return null;
+	}
+	
+	
+	/**
+	 *	Checking to see if there's been a quit malfunction.
+	 *
+	 *	@ignore
+	 */
+	static function DeathScan()
+	{
+		if(self::$iDeathCount >= MAX_RESTARTS)
+		{
+			exit;
+		}
 	}
 }

@@ -5,7 +5,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC6 (Git commit: 09eae40a2d1115ab2c6e5a45c9734a09722196b1)
+ *	@version 1.1.1-RC6 (Git commit: fe316c18cb3676fd2b6d619520c4ddd28173bb18)
  */
 
 
@@ -14,7 +14,7 @@ error_reporting(E_ALL | E_STRICT);
 
 
 /* Some bot-brag-relating things. */
-define("BOT_VERSION", "1.1.1-RC6-09eae40");
+define("BOT_VERSION", "1.1.1-RC6-fe316c1");
 define("BOT_RELDATE", "21/08/2010");
 
 
@@ -48,3 +48,7 @@ define("MODE_USER_HOPER", 2);
 define("MODE_USER_OPER", 4);
 define("MODE_USER_ADMIN", 8);
 define("MODE_USER_OWNER", 16);
+
+
+/* Maximum restarts in a 1 minute period */
+define("MAX_RESTARTS", 15);
