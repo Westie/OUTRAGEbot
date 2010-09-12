@@ -21,6 +21,8 @@ $ Renamed Master.invokeEvent() to Master.triggerEvent()
 + Added User class
 $ Recoded entire user management system
 $ Made the socket core more efficient
++ Added debug utility
++ Changed $sChannel from string to Channel on all apart from onNotice
 
 
 Version 1.1.0 (15/05/2010)

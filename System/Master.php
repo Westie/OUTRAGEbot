@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC6 (Git commit: b9b72a66c442462b03601b9a9d0bcd30a627e93e)
+ *	@version 1.1.1-BETA7 (Git commit: ff947feec48e14365189e16e20c144b6b609bc21)
  */
  
 
@@ -849,7 +849,7 @@ class Master
 	 */
 	private function _onNotice($aChunks)
 	{
-		$this->triggerEvent("onNotice", $this->getNickname($aChunks[0]), $this->getChannel($aChunks[2]), $aChunks[3]);
+		$this->triggerEvent("onNotice", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
 	}
 	
 	
@@ -1642,12 +1642,12 @@ class Master
 	 *
 	 *	@param string $sNickname Nickname
 	 *	@param string $sRequest CTCP request
-	 *	@param integer $mSend Method to send messages (see sendRaw() for details)
 	 *	@see Master::sendRaw()
 	 */
-	public function ctcpRequest($sNickname, $sRequest, $mSend = SEND_DEF)
+	public function ctcpRequest($sNickname, $sRequest)
 	{
-		return $this->sendRaw("PRIVMSG {$sNickname} :".chr(1).trim($sRequest).chr(1), $mSend);
+		// return $this->sendRaw("PRIVMSG {$sNickname} :".chr(1).trim($sRequest).chr(1), $mSend);
+		// $this->getRequest("PRIVMSG {$sNickname} :".chr(1).trim($sRequest).chr(1), "NOTICE", "", 4, 2);
 	}
 
 
