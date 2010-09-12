@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-RC6 (Git commit: fe316c18cb3676fd2b6d619520c4ddd28173bb18)
+ *	@version 1.1.1-RC6 (Git commit: b9b72a66c442462b03601b9a9d0bcd30a627e93e)
  */
  
 
@@ -742,9 +742,10 @@ class Master
 	private function _onJoin($aChunks)
 	{
 		$sNickname = $this->getNickname($aChunks[0]);
-
-		$this->triggerEvent("onJoin", $sNickname, $aChunks[2]);
-		$this->getChannel($aChunks[2])->addUserToChannel($sNickname);
+		$pChannel = $this->getChannel($aChunks[2]);
+			
+		$this->triggerEvent("onJoin", $sNickname, $pChannel);
+		$pChannel->addUserToChannel($sNickname);
 	}
 	
 	
@@ -757,8 +758,10 @@ class Master
 		$aChunks[3] = explode(' ', $aChunks[3], 2);
 		$aChunks[3][1] = trim(isset($aChunks[3][1]) ? substr($aChunks[3][1], 1) : "");
 		
-		$this->triggerEvent("onKick", $this->getNickname($aChunks[0]), $aChunks[3][0], $aChunks[2], $aChunks[3][1]);
-		$this->getChannel($aChunks[2])->removeUserFromChannel($aChunks[3][0]);
+		$pChannel = $this->getChannel($aChunks[2]);
+		
+		$this->triggerEvent("onKick", $this->getNickname($aChunks[0]), $aChunks[3][0], $pChannel, $aChunks[3][1]);
+		$pChannel->removeUserFromChannel($aChunks[3][0]);
 	}
 	
 	
@@ -769,9 +772,10 @@ class Master
 	private function _onPart($aChunks)
 	{
 		$sNickname = $this->getNickname($aChunks[0]);
+		$pChannel = $this->getChannel($aChunks[2]);
 		
-		$this->triggerEvent("onPart", $sNickname, $aChunks[2], $aChunks[3]);
-		$this->getChannel($aChunks[2])->removeUserFromChannel($sNickname);
+		$this->triggerEvent("onPart", $sNickname, $pChannel, $aChunks[3]);
+		$pChannel->removeUserFromChannel($sNickname);
 	}
 	
 	
@@ -799,8 +803,7 @@ class Master
 	private function _onMode($aChunks)
 	{
 		$this->triggerEvent("onMode", $aChunks[2], $aChunks[3]);
-		
-		$sChannel = strtolower($aChunks[2]);
+		$pChannel = $this->getChannel($aChunks[2]);
 			
 		foreach($this->parseModes($aChunks[3]) as $aMode)
 		{
@@ -812,7 +815,7 @@ class Master
 			$sMode = $aMode['MODE'];
 			$sNickname = $aMode['PARAM'];
 			
-			$this->getChannel($sChannel)->modifyUserInChannel($sNickname, $aMode['ACTION'], $sMode);
+			$pChannel->modifyUserInChannel($sNickname, $aMode['ACTION'], $sMode);
 		}
 	}
 	
@@ -846,7 +849,7 @@ class Master
 	 */
 	private function _onNotice($aChunks)
 	{
-		$this->triggerEvent("onNotice", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
+		$this->triggerEvent("onNotice", $this->getNickname($aChunks[0]), $this->getChannel($aChunks[2]), $aChunks[3]);
 	}
 	
 	
@@ -922,13 +925,13 @@ class Master
 				if($aChunks[3][0] == $this->pConfig->Network['delimiter'])
 				{
 					$aCommand = explode(' ', trim($aChunks[3]), 2);
-					$this->triggerEvent("onCommand", $this->getNickname($aChunks[0]), $aChunks[2],
+					$this->triggerEvent("onCommand", $this->getNickname($aChunks[0]), $this->getChannel($aChunks[2]),
 						substr($aCommand[0], 1), (isset($aCommand[1]) ? $aCommand[1] : ""));
 						
 					return;
 				}
 				
-				$this->triggerEvent("onMessage", $this->getNickname($aChunks[0]), $aChunks[2], $aChunks[3]);
+				$this->triggerEvent("onMessage", $this->getNickname($aChunks[0]), $this->getChannel($aChunks[2]), $aChunks[3]);
 				return;
 			}
 			default:
@@ -947,12 +950,13 @@ class Master
 	private function _onTopic($aChunks)
 	{
 		$sNickname = $this->getNickname($aChunks[0]);
+		$pChannel = $this->getChannel($aChunks[2]);
 		
-		$this->getChannel($aChunks[2])->aTopicInformation['String'] = $aChunks[3];
-		$this->getChannel($aChunks[2])->aTopicInformation['Time'] = time();
-		$this->getChannel($aChunks[2])->aTopicInformation['SetBy'] = $sNickname;
+		$pChannel->aTopicInformation['String'] = $aChunks[3];
+		$pChannel->getChannel($aChunks[2])->aTopicInformation['Time'] = time();
+		$pChannel->getChannel($aChunks[2])->aTopicInformation['SetBy'] = $sNickname;
 	
-		$this->triggerEvent("onTopic", $sNickname, $aChunks[2], $aChunks[3]);
+		$this->triggerEvent("onTopic", $sNickname, $pChannel, $aChunks[3]);
 	}
 	
 	
