@@ -9,7 +9,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010/ -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-BETA7 (Git commit: d6e9046fbd12d660ded19c7b71c3e13c577d5adc)
+ *	@version 1.1.1-BETA7 (Git commit: 60f1daa876e990ffbebe930c63ab097e2bf49696)
  */
 
 class Socket
@@ -94,6 +94,11 @@ class Socket
 		$this->rSocket = stream_socket_client("tcp://{$pConfig->Network['host']}:{$pConfig->Network['port']}", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $rSocketOptions);
 		stream_set_blocking($this->rSocket, 0);
 		
+		if(isset($this->aConfig['password']))
+		{
+			$this->Output("PASS {$this->aConfig['password']}");
+		}
+		
 		$this->Output("NICK {$this->aConfig['nickname']}");
 		$this->Output("USER {$this->aConfig['username']} x x :{$this->aConfig['realname']}");
 		
@@ -111,9 +116,8 @@ class Socket
 		
 		++Control::$iDeathCount;
 		
-		@socket_clear_error();
-		
 		$this->socketShutdown();
+		
 		$this->Active = false;
 		$this->isWaiting = false;
 	}
@@ -124,6 +128,7 @@ class Socket
 	{
 		++$this->aStatistics['Output']['Packets'];
 		$this->aStatistics['Output']['Bytes'] += strlen($sRaw.IRC_EOL);
+		
 		return fputs($this->rSocket, $sRaw.IRC_EOL);
 	}
 	
