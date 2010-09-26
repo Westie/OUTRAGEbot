@@ -9,7 +9,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010/ -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-BETA7 (Git commit: ff947feec48e14365189e16e20c144b6b609bc21)
+ *	@version 1.1.1-BETA7 (Git commit: d6e9046fbd12d660ded19c7b71c3e13c577d5adc)
  */
 
 class Socket
@@ -79,26 +79,20 @@ class Socket
 		);
 		
 		/* Shortcut, eh? */
-		$pConfig = $this->pMaster->pConfig;
-		
-		$this->rSocket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+		$pConfig = $this->pMaster->pConfig;		
+		$aSocketOptions = array();
 		
 		if(isset($pConfig->Network['bind']))
 		{
-			socket_bind($this->rSocket, $pConfig->Network['bind']);
+			$aSocketOptions['socket'] = array
+			(
+				"bindto" => "{$pConfig->Network['bind']}:0",
+			);
 		}
 		
-		socket_connect($this->rSocket, $pConfig->Network['host'], $pConfig->Network['port']);
-		
-		if(!isset($_SERVER['WINDIR']) && !isset($_SERVER['windir']))
-		{
-		 	socket_set_nonblock($this->rSocket);
-		}
-		
-		if(isset($this->aConfig['password']))
-		{
-			$this->Output("PASS {$this->aConfig['password']}");
-		}
+		$rSocketOptions = stream_context_create($aSocketOptions);
+		$this->rSocket = stream_socket_client("tcp://{$pConfig->Network['host']}:{$pConfig->Network['port']}", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $rSocketOptions);
+		stream_set_blocking($this->rSocket, 0);
 		
 		$this->Output("NICK {$this->aConfig['nickname']}");
 		$this->Output("USER {$this->aConfig['username']} x x :{$this->aConfig['realname']}");
@@ -130,7 +124,7 @@ class Socket
 	{
 		++$this->aStatistics['Output']['Packets'];
 		$this->aStatistics['Output']['Bytes'] += strlen($sRaw.IRC_EOL);
-		return @socket_write($this->rSocket, $sRaw.IRC_EOL);
+		return fputs($this->rSocket, $sRaw.IRC_EOL);
 	}
 	
 	
@@ -197,11 +191,6 @@ class Socket
 			return false;
 		}
 		
-		if(strlen(socket_last_error($this->rSocket)) > 3)
-		{
-			return false;
-		}
-		
 		return true;
 	}
 	
@@ -224,7 +213,7 @@ class Socket
 	/* Shutting down socket - used for restarting, and dying. */
 	public function socketShutdown()
 	{
-		return @socket_shutdown($this->rSocket);
+		return fclose($this->rSocket);
 	}
 	
 	
@@ -245,7 +234,7 @@ class Socket
 	/* Check the sockets for stupid crap */
 	private function scanSocket()
 	{
-		$sInputString = socket_read($this->rSocket, 4096, PHP_BINARY_READ);
+		$sInputString = fgets($this->rSocket, 4096);
 		
 		foreach(explode("\n", $sInputString) as $sString)
 		{		
