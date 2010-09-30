@@ -19,7 +19,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-BETA7 (Git commit: fdeb506d199e5c806317b594b541f78287131a8b)
+ *	@version 1.1.1-BETA7 (Git commit: 60f1daa876e990ffbebe930c63ab097e2bf49696)
  */
  
 
@@ -1799,14 +1799,14 @@ class Master
 	{
 		if(isset($this->pPlugins->$sPlugin))
 		{
+			Timers::CheckCall();
+			$this->checkHandlers($sPlugin);
+			$this->checkFunctions($sPlugin);
+			
 			foreach($this->pPlugins->$sPlugin as $sKey => $mVar)
 			{
 				unset($this->pPlugins->$sPlugin->$sKey);
 			}
-			
-			Timers::CheckCall();
-			$this->checkHandlers($sPlugin);
-			$this->checkFunctions($sPlugin);
 			
 			unset($this->pPlugins->$sPlugin);
 			

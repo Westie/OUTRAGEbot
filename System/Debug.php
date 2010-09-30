@@ -6,7 +6,7 @@
  *	@package OUTRAGEbot
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
- *	@version 1.1.1-BETA7 (Git commit: d6e9046fbd12d660ded19c7b71c3e13c577d5adc)
+ *	@version 1.1.1-BETA7 (Git commit: 71136b6a56dbafc2fb954fd9e6881298d0a9e9a6)
  */
 
 
@@ -47,10 +47,14 @@ register_tick_function(function()
 /* Function to dump the output to the file */
 function outputCallRecords()
 {
-	$aFunctions = arsort($GLOBALS['aFunctions']);
+	global
+		$aFunctions;
+	
+	
+	$aFunction = $aFunctions;
 	$sString = "";
 	
-	foreach($aFunctions as $sKey => $iVal)
+	foreach($aFunction as $sKey => $iVal)
 	{
 		$sString .= "{$sKey} -> {$iVal}\r\n";
 	}
@@ -61,6 +65,6 @@ function outputCallRecords()
 
 
 /* Declare the tick count */
-declare(ticks = 10);
+declare(ticks = 1);
 
 echo "** Debug analysis loaded.";

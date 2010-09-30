@@ -72,9 +72,9 @@ abstract class Plugins
 	 *
 	 *	@ignore
 	 */
-	public final function __construct($oResource, $aIdentifier)
+	public final function __construct($pResource, $aIdentifier)
 	{
-		$this->pBot = $oResource;
+		$this->pBot = $pResource;
 		$this->aIdentifier = $aIdentifier;
 		
 		call_user_func(array($this, 'onConstruct'));
