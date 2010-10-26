@@ -3,7 +3,7 @@
  *	Starting file for OUTRAGEbot.
  *	Use this file to start the bot.
  *
- *	@ignore
+ *	@ignore k
  *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
  *	@author David Weston <westie@typefish.co.uk>
  *	@version 1.1.1-BETA7 (Git commit: 9ed3d64ce9ab29734725d301833c26e328b0c0d7)
