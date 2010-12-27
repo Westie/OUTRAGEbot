@@ -10,6 +10,8 @@ define("ROOT", __DIR__);
 include "System/Core/Core.php";
 
 
+Core::initClass();
+
 Core::Library("Configuration");
 Core::Library("Format");
 Core::Library("Functions");

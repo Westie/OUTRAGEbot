@@ -12,7 +12,17 @@ class Core
 	
 	
 	public static
-		$aPluginCache = array();
+		$aPluginCache = array(),
+		$pFunctionList = null;
+	
+	
+	/**
+	 *	Called when the core class is loaded.
+	 */
+	public function initClass()
+	{
+		self::$pFunctionList = new stdClass();
+	}
 	
 	
 	/**
@@ -26,7 +36,10 @@ class Core
 		{
 			include $sModuleLocation;
 			
-			self::$aModules[] = "Module{$sModule}";
+			$sModuleName = "Module{$sModule}";
+			self::$aModules[] = $sModuleName;
+			
+			$sModuleName::initModule();
 			
 			return true;
 		}
@@ -46,7 +59,10 @@ class Core
 		{
 			include $sModuleLocation;
 			
-			self::$aModules[] = "Core{$sModule}";
+			$sModuleName = "Core{$sModule}";
+			self::$aModules[] = $sModuleName;
+			
+			$sModuleName::initModule();
 			
 			return true;
 		}
@@ -133,5 +149,20 @@ class Core
 		}
 		
 		return CoreHandler::$sNumeric($pInstance, $pMessage);
+	}
+	
+	
+	/**
+	 *	Adds a virtual function into the Master object.
+	 */
+	static function introduceFunction($sFunctionName, $cMethodCallback)
+	{
+		if(!is_callable($cMethodCallback))
+		{
+			return false;
+		}
+		
+		self::$pFunctionList->$sFunctionName = $cMethodCallback;
+		return true;
 	}
 }
