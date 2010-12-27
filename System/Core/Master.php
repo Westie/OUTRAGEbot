@@ -6,7 +6,7 @@
 
 class CoreMaster
 {
-	private
+	public
 		$pMessage = null,
 		$pConfig = null;
 	
@@ -21,7 +21,7 @@ class CoreMaster
 	 */
 	public function __construct($pConfig)
 	{
-		$this->pConfig = $pConfig;
+		$this->pConfig = $pConfig;		
 		$this->pMessage = new stdClass();
 		
 		$pNetwork = $this->pConfig->Network;
@@ -159,6 +159,9 @@ class CoreMaster
 	public function triggerEvent()
 	{
 		$aArguments = func_get_args();
+		
+		print_r($aArguments);
+		$sEventName = array_shift($aArguments);
 		
 		return;
 	}

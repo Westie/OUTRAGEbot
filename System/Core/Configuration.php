@@ -45,6 +45,52 @@ class CoreConfiguration
 			$bSlave = true;
 		}
 		
+		$pConfig = self::verifyConfiguration($pConfig);
+		
 		return Core::addInstance($sConfigName, new CoreMaster($pConfig));
+	}
+	
+	
+	/**
+	 *	Ensures that the required variables are indeed in memory.
+	 */
+	static function verifyConfiguration($pConfig)
+	{
+		$pNetwork = $pConfig->Network;
+		
+		if(empty($pNetwork->delimiter))
+		{
+			$pNetwork->delimiter = "!";
+		}
+		
+		if(empty($pNetwork->rotation))
+		{
+			$pNetwork->rotation = SEND_DEF;
+		}
+		
+		if(empty($pNetwork->quitmsg))
+		{
+			$pNetwork->quitmsg = "OUTRAGEbot is going to bed :(";
+		}
+		
+		if(empty($pNetwork->version))
+		{
+			$pNetwork->version = "OUTRAGEbot ".BOT_VERSION." (rel. ".BOT_RELDATE."); David Weston; http://outrage.typefish.co.uk";
+		}
+		
+		if(!empty($pNetwork->owners))
+		{
+			foreach(explode(',', $pNetwork->owners) as $sOwnerAddress)
+			{
+				$sOwnerAddress = trim($sOwnerAddress);
+				$pNetwork->ownersArray[] = $sAddr;
+			}
+		}
+		else
+		{
+			$pNetwork->ownersArray = array();
+		}
+		
+		return $pConfig;
 	}
 }

@@ -8,6 +8,7 @@ define("ROOT", __DIR__);
 
 
 include "System/Core/Core.php";
+include "System/Core/Definitions.php";
 
 
 Core::initClass();

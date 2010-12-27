@@ -19,7 +19,7 @@ class Core
 	/**
 	 *	Called when the core class is loaded.
 	 */
-	public function initClass()
+	static function initClass()
 	{
 		self::$pFunctionList = new stdClass();
 	}
