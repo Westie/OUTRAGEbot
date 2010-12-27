@@ -1,25 +1,14 @@
 <?php
 /**
- *	Format class for OUTRAGEbot
- *
- *	All the formatting that that the bot needs, colours and/or otherwise, are all stored here.
- -
- -	<html>
- -
- *	<b>Obviously HTML formatting goes in here, I haven't got in there are.</b>	
- -
- -	</html>
- -
- *
- *	@package OUTRAGEbot
- *	@copyright David Weston (c) 2010 -> http://www.typefish.co.uk/licences/
- *	@author David Weston <westie@typefish.co.uk>
- *	@version 2.0.0-Alpha (Git commit: )
+ *	OUTRAGEbot development
  */
+
 
 class Format
 {
-	/* Defining text formatting */
+	/**
+	 *	Defining text formatting
+	 */
 	const
 		Bold = "\002",
 		Clear = "\017",
@@ -30,7 +19,9 @@ class Format
 		Underline = "\037";
 		
 		
-	/* Defining colours */
+	/**
+	 *	Defining colours
+	 */
 	const
 		White = "\00300",
 		Black = "\00301",
@@ -50,7 +41,9 @@ class Format
 		Grey = "\00315";
 	
 	
-	/* Defining backgrounds too! */
+	/**
+	 *	Defining backgrounds too!
+	 */
 	const
 		Back_White = ',00',
 		Back_Black = ',01',
@@ -70,7 +63,9 @@ class Format
 		Back_Grey = ',15';
 		
 	
-	/* Parser: get formatting reference */
+	/**
+	 *	Parser: get formatting reference
+	 */
 	static function getFormat($sFormat, $sNamespace = "")
 	{
 		$sFormat = strtolower($sFormat);
@@ -91,21 +86,29 @@ class Format
 	}
 	
 	
-	/* Parser: decide if clear char is used */
+	/**
+	 *	Parser: decide if clear char is used
+	 */
 	static function useClearChar($sChar)
 	{
 		switch($sChar)
 		{
 			case "^":
+			{
 				return self::Clear;
+			}
 			default:
+			{
 				return "";
+			}
 		}
 	}
 }
 
 
-/* Format function */
+/**
+ *	The format function
+ */
 function Format($sInputString)
 {
 	while(preg_match("/(\*|\^)(.*?)(\*|\^)/", $sInputString, $aParts) != false)
