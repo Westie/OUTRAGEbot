@@ -27,6 +27,7 @@ class CoreConfiguration
 		}
 		
 		$pConfig = new stdClass();
+		
 		$bSlave = false;
 		
 		foreach($aConfiguration as $sConfigKey => $aConfigObject)
@@ -56,6 +57,7 @@ class CoreConfiguration
 	 */
 	static function verifyConfiguration($pConfig)
 	{
+		$pConfig->Server = new stdClass();
 		$pNetwork = $pConfig->Network;
 		
 		if(empty($pNetwork->delimiter))
@@ -78,17 +80,28 @@ class CoreConfiguration
 			$pNetwork->version = "OUTRAGEbot ".BOT_VERSION." (rel. ".BOT_RELDATE."); David Weston; http://outrage.typefish.co.uk";
 		}
 		
+		if(empty($pNetwork->perform))
+		{
+			$pNetwork->perform = array();
+		}
+		
+		$pNetwork->ownerArray = array();
+		$pNetwork->channelArray = array();
+		
 		if(!empty($pNetwork->owners))
 		{
 			foreach(explode(',', $pNetwork->owners) as $sOwnerAddress)
 			{
-				$sOwnerAddress = trim($sOwnerAddress);
-				$pNetwork->ownersArray[] = $sAddr;
+				$pNetwork->ownerArray[] = trim($sOwnerAddress);
 			}
 		}
-		else
+		
+		if(!empty($pNetwork->channels))
 		{
-			$pNetwork->ownersArray = array();
+			foreach(explode(',', $pNetwork->channels) as $sChannelName)
+			{
+				$pNetwork->channelArray[] = trim($sChannelName);
+			}
 		}
 		
 		return $pConfig;

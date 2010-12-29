@@ -141,7 +141,7 @@ class Core
 	 */
 	static function Handler(CoreMaster $pInstance, $pMessage)
 	{
-		$sNumeric = $pMessage->Numeric;
+		$sNumeric = !is_numeric($pMessage->Numeric) ? $pMessage->Numeric : 'N'.$pMessage->Numeric;
 		
 		if(!method_exists("CoreHandler", $sNumeric))
 		{

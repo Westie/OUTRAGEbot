@@ -14,9 +14,7 @@ class CoreTimer
 	 *	Called when the module is loaded.
 	 */
 	static function initModule()
-	{
-		println(" * Module loaded");
-		
+	{		
 		Core::introduceFunction("addTimer", array(__CLASS__, "Add"));
 		Core::introduceFunction("removeTimer", array(__CLASS__, "Add"));
 	}

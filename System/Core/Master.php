@@ -7,13 +7,17 @@
 class CoreMaster
 {
 	public
+		$pSocket = null,
 		$pMessage = null,
 		$pConfig = null;
 	
 	
-	private		
+	private
 		$aPlugins = array(),
-		$aSockets = array();
+		$aSockets = array(),
+		
+		$pChannels = null,
+		$pBotItter = null;
 	
 	
 	/**
@@ -21,8 +25,16 @@ class CoreMaster
 	 */
 	public function __construct($pConfig)
 	{
-		$this->pConfig = $pConfig;		
+		$this->pConfig = $pConfig;
+		
 		$this->pMessage = new stdClass();
+		$this->pChannels = new stdClass();
+		
+		$this->pBotItter = (object) array
+		(
+			"iIndex" => 0,
+			"iPosition" => 0,
+		);
 		
 		$pNetwork = $this->pConfig->Network;
 		
@@ -33,6 +45,8 @@ class CoreMaster
 			$pBot->port = $pNetwork->port;
 			
 			$this->aSockets[] = new CoreSocket($this, $pBot);
+			
+			++$this->pBotItter->iCount;
 		}
 	}
 	
@@ -46,6 +60,61 @@ class CoreMaster
 		{
 			$pSocket->Socket();
 		}
+	}
+	
+	
+	/**
+	 *	Send stuff to the outside world.
+	 */
+	public function Raw($sRawString, $mOption = SEND_DEF)
+	{
+		if($mOption == SEND_DEF)
+		{
+			$mOption = $this->pConfig->Network->rotation;
+		}
+		
+		switch($mOption)
+		{
+			case SEND_MAST:
+			{
+				return $this->aSockets[0]->Output($sMessage);
+			}
+			case SEND_CURR:
+			{
+				return $this->pSocket->Output($sMessage);
+			}
+			case SEND_ALL:
+			{
+				foreach($this->aSockets as $pSocket)
+				{
+					$pSocket->Output($sMessage);
+				}
+				
+				return;
+			}
+			case SEND_DIST:
+			default:
+			{
+				return $this->getNextChild()->Output($sMessage);
+			}
+		}
+	}
+	
+	
+	/**
+	 *	This function gets the next child along in the queue.
+	 */
+	public function getNextSocket()
+	{	
+		if($this->pBotItter->iIndex >= $this->pBotItter->iCount)
+		{
+			$this->pBotItter->iIndex = 0;
+		}
+		
+		$pBot = $this->aSockets[$this->pBotItter->iIndex];
+		++$this->pBotItter->iIndex;
+		
+		return $pBot;
 	}
 	
 	
@@ -64,20 +133,18 @@ class CoreMaster
 		
 		if($pMessage->Parts[0] == "PING")
 		{
-			$pSocket->Output("PONG ".$pMessage->Parts[1]);
-			return;
+			return $pSocket->Output("PONG ".$pMessage->Parts[1]);
 		}
 		
 		$this->pMessage = $pMessage;
+		$this->pSocket = $pSocket;
 		
 		if($pSocket->isSocketSlave())
 		{
-			$this->_onRaw($pMessage);
-			return;
+			return CoreHandler::Unhandled($this, $pMessage);
 		}
 		
-		
-		Core::Handler($this, $pMessage);
+		return Core::Handler($this, $pMessage);
 	}
 	
 	
@@ -154,15 +221,29 @@ class CoreMaster
 	
 	
 	/**
-	 *	Trigger an event for loaded plugins
+	 *	Trigger an event for loaded plugins.
 	 */
 	public function triggerEvent()
 	{
 		$aArguments = func_get_args();
-		
-		print_r($aArguments);
 		$sEventName = array_shift($aArguments);
 		
 		return;
+	}
+	
+	
+	/**
+	 *	Retrieve the channel object.
+	 */
+	public function getChannel($sChannel)
+	{
+		$sChannel = strtolower($sChannel);
+		
+		if(!isset($this->pChannels->$sChannel))
+		{
+			$this->pChannels->$sChannel = new CoreChannel($this, $sChannel);
+		}
+		
+		return $this->pChannels->$sChannel;
 	}
 }
