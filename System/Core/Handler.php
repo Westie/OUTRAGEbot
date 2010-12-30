@@ -10,20 +10,21 @@ class CoreHandler
 	 *	Called when there are no available handlers for a specific numeric.
 	 */
 	static function Unhandled(CoreMaster $pInstance, $pMessage)
-	{
-		println(" * {$pMessage->Raw}");
-		
+	{		
 		switch($pMessage->Numeric)
 		{
+			case "001":
+			{
+				self::onConnect($pInstance, $pMessage);
+			}
 		}
 	}
 	
 	
 	/**
 	 *	Called when the bot connects to the network.
-	 *	Numeric: 001 - Successful connection.
 	 */
-	static function N001(CoreMaster $pInstance, $pMessage)
+	static function onConnect(CoreMaster $pInstance, $pMessage)
 	{
 		$pNetwork = $pInstance->pConfig->Network;
 		
@@ -38,18 +39,6 @@ class CoreHandler
 		}
 		
 		$pInstance->triggerEvent("onConnect");
-	}
-	
-	
-	/**
-	 *	Called when a user joins a channel.
-	 */
-	static function Join(CoreMaster $pInstance, $pMessage)
-	{
-		$pChannel = $pInstance->getChannel($pMessage->Parts[2]);
-		
-		$pChannel->addUserToChannel($pMessage->User->Nickname);
-		$pInstance->triggerEvent("onJoin", $sNickname, $pChannel);
 	}
 	
 	
@@ -77,6 +66,11 @@ class CoreHandler
 			if(empty($aCommands[1]))
 			{
 				$aCommands[1] = true;
+			}
+			
+			if($aCommands[0] == "CHANMODES")
+			{				
+				$pInstance->pConfig->Server->ChannelModes = explode(',', $aCommands[1]);
 			}
 			
 			$pInstance->pConfig->Server->{$aCommands[0]} = $aCommands[1];
@@ -108,6 +102,18 @@ class CoreHandler
 			$sNickname = preg_replace("/[+%@&~]/", "", $sNickname);
 			$pChannel->addUserToChannel($sNickname, $sChannelMode);
 		}
+	}
+	
+	
+	/**
+	 *	Called when a user joins a channel.
+	 */
+	static function Join(CoreMaster $pInstance, $pMessage)
+	{
+		$pChannel = $pInstance->getChannel($pMessage->Parts[2]);
+		
+		$pChannel->addUserToChannel($pMessage->User->Nickname);
+		$pInstance->triggerEvent("onJoin", $pMessage->User->Nickname, $pChannel);
 	}
 	
 	
@@ -146,6 +152,108 @@ class CoreHandler
 			default:
 			{
 				return $pInstance->triggerEvent("onPrivateMessage", $pMessage->User->Nickname, $pMessage->Parts[2], $pMessage->Payload);
+			}
+		}
+	}
+	
+	
+	/**
+	 *	Called when the mode is changed in the channel.
+	 *
+	 *	Yeah, no need for any other methods, just huge variables.
+	 *	I might seperate this and make it useable later.
+	 */
+	static function Mode(CoreMaster $pInstance, $pMessage)
+	{
+		println("\r\n\r\n-- {$pMessage->Raw}");
+		
+		$aParts = $pMessage->Parts;
+		$aModes = array();
+		
+		$pServerConfig = $pInstance->pConfig->Server;
+		
+		array_shift($aParts);
+		array_shift($aParts);
+		
+		$sChannel = array_shift($aParts);
+		$sSetting = array_shift($aParts);
+		
+		$iSet = 0;
+		
+		$iLength = strlen($sSetting);
+		$iSwitches = 0;
+		
+		for($i = 0; $i < $iLength; ++$i)
+		{
+			$cMode = $sSetting[$i];
+			
+			switch($cMode)
+			{
+				case '+':
+				{
+					$iSet = 1;
+					continue;
+				}
+				case '-':
+				{
+					$iSet = 2;
+					continue;
+				}
+			}
+			
+			if($iSet == 0 || $cMode == '+' || $cMode == '-')
+			{
+				continue;
+			}
+			
+			$bIsPrefix = strpos($pServerConfig->PREFIX, $cMode) !== false;
+			$iGroupID = 0;
+			
+			foreach($pServerConfig->ChannelModes as $iGroup => $sGroupString)
+			{
+				if(strpos($sGroupString, $cMode) === false)
+				{
+					continue;
+				}
+				
+				$iGroupID = $iGroup + 1;
+			}
+			
+			$iGroupID = $bIsPrefix ? 2 : $iGroupID;
+			
+			switch($iGroupID)
+			{
+				/* Arguments required at all times */
+				case 1:
+				case 2:
+				{
+					$sArgument = array_shift($aParts);
+				
+					if(preg_match('/['.$pServerConfig->PREFIX.']/', $cMode))
+					{
+						$pChannel = $pInstance->getChannel($sChannel);						
+						$pChannel->modifyUserInChannel($sArgument, ($iSet == 1 ? '+' : '-'), $cMode);
+					}
+					
+					break;
+				}
+				
+				/* Arguments passed only if enabled/changed */
+				case 3:
+				{
+					if($iSet == 1)
+					{
+						array_shift($aParts);
+					}
+					
+					break;
+				}
+				
+				/* No passed arguments */
+				case 4:
+				{
+					break;
+				}
 			}
 		}
 	}

@@ -40,6 +40,8 @@ class CoreMaster
 		
 		foreach($this->pConfig->Bots as $pBot)
 		{
+			print_r($pBot);
+			
 			$pBot->handle = $pBot->nickname;
 			$pBot->host = $pNetwork->host;
 			$pBot->port = $pNetwork->port;
