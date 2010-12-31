@@ -38,15 +38,20 @@ class CoreMaster
 		
 		$pNetwork = $this->pConfig->Network;
 		
-		foreach($this->pConfig->Bots as $pBot)
+		foreach($pNetwork->pluginArray as $sPluginName)
 		{
-			print_r($pBot);
-			
+			$this->activatePlugin($sPluginName);
+		}
+		
+		foreach($this->pConfig->Bots as $pBot)
+		{			
 			$pBot->handle = $pBot->nickname;
 			$pBot->host = $pNetwork->host;
 			$pBot->port = $pNetwork->port;
 			
 			$this->aSockets[] = new CoreSocket($this, $pBot);
+			
+			println(" - Loaded {$pNetwork->name}/{$pBot->handle}");
 			
 			++$this->pBotItter->iCount;
 		}
@@ -61,44 +66,6 @@ class CoreMaster
 		foreach($this->aSockets as $pSocket)
 		{
 			$pSocket->Socket();
-		}
-	}
-	
-	
-	/**
-	 *	Send stuff to the outside world.
-	 */
-	public function Raw($sRawString, $mOption = SEND_DEF)
-	{
-		if($mOption == SEND_DEF)
-		{
-			$mOption = $this->pConfig->Network->rotation;
-		}
-		
-		switch($mOption)
-		{
-			case SEND_MAST:
-			{
-				return $this->aSockets[0]->Output($sMessage);
-			}
-			case SEND_CURR:
-			{
-				return $this->pSocket->Output($sMessage);
-			}
-			case SEND_ALL:
-			{
-				foreach($this->aSockets as $pSocket)
-				{
-					$pSocket->Output($sMessage);
-				}
-				
-				return;
-			}
-			case SEND_DIST:
-			default:
-			{
-				return $this->getNextChild()->Output($sMessage);
-			}
 		}
 	}
 	
@@ -147,6 +114,47 @@ class CoreMaster
 		}
 		
 		return Core::Handler($this, $pMessage);
+	}
+	
+	
+	/**
+	 *	Send stuff to the outside world.
+	 */
+	public function Raw($sRawString, $mOption = SEND_DEF)
+	{
+		if($mOption == SEND_DEF)
+		{
+			$mOption = $this->pConfig->Network->rotation;
+		}
+		
+		switch($mOption)
+		{
+			case SEND_MAST:
+			{
+				return $this->aSockets[0]->Output($sMessage);
+			}
+			
+			case SEND_CURR:
+			{
+				return $this->pSocket->Output($sMessage);
+			}
+			
+			case SEND_ALL:
+			{
+				foreach($this->aSockets as $pSocket)
+				{
+					$pSocket->Output($sMessage);
+				}
+				
+				return;
+			}
+			
+			case SEND_DIST:
+			default:
+			{
+				return $this->getNextChild()->Output($sMessage);
+			}
+		}
 	}
 	
 	
@@ -210,15 +218,24 @@ class CoreMaster
 	 */
 	public function activatePlugin($sPluginName)
 	{
-		$sIdentifier = getPluginIdentifier($sPluginName);
+		$sIdentifier = CoreUtilities::getPluginIdentifier($sPluginName);
 		
 		if($sIdentifier == false)
 		{
 			return false;
 		}
 		
-		$this->aPlugins[$sPluginName] = new $sIdentifier();		
+		$this->aPlugins[$sPluginName] = new $sIdentifier($this);		
 		return true;
+	}
+	
+	
+	/**
+	 *	Remove a plugin from the local instance.
+	 */
+	public function deactivatePlugin($sPluginName)
+	{
+		unset($this->aPlugins[$sPluginName]);
 	}
 	
 	
@@ -229,6 +246,16 @@ class CoreMaster
 	{
 		$aArguments = func_get_args();
 		$sEventName = array_shift($aArguments);
+		
+		foreach($this->aPlugins as $pPluginInstance)
+		{
+			$mReturn = call_user_func_array(array($pPluginInstance, $sEventName), $aArguments);
+			
+			if($mReturn == END_EVENT_EXEC)
+			{
+				return;
+			}
+		}
 		
 		return;
 	}

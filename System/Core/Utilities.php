@@ -43,12 +43,12 @@ class CoreUtilities
 		$sIdentifier = substr($sPluginName, 0, 8).'_'.substr(sha1(microtime()."-".uniqid()), 2, 10);
 		$sClass = file_get_contents($sPluginLocation); // Ouch, this has gotta hurt.
 
-		if(!preg_match("/class[\s]+?".$sPluginName."[\s]+?extends[\s]+?Plugins[\s]+?{/", $sClass))
+		if(!preg_match("/class[\s]+?".$sPluginName."[\s]+?extends[\s]+?Plugin[\s]+?{/", $sClass))
 		{
 			return false;
 		}
 
-		$sClass = preg_replace("/(class[\s]+?)".$sPluginName."([\s]+?extends[\s]+?Plugins[\s]+?{)/", "\\1".$sIdentifier."\\2", $sClass);
+		$sClass = preg_replace("/(class[\s]+?)".$sPluginName."([\s]+?extends[\s]+?Plugin[\s]+?{)/", "\\1".$sIdentifier."\\2", $sClass);
 		$sFile = tempnam(dirname($sPluginLocation), "nat"); // Stops the __FILE__ bugs.
 
 		file_put_contents($sFile, $sClass);				

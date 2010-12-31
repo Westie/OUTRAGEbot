@@ -13,12 +13,7 @@ class CoreChannel
 		
 	public
 		$pUsers = null,
-		$aTopicInformation = array
-		(
-			'String' => '',
-			'SetBy' => '',
-			'Time' => 0
-		);
+		$pTopic = null;
 	
 	
 	/**
@@ -28,7 +23,15 @@ class CoreChannel
 	{
 		$this->pMaster = $pMaster;
 		$this->sChannel = strtolower($sChannel);
+		
 		$this->pUsers = new stdClass();
+		
+		$this->pTopic = (object) array
+		(
+			"chantopic" => "",
+			"timestamp" => "",
+			"setter" => "",
+		);
 	}
 	
 	

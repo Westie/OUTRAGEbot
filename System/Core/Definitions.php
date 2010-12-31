@@ -35,3 +35,9 @@ define("MODE_USER_HOPER", 2);
 define("MODE_USER_OPER", 4);
 define("MODE_USER_ADMIN", 8);
 define("MODE_USER_OWNER", 16);
+
+
+/**
+ *	A little trick to end execution of following event handlers.
+ */
+define("END_EVENT_EXEC", 0x80000000);

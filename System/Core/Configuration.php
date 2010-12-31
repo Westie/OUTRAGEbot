@@ -46,7 +46,7 @@ class CoreConfiguration
 			$bSlave = true;
 		}
 		
-		$pConfig = self::verifyConfiguration($pConfig);
+		self::verifyConfiguration($pConfig);
 		
 		return Core::addInstance($sConfigName, new CoreMaster($pConfig));
 	}
@@ -86,6 +86,7 @@ class CoreConfiguration
 		}
 		
 		$pNetwork->ownerArray = array();
+		$pNetwork->pluginArray = array();
 		$pNetwork->channelArray = array();
 		
 		if(!empty($pNetwork->owners))
@@ -101,6 +102,14 @@ class CoreConfiguration
 			foreach(explode(',', $pNetwork->channels) as $sChannelName)
 			{
 				$pNetwork->channelArray[] = trim($sChannelName);
+			}
+		}
+		
+		if(!empty($pNetwork->plugins))
+		{
+			foreach(explode(',', $pNetwork->plugins) as $sPluginName)
+			{
+				$pNetwork->pluginArray[] = trim($sPluginName);
 			}
 		}
 		
