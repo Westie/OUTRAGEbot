@@ -9,11 +9,14 @@ class CoreMaster
 	public
 		$pSocket = null,
 		$pMessage = null,
-		$pConfig = null;
+		$pConfig = null,
+		
+		$pEventHandlers = null,
+		$pCurrentScript = null;
 	
 	
 	private
-		$aPlugins = array(),
+		$aScripts = array(),
 		$aSockets = array(),
 		
 		$pChannels = null,
@@ -29,6 +32,7 @@ class CoreMaster
 		
 		$this->pMessage = new stdClass();
 		$this->pChannels = new stdClass();
+		$this->pEventHandlers = new stdClass();
 		
 		$this->pBotItter = (object) array
 		(
@@ -38,9 +42,9 @@ class CoreMaster
 		
 		$pNetwork = $this->pConfig->Network;
 		
-		foreach($pNetwork->pluginArray as $sPluginName)
+		foreach($pNetwork->scriptArray as $sScriptName)
 		{
-			$this->activatePlugin($sPluginName);
+			$this->activateScript($sScriptName);
 		}
 		
 		foreach($this->pConfig->Bots as $pBot)
@@ -88,7 +92,34 @@ class CoreMaster
 	
 	
 	/**
-	 *	Function to deal with the input data.
+	 *	This function returns the network configuration.
+	 */
+	public function getNetworkConfiguration()
+	{
+		return $this->pConfig->Network;
+	}
+	
+	
+	/**
+	 *	This function returns the network configuration.
+	 */
+	public function getServerConfiguration()
+	{
+		return $this->pConfig->Server;
+	}
+	
+	
+	/**
+	 *	This function returns the current socket's configuration.
+	 */
+	public function getSocketConfiguration()
+	{
+		return $this->pSocket->pConfig;
+	}
+	
+	
+	/**
+	 *	This function to deal with the input data.
 	 */
 	public function Portkey(CoreSocket $pSocket, $sString)
 	{
@@ -131,19 +162,19 @@ class CoreMaster
 		{
 			case SEND_MAST:
 			{
-				return $this->aSockets[0]->Output($sMessage);
+				return $this->aSockets[0]->Output($sRawString);
 			}
 			
 			case SEND_CURR:
 			{
-				return $this->pSocket->Output($sMessage);
+				return $this->pSocket->Output($sRawString);
 			}
 			
 			case SEND_ALL:
 			{
 				foreach($this->aSockets as $pSocket)
 				{
-					$pSocket->Output($sMessage);
+					$pSocket->Output($sRawString);
 				}
 				
 				return;
@@ -152,9 +183,152 @@ class CoreMaster
 			case SEND_DIST:
 			default:
 			{
-				return $this->getNextChild()->Output($sMessage);
+				return $this->getNextChild()->Output($sRawString);
 			}
 		}
+	}
+	
+	
+	/**
+	 *	Sends a message to the specified channel.
+	 */
+	public function Message($sChannel, $sMessage, $mOption = SEND_DEF)
+	{
+		return $this->Raw("PRIVMSG {$sChannel} :{$sMessage}", $mOption);
+	}
+	
+	
+	/**
+	 *	Sends an action to the specified channel.
+	 */
+	public function Action($sChannel, $sMessage, $mOption = SEND_DEF)
+	{
+		return $this->Raw("PRIVMSG {$sChannel} :".chr(1)."ACTION {$sMessage}".chr(1), $mOption);
+	}
+	
+	
+	/**
+	 *	Sends a notice to the specified channel.
+	 */
+	public function Notice($sNickname, $sMessage, $mOption = SEND_DEF)
+	{
+		return $this->Raw("NOTICE {$sNickname} :{$sMessage}", $mOption);
+	}
+	
+	
+	/**
+	 *	Sends a CTCP reply.
+	 */
+	public function ctcpReply($sNickname, $sMessage)
+	{
+		return $this->Raw("NOTICE {$sNickname} :".chr(1).trim($sMessage).chr(1), SEND_CURR);
+	}
+	
+	
+	/**
+	 *	Sends a CTCP request.
+	 */
+	public function ctcpRequest($sNickname, $sRequest)
+	{
+		return $this->Raw("PRIVMSG {$sNickname} :".chr(1).trim($sRequest).chr(1), SEND_CURR);
+	}
+	
+	
+	/**
+	 *	Checks if that user has voice in that channel. Voicers have the
+	 *	mode ' + '.
+	 */
+	public function isUserVoice($sChannel, $sUser)
+	{
+		$pChannel = $this->getChannel($sChannel);
+		
+		if(!isset($pChannel->pUsers->$sUser))
+		{
+			return false;
+		}
+		
+		return preg_match('/[qaohv]/', $pChannel->pUsers->$sUser);
+	}
+	
+	
+	/**
+	 *	Checks if that user has half-op in that channel. Half operators
+	 *	have the mode ' % ', and may not be available on all networks.
+	 */
+	public function isUserHalfOp($sChannel, $sUser)
+	{
+		$pChannel = $this->getChannel($sChannel);
+		
+		if(!isset($pChannel->pUsers->$sUser))
+		{
+			return false;
+		}
+		
+		return preg_match('/[qaoh]/', $pChannel->pUsers->$sUser);
+	}
+	
+	
+	/**
+	 *	Checks if that user has operator in that channel. Operators have
+	 *	the mode ' @ '.
+	 */
+	public function isUserOp($sChannel, $sUser)
+	{
+		$pChannel = $this->getChannel($sChannel);
+		
+		if(!isset($pChannel->pUsers->$sUser))
+		{
+			return false;
+		}
+		
+		return preg_match('/[qao]/', $pChannel->pUsers->$sUser);
+	}
+	
+	
+	/**
+	 *	Checks if that user has admin in that channel. Admins have the
+	 *	mode ' & ', and may not be available on all networks.
+	 */
+	public function isUserAdmin($sChannel, $sUser)
+	{
+		$pChannel = $this->getChannel($sChannel);
+		
+		if(!isset($pChannel->pUsers->$sUser))
+		{
+			return false;
+		}
+		
+		return preg_match('/[qa]/', $pChannel->pUsers->$sUser);
+	}
+	
+	
+	/**
+	 *	Checks if that user has owner in that channel. Owners have the
+	 *	mode ' ~ ', and may not be available on all networks.
+	 *
+	 *	@param string $sChannel Channel where user is
+	 *	@param string $sUser Nickname to check
+	 *	@return bool 'true' on success.
+	 */
+	public function isUserOwner($sChannel, $sUser)
+	{	
+		$pChannel = $this->getChannel($sChannel);
+		
+		if(!isset($pChannel->pUsers->$sUser))
+		{
+			return false;
+		}
+		
+		return preg_match('/[q]/', $pChannel->pUsers->$sUser);
+	}
+		
+	
+	/**
+	 *	Check if the current, active IRC user is a bot admin.
+	 */
+	public function isAdmin()
+	{
+		return in_array($this->pMessage->User->Hostname, $this->pConfig->Network->ownerArray) !== false;
 	}
 	
 	
@@ -214,42 +388,86 @@ class CoreMaster
 	
 	
 	/**
-	 *	Activate a plugin from the plugin directory.
+	 *	Activate a Script from the Script directory.
 	 */
-	public function activatePlugin($sPluginName)
+	public function activateScript($sScriptName)
 	{
-		$sIdentifier = CoreUtilities::getPluginIdentifier($sPluginName);
+		$sIdentifier = CoreUtilities::getScriptIdentifier($sScriptName);
 		
 		if($sIdentifier == false)
 		{
 			return false;
 		}
 		
-		$this->aPlugins[$sPluginName] = new $sIdentifier($this);		
+		$this->aScripts[$sScriptName] = new $sIdentifier($this);
 		return true;
 	}
 	
 	
 	/**
-	 *	Remove a plugin from the local instance.
+	 *	Remove a Script from the local instance.
 	 */
-	public function deactivatePlugin($sPluginName)
+	public function deactivateScript($sScriptName)
 	{
-		unset($this->aPlugins[$sPluginName]);
+		unset($this->aScripts[$sScriptName]);
 	}
 	
 	
 	/**
-	 *	Trigger an event for loaded plugins.
+	 *	Add an event handler into the local instance.
+	 */
+	public function addEventHandler($sEventName, $cCallback)
+	{
+		if(!is_callable($cCallback))
+		{
+			$cCallback = array($this->pCurrentScript, $cCallback);
+		}
+		
+		$sHandlerID = uniqid("ehn");
+		$sEventName = strtoupper($sEventName);
+		
+		if(empty($this->pEventHandlers->$sEventName))
+		{
+			$this->pEventHandlers->$sEventName = array();
+		}
+		
+		$this->pEventHandlers->$sEventName[$sHandlerID] = $cCallback;
+		
+		
+		
+		return $sHandlerID;
+	}
+	
+	
+	/**
+	 *	Remove an event handler from the local instance.
+	 */
+	public function removeEventHandler($sHandlerID)
+	{
+		foreach($this->pEventHandlers as $pEvent)
+		{
+			foreach(array_keys($pEvent) as $sHandlerGID)
+			{
+				if($sHandlerID == $sHandlerGID)
+				{
+					unset($pEvent[$sHandlerID]);
+				}
+			}
+		}
+	}
+	
+	
+	/**
+	 *	Trigger an event for loaded Scripts.
 	 */
 	public function triggerEvent()
 	{
 		$aArguments = func_get_args();
 		$sEventName = array_shift($aArguments);
 		
-		foreach($this->aPlugins as $pPluginInstance)
+		foreach($this->aScripts as $pScriptInstance)
 		{
-			$mReturn = call_user_func_array(array($pPluginInstance, $sEventName), $aArguments);
+			$mReturn = call_user_func_array(array($pScriptInstance, $sEventName), $aArguments);
 			
 			if($mReturn == END_EVENT_EXEC)
 			{
@@ -274,5 +492,42 @@ class CoreMaster
 		}
 		
 		return $this->pChannels->$sChannel;
+	}
+	
+	
+	/**
+	 *	Adds formatting to the text.
+	 */
+	public function Format($sInputText)
+	{
+		return Format($sInputText);
+	}
+	
+	
+	/**
+	 *	Strips the text of formatting.
+	 */
+	public function stripFormat($sText) 
+	{
+		return preg_replace("/[\002\017\001\026\001\037]/", "", $sText);
+	}
+	
+	
+	/**
+	 *	Strips the text of colours.
+	 */
+	public function stripColour($sText)
+	{
+		return preg_replace("/\003[0-9]{1,2}(,[0-9]{1,2})?/", "", $sText);
+	}
+	
+	
+	/**
+	 *	Strips the text of formatting and colours.
+	 */
+	public function stripAll($sText)
+	{
+		return preg_replace("/[\002\017\001\026\001\037]/", "", 
+		preg_replace("/\003[0-9]{1,2}(,[0-9]{1,2})?/", "", $sText));
 	}
 }

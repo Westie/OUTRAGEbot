@@ -238,7 +238,7 @@ class CoreHandler
 			{
 				$pChannel = $pInstance->getChannel($pMessage->Parts[2]);
 				
-				if($pMessage->Parts[3][0] == $pInstance->pConfig->Network->delimiter)
+				if($pMessage->Payload[0] == $pInstance->pConfig->Network->delimiter)
 				{	
 					$aCommandPayload = explode(' ', substr($pMessage->Payload, 1), 2);
 					

@@ -86,7 +86,7 @@ class CoreConfiguration
 		}
 		
 		$pNetwork->ownerArray = array();
-		$pNetwork->pluginArray = array();
+		$pNetwork->scriptArray = array();
 		$pNetwork->channelArray = array();
 		
 		if(!empty($pNetwork->owners))
@@ -105,11 +105,11 @@ class CoreConfiguration
 			}
 		}
 		
-		if(!empty($pNetwork->plugins))
+		if(!empty($pNetwork->scripts))
 		{
-			foreach(explode(',', $pNetwork->plugins) as $sPluginName)
+			foreach(explode(',', $pNetwork->scripts) as $sScriptName)
 			{
-				$pNetwork->pluginArray[] = trim($sPluginName);
+				$pNetwork->scriptArray[] = trim($sScriptName);
 			}
 		}
 		

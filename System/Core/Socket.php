@@ -8,7 +8,9 @@ class CoreSocket
 {
 	private
 		$rSocket = null,
-		$pMaster = null,
+		$pMaster = null;
+	
+	public
 		$pConfig = null;
 	
 	

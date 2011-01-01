@@ -16,40 +16,40 @@ function println($sString)
 class CoreUtilities
 {
 	/**
-	 *	Parsing and modifying the plugin files.
+	 *	Parsing and modifying the Script files.
 	 *	Caution: Messy code! Needs improving!
 	 */
-	static function getPluginIdentifier($sPluginName)
+	static function getScriptIdentifier($sScriptName)
 	{
-		$sPluginLocation = ROOT."/Plugins/{$sPluginName}/Default.php";
+		$sScriptLocation = ROOT."/Scripts/{$sScriptName}/Default.php";
 		
-		if(!file_exists($sPluginLocation))
+		if(!file_exists($sScriptLocation))
 		{
 			return false;
 		}
 		
-		if(isset(Core::$aPluginCache[$sPluginName]))
+		if(isset(Core::$aScriptCache[$sScriptName]))
 		{
-			$aPluginCache = Core::$aPluginCache[$sPluginName];
+			$aScriptCache = Core::$aScriptCache[$sScriptName];
 			
 			clearstatcache();
 			
-			if($aPluginCache['modifytime'] >= filemtime($sPluginLocation))
+			if($aScriptCache['modifytime'] >= filemtime($sScriptLocation))
 			{
-				return $aPluginCache['identifier'];
+				return $aScriptCache['identifier'];
 			}
 		}
 
-		$sIdentifier = substr($sPluginName, 0, 8).'_'.substr(sha1(microtime()."-".uniqid()), 2, 10);
-		$sClass = file_get_contents($sPluginLocation); // Ouch, this has gotta hurt.
+		$sIdentifier = substr($sScriptName, 0, 8).'_'.substr(sha1(microtime()."-".uniqid()), 2, 10);
+		$sClass = file_get_contents($sScriptLocation); // Ouch, this has gotta hurt.
 
-		if(!preg_match("/class[\s]+?".$sPluginName."[\s]+?extends[\s]+?Plugin[\s]+?{/", $sClass))
+		if(!preg_match("/class[\s]+?".$sScriptName."[\s]+?extends[\s]+?Script[\s]+?{/", $sClass))
 		{
 			return false;
 		}
 
-		$sClass = preg_replace("/(class[\s]+?)".$sPluginName."([\s]+?extends[\s]+?Plugin[\s]+?{)/", "\\1".$sIdentifier."\\2", $sClass);
-		$sFile = tempnam(dirname($sPluginLocation), "nat"); // Stops the __FILE__ bugs.
+		$sClass = preg_replace("/(class[\s]+?)".$sScriptName."([\s]+?extends[\s]+?Script[\s]+?{)/", "\\1".$sIdentifier."\\2", $sClass);
+		$sFile = tempnam(dirname($sScriptLocation), "nat"); // Stops the __FILE__ bugs.
 
 		file_put_contents($sFile, $sClass);				
 		unset($sClass); // Weight off the shoulders anyone?
@@ -57,9 +57,9 @@ class CoreUtilities
 		include $sFile;
 		unlink($sFile);
 
-		Core::$aPluginCache[$sPluginName] = array
+		Core::$aScriptCache[$sScriptName] = array
 		(
-			'modifytime' => filemtime($sPluginLocation),
+			'modifytime' => filemtime($sScriptLocation),
 			'identifier' => $sIdentifier,
 		);
 

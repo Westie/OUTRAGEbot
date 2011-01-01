@@ -12,7 +12,7 @@ class Core
 	
 	
 	public static
-		$aPluginCache = array(),
+		$aScriptCache = array(),
 		$pFunctionList = null;
 	
 	
@@ -141,6 +141,29 @@ class Core
 	 */
 	static function Handler(CoreMaster $pInstance, $pMessage)
 	{
+		foreach($pInstance->pEventHandlers as $sEvent => $aEventHandler)
+		{
+			/**
+			 *	TODO: Fix this
+			 */
+			println("{$sEvent} --- {$pMessage->Numeric}");
+			
+			if($sEvent != $pMessage->Numeric)
+			{
+				continue;
+			}
+			
+			foreach($aEventHandler as $cHandler)
+			{
+				$mReturn = call_user_func($cHandler, $pInstance, $pMessage);
+			
+				if($mReturn == END_EVENT_EXEC)
+				{
+					return true;
+				}
+			}
+		}
+		
 		$sNumeric = !is_numeric($pMessage->Numeric) ? $pMessage->Numeric : 'N'.$pMessage->Numeric;
 		
 		if(!method_exists("CoreHandler", $sNumeric))
@@ -153,7 +176,7 @@ class Core
 	
 	
 	/**
-	 *	Adds a virtual function into the Master object.
+	 *	Adds a virtual function into the bot.
 	 */
 	static function introduceFunction($sFunctionName, $cMethodCallback)
 	{
@@ -164,5 +187,14 @@ class Core
 		
 		self::$pFunctionList->$sFunctionName = $cMethodCallback;
 		return true;
+	}
+	
+	
+	/**
+	 *	Removes a virtual function from the bot.
+	 */
+	static function removeFunction($sFunctionName)
+	{
+		unset(self::$pFunctionList->$sFunctionName);
 	}
 }

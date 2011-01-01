@@ -61,48 +61,6 @@ class Format
 		Back_Pink = ',13',
 		Back_DarkGrey = ',14',
 		Back_Grey = ',15';
-		
-	
-	/**
-	 *	Parser: get formatting reference
-	 */
-	static function getFormat($sFormat, $sNamespace = "")
-	{
-		$sFormat = strtolower($sFormat);
-		$sFormat = ucwords($sFormat);
-		$sNamespace = ucwords($sNamespace);
-		
-		if($sFormat == "/")
-		{
-			return self::Clear;
-		}
-		
-		if(defined("self::{$sNamespace}{$sFormat}"))
-		{
-			return constant("self::{$sNamespace}{$sFormat}");
-		}
-		
-		return "";
-	}
-	
-	
-	/**
-	 *	Parser: decide if clear char is used
-	 */
-	static function useClearChar($sChar)
-	{
-		switch($sChar)
-		{
-			case "^":
-			{
-				return self::Clear;
-			}
-			default:
-			{
-				return "";
-			}
-		}
-	}
 }
 
 
@@ -111,25 +69,13 @@ class Format
  */
 function Format($sInputString)
 {
-	while(preg_match("/(\*|\^)(.*?)(\*|\^)/", $sInputString, $aParts) != false)
-	{
-		$sOutputString = Format::useClearChar($aParts[1]);
-		
-		$aCodes = explode(":", $aParts[2], 2);
-		
-		if(!isset($aCodes[1]))
-		{
-			$sOutputString .= Format::getFormat($aCodes[0]);
-		}
-		else
-		{
-			$sOutputString .= Format::getFormat($aCodes[0]);
-			$sOutputString .= Format::getFormat($aCodes[1], 'Back_');
-		}
-		
-		$sOutputString .= Format::useClearChar($aParts[3]);
-		$sInputString = str_replace($aParts[0], $sOutputString, $sInputString);
-	}
+	/*
 	
-	return $sInputString;
+		Format tags:
+		
+		[b] [/b]		Embolden text
+		[c=$colour] [/c]	Colourise text
+		
+		more I haven't decided yet!
+	 */
 }

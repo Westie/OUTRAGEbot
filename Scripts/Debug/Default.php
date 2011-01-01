@@ -4,23 +4,23 @@
  */
 
 
-class Debug extends Plugin
+class Debug extends Script
 {
 	/**
-	 *	Called when the plugin is loaded.
+	 *	Called when the Script is loaded.
 	 */
 	public function onConstruct()
 	{
-		println("# Plugin Debug loaded, class version ".__CLASS__.".");
+		println("# Script Debug loaded, class version ".__CLASS__.".");
 	}
 	
 	
 	/**
-	 *	Called when the plugin is removed.
+	 *	Called when the Script is removed.
 	 */
 	public function onDestruct()
 	{
-		println("# Plugin Debug removed from active usage.");
+		println("# Script Debug removed from active usage.");
 	}
 	
 	
@@ -29,7 +29,7 @@ class Debug extends Plugin
 	 */
 	public function onConnect()
 	{
-		println("# It looks like the Debug plugin has connected!");
+		println("# It looks like the Debug Script has connected!");
 	}
 	
 	
@@ -147,6 +147,6 @@ class Debug extends Plugin
 	 */
 	public function onUnhandledEvent($pMessage)
 	{
-		print_r($pMessage);
+		//println("# Unhandled: {$pMessage->Raw}");
 	}
 }
