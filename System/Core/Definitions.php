@@ -38,6 +38,6 @@ define("MODE_USER_OWNER", 16);
 
 
 /**
- *	A little trick to end execution of following event handlers.
+ *	A little trick to do with event handlers.
  */
 define("END_EVENT_EXEC", 0x80000000);

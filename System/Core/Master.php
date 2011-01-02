@@ -379,8 +379,8 @@ class CoreMaster
 		{
 			return (object) array
 			(
-				"Nickname" => null,
-				"Username" => null,
+				"Nickname" => $sHostname,
+				"Username" => $sHostname,
 				"Hostname" => $sHostname,
 			);
 		}
@@ -416,26 +416,29 @@ class CoreMaster
 	/**
 	 *	Add an event handler into the local instance.
 	 */
-	public function addEventHandler($sEventName, $cCallback)
+	public function addEventHandler($sEventName, $cCallback, $sArgumentFormat = null)
 	{
 		if(!is_callable($cCallback))
 		{
 			$cCallback = array($this->pCurrentScript, $cCallback);
 		}
 		
-		$sHandlerID = uniqid("ehn");
+		$sHandlerID = uniqid("nat");
 		$sEventName = strtoupper($sEventName);
 		
-		if(empty($this->pEventHandlers->$sEventName))
-		{
-			$this->pEventHandlers->$sEventName = array();
-		}
-		
-		$this->pEventHandlers->$sEventName[$sHandlerID] = $cCallback;
-		
-		
+		$this->pEventHandlers->{$sEventName}[$sHandlerID] = array($cCallback, $sArgumentFormat);
 		
 		return $sHandlerID;
+	}
+	
+	
+	/**
+	 *	Add a command handler into the local instance.
+	 *	I'm cheating with this, aren't I?
+	 */
+	public function addCommandHandler($sCommandName, $cCallback)
+	{		
+		return $this->addEventHandler('PRIVMSG', $cCallback, chr(0xFF).$sCommandName);
 	}
 	
 	
@@ -452,6 +455,11 @@ class CoreMaster
 				{
 					unset($pEvent[$sHandlerID]);
 				}
+			}
+			
+			if(count($pEvent) == 0)
+			{
+				unset($pEvent);
 			}
 		}
 	}

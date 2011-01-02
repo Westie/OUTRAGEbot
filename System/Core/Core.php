@@ -143,19 +143,79 @@ class Core
 	{
 		foreach($pInstance->pEventHandlers as $sEvent => $aEventHandler)
 		{
-			/**
-			 *	TODO: Fix this
-			 */
-			println("{$sEvent} --- {$pMessage->Numeric}");
-			
 			if($sEvent != $pMessage->Numeric)
 			{
 				continue;
 			}
 			
-			foreach($aEventHandler as $cHandler)
+			foreach($aEventHandler as $aHandler)
 			{
-				$mReturn = call_user_func($cHandler, $pInstance, $pMessage);
+				list($cHandler, $sArgumentList) = $aHandler;
+				
+				$mReturn = 0;
+				$aArguments = array($pInstance);
+				
+				if($sArgumentList === null)
+				{					
+					$mReturn = call_user_func($cHandler, $pInstance, $pMessage);
+				}
+				elseif(ord(substr($sArgumentList, 0, 1)) === 0xFF)
+				{
+					$sCommandName = $pInstance->pConfig->Network->delimiter.substr($sArgumentList, 1);
+					$aCommandPayload = explode(' ', $pMessage->Payload, 2);
+					
+					if($sCommandName != $aCommandPayload[0])
+					{
+						continue;
+					}
+					
+					if(!isset($aCommandPayload[1]))
+					{
+						$aCommandPayload[1] = "";
+					}
+					
+					$mReturn = call_user_func($cHandler, $pInstance, $pMessage->User->Nickname, $aCommandPayload[0], $aCommandPayload[1]);
+				}
+				else
+				{										
+					foreach(preg_split('//', $sArgumentList, -1, PREG_SPLIT_NO_EMPTY) as $cArgument)
+					{
+						switch($cArgument)
+						{
+							case 'c':
+							{
+								$aArguments[] = $pMessage->Parts;
+								break;
+							}
+							
+							case 'm':
+							{
+								$aArguments[] = $pMessage;
+								break;
+							}
+							
+							case 'p':
+							{
+								$aArguments[] = $pMessage->Payload;
+								break;
+							}
+							
+							case 'r':
+							{
+								$aArguments[] = $pMessage->Raw;
+								break;
+							}
+							
+							case 'u':
+							{
+								$aArguments[] = $pMessage->User;
+								break;
+							}
+						}
+					}
+					
+					$mReturn = call_user_func_array($cHandler, $aArguments);
+				}
 			
 				if($mReturn == END_EVENT_EXEC)
 				{

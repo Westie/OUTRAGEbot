@@ -12,6 +12,21 @@ class Debug extends Script
 	public function onConstruct()
 	{
 		println("# Script Debug loaded, class version ".__CLASS__.".");
+		
+		$this->addEventHandler("INVITE", function($p, $u, $c)
+		{
+			$p->Message("#westie", "(custom args) OUTRAGEbot has been invited into {$c} by {$u->Nickname}");
+		}, "up");
+		
+		$this->addEventHandler("INVITE", function($p, $m)
+		{
+			$p->Message("#westie", "(standard args) OUTRAGEbot has been invited into {$m->Payload} by {$m->User->Nickname}");
+		});
+		
+		$this->addCommandHandler("test", function($p, $n, $c, $a)
+		{
+			$p->Message("#westie", "yes, this is a command. have fun with your testing user!");
+		});
 	}
 	
 	
