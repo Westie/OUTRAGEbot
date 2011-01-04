@@ -23,7 +23,7 @@ class Debug extends Script
 			$p->Message("#westie", "(standard args) OUTRAGEbot has been invited into {$m->Payload} by {$m->User->Nickname}");
 		});
 		
-		$this->addCommandHandler("test", function($p, $n, $c, $a)
+		$this->addCommandHandler("test", function($p, $c, $n, $a)
 		{
 			$p->Message("#westie", "yes, this is a command. have fun with your testing user!");
 		});

@@ -10,14 +10,19 @@ abstract class Script
 		$pInstance = null;
 	
 	
+	public
+		$sScriptID;
+	
+	
 	/**
 	 *	This is called when the Script is loaded.
 	 */
-	public final function __construct($pInstance)
+	public final function __construct($pInstance, $sScriptID)
 	{
 		$this->pInstance = $pInstance;
+		$this->sScriptID = $sScriptID;
 		
-		call_user_func(array($this, 'onConstruct'));
+		$this->onConstruct();
 		return true;
 	}
 	
@@ -34,6 +39,7 @@ abstract class Script
 			$this->$sKey = NULL;
 		}
 		
+		$this->onDestruct();
 		return true;
 	}
 	
@@ -43,6 +49,7 @@ abstract class Script
 	 */
 	public final function __call($sFunctionName, $aArgumentList)
 	{
+		println("{$sFunctionName}");
 		$this->pInstance->pCurrentScript = $this;
 		
 		if(method_exists($this->pInstance, $sFunctionName))

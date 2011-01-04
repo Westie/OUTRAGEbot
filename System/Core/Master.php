@@ -92,29 +92,52 @@ class CoreMaster
 	
 	
 	/**
-	 *	This function returns the network configuration.
+	 *	Returns a list of all callable functions in OUTRAGEbot.
+	 *	You have got to love Reflection.
 	 */
-	public function getNetworkConfiguration()
+	public function getCallableMethods()
 	{
-		return $this->pConfig->Network;
+		$pClass = new ReflectionClass(__CLASS__);
+		$aMethods = array();
+		
+		foreach($pClass->getMethods() as $pMethod)
+		{
+			$aMethods[] = $pMethod->name;
+		}
+		
+		foreach(array_keys(Core::$pFunctionList) as $sFunctionName)
+		{
+			$aMethods[] = $sFunctionName;
+		}
+		
+		return $aMethods;
 	}
 	
 	
 	/**
 	 *	This function returns the network configuration.
 	 */
-	public function getServerConfiguration()
+	public function getNetworkConfiguration($sConfigKey = null)
 	{
-		return $this->pConfig->Server;
+		return $sConfigKey == null ? $this->pConfig->Network : $this->pConfig->Network->$sConfigKey;
+	}
+	
+	
+	/**
+	 *	This function returns the network configuration.
+	 */
+	public function getServerConfiguration($sConfigKey)
+	{
+		return $sConfigKey == null ? $this->pConfig->Server : $this->pConfig->Server->$sConfigKey;
 	}
 	
 	
 	/**
 	 *	This function returns the current socket's configuration.
 	 */
-	public function getSocketConfiguration()
+	public function getSocketConfiguration($sConfigKey)
 	{
-		return $this->pSocket->pConfig;
+		return $sConfigKey == null ? $this->pConfig->Socket : $this->pConfig->Socket->$sConfigKey;
 	}
 	
 	
@@ -399,7 +422,7 @@ class CoreMaster
 			return false;
 		}
 		
-		$this->aScripts[$sScriptName] = new $sIdentifier($this);
+		$this->aScripts[$sScriptName] = new $sIdentifier($this, $sIdentifier);
 		return true;
 	}
 	
@@ -475,7 +498,10 @@ class CoreMaster
 		
 		foreach($this->aScripts as $pScriptInstance)
 		{
-			$mReturn = call_user_func_array(array($pScriptInstance, $sEventName), $aArguments);
+			if(method_exists($pScriptInstance, $sEventName))
+			{
+				$mReturn = call_user_func_array(array($pScriptInstance, $sEventName), $aArguments);
+			}
 			
 			if($mReturn == END_EVENT_EXEC)
 			{

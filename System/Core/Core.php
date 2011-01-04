@@ -7,6 +7,7 @@
 class Core
 {
 	private static
+		$aErrorLog = array(),
 		$aModules = array(),
 		$aInstances = array();
 	
@@ -22,6 +23,8 @@ class Core
 	static function initClass()
 	{
 		self::$pFunctionList = new stdClass();
+		
+		set_error_handler(array("Core", "errorHandler"));
 	}
 	
 	
@@ -174,7 +177,7 @@ class Core
 						$aCommandPayload[1] = "";
 					}
 					
-					$mReturn = call_user_func($cHandler, $pInstance, $pMessage->User->Nickname, $aCommandPayload[0], $aCommandPayload[1]);
+					$mReturn = call_user_func($cHandler, $pInstance, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[0], $aCommandPayload[1]);
 				}
 				else
 				{										
@@ -256,5 +259,51 @@ class Core
 	static function removeFunction($sFunctionName)
 	{
 		unset(self::$pFunctionList->$sFunctionName);
+	}
+	
+	
+	/**
+	 *	Error handler for OUTRAGEbot
+	 */
+	static function errorHandler($errno, $errstr, $errfile, $errline)
+	{
+		self::$aErrorLog[] = (object) array
+		(
+			"number" => $errno,
+			"string" => $errstr,
+			"file" => $errfile,
+			"line" => $errline,
+		);
+	}
+	
+	
+	/**
+	 *	Return (and purge if necessary) the error log.
+	 */
+	static function getErrorLog($bPurge = false)
+	{
+		$aErrorLog = self::$aErrorLog;
+		
+		if($bPurge)
+		{
+			self::$aErrorLog = array();
+		}
+		
+		return $aErrorLog;
+	}
+	
+	
+	/**
+	 *	What? Someone spelled a function call wrong? Let's protect against a crash!
+	 */
+	static function __callStatic($sFunctionName, $aArguments)
+	{
+		self::$aErrorLog[] = (object) array
+		(
+			"number" => E_WARNING,
+			"string" => "Call to undefined function, Core library.",
+			"file" => "",
+			"line" => "",
+		);
 	}
 }
