@@ -9,7 +9,8 @@ class Core
 	private static
 		$aErrorLog = array(),
 		$aModules = array(),
-		$aInstances = array();
+		$aInstances = array(),
+		$pCurrentInstance = null;
 	
 	
 	public static
@@ -113,8 +114,19 @@ class Core
 	{
 		foreach(self::$aInstances as $pInstance)
 		{
+			self::$pCurrentInstance = $pInstance;
+			
 			$pInstance->Socket();
 		}
+	}
+	
+	
+	/**
+	 *	Gets the current CoreMaster instance.
+	 */
+	static function getCurrentInstance()
+	{
+		return self::$pCurrentInstance;
 	}
 	
 	
@@ -290,6 +302,23 @@ class Core
 		}
 		
 		return $aErrorLog;
+	}
+	
+	
+	/**
+	 *	Parse a string from the IRC server.
+	 */
+	static function getMessageObject($sString)
+	{
+		$pMessage = new stdClass();
+		
+		$pMessage->Raw = $sString;
+		$pMessage->Parts = explode(' ', $sString);
+		$pMessage->Numeric = $pMessage->Parts[1];
+		$pMessage->User = CoreMaster::parseHostmask(substr($pMessage->Parts[0], 1));
+		$pMessage->Payload = (($iPosition = strpos($sString, ':', 2)) !== false) ? substr($sString, $iPosition + 1) : '';
+		
+		return $pMessage;
 	}
 	
 	

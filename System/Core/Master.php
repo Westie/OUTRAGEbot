@@ -92,6 +92,15 @@ class CoreMaster
 	
 	
 	/**
+	 *	Returns the current in use socket.
+	 */
+	public function getCurrentSocket()
+	{
+		return $this->pSocket;
+	}
+	
+	
+	/**
 	 *	Returns a list of all callable functions in OUTRAGEbot.
 	 *	You have got to love Reflection.
 	 */
@@ -146,13 +155,7 @@ class CoreMaster
 	 */
 	public function Portkey(CoreSocket $pSocket, $sString)
 	{
-		$pMessage = new stdClass();
-		
-		$pMessage->Raw = $sString;
-		$pMessage->Parts = explode(' ', $sString);
-		$pMessage->User = $this->parseHostmask(substr($pMessage->Parts[0], 1));
-		$pMessage->Numeric = $pMessage->Parts[1];
-		$pMessage->Payload = (($iPosition = strpos($sString, ':', 2)) !== false) ? substr($sString, $iPosition + 1) : '';
+		$pMessage = Core::getMessageObject($sString);
 		
 		if($pMessage->Parts[0] == "PING")
 		{
@@ -328,10 +331,6 @@ class CoreMaster
 	/**
 	 *	Checks if that user has owner in that channel. Owners have the
 	 *	mode ' ~ ', and may not be available on all networks.
-	 *
-	 *	@param string $sChannel Channel where user is
-	 *	@param string $sUser Nickname to check
-	 *	@return bool 'true' on success.
 	 */
 	public function isUserOwner($sChannel, $sUser)
 	{	

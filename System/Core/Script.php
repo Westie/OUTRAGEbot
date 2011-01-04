@@ -49,7 +49,6 @@ abstract class Script
 	 */
 	public final function __call($sFunctionName, $aArgumentList)
 	{
-		println("{$sFunctionName}");
 		$this->pInstance->pCurrentScript = $this;
 		
 		if(method_exists($this->pInstance, $sFunctionName))

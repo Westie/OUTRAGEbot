@@ -8,7 +8,8 @@ class CoreSocket
 {
 	private
 		$rSocket = null,
-		$pMaster = null;
+		$pMaster = null,
+		$pSocketHandler = null;
 	
 	public
 		$pConfig = null;
@@ -21,6 +22,8 @@ class CoreSocket
 	{
 		$this->pMaster = $pMaster;
 		$this->pConfig = $pConfig;
+		
+		$this->resetSocketHandler();
 		
 		$this->createConnection();
 	}
@@ -110,7 +113,10 @@ class CoreSocket
 				continue;
 			}
 			
-			$this->pMaster->Portkey($this, $sString);
+			# I wish for an easier solution, but this wish, like
+			# so many that I have, will never be realised.
+			
+			call_user_func($this->cSocketHandler, $this, $sString);
 		}
 		
 		return;
@@ -118,7 +124,34 @@ class CoreSocket
 	
 	
 	/**
-	 *	Toggle the blocking of sockets.
+	 *	Sets the socket handler. Only for advanced module operations.
+	 */
+	public function setSocketHandler($cCallback)
+	{
+		$this->cSocketHandler = $cCallback;
+	}
+	
+	
+	/**
+	 *	Retrieves the socket handler. Only for advanced module operations.
+	 */
+	public function getSocketHandler()
+	{
+		return $this->cSocketHandler;
+	}
+	
+	
+	/**
+	 *	Sets the socket handler. Only for advanced module operations.
+	 */
+	public function resetSocketHandler()
+	{
+		$this->cSocketHandler = array($this->pMaster, "Portkey");
+	}
+	
+	
+	/**
+	 *	Toggle the blocking of sockets. Only for advanced module operations.
 	 */
 	public function setSocketBlocking($bBlocking)
 	{
