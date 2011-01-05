@@ -10,6 +10,9 @@ class CoreChannel
 	private
 		$pMaster = null,
 		$sChannel = null;
+	
+	static
+		$mTemp = null;
 		
 	public
 		$pUsers = null,
@@ -22,7 +25,7 @@ class CoreChannel
 	public function __construct($pMaster, $sChannel)
 	{
 		$this->pMaster = $pMaster;
-		$this->sChannel = strtolower($sChannel);
+		$this->sChannel = strtolower(trim($sChannel));
 		
 		$this->pUsers = new stdClass();
 		
@@ -198,5 +201,140 @@ class CoreChannel
 	public function getTopic()
 	{
 		return $this->aTopicInformation;
+	}
+	
+	
+	/**
+	 *	Get the channel ban list.
+	 */
+	public function getBanList()
+	{
+		CoreChannel::$mTemp = array();
+		
+		$pSocket = $this->pMaster->getCurrentSocket();
+		
+		$pSocket->Output("MODE {$this->sChannel} +b");
+		
+		$pSocket->executeCapture(function($sString)
+		{
+			$pMessage = Core::getMessageObject($sString);
+		
+			switch($pMessage->Numeric)
+			{
+				case "367":
+				{
+					CoreChannel::$mTemp[] = (object) array
+					(
+						'mask' => $pMessage->Parts[4],
+						'admin' => $pMessage->Parts[5],
+						'time' => $pMessage->Parts[6],
+					);
+					
+					return false;
+				}
+				
+				case "368":
+				{
+					return true;
+				}
+			}
+			
+			return false;
+		});
+		
+		$mTemp = CoreChannel::$mTemp;
+		CoreChannel::$mTemp = null;
+		
+		return $mTemp;
+	}
+	
+	
+	/**
+	 *	Get the channel invite list.
+	 */
+	public function getInviteList()
+	{
+		CoreChannel::$mTemp = array();
+		
+		$pSocket = $this->pMaster->getCurrentSocket();
+		
+		$pSocket->Output("MODE {$this->sChannel} +I");
+		
+		$pSocket->executeCapture(function($sString)
+		{
+			$pMessage = Core::getMessageObject($sString);
+		
+			switch($pMessage->Numeric)
+			{
+				case "346":
+				{
+					CoreChannel::$mTemp[] = (object) array
+					(
+						'mask' => $pMessage->Parts[4],
+						'admin' => $pMessage->Parts[5],
+						'time' => $pMessage->Parts[6],
+					);
+					
+					return false;
+				}
+				
+				case "347":
+				{
+					return true;
+				}
+			}
+			
+			return false;
+		});
+		
+		$mTemp = CoreChannel::$mTemp;
+		CoreChannel::$mTemp = null;
+		
+		return $mTemp;
+	}
+	
+	
+	/**
+	 *	Get the channel exception list.
+	 */
+	public function getExceptionList()
+	{
+		CoreChannel::$mTemp = array();
+		
+		$pSocket = $this->pMaster->getCurrentSocket();
+		
+		$pSocket->Output("MODE {$this->sChannel} +e");
+		
+		$pSocket->executeCapture(function($sString)
+		{
+			$pMessage = Core::getMessageObject($sString);
+		
+			switch($pMessage->Numeric)
+			{
+				case "348":
+				{
+					CoreChannel::$mTemp[] = (object) array
+					(
+						'mask' => $pMessage->Parts[4],
+						'admin' => $pMessage->Parts[5],
+						'time' => $pMessage->Parts[6],
+					);
+					
+					return false;
+				}
+				
+				case "349":
+				{
+					return true;
+				}
+			}
+			
+			return false;
+		});
+		
+		$mTemp = CoreChannel::$mTemp;
+		CoreChannel::$mTemp = null;
+		
+		return $mTemp;
 	}
 }

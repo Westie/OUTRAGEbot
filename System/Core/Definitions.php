@@ -11,6 +11,12 @@ error_reporting(E_ALL | E_STRICT);
 
 
 /**
+ *	Set the tick rate.
+ */
+define("BOT_TICKRATE", 2600);
+
+
+/**
  *	Some bot-brag-relating things.
  */
 define("BOT_VERSION", "2.0.0-Alpha-0");

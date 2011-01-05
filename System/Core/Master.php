@@ -359,7 +359,7 @@ class CoreMaster
 	 */
 	public function getUsername($sHostname)
 	{
-		return $this->parseHostmask($sHostname)->Username;
+		return self::parseHostmask($sHostname)->Username;
 	}
 	
 	
@@ -368,7 +368,7 @@ class CoreMaster
 	 */
 	public function getNickname($sHostname)
 	{
-		return $this->parseHostmask($sHostname)->Nickname;
+		return self::parseHostmask($sHostname)->Nickname;
 	}
 	
 	
@@ -377,14 +377,14 @@ class CoreMaster
 	 */
 	public function getHostname($sHostname)
 	{
-		return $this->parseHostmask($sHostname)->Hostname;
+		return self::parseHostmask($sHostname)->Hostname;
 	}
 	
 	
 	/**
 	 *	Get the hostmask info as an array.
 	 */
-	public function parseHostmask($sHostname)
+	static function parseHostmask($sHostname)
 	{
 		$bMatch = preg_match('/(.*)!(.*)@(.*)/', $sHostname, $aDetails);
 		
@@ -497,6 +497,8 @@ class CoreMaster
 		
 		foreach($this->aScripts as $pScriptInstance)
 		{
+			$mReturn = null;
+			
 			if(method_exists($pScriptInstance, $sEventName))
 			{
 				$mReturn = call_user_func_array(array($pScriptInstance, $sEventName), $aArguments);

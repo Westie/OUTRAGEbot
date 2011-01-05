@@ -162,6 +162,6 @@ class Debug extends Script
 	 */
 	public function onUnhandledEvent($pMessage)
 	{
-		//println("# Unhandled: {$pMessage->Raw}");
+		println("# Unhandled: {$pMessage->Raw}");
 	}
 }

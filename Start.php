@@ -23,6 +23,8 @@ Core::Library("Socket");
 Core::LModule("Timer");
 Core::Library("Utilities");
 
+Core::Module("Whois");
+
 
 Core::scanConfig();
 
@@ -32,5 +34,5 @@ while(true)
 	Core::Tick();
 	Core::Socket();
 	
-	usleep(2600);
+	usleep(BOT_TICKRATE);
 }

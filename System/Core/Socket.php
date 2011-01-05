@@ -7,6 +7,7 @@
 class CoreSocket
 {
 	private
+		$aCaptureStack = array(),
 		$rSocket = null,
 		$pMaster = null,
 		$pSocketHandler = null;
@@ -22,6 +23,8 @@ class CoreSocket
 	{
 		$this->pMaster = $pMaster;
 		$this->pConfig = $pConfig;
+		
+		$this->pConfig->Capture = false;
 		
 		$this->resetSocketHandler();
 		
@@ -116,7 +119,14 @@ class CoreSocket
 			# I wish for an easier solution, but this wish, like
 			# so many that I have, will never be realised.
 			
-			call_user_func($this->cSocketHandler, $this, $sString);
+			if(!$this->pConfig->Capture)
+			{
+				call_user_func($this->cSocketHandler, $this, $sString);
+			}
+			else
+			{
+				$this->aCaptureStack[] = $sString;
+			}
 		}
 		
 		return;
@@ -124,7 +134,8 @@ class CoreSocket
 	
 	
 	/**
-	 *	Sets the socket handler. Only for advanced module operations.
+	 *	Sets the socket handler.
+	 *	Only for advanced module operations.
 	 */
 	public function setSocketHandler($cCallback)
 	{
@@ -133,7 +144,8 @@ class CoreSocket
 	
 	
 	/**
-	 *	Retrieves the socket handler. Only for advanced module operations.
+	 *	Retrieves the socket handler.
+	 *	Only for advanced module operations.
 	 */
 	public function getSocketHandler()
 	{
@@ -142,7 +154,8 @@ class CoreSocket
 	
 	
 	/**
-	 *	Sets the socket handler. Only for advanced module operations.
+	 *	Sets the socket handler.
+	 *	Only for advanced module operations.
 	 */
 	public function resetSocketHandler()
 	{
@@ -151,10 +164,74 @@ class CoreSocket
 	
 	
 	/**
-	 *	Toggle the blocking of sockets. Only for advanced module operations.
+	 *	Toggle the blocking of sockets.
+	 *	Only for advanced module operations.
 	 */
 	public function setSocketBlocking($bBlocking)
 	{
 		return stream_set_blocking($this->rSocket, ($bBlocking ? 1 : 0));
+	}
+	
+	
+	/**
+	 *	Begin the capturing of incoming data.
+	 */
+	public function startCapture()
+	{
+		$this->pConfig->Capture = true;
+		$this->setSocketBlocking(true);
+	}
+	
+	
+	/**
+	 *	Get the captured packets.
+	 */
+	public function getCapture()
+	{		
+		if(!count($this->aCaptureStack))
+		{
+			usleep(BOT_TICKRATE);
+			
+			$this->Socket();
+			
+			return $this->getCapture();
+		}
+		
+		return array_shift($this->aCaptureStack);
+	}
+	
+	
+	/**
+	 *	An alternative, cleaner way of implementing the capture device.
+	 */
+	public function executeCapture($cCallback)
+	{
+		$this->startCapture();
+		
+		while(true)
+		{
+			$mReturn = call_user_func($cCallback, $this->getCapture());
+			
+			if($mReturn === true)
+			{
+				break;
+			}
+		}
+		
+		$this->stopCapture();
+	}
+	
+	/**
+	 *	Stop the capturing of incoming data.
+	 */
+	public function stopCapture()
+	{
+		$this->pConfig->Capture = false;
+		$this->setSocketBlocking(false);
+		
+		foreach($this->aCaptureStack as $sString)
+		{
+			call_user_func($this->cSocketHandler, $this, $sString);
+		}
 	}
 }
