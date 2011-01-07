@@ -131,6 +131,20 @@ class Core
 	
 	
 	/**
+	 *	Gets a specific CoreMaster instance.
+	 */
+	static function getSpecificInstance($sInstanceName)
+	{
+		if(isset(self::$aInstances[$sInstanceName]))
+		{
+			return self::$aInstances[$sInstanceName];
+		}
+		
+		return null;
+	}
+	
+	
+	/**
 	 *	Scan the configuration directory for settings.
 	 */
 	static function scanConfig()
@@ -143,11 +157,21 @@ class Core
 	
 	
 	/**
-	 *	Adds an instance of the master class to the core.
+	 *	Adds an instance of CoreMaster to the core.
 	 */
 	static function addInstance($sInstance, $pInstance)
 	{
 		self::$aInstances[$sInstance] = $pInstance;
+	}
+	
+	
+	/**
+	 *	Removes an instance of CoreMaster.
+	 *	This will probably only work once I fix some 'PHP bugs'
+	 */
+	static function removeInstance($sInstance)
+	{
+		unset(self::$aInstances[$sInstance]);
 	}
 	
 	

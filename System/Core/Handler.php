@@ -178,14 +178,13 @@ class CoreHandler
 	 */
 	static function Nick(CoreMaster $pInstance, $pMessage)
 	{
-		/* TODO: Add the self-check for force nick change. */		
-		
+		/* TODO: Add the self-check for force nick change. */
 		foreach($pInstance->pChannels as $pChannel)
 		{
-			$pChannel->renameUserInChannel($pMessage->Parts[2], $sNickname);
+			$pChannel->renameUserInChannel($pMessage->Payload, $pMessage->User->Nickname);
 		}
 		
-		$pInstance->triggerEvent("onNicknameChange", $pMessage->Parts[2], $sNickname);
+		$pInstance->triggerEvent("onNicknameChange", $pMessage->Payload, $pMessage->User->Nickname);
 	}
 	
 	
@@ -196,7 +195,7 @@ class CoreHandler
 	{
 		foreach($pInstance->pChannels as $pChannel)
 		{
-			$pChannel->removeUserFromChannel($pMessage->Parts[3]);
+			$pChannel->removeUserFromChannel($pMessage->User->Nickname);
 		}
 		
 		$pInstance->triggerEvent("onUserQuit", $pMessage->User->Nickname, $pMessage->Payload);

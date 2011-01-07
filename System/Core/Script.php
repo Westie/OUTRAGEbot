@@ -59,7 +59,7 @@ abstract class Script
 		{
 			if(isset(Core::$pFunctionList->$sFunctionName))
 			{
-				call_user_func_array(Core::$pFunctionList->$sFunctionName, $aArgumentList);
+				return call_user_func_array(Core::$pFunctionList->$sFunctionName, $aArgumentList);
 			}
 		}
 		

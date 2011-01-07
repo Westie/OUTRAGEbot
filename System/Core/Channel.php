@@ -105,7 +105,7 @@ class CoreChannel
 	 *	Users: Rename a user from the internal database
 	 *	@ignore
 	 */
-	public function renameUserInChannel($sOldNickname, $sNewNickname)
+	public function renameUserInChannel($sNewNickname, $sOldNickname)
 	{
 		$this->pUsers->$sNewNickname = $this->pUsers->$sOldNickname;
 		unset($this->pUsers->$sOldNickname);
@@ -169,7 +169,7 @@ class CoreChannel
 	/**
 	 *	Get the users in the channel
 	 */
-	public function propGetUsers()
+	private function propGetUsers()
 	{
 		$aUsers = array();
 		
@@ -336,5 +336,80 @@ class CoreChannel
 		CoreChannel::$mTemp = null;
 		
 		return $mTemp;
+	}
+	
+	
+		/**
+	 *	Checks if that user has voice in that channel. Voicers have the
+	 *	mode ' + '.
+	 */
+	public function isUserVoice($sUser)
+	{
+		if(!isset($this->pUsers->$sUser))
+		{
+			return false;
+		}
+		
+		return preg_match('/[qaohv]/', $this->pUsers->$sUser) == true;
+	}
+	
+	
+	/**
+	 *	Checks if that user has half-op in that channel. Half operators
+	 *	have the mode ' % ', and may not be available on all networks.
+	 */
+	public function isUserHalfOp($sUser)
+	{
+		if(!isset($this->pUsers->$sUser))
+		{
+			return false;
+		}
+		
+		return preg_match('/[qaoh]/', $this->pUsers->$sUser) == true;
+	}
+	
+	
+	/**
+	 *	Checks if that user has operator in that channel. Operators have
+	 *	the mode ' @ '.
+	 */
+	public function isUserOp($sUser)
+	{
+		if(!isset($this->pUsers->$sUser))
+		{
+			return false;
+		}
+		
+		return preg_match('/[qao]/', $this->pUsers->$sUser) == true;
+	}
+	
+	
+	/**
+	 *	Checks if that user has admin in that channel. Admins have the
+	 *	mode ' & ', and may not be available on all networks.
+	 */
+	public function isUserAdmin($sUser)
+	{
+		if(!isset($this->pUsers->$sUser))
+		{
+			return false;
+		}
+		
+		return preg_match('/[qa]/', $this->pUsers->$sUser) == true;
+	}
+	
+	
+	/**
+	 *	Checks if that user has owner in that channel. Owners have the
+	 *	mode ' ~ ', and may not be available on all networks.
+	 */
+	public function isUserOwner($sUser)
+	{	
+		if(!isset($this->pUsers->$sUser))
+		{
+			return false;
+		}
+		
+		return preg_match('/[q]/', $this->pUsers->$sUser) == true;
 	}
 }

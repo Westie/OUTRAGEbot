@@ -12,14 +12,14 @@ class CoreMaster
 		$pConfig = null,
 		
 		$pEventHandlers = null,
-		$pCurrentScript = null;
+		$pCurrentScript = null,
+		$pChannels = null;
 	
 	
 	private
 		$aScripts = array(),
 		$aSockets = array(),
 		
-		$pChannels = null,
 		$pBotItter = null;
 	
 	
@@ -135,7 +135,7 @@ class CoreMaster
 	/**
 	 *	This function returns the network configuration.
 	 */
-	public function getServerConfiguration($sConfigKey)
+	public function getServerConfiguration($sConfigKey = null)
 	{
 		return $sConfigKey == null ? $this->pConfig->Server : $this->pConfig->Server->$sConfigKey;
 	}
@@ -144,7 +144,7 @@ class CoreMaster
 	/**
 	 *	This function returns the current socket's configuration.
 	 */
-	public function getSocketConfiguration($sConfigKey)
+	public function getSocketConfiguration($sConfigKey = null)
 	{
 		return $sConfigKey == null ? $this->pConfig->Socket : $this->pConfig->Socket->$sConfigKey;
 	}
@@ -273,7 +273,7 @@ class CoreMaster
 			return false;
 		}
 		
-		return preg_match('/[qaohv]/', $pChannel->pUsers->$sUser);
+		return preg_match('/[qaohv]/', $pChannel->pUsers->$sUser) == true;
 	}
 	
 	
@@ -290,7 +290,7 @@ class CoreMaster
 			return false;
 		}
 		
-		return preg_match('/[qaoh]/', $pChannel->pUsers->$sUser);
+		return preg_match('/[qaoh]/', $pChannel->pUsers->$sUser) == true;
 	}
 	
 	
@@ -307,7 +307,7 @@ class CoreMaster
 			return false;
 		}
 		
-		return preg_match('/[qao]/', $pChannel->pUsers->$sUser);
+		return preg_match('/[qao]/', $pChannel->pUsers->$sUser) == true;
 	}
 	
 	
@@ -324,7 +324,7 @@ class CoreMaster
 			return false;
 		}
 		
-		return preg_match('/[qa]/', $pChannel->pUsers->$sUser);
+		return preg_match('/[qa]/', $pChannel->pUsers->$sUser) == true;
 	}
 	
 	
@@ -341,7 +341,7 @@ class CoreMaster
 			return false;
 		}
 		
-		return preg_match('/[q]/', $pChannel->pUsers->$sUser);
+		return preg_match('/[q]/', $pChannel->pUsers->$sUser) == true;
 	}
 		
 	

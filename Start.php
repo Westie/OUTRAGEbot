@@ -23,7 +23,9 @@ Core::Library("Socket");
 Core::LModule("Timer");
 Core::Library("Utilities");
 
+
 Core::Module("Whois");
+Core::Module("List");
 
 
 Core::scanConfig();
