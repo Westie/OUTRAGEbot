@@ -178,6 +178,8 @@ class Core
 	
 	/**
 	 *	Deals with the callback handlers
+	 *
+	 *	I need to clean this up
 	 */
 	static function Handler(CoreMaster $pInstance, $pMessage)
 	{
@@ -196,8 +198,15 @@ class Core
 				$aArguments = array($pInstance);
 				
 				if($sArgumentList === null)
-				{					
-					$mReturn = call_user_func($cHandler, $pInstance, $pMessage);
+				{
+					if(is_array($cHandler) && ($cHandler[0] instanceof Script))
+					{
+						$mReturn = call_user_func($cHandler, $pMessage);
+					}
+					else
+					{
+						$mReturn = call_user_func($cHandler, $pInstance, $pMessage);
+					}
 				}
 				elseif(ord(substr($sArgumentList, 0, 1)) === 0xFF)
 				{
@@ -214,7 +223,14 @@ class Core
 						$aCommandPayload[1] = "";
 					}
 					
-					$mReturn = call_user_func($cHandler, $pInstance, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[0], $aCommandPayload[1]);
+					if(is_array($cHandler) && ($cHandler[0] instanceof Script))
+					{
+						$mReturn = call_user_func($cHandler, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[0], $aCommandPayload[1]);
+					}
+					else
+					{
+						$mReturn = call_user_func($cHandler, $pInstance, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[0], $aCommandPayload[1]);
+					}
 				}
 				else
 				{										

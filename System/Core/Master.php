@@ -253,6 +253,7 @@ class CoreMaster
 	
 	/**
 	 *	Sends a CTCP request.
+	 *	Not fully implemented yet.
 	 */
 	public function ctcpRequest($sNickname, $sRequest)
 	{
@@ -449,6 +450,16 @@ class CoreMaster
 	
 	
 	/**
+	 *	Reactivate a Script, used when there's an update for instance.
+	 */
+	public function reactivateScript($sScriptName)
+	{
+		$this->deactivateScript($sScriptName);
+		return $this->activateScript($sScriptName);
+	}
+	
+	
+	/**
 	 *	Add an event handler into the local instance.
 	 */
 	public function addEventHandler($sEventName, $cCallback, $sArgumentFormat = null)
@@ -578,5 +589,39 @@ class CoreMaster
 	{
 		return preg_replace("/[\002\017\001\026\001\037]/", "", 
 		preg_replace("/\003[0-9]{1,2}(,[0-9]{1,2})?/", "", $sText));
+	}
+	
+	
+	/**
+	 *	Makes the bot join a channel.
+	 */
+	public function Join($sChannel, $mOption = SEND_DEF)
+	{
+		return $this->Raw("JOIN {$sChannel}", $mOption);
+	}
+	
+	
+	/**
+	 *	Makes the bot leave a channel.
+	 */
+	public function Part($sChannel, $sReason = null, $mOption = SEND_DEF)
+	{
+		$sPart = "PART {$sChannel}";
+		
+		if($sReason != null)
+		{
+			$sPart .= " :{$sReason}";
+		}
+		
+		return $this->Raw($sPart, $mOption);
+	}
+	
+	
+	/**
+	 *	Invite a user to the channel
+	 */
+	public function Invite($sNickname, $sChannel)
+	{
+		return $this->Raw("INVITE {$sNickname} {$sChannel}");
 	}
 }
