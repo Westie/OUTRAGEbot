@@ -25,6 +25,7 @@ class Core
 	{
 		self::$pFunctionList = new stdClass();
 		
+		error_reporting(E_ALL | E_STRICT);
 		set_error_handler(array("Core", "errorHandler"));
 	}
 	

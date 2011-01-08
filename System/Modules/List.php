@@ -29,8 +29,18 @@ class ModuleList
 		$pInstance = Core::getCurrentInstance();
 		$pSocket = $pInstance->getCurrentSocket();
 		
-		$pSocket->Output("WHOIS {$sNickname}");
+		$pSocket->Output("LIST");
 		$pSocket->executeCapture(array(__CLASS__, "parseLineResponse"));
+		
+		usort(self::$pTempObject, function($pChannelA, $pChannelB)
+		{
+			if($pChannelA->count == $pChannelB->count)
+			{
+				return 0;
+			}
+			
+			return ($pChannelA->count < $pChannelB->count) ? 1 : -1;
+		});
 		
 		return self::$pTempObject;
 	}
@@ -52,8 +62,6 @@ class ModuleList
 			
 			case "322":
 			{
-				// :irc Westie 232 #channel count :topic
-				
 				self::$pTempObject[] = (object) array
 				(
 					"channel" => $pMessage->Parts[3],

@@ -11,16 +11,20 @@ abstract class Script
 	
 	
 	public
-		$sScriptID;
+		$sScriptID,
+		$sScriptName,
+		$aHandlerCache = array();
 	
 	
 	/**
 	 *	This is called when the Script is loaded.
 	 */
-	public final function __construct($pInstance, $sScriptID)
+	public final function __construct($pInstance, $aScript)
 	{
 		$this->pInstance = $pInstance;
-		$this->sScriptID = $sScriptID;
+		
+		$this->sScriptID = $aScript[0];
+		$this->sScriptName = $aScript[1];
 		
 		$this->onConstruct();
 		return true;
@@ -39,7 +43,6 @@ abstract class Script
 			$this->$sKey = NULL;
 		}
 		
-		$this->onDestruct();
 		return true;
 	}
 	

@@ -13,19 +13,43 @@ class Debug extends Script
 	{
 		println("# Script Debug loaded, class version ".__CLASS__.".");
 		
+		
+		/**
+		 *	Here we have the custom defined arguments.
+		 *
+		 *	$p	Bot instance		
+		 *	$u	User instance		u
+		 *	$c	Payload string		p
+		 */
 		$this->addEventHandler("INVITE", function($p, $u, $c)
 		{
 			$p->Message("#westie", "(custom args) OUTRAGEbot has been invited into {$c} by {$u->Nickname}");
 		}, "up");
 		
+		
+		/**
+		 *	Here we use no custom arguments, just the standard ones.
+		 *
+		 *	$p	Bot instance
+		 *	$m	Message instance
+		 */
 		$this->addEventHandler("INVITE", function($p, $m)
 		{
 			$p->Message("#westie", "(standard args) OUTRAGEbot has been invited into {$m->Payload} by {$m->User->Nickname}");
 		});
 		
+		
+		/**
+		 *	A command handler.
+		 *
+		 *	$p	Bot instance
+		 *	$c	Channel name
+		 *	$n	Sender's nickname
+		 *	$a	Argument string
+		 */
 		$this->addCommandHandler("test", function($p, $c, $n, $a)
 		{
-			$p->Message("#westie", "yes, this is a command. have fun with your testing user!");
+			$p->Message($c, "yes, this is a command. have fun with your testing user!");
 		});
 	}
 	

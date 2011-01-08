@@ -421,7 +421,7 @@ class CoreMaster
 			return false;
 		}
 		
-		$this->aScripts[$sScriptName] = new $sIdentifier($this, $sIdentifier);
+		$this->aScripts[$sScriptName] = new $sIdentifier($this, array($sIdentifier, $sScriptName));
 		return true;
 	}
 	
@@ -431,7 +431,20 @@ class CoreMaster
 	 */
 	public function deactivateScript($sScriptName)
 	{
+		if(empty($this->aScripts[$sScriptName]))
+		{
+			return false;
+		}
+		
+		foreach($this->aScripts[$sScriptName]->aHandlerCache as $sHandlerID)
+		{
+			$this->removeEventHandler($sHandlerID);
+		}
+		
+		unset($this->aScripts[$sScriptName]->aHandlerCache);
 		unset($this->aScripts[$sScriptName]);
+		
+		return true;
 	}
 	
 	
@@ -448,6 +461,7 @@ class CoreMaster
 		$sHandlerID = uniqid("nat");
 		$sEventName = strtoupper($sEventName);
 		
+		$this->pCurrentScript->aHandlerCache[] = $sHandlerID;
 		$this->pEventHandlers->{$sEventName}[$sHandlerID] = array($cCallback, $sArgumentFormat);
 		
 		return $sHandlerID;

@@ -22,8 +22,15 @@ class Evaluation extends Script
 			
 			ob_end_clean();
 		
-			foreach(explode("\n", $aOutput) as $sOutput)
+			foreach(explode(PHP_EOL, $aOutput) as $sOutput)
 			{
+				$sOutput = rtrim($sOutput);
+				
+				if(strlen($sOutput) < 1)
+				{
+					continue;
+				}
+				
 				$this->Message($sChannel, $sOutput);
 			}
 		
@@ -39,8 +46,15 @@ class Evaluation extends Script
 			
 			ob_end_clean();
 		
-			foreach(explode("\n", $aOutput) as $sOutput)
+			foreach(explode(PHP_EOL, $aOutput) as $sOutput)
 			{
+				$sOutput = rtrim($sOutput);
+				
+				if(strlen($sOutput) < 1)
+				{
+					continue;
+				}
+				
 				$this->Message($sChannel, $sOutput);
 			}
 		
