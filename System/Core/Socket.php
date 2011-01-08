@@ -57,6 +57,8 @@ class CoreSocket
 		$this->Output("NICK {$this->pConfig->nickname}");
 		$this->Output("USER {$this->pConfig->username} x x :{$this->pConfig->realname}");
 		
+		$this->pConfig->StartTime = time();
+		
 		return;
 	}
 	

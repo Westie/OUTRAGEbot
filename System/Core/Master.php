@@ -422,6 +422,8 @@ class CoreMaster
 			return false;
 		}
 		
+		println(" * Loaded {$sScriptName} script");
+		
 		$this->aScripts[$sScriptName] = new $sIdentifier($this, $sScriptName);
 		return true;
 	}
@@ -441,6 +443,8 @@ class CoreMaster
 		{
 			$this->removeEventHandler($sHandlerID);
 		}
+		
+		println(" * Unloaded {$sScriptName} script");
 		
 		unset($this->aScripts[$sScriptName]->aHandlerCache);
 		unset($this->aScripts[$sScriptName]);

@@ -224,7 +224,9 @@ class CoreHandler
 	{
 		if($pMessage->Payload[0] == Format::CTCP)
 		{
+			self::CTCP($pInstance, $pMessage);
 			$pInstance->triggerEvent("onCTCPRequest", $pMessage->User->Nickname, substr($pMessage->Payload, 1, -1));
+			
 			return;
 		}
 		
@@ -369,6 +371,53 @@ class CoreHandler
 				{
 					break;
 				}
+			}
+		}
+	}
+	
+	
+	/**
+	 *	Alright, I'm cheating with the CTCP stuff.
+	 */
+	static function CTCP(CoreMaster $pInstance, $pMessage)
+	{
+		$pMessage->Payload = substr($pMessage->Payload, 1, -1);
+		
+		$aCTCP = explode(' ', $pMessage->Payload, 2);
+		
+		if(empty($aCTCP[1]))
+		{
+			$aCTCP[1] = "";
+		}
+		
+		switch($aCTCP[0])
+		{
+			case "VERSION":
+			{
+				return $pInstance->ctcpReply($pMessage->User->Nickname, "VERSION {$pInstance->pConfig->Network->version}");
+			}
+			
+			case "TIME":
+			{
+				return $pInstance->ctcpReply($pMessage->User->Nickname, "TIME ".date("d/m/Y H:i:s", time()));
+			}
+			
+			case "PING":
+			{
+				return $pInstance->ctcpReply($pMessage->User->Nickname, "PING {$aCTCP[1]}");
+			}
+			
+			case "UPTIME":
+			{
+				$aDuration = CoreUtilities::Duration($pInstance->pCurrentSocket->pConfig->StartTime);
+				$sString = "UPTIME {$aDuration['weeks']} weeks, {$aDuration['days']} days, {$aDuration['hours']} hours, {$aDuration['minutes']} minutes, {$aDuration['seconds']} seconds.";
+				
+				return $pInstance->ctcpReply($pMessage->User->Nickname, $sString);
+			}
+			
+			case "START":
+			{
+				return $pInstance->ctcpReply($pMessage->User->Nickname, "START ".date("d/m/Y H:i:s", time($pInstance->pCurrentSocket->pConfig->StartTime)));
 			}
 		}
 	}

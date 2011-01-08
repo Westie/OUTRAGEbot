@@ -22,7 +22,7 @@ class Evaluation extends Script
 			
 			ob_end_clean();
 		
-			foreach(explode(PHP_EOL, $aOutput) as $sOutput)
+			foreach(explode("\n", $aOutput) as $sOutput)
 			{
 				$sOutput = rtrim($sOutput);
 				
@@ -46,7 +46,7 @@ class Evaluation extends Script
 			
 			ob_end_clean();
 		
-			foreach(explode(PHP_EOL, $aOutput) as $sOutput)
+			foreach(explode("\n", $aOutput) as $sOutput)
 			{
 				$sOutput = rtrim($sOutput);
 				
