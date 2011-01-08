@@ -421,7 +421,7 @@ class CoreMaster
 			return false;
 		}
 		
-		$this->aScripts[$sScriptName] = new $sIdentifier($this, array($sIdentifier, $sScriptName));
+		$this->aScripts[$sScriptName] = new $sIdentifier($this, $sScriptName);
 		return true;
 	}
 	

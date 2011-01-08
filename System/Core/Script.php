@@ -19,12 +19,12 @@ abstract class Script
 	/**
 	 *	This is called when the Script is loaded.
 	 */
-	public final function __construct($pInstance, $aScript)
+	public final function __construct($pInstance, $sScript)
 	{
 		$this->pInstance = $pInstance;
 		
-		$this->sScriptID = $aScript[0];
-		$this->sScriptName = $aScript[1];
+		$this->sScriptName = $sScript;
+		$this->sScriptID = __CLASS__;
 		
 		$this->onConstruct();
 		return true;
