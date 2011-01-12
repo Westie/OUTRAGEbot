@@ -443,6 +443,8 @@ class CoreMaster
 		{
 			$this->removeEventHandler($sHandlerID);
 		}
+
+		$this->aScripts[$sScriptName]->onDestruct();
 		
 		println(" * Unloaded {$sScriptName} script");
 		
