@@ -18,6 +18,8 @@ class BOFH extends Script
 			preg_match('/<br><font size = "\+2">(.*)<\/font>/s', $sOutput, $aMatches); 
 
 			$pInstance->Message($sChannel, trim($aMatches[1]));
+			
+			return END_EVENT_EXEC;
 		});
 	}
 }
