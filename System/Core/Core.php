@@ -225,11 +225,11 @@ class Core
 					
 					if(is_array($cHandler) && ($cHandler[0] instanceof Script))
 					{
-						$mReturn = call_user_func($cHandler, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[0], $aCommandPayload[1]);
+						$mReturn = call_user_func($cHandler, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[1]);
 					}
 					else
 					{
-						$mReturn = call_user_func($cHandler, $pInstance, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[0], $aCommandPayload[1]);
+						$mReturn = call_user_func($cHandler, $pInstance, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[1]);
 					}
 				}
 				else

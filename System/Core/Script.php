@@ -111,6 +111,15 @@ abstract class Script
 	
 	
 	/**
+	 *	Returns the file resource as a string.
+	 */
+	public function getResourceAsString($sFileString)
+	{
+		return realpath(ROOT."/Resources/{$this->spScript}/{$sFileString}");
+	}
+	
+	
+	/**
 	 *	Checks if a resource exists or not.
 	 */
 	public function isResource($sFileString)
