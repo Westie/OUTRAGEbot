@@ -7,6 +7,7 @@
 abstract class Script
 {
 	private
+		$spScript,
 		$pInstance = null;
 	
 	
@@ -24,6 +25,7 @@ abstract class Script
 		$this->pInstance = $pInstance;
 		
 		$this->sScriptName = $sScript;
+		$this->spScript = $sScript;
 		$this->sScriptID = __CLASS__;
 		
 		$this->onConstruct();
@@ -83,5 +85,49 @@ abstract class Script
 		}
 		
 		return null;
+	}
+	
+	
+	/**
+	 *	Retrieves the file resource from the Resources folder.
+	 */
+	public function getResource($sFileString, $sMode = "w+")
+	{
+		$sResource = ROOT."/Resources/{$this->spScript}/{$sFileString}";
+		
+		$sFile = basename($sResource);
+		$sDirectory = dirname($sResource);
+		
+		if(!is_dir($sDirectory))
+		{
+			if(!mkdir($sDirectory, 0777, true))
+			{
+				return null;
+			}
+		}
+		
+		return fopen($sResource, $sMode);
+	}
+	
+	
+	/**
+	 *	Checks if a resource exists or not.
+	 */
+	public function isResource($sFileString)
+	{
+		$sResource = ROOT."/Resources/{$this->spScript}/{$sFileString}";
+		
+		return file_exists($sResource) !== false;
+	}
+	
+	
+	/**
+	 *	Removes a resource from the directory.
+	 */
+	public function removeResource($sFileString)
+	{
+		$sResource = ROOT."/Resources/{$this->spScript}/{$sFileString}";
+		
+		return unlink($sResource) !== false;
 	}
 }

@@ -92,6 +92,15 @@ class CoreChannel
 	
 	
 	/**
+	 *	Sends stuff to the channel. It's a shortcut, basically.
+	 */
+	public function __invoke($sMessage)
+	{
+		return $this->pMaster->Message($this->sChannel, $sMessage);
+	}
+	
+	
+	/**
 	 *	Users: Add user to the internal database
 	 *	@ignore
 	 */
@@ -183,15 +192,6 @@ class CoreChannel
 		}
 		
 		return $aUsers;
-	}
-	
-	
-	/**
-	 *	Called when the object is invoked.
-	 */
-	public function __invoke($sMessage)
-	{
-		return $this->pMaster->Message($this->sChannel, $sMessage);
 	}
 	
 	

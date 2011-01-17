@@ -422,7 +422,7 @@ class CoreMaster
 			return false;
 		}
 		
-		println(" * Loaded {$sScriptName} script");
+		println(" * Activated script '{$sScriptName}'");
 		
 		$this->aScripts[$sScriptName] = new $sIdentifier($this, $sScriptName);
 		return true;
@@ -446,7 +446,7 @@ class CoreMaster
 
 		$this->aScripts[$sScriptName]->onDestruct();
 		
-		println(" * Unloaded {$sScriptName} script");
+		println(" * Deactivated script '{$sScriptName}'");
 		
 		unset($this->aScripts[$sScriptName]->aHandlerCache);
 		unset($this->aScripts[$sScriptName]);
@@ -462,6 +462,15 @@ class CoreMaster
 	{
 		$this->deactivateScript($sScriptName);
 		return $this->activateScript($sScriptName);
+	}
+	
+	
+	/**
+	 *	Return a list of activated Scripts.
+	 */
+	public function getActivatedScripts()
+	{
+		return array_keys($this->aScripts[$sScriptName]);
 	}
 	
 	
