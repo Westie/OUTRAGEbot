@@ -18,6 +18,7 @@ Core::Library("Configuration");
 Core::Library("Format");
 Core::Library("Handler");
 Core::Library("Master");
+Core::Library("Resources");
 Core::Library("Script");
 Core::Library("Socket");
 Core::LModule("Timer");

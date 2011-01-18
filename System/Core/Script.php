@@ -93,29 +93,7 @@ abstract class Script
 	 */
 	public function getResource($sFileString, $sMode = "w+")
 	{
-		$sResource = ROOT."/Resources/{$this->spScript}/{$sFileString}";
-		
-		$sFile = basename($sResource);
-		$sDirectory = dirname($sResource);
-		
-		if(!is_dir($sDirectory))
-		{
-			if(!mkdir($sDirectory, 0777, true))
-			{
-				return null;
-			}
-		}
-		
-		return fopen($sResource, $sMode);
-	}
-	
-	
-	/**
-	 *	Returns the file resource as a string.
-	 */
-	public function getResourceAsString($sFileString)
-	{
-		return realpath(ROOT."/Resources/{$this->spScript}/{$sFileString}");
+		return new CoreResources($this->spScript, $sFileString, $sMode);
 	}
 	
 	

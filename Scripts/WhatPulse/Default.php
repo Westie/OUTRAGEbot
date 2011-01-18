@@ -1,139 +1,99 @@
 <?php
 /**
  *	OUTRAGEbot development
- *
- *	The blank script - remove callbacks one doesn't need to improve
- *	overall efficiency.
  */
 
 
-class Blank extends Script
+class WhatPulse extends Script
 {
 	/**
 	 *	Called when the Script is loaded.
 	 */
 	public function onConstruct()
 	{
+		$this->addCommandHandler("wp", "getWPStats");
+		$this->addCommandHandler("setwp", "setWPID");
 	}
 	
 	
 	/**
-	 *	Called when the Script is removed.
+	 *	Called when someone wants to set their WP stats.
 	 */
-	public function onDestruct()
+	public function setWPID($sChannel, $sNickname, $sArguments)
 	{
+		if(!$sArguments)
+		{
+			$this->Notice($sNickname, "Sorry, but this doesn't look a valid ID");
+			return END_EVENT_EXEC;
+		}
+		
+		$pUser = $this->getResource("Users/{$sNickname}", "w");
+		$pUser->write($sArguments);
+		
+		$this->Notice($sNickname, "Congrats! You've now set your WP ID to {$sArguments}.");
+		
+		return END_EVENT_EXEC;
 	}
 	
 	
 	/**
-	 *	Called when the bot successfully connects to the network.
+	 *	Called when someone wants their WP stats.
 	 */
-	public function onConnect()
+	public function getWPStats($sChannel, $sNickname, $sArguments)
 	{
+		if(!$this->isResource("Users/{$sNickname}"))
+		{
+			$this->Notice($sNickname, "Nope, you don't have an WP id with us, use setwp.");
+			return END_EVENT_EXEC;
+		}
+		
+		$pWhatpulse = $this->getWhatpulseObject($sNickname);
+		
+		if(!($pWhatpulse instanceof SimpleXMLElement))
+		{
+			$this->Notice($sNickname, "There seems to be an error. Sorry about that!");
+			return END_EVENT_EXEC;
+		}
+		
+		$sDate = $pWhatpulse->DateJoined;
+		$sNickname = $pWhatpulse->AccountName;
+		$iKeys = number_format("{$pWhatpulse->TotalKeyCount}");
+		$iClicks = number_format("{$pWhatpulse->TotalMouseClicks}");
+		$iMouseDistance = number_format("{$pWhatpulse->TotalMiles}");
+		$iRank = number_format("{$pWhatpulse->Rank}");
+		$iPulses = number_format("{$pWhatpulse->Pulses}");
+		
+		$this->Message($sChannel, "Since ".Format::DarkGreen."{$sDate}".Format::Clear.", ".Format::DarkGreen."{$sNickname}".Format::Clear." has typed ".Format::DarkGreen."{$iKeys}".Format::Clear." characters, clicked ".Format::DarkGreen."{$iClicks}".Format::Clear." times and moved their mouse ".Format::DarkGreen."{$iMouseDistance}".Format::Clear." miles.");
+		$this->Message($sChannel, Format::DarkGreen."{$sNickname}".Format::Clear." has sent ".Format::DarkGreen."{$iPulses}".Format::Clear." pulses during this time, giving them a rank of ".Format::DarkGreen."{$iRank}".Format::Clear.".");
+		
+		return END_EVENT_EXEC;
 	}
 	
 	
 	/**
-	 *	Called when a user joins a channel.
+	 *	Function to deal with the output of the WP stats
 	 */
-	public function onChannelJoin($sChannel, $sNickname)
+	private function getWhatpulseObject($sNickname)
 	{
-	}
-	
-	
-	/**
-	 *	Called when a user parts a channel.
-	 */
-	public function onChannelPart($sChannel, $sNickname)
-	{
-	}
-	
-	
-	/**
-	 *	Called when a user is kicked from a channel.
-	 */
-	public function onChannelKick($sChannel, $sAdminUser, $sKickedUser, $sReason)
-	{
-	}
-	
-	
-	/**
-	 *	Called when someone changes the channel topic.
-	 */
-	public function onChannelTopic($sChannel, $sNickname, $sTopic)
-	{
-	}
-	
-	
-	/**
-	 *	Called when someone changes their nickname.
-	 */
-	public function onNicknameChange($sOldNickname, $sNewNickname)
-	{
-	}
-	
-	
-	/**
-	 *	Called when someone quits from the network.
-	 */
-	public function onUserQuit($sNickname, $sReason)
-	{
-	}
-	
-	
-	/**
-	 *	Called when someone sends a notice to the bot.
-	 */
-	public function onUserNotice($sSender, $sRecipient, $sMessage)
-	{
-	}
-	
-	
-	/**
-	 *	Called when someone sends a message in a channel.
-	 */
-	public function onChannelMessage($sChannel, $sNickname, $sMessage)
-	{
-	}
-	
-	
-	/**
-	 *	Called when someone sends a command in a channel.
-	 */
-	public function onChannelCommand($sChannel, $sNickname, $sCommand, $sArguments)
-	{
-	}
-	
-	
-	/**
-	 *	Called when a fellow user sends the bot a private message.
-	 */
-	public function onPrivateMessage($sSender, $sRecipient, $sMessage)
-	{
-	}
-	
-	
-	/**
-	 *	Called on a CTCP request from a fellow user.
-	 */
-	public function onCTCPRequest($sNickname, $sPayload)
-	{
-	}
-	
-	
-	/**
-	 *	Called on a CTCP request from a fellow user.
-	 */
-	public function onCTCPResponse($sNickname, $sPayload)
-	{
-	}
-	
-	
-	/**
-	 *	Called when there are no event handlers for this specific
-	 *	numeric in OUTRAGEbot.
-	 */
-	public function onUnhandledEvent($pMessage)
-	{
+		$pUser = $this->getResource("Users/{$sNickname}");
+		$iUserID = $pUser->read();
+		unset($pUser);
+		
+		$pCache = $this->getResource("Cache/{$iUserID}");
+		
+		if($pCache->isNew() || $pCache->timeModify + 400 > time())
+		{
+			$sXML = file_get_contents("http://whatpulse.org/api/user.php?UserID={$iUserID}");
+			$pCache->write($sXML);
+		}
+		
+		$sXML = $pCache->read();
+		
+		if(!stristr($sXML, "<?xml"))
+		{
+			return null;
+		}
+		
+		return new SimpleXMLElement($sXML);
 	}
 }

@@ -509,7 +509,7 @@ class CoreMaster
 	 */
 	public function removeEventHandler($sHandlerID)
 	{
-		foreach($this->pEventHandlers as $pEvent)
+		foreach($this->pEventHandlers as &$pEvent)
 		{
 			foreach(array_keys($pEvent) as $sHandlerGID)
 			{
@@ -519,7 +519,7 @@ class CoreMaster
 				}
 			}
 			
-			if(count($pEvent) == 0)
+			if(count($this->pEventHandlers) == 0)
 			{
 				unset($pEvent);
 			}
