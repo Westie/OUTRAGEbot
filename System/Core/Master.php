@@ -519,7 +519,7 @@ class CoreMaster
 				}
 			}
 			
-			if(count($this->pEventHandlers) == 0)
+			if(count($pEvent) == 0)
 			{
 				unset($pEvent);
 			}
