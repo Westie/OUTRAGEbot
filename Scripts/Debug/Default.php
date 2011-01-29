@@ -17,7 +17,7 @@ class Debug extends Script
 		/**
 		 *	Here we have the custom defined arguments.
 		 *
-		 *	$p	Bot instance		
+		 *	$p	Bot instance	
 		 *	$u	User instance		u
 		 *	$c	Payload string		p
 		 */

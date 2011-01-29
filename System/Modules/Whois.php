@@ -39,7 +39,7 @@ class ModuleWhois
 		$pInstance = Core::getCurrentInstance();
 		$pSocket = $pInstance->getCurrentSocket();
 		
-		$pSocket->Output("WHOIS {$sNickname}");
+		$pSocket->Output("WHOIS {$sNickname} {$sNickname}"); // We're cheating here!
 		$pSocket->executeCapture(array(__CLASS__, "parseWhoisLine"));
 		
 		return self::$pTempObject;
