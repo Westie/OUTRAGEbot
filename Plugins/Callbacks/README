@@ -1,5 +1,0 @@
-== CALLBACKS ==
-
-You may be wondering what the Callbacks plugin is. This is a re-implementation of what used to be integrated into the core of the old source, Happybot.
-
-Any updates to the code, and if this code is used on more than one bot group, it will automatically update it.
