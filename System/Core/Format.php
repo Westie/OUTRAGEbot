@@ -69,13 +69,4 @@ class Format
  */
 function Format($sInputString)
 {
-	/*
-	
-		Format tags:
-		
-		[b] [/b]		Embolden text
-		[c=$colour] [/c]	Colourise text
-		
-		more I haven't decided yet!
-	 */
 }
