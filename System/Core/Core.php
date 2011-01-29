@@ -185,6 +185,11 @@ class Core
 	{
 		foreach($pInstance->pEventHandlers as $sEvent => $aEventHandler)
 		{
+			var_dump($pMessage->Numeric);
+			var_dump($sEvent);
+			
+			echo "\r\n";
+			
 			if($sEvent != $pMessage->Numeric)
 			{
 				continue;
