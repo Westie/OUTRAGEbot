@@ -470,14 +470,14 @@ class CoreMaster
 	 */
 	public function getActivatedScripts()
 	{
-		return array_keys($this->aScripts[$sScriptName]);
+		return array_keys($this->aScripts);
 	}
 	
 	
 	/**
 	 *	Add an event handler into the local instance.
 	 */
-	public function addEventHandler($sEventName, $cCallback, $sArgumentFormat = null)
+	public function addEventHandler($sEventName, $cCallback, $sArgumentFormat = null, $mArguments = null)
 	{
 		if(!is_callable($cCallback))
 		{
@@ -488,7 +488,12 @@ class CoreMaster
 		$sEventName = strtoupper($sEventName);
 		
 		$this->pCurrentScript->aHandlerCache[] = $sHandlerID;
-		$this->pEventHandlers->{$sEventName}[$sHandlerID] = array($cCallback, $sArgumentFormat);
+		$this->pEventHandlers->{$sEventName}[$sHandlerID] = (object) array
+		(
+			"callback" => $cCallback,
+			"argFormat" => $sArgumentFormat,
+			"arguments" => $mArguments,
+		);
 		
 		return $sHandlerID;
 	}
@@ -500,7 +505,7 @@ class CoreMaster
 	 */
 	public function addCommandHandler($sCommandName, $cCallback)
 	{		
-		return $this->addEventHandler('PRIVMSG', $cCallback, chr(0xFF).$sCommandName);
+		return $this->addEventHandler('PRIVMSG', $cCallback, 120, $sCommandName);
 	}
 	
 	

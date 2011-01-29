@@ -177,106 +177,39 @@ class Core
 	
 	
 	/**
-	 *	Deals with the callback handlers
-	 *
-	 *	I need to clean this up!
+	 *	The main handler function. This function delegates
+	 *	everything.
 	 */
 	static function Handler(CoreMaster $pInstance, $pMessage)
 	{
-		foreach($pInstance->pEventHandlers as $sEvent => $aEventHandler)
+		foreach($pInstance->pEventHandlers as $sEventNumeric => $aEventHandlers)
 		{
-			if($sEvent != $pMessage->Numeric)
+			if($sEventNumeric != $pMessage->Numeric)
 			{
 				continue;
 			}
 			
-			foreach($aEventHandler as $aHandler)
+			$mReturn = null;
+			
+			foreach($aEventHandlers as $pEventHandler)
 			{
-				list($cHandler, $sArgumentList) = $aHandler;
-				
-				$mReturn = 0;
-				$aArguments = array($pInstance);
-				
-				if($sArgumentList === null)
+				if($pEventHandler->argFormat === null)
 				{
-					if(is_array($cHandler) && ($cHandler[0] instanceof Script))
-					{
-						$mReturn = call_user_func($cHandler, $pMessage);
-					}
-					else
-					{
-						$mReturn = call_user_func($cHandler, $pInstance, $pMessage);
-					}
+					$mReturn = self::DefaultHandler($pInstance, $pMessage, $pEventHandler);
 				}
-				elseif(ord(substr($sArgumentList, 0, 1)) === 0xFF)
+				elseif($pEventHandler->argFormat === 120)
 				{
-					$sCommandName = $pInstance->pConfig->Network->delimiter.substr($sArgumentList, 1);
-					$aCommandPayload = explode(' ', $pMessage->Payload, 2);
-					
-					if($sCommandName != $aCommandPayload[0])
-					{
-						continue;
-					}
-					
-					if(!isset($aCommandPayload[1]))
-					{
-						$aCommandPayload[1] = "";
-					}
-					
-					if(is_array($cHandler) && ($cHandler[0] instanceof Script))
-					{
-						$mReturn = call_user_func($cHandler, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[1]);
-					}
-					else
-					{
-						$mReturn = call_user_func($cHandler, $pInstance, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[1]);
-					}
+					$mReturn = self::CommandHandler($pInstance, $pMessage, $pEventHandler);
 				}
 				else
-				{										
-					foreach(preg_split('//', $sArgumentList, -1, PREG_SPLIT_NO_EMPTY) as $cArgument)
-					{
-						switch($cArgument)
-						{
-							case 'c':
-							{
-								$aArguments[] = $pMessage->Parts;
-								break;
-							}
-							
-							case 'm':
-							{
-								$aArguments[] = $pMessage;
-								break;
-							}
-							
-							case 'p':
-							{
-								$aArguments[] = $pMessage->Payload;
-								break;
-							}
-							
-							case 'r':
-							{
-								$aArguments[] = $pMessage->Raw;
-								break;
-							}
-							
-							case 'u':
-							{
-								$aArguments[] = $pMessage->User;
-								break;
-							}
-						}
-					}
-					
-					$mReturn = call_user_func_array($cHandler, $aArguments);
-				}
-			
-				if($mReturn == END_EVENT_EXEC)
 				{
-					return true;
+					$mReturn = self::CustomHandler($pInstance, $pMessage, $pEventHandler);
 				}
+			}
+			
+			if($mReturn == END_EVENT_EXEC)
+			{
+				return true;
 			}
 		}
 		
@@ -288,6 +221,92 @@ class Core
 		}
 		
 		return CoreHandler::$sNumeric($pInstance, $pMessage);
+	}
+	
+	
+	/**
+	 *	Deals with the default handlers.
+	 */
+	private static function DefaultHandler(CoreMaster $pInstance, $pMessage, $pEventHandler)
+	{
+		if(is_array($pEventHandler->callback) && ($pEventHandler->callback[0] instanceof Script))
+		{
+			return call_user_func($pEventHandler->callback, $pMessage);
+		}
+		
+		return call_user_func($pEventHandler->callback, $pInstance, $pMessage);
+	}
+	
+	
+	/**
+	 *	Deals with command handlers.
+	 */
+	private static function CommandHandler(CoreMaster $pInstance, $pMessage, $pEventHandler)
+	{
+		$sCommandName = $pInstance->pConfig->Network->delimiter.$pEventHandler->arguments;
+		$aCommandPayload = explode(' ', $pMessage->Payload, 2);
+		
+		if($sCommandName != $aCommandPayload[0])
+		{
+			return;
+		}
+		
+		$aCommandPayload[1] = isset($aCommandPayload[1]) ? $aCommandPayload[1] : "";
+		
+		if(is_array($pEventHandler->callback) && ($pEventHandler->callback[0] instanceof Script))
+		{
+			return call_user_func($pEventHandler->callback, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[1]);
+		}
+		
+		return call_user_func($pEventHandler->callback, $pInstance, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[1]);
+	}
+	
+	
+	/**
+	 *	Deals with the more complex custom command handlers.
+	 */
+	private static function CustomHandler(CoreMaster $pInstance, $pMessage, $pEventHandler)
+	{
+		$aArgumentList = preg_split('//', $pEventHandler->argFormat, -1, PREG_SPLIT_NO_EMPTY);
+		$aArguments[] = $pInstance;
+		
+		foreach($aArgumentList as $cArgument)
+		{
+			switch($cArgument)
+			{
+				case 'c':
+				{
+					$aArguments[] = $pMessage->Parts;
+					break;
+				}
+				
+				case 'm':
+				{
+					$aArguments[] = $pMessage;
+					break;
+				}
+				
+				case 'p':
+				{
+					$aArguments[] = $pMessage->Payload;
+					break;
+				}
+				
+				case 'r':
+				{
+					$aArguments[] = $pMessage->Raw;
+					break;
+				}
+				
+				case 'u':
+				{
+					$aArguments[] = $pMessage->User;
+					break;
+				}
+			}
+		}
+		
+		return call_user_func_array($pEventHandler->callback, $aArguments);
 	}
 	
 	
