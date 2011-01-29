@@ -179,7 +179,7 @@ class Core
 	/**
 	 *	Deals with the callback handlers
 	 *
-	 *	I need to clean this up
+	 *	I need to clean this up!
 	 */
 	static function Handler(CoreMaster $pInstance, $pMessage)
 	{
