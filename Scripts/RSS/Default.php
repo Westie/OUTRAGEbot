@@ -1,7 +1,14 @@
 <?php
 /**
- *	OUTRAGEbot development
- *	Script created by mavus
+ *	OUTRAGEbot - PHP 5.3 based IRC bot
+ *
+ *	Author:		Jannis Pohl <mave1337@gmail.com>
+ *
+ *	Version:        2.0.0-Alpha
+ *	Git commit:     85afeb688f7ca5db50b99229665ff01e8cec8868
+ *	Committed at:   Sun Jan 30 19:41:46 2011 +0000
+ *
+ *	Licence:	http://www.typefish.co.uk/licences/
  */
 
 
@@ -13,7 +20,7 @@ class RSS extends Script
 	private static
 		$sBitlyLogin = '',
 		$sBitlyApiKey = '';
-	
+
 	/**
 	 *	Called when the Script is loaded.
 	 */
@@ -24,8 +31,8 @@ class RSS extends Script
 		$this->addSubscription('psx-scene', 'http://www.psx-scene.com/forums/external.php?type=RSS2&forumids=6', 60, $ps3);
 		$this->addSubscription('ps3-hacks', 'http://www.ps3-hacks.com/feed/', 60, $ps3);
 	}
-	
-	
+
+
 	/**
 	 *	Called when the Script is removed.
 	 */

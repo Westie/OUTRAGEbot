@@ -1,6 +1,14 @@
 <?php
 /**
- *	OUTRAGEbot development
+ *	OUTRAGEbot - PHP 5.3 based IRC bot
+ *
+ *	Author:		David Weston <westie@typefish.co.uk>
+ *
+ *	Version:        2.0.0-Alpha
+ *	Git commit:     85afeb688f7ca5db50b99229665ff01e8cec8868
+ *	Committed at:   Sun Jan 30 19:41:46 2011 +0000
+ *
+ *	Licence:	http://www.typefish.co.uk/licences/
  */
 
 
@@ -12,12 +20,12 @@ class Debug extends Script
 	public function onConstruct()
 	{
 		println("# Script Debug loaded, class version ".__CLASS__.".");
-		
-		
+
+
 		/**
 		 *	Here we have the custom defined arguments.
 		 *
-		 *	$p	Bot instance	
+		 *	$p	Bot instance
 		 *	$u	User instance		u
 		 *	$c	Payload string		p
 		 */
@@ -25,8 +33,8 @@ class Debug extends Script
 		{
 			$p->Message("#westie", "(custom args) OUTRAGEbot has been invited into {$c} by {$u->Nickname}");
 		}, "up");
-		
-		
+
+
 		/**
 		 *	Here we use no custom arguments, just the standard ones.
 		 *
@@ -37,8 +45,8 @@ class Debug extends Script
 		{
 			$p->Message("#westie", "(standard args) OUTRAGEbot has been invited into {$m->Payload} by {$m->User->Nickname}");
 		});
-		
-		
+
+
 		/**
 		 *	A command handler.
 		 *
@@ -52,8 +60,8 @@ class Debug extends Script
 			$p->Message($c, "yes, this is a command. have fun with your testing user!");
 		});
 	}
-	
-	
+
+
 	/**
 	 *	Called when the Script is removed.
 	 */
@@ -61,8 +69,8 @@ class Debug extends Script
 	{
 		println("# Script Debug removed from active usage.");
 	}
-	
-	
+
+
 	/**
 	 *	Called when the bot successfully connects to the network.
 	 */
@@ -70,8 +78,8 @@ class Debug extends Script
 	{
 		println("# It looks like the Debug Script has connected!");
 	}
-	
-	
+
+
 	/**
 	 *	Called when a user joins a channel.
 	 */
@@ -79,8 +87,8 @@ class Debug extends Script
 	{
 		println("# {$sNickname} has joined {$sChannel}.");
 	}
-	
-	
+
+
 	/**
 	 *	Called when a user parts a channel.
 	 */
@@ -88,8 +96,8 @@ class Debug extends Script
 	{
 		println("# {$sNickname} has left {$sChannel}.");
 	}
-	
-	
+
+
 	/**
 	 *	Called when a user is kicked from a channel.
 	 */
@@ -97,8 +105,8 @@ class Debug extends Script
 	{
 		println("# {$sKickedUser} was kicked from {$sChannel} by {$sAdmin}: {$sReason}");
 	}
-	
-	
+
+
 	/**
 	 *	Called when someone changes the channel topic.
 	 */
@@ -106,8 +114,8 @@ class Debug extends Script
 	{
 		println("# {$sNickname} set {$sChannel}'s topic to {$sTopic}");
 	}
-	
-	
+
+
 	/**
 	 *	Called when someone changes their nickname.
 	 */
@@ -115,8 +123,8 @@ class Debug extends Script
 	{
 		println("# {$sOldNickname} has changed their nick to {$sNewNickname}.");
 	}
-	
-	
+
+
 	/**
 	 *	Called when someone quits from the network.
 	 */
@@ -124,8 +132,8 @@ class Debug extends Script
 	{
 		println("# {$sNickname} has quit the network: {$sReason}");
 	}
-	
-	
+
+
 	/**
 	 *	Called when someone sends a notice to the bot.
 	 */
@@ -133,8 +141,8 @@ class Debug extends Script
 	{
 		println("# {$sSender} sent via notice {$sRecipient} {$sMessage}");
 	}
-	
-	
+
+
 	/**
 	 *	Called when someone sends a message in a channel.
 	 */
@@ -142,8 +150,8 @@ class Debug extends Script
 	{
 		println("# {$sNickname} in {$sChannel}: {$sMessage}");
 	}
-	
-	
+
+
 	/**
 	 *	Called when someone sends a command in a channel.
 	 */
@@ -151,8 +159,8 @@ class Debug extends Script
 	{
 		println("# {$sNickname} in {$sChannel}: command {$sCommand}, argument {$sArguments}");
 	}
-	
-	
+
+
 	/**
 	 *	Called when a fellow user sends the bot a private message.
 	 */
@@ -160,8 +168,8 @@ class Debug extends Script
 	{
 		println("# {$sSender} sent {$sRecipient} {$sMessage}");
 	}
-	
-	
+
+
 	/**
 	 *	Called on a CTCP request from a fellow user.
 	 */
@@ -169,8 +177,8 @@ class Debug extends Script
 	{
 		println("# {$sNickname} has requested '{$sPayload}'.");
 	}
-	
-	
+
+
 	/**
 	 *	Called on a CTCP request from a fellow user.
 	 */
@@ -178,8 +186,8 @@ class Debug extends Script
 	{
 		println("# {$sNickname} has replied with '{$sPayload}'.");
 	}
-	
-	
+
+
 	/**
 	 *	Called when there are no event handlers for this specific
 	 *	numeric in OUTRAGEbot.
