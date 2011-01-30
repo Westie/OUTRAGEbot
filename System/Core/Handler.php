@@ -4,7 +4,7 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
-*	Version:        <version>
+ *	Version:        <version>
  *	Git commit:     <commitHash>
  *	Committed at:   <commitTime>
  *
