@@ -4,9 +4,9 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
- *	Version:        <version>
- *	Git commit:     <commitHash>
- *	Committed at:   <commitTime>
+ *	Version:        2.0.0-Alpha
+ *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
+ *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -18,15 +18,15 @@ class CoreChannel
 	private
 		$pMaster = null,
 		$sChannel = null;
-	
+
 	static
 		$mTemp = null;
-		
+
 	public
 		$pUsers = null,
 		$pTopic = null;
-	
-	
+
+
 	/**
 	 *	Called when the class is constructed.
 	 */
@@ -34,9 +34,9 @@ class CoreChannel
 	{
 		$this->pMaster = $pMaster;
 		$this->sChannel = strtolower(trim($sChannel));
-		
+
 		$this->pUsers = new stdClass();
-		
+
 		$this->pTopic = (object) array
 		(
 			"chantopic" => "",
@@ -44,8 +44,8 @@ class CoreChannel
 			"setter" => "",
 		);
 	}
-	
-	
+
+
 	/**
 	 *	Called when the object is converted to string.
 	 */
@@ -53,8 +53,8 @@ class CoreChannel
 	{
 		return $this->sChannel;
 	}
-	
-	
+
+
 	/**
 	 *	Properties: accessing psuedo properties.
 	 *	@ignore
@@ -62,16 +62,16 @@ class CoreChannel
 	public function __get($sKey)
 	{
 		$sKey = "propGet".$sKey;
-		
+
 		if(method_exists($this, $sKey))
 		{
 			return $this->$sKey();
 		}
-		
+
 		return null;
 	}
-	
-	
+
+
 	/**
 	 *	Properties: setting psuedo properties.
 	 *	@ignore
@@ -79,16 +79,16 @@ class CoreChannel
 	public function __set($sKey, $mValue)
 	{
 		$sKey = "propSet".$sKey;
-		
+
 		if(method_exists($this, $sKey))
 		{
 			return $this->$sKey($mValue);
 		}
-		
+
 		return null;
 	}
-	
-	
+
+
 	/**
 	 *	Users: Checks if a user is in the database
 	 *	@ignore
@@ -97,8 +97,8 @@ class CoreChannel
 	{
 		return isset($this->pUsers->$sNickname);
 	}
-	
-	
+
+
 	/**
 	 *	Sends stuff to the channel. It's a shortcut, basically.
 	 */
@@ -106,8 +106,8 @@ class CoreChannel
 	{
 		return $this->pMaster->Message($this->sChannel, $sMessage);
 	}
-	
-	
+
+
 	/**
 	 *	Users: Add user to the internal database
 	 *	@ignore
@@ -116,8 +116,8 @@ class CoreChannel
 	{
 		$this->pUsers->$sNickname = $sChannelMode;
 	}
-	
-	
+
+
 	/**
 	 *	Users: Rename a user from the internal database
 	 *	@ignore
@@ -127,14 +127,14 @@ class CoreChannel
 		$this->pUsers->$sNewNickname = $this->pUsers->$sOldNickname;
 		unset($this->pUsers->$sOldNickname);
 	}
-	
-	
+
+
 	/**
 	 *	Users: Add user to the internal database
 	 *	@ignore
 	 */
 	public function modifyUserInChannel($sNickname, $sMode, $sChannelMode = "")
-	{		
+	{
 		if($sMode == '+')
 		{
 			$this->pUsers->$sNickname .= $sChannelMode;
@@ -144,8 +144,8 @@ class CoreChannel
 			$this->pUsers->$sNickname = str_replace($sChannelMode, "", $this->pUsers->$sNickname);
 		}
 	}
-	
-	
+
+
 	/**
 	 *	Users: Remove a user from the internal database
 	 *	@ignore
@@ -154,8 +154,8 @@ class CoreChannel
 	{
 		unset($this->pUsers->$sNickname);
 	}
-	
-	
+
+
 	/**
 	 *	Get the channel user count.
 	 */
@@ -163,8 +163,8 @@ class CoreChannel
 	{
 		return count($this->pUsers);
 	}
-	
-	
+
+
 	/**
 	 *	Get the channel topic.
 	 */
@@ -172,8 +172,8 @@ class CoreChannel
 	{
 		return $this->aTopicInformation['String'];
 	}
-	
-	
+
+
 	/**
 	 *	Set the channel topic
 	 */
@@ -181,28 +181,28 @@ class CoreChannel
 	{
 		return $this->pMaster->Raw("TOPIC {$this->sChannel} :{$sString}");
 	}
-	
-	
+
+
 	/**
 	 *	Get the users in the channel
 	 */
 	private function propGetUsers()
 	{
 		$aUsers = array();
-		
+
 		foreach($this->pUsers as $sNickname => $sChannelMode)
-		{		
+		{
 			$aUsers[] = (object) array
 			(
 				"Nickname" => $sNickname,
 				"Usermode" => $sChannelMode,
 			);
 		}
-		
+
 		return $aUsers;
 	}
-	
-	
+
+
 	/**
 	 *	Get the channel topic information
 	 */
@@ -210,23 +210,23 @@ class CoreChannel
 	{
 		return $this->aTopicInformation;
 	}
-	
-	
+
+
 	/**
 	 *	Get the channel ban list.
 	 */
 	public function getBanList()
 	{
 		CoreChannel::$mTemp = array();
-		
+
 		$pSocket = $this->pMaster->getCurrentSocket();
-		
+
 		$pSocket->Output("MODE {$this->sChannel} +b");
-		
+
 		$pSocket->executeCapture(function($sString)
 		{
 			$pMessage = Core::getMessageObject($sString);
-		
+
 			switch($pMessage->Numeric)
 			{
 				case "367":
@@ -237,41 +237,41 @@ class CoreChannel
 						'admin' => $pMessage->Parts[5],
 						'time' => $pMessage->Parts[6],
 					);
-					
+
 					return false;
 				}
-				
+
 				case "368":
 				{
 					return true;
 				}
 			}
-			
+
 			return false;
 		});
-		
+
 		$mTemp = CoreChannel::$mTemp;
 		CoreChannel::$mTemp = null;
-		
+
 		return $mTemp;
 	}
-	
-	
+
+
 	/**
 	 *	Get the channel invite list.
 	 */
 	public function getInviteList()
 	{
 		CoreChannel::$mTemp = array();
-		
+
 		$pSocket = $this->pMaster->getCurrentSocket();
-		
+
 		$pSocket->Output("MODE {$this->sChannel} +I");
-		
+
 		$pSocket->executeCapture(function($sString)
 		{
 			$pMessage = Core::getMessageObject($sString);
-		
+
 			switch($pMessage->Numeric)
 			{
 				case "346":
@@ -282,41 +282,41 @@ class CoreChannel
 						'admin' => $pMessage->Parts[5],
 						'time' => $pMessage->Parts[6],
 					);
-					
+
 					return false;
 				}
-				
+
 				case "347":
 				{
 					return true;
 				}
 			}
-			
+
 			return false;
 		});
-		
+
 		$mTemp = CoreChannel::$mTemp;
 		CoreChannel::$mTemp = null;
-		
+
 		return $mTemp;
 	}
-	
-	
+
+
 	/**
 	 *	Get the channel exception list.
 	 */
 	public function getExceptionList()
 	{
 		CoreChannel::$mTemp = array();
-		
+
 		$pSocket = $this->pMaster->getCurrentSocket();
-		
+
 		$pSocket->Output("MODE {$this->sChannel} +e");
-		
+
 		$pSocket->executeCapture(function($sString)
 		{
 			$pMessage = Core::getMessageObject($sString);
-		
+
 			switch($pMessage->Numeric)
 			{
 				case "348":
@@ -327,26 +327,26 @@ class CoreChannel
 						'admin' => $pMessage->Parts[5],
 						'time' => $pMessage->Parts[6],
 					);
-					
+
 					return false;
 				}
-				
+
 				case "349":
 				{
 					return true;
 				}
 			}
-			
+
 			return false;
 		});
-		
+
 		$mTemp = CoreChannel::$mTemp;
 		CoreChannel::$mTemp = null;
-		
+
 		return $mTemp;
 	}
-	
-	
+
+
 		/**
 	 *	Checks if that user has voice in that channel. Voicers have the
 	 *	mode ' + '.
@@ -357,11 +357,11 @@ class CoreChannel
 		{
 			return false;
 		}
-		
+
 		return preg_match('/[qaohv]/', $this->pUsers->$sUser) == true;
 	}
-	
-	
+
+
 	/**
 	 *	Checks if that user has half-op in that channel. Half operators
 	 *	have the mode ' % ', and may not be available on all networks.
@@ -372,11 +372,11 @@ class CoreChannel
 		{
 			return false;
 		}
-		
+
 		return preg_match('/[qaoh]/', $this->pUsers->$sUser) == true;
 	}
-	
-	
+
+
 	/**
 	 *	Checks if that user has operator in that channel. Operators have
 	 *	the mode ' @ '.
@@ -387,11 +387,11 @@ class CoreChannel
 		{
 			return false;
 		}
-		
+
 		return preg_match('/[qao]/', $this->pUsers->$sUser) == true;
 	}
-	
-	
+
+
 	/**
 	 *	Checks if that user has admin in that channel. Admins have the
 	 *	mode ' & ', and may not be available on all networks.
@@ -402,22 +402,22 @@ class CoreChannel
 		{
 			return false;
 		}
-		
+
 		return preg_match('/[qa]/', $this->pUsers->$sUser) == true;
 	}
-	
-	
+
+
 	/**
 	 *	Checks if that user has owner in that channel. Owners have the
 	 *	mode ' ~ ', and may not be available on all networks.
 	 */
 	public function isUserOwner($sUser)
-	{	
+	{
 		if(!isset($this->pUsers->$sUser))
 		{
 			return false;
 		}
-		
+
 		return preg_match('/[q]/', $this->pUsers->$sUser) == true;
 	}
 }

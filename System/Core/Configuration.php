@@ -4,9 +4,9 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
- *	Version:        <version>
- *	Git commit:     <commitHash>
- *	Committed at:   <commitTime>
+ *	Version:        2.0.0-Alpha
+ *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
+ *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -25,41 +25,41 @@ class CoreConfiguration
 		{
 			return false;
 		}
-		
+
 		$aConfiguration = parse_ini_file($sLocation, true);
-		
+
 		if(!is_array($aConfiguration) || count($aConfiguration) <= 1)
 		{
 			println(" * Sorry, looks like the network {$sConfigName} failed to load!");
 			return false;
 		}
-		
+
 		$pConfig = new stdClass();
-		
+
 		$bSlave = false;
-		
+
 		foreach($aConfiguration as $sConfigKey => $aConfigObject)
 		{
 			if($sConfigKey[0] == "~")
 			{
 				$sConfigKey = substr($sConfigKey, 1);
 				$pConfig->$sConfigKey = (object) $aConfigObject;
-				
+
 				continue;
 			}
-			
+
 			$aConfigObject = array_merge(array("nickname" => $sConfigKey), $aConfigObject, array("slave" => $bSlave));
 			$pConfig->Bots[$sConfigKey] = (object) $aConfigObject;
-			
+
 			$bSlave = true;
 		}
-		
+
 		self::verifyConfiguration($pConfig);
-		
+
 		return Core::addInstance($sConfigName, new CoreMaster($pConfig));
 	}
-	
-	
+
+
 	/**
 	 *	Ensures that the required variables are indeed in memory.
 	 */
@@ -67,36 +67,36 @@ class CoreConfiguration
 	{
 		$pConfig->Server = new stdClass();
 		$pNetwork = $pConfig->Network;
-		
+
 		if(empty($pNetwork->delimiter))
 		{
 			$pNetwork->delimiter = "!";
 		}
-		
+
 		if(empty($pNetwork->rotation))
 		{
 			$pNetwork->rotation = SEND_DEF;
 		}
-		
+
 		if(empty($pNetwork->quitmsg))
 		{
 			$pNetwork->quitmsg = "OUTRAGEbot is going to bed :(";
 		}
-		
+
 		if(empty($pNetwork->version))
 		{
 			$pNetwork->version = "OUTRAGEbot ".BOT_VERSION." (rel. ".BOT_RELDATE."); David Weston; http://outrage.typefish.co.uk";
 		}
-		
+
 		if(empty($pNetwork->perform))
 		{
 			$pNetwork->perform = array();
 		}
-		
+
 		$pNetwork->ownerArray = array();
 		$pNetwork->scriptArray = array();
 		$pNetwork->channelArray = array();
-		
+
 		if(!empty($pNetwork->owners))
 		{
 			foreach(explode(',', $pNetwork->owners) as $sOwnerAddress)
@@ -104,7 +104,7 @@ class CoreConfiguration
 				$pNetwork->ownerArray[] = trim($sOwnerAddress);
 			}
 		}
-		
+
 		if(!empty($pNetwork->channels))
 		{
 			foreach(explode(',', $pNetwork->channels) as $sChannelName)
@@ -112,7 +112,7 @@ class CoreConfiguration
 				$pNetwork->channelArray[] = trim($sChannelName);
 			}
 		}
-		
+
 		if(!empty($pNetwork->scripts))
 		{
 			foreach(explode(',', $pNetwork->scripts) as $sScriptName)
@@ -120,7 +120,7 @@ class CoreConfiguration
 				$pNetwork->scriptArray[] = trim($sScriptName);
 			}
 		}
-		
+
 		return $pConfig;
 	}
 }

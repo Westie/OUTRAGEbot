@@ -4,9 +4,9 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
- *	Version:        <version>
- *	Git commit:     <commitHash>
- *	Committed at:   <commitTime>
+ *	Version:        2.0.0-Alpha
+ *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
+ *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -19,88 +19,88 @@ class Core
 		$aModules = array(),
 		$aInstances = array(),
 		$pCurrentInstance = null;
-	
-	
+
+
 	public static
 		$aScriptCache = array(),
 		$pFunctionList = null;
-	
-	
+
+
 	/**
 	 *	Called when the core class is loaded.
 	 */
 	static function initClass()
 	{
 		self::$pFunctionList = new stdClass();
-		
+
 		error_reporting(E_ALL | E_STRICT);
 		set_error_handler(array("Core", "errorHandler"));
 	}
-	
-	
+
+
 	/**
 	 *	Called to load a module
 	 */
 	static function Module($sModule)
 	{
 		$sModuleLocation = ROOT."/System/Modules/{$sModule}.php";
-		
+
 		if(file_exists($sModuleLocation))
 		{
 			include $sModuleLocation;
-			
+
 			$sModuleName = "Module{$sModule}";
 			self::$aModules[] = $sModuleName;
-			
+
 			$sModuleName::initModule();
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
-	
-	
+
+
 	/**
 	 *	Called to load a core module
 	 */
 	static function LModule($sModule)
 	{
 		$sModuleLocation = ROOT."/System/Core/{$sModule}.php";
-		
+
 		if(file_exists($sModuleLocation))
 		{
 			include $sModuleLocation;
-			
+
 			$sModuleName = "Core{$sModule}";
 			self::$aModules[] = $sModuleName;
-			
+
 			$sModuleName::initModule();
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
-	
-	
+
+
 	/**
 	 *	Called to load a system class.
 	 */
 	static function Library($sClass)
 	{
 		$sClassLocation = ROOT."/System/Core/{$sClass}.php";
-		
+
 		if(file_exists($sClassLocation))
 		{
 			include $sClassLocation;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
-	
+
+
 	/**
 	 *	Called on every iteration, deals with global modules.
 	 */
@@ -114,8 +114,8 @@ class Core
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 *	Called on every iteration, deals with the sockets.
 	 */
@@ -124,12 +124,12 @@ class Core
 		foreach(self::$aInstances as $pInstance)
 		{
 			self::$pCurrentInstance = $pInstance;
-			
+
 			$pInstance->Socket();
 		}
 	}
-	
-	
+
+
 	/**
 	 *	Gets the current CoreMaster instance.
 	 */
@@ -137,8 +137,8 @@ class Core
 	{
 		return self::$pCurrentInstance;
 	}
-	
-	
+
+
 	/**
 	 *	Gets a specific CoreMaster instance.
 	 */
@@ -148,11 +148,11 @@ class Core
 		{
 			return self::$aInstances[$sInstanceName];
 		}
-		
+
 		return null;
 	}
-	
-	
+
+
 	/**
 	 *	Scan the configuration directory for settings.
 	 */
@@ -163,8 +163,8 @@ class Core
 			CoreConfiguration::ParseLocation($sDirectory);
 		}
 	}
-	
-	
+
+
 	/**
 	 *	Adds an instance of CoreMaster to the core.
 	 */
@@ -172,8 +172,8 @@ class Core
 	{
 		self::$aInstances[$sInstance] = $pInstance;
 	}
-	
-	
+
+
 	/**
 	 *	Removes an instance of CoreMaster.
 	 *	This will probably only work once I fix some 'PHP bugs'
@@ -182,8 +182,8 @@ class Core
 	{
 		unset(self::$aInstances[$sInstance]);
 	}
-	
-	
+
+
 	/**
 	 *	The main handler function. This function delegates
 	 *	everything.
@@ -196,9 +196,9 @@ class Core
 			{
 				continue;
 			}
-			
+
 			$mReturn = null;
-			
+
 			foreach($aEventHandlers as $pEventHandler)
 			{
 				if($pEventHandler->argFormat === null)
@@ -214,24 +214,24 @@ class Core
 					$mReturn = self::CustomHandler($pInstance, $pMessage, $pEventHandler);
 				}
 			}
-			
+
 			if($mReturn == END_EVENT_EXEC)
 			{
 				return true;
 			}
 		}
-		
+
 		$sNumeric = !is_numeric($pMessage->Numeric) ? $pMessage->Numeric : 'N'.$pMessage->Numeric;
-		
+
 		if(!method_exists("CoreHandler", $sNumeric))
 		{
 			return CoreHandler::Unhandled($pInstance, $pMessage);
 		}
-		
+
 		return CoreHandler::$sNumeric($pInstance, $pMessage);
 	}
-	
-	
+
+
 	/**
 	 *	Deals with the default handlers.
 	 */
@@ -241,11 +241,11 @@ class Core
 		{
 			return call_user_func($pEventHandler->callback, $pMessage);
 		}
-		
+
 		return call_user_func($pEventHandler->callback, $pInstance, $pMessage);
 	}
-	
-	
+
+
 	/**
 	 *	Deals with command handlers.
 	 */
@@ -253,23 +253,23 @@ class Core
 	{
 		$sCommandName = $pInstance->pConfig->Network->delimiter.$pEventHandler->arguments;
 		$aCommandPayload = explode(' ', $pMessage->Payload, 2);
-		
+
 		if($sCommandName != $aCommandPayload[0])
 		{
 			return;
 		}
-		
+
 		$aCommandPayload[1] = isset($aCommandPayload[1]) ? $aCommandPayload[1] : "";
-		
+
 		if(is_array($pEventHandler->callback) && ($pEventHandler->callback[0] instanceof Script))
 		{
 			return call_user_func($pEventHandler->callback, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[1]);
 		}
-		
+
 		return call_user_func($pEventHandler->callback, $pInstance, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[1]);
 	}
-	
-	
+
+
 	/**
 	 *	Deals with the more complex custom command handlers.
 	 */
@@ -277,7 +277,7 @@ class Core
 	{
 		$aArgumentList = preg_split('//', $pEventHandler->argFormat, -1, PREG_SPLIT_NO_EMPTY);
 		$aArguments[] = $pInstance;
-		
+
 		foreach($aArgumentList as $cArgument)
 		{
 			switch($cArgument)
@@ -287,25 +287,25 @@ class Core
 					$aArguments[] = $pMessage->Parts;
 					break;
 				}
-				
+
 				case 'm':
 				{
 					$aArguments[] = $pMessage;
 					break;
 				}
-				
+
 				case 'p':
 				{
 					$aArguments[] = $pMessage->Payload;
 					break;
 				}
-				
+
 				case 'r':
 				{
 					$aArguments[] = $pMessage->Raw;
 					break;
 				}
-				
+
 				case 'u':
 				{
 					$aArguments[] = $pMessage->User;
@@ -313,11 +313,11 @@ class Core
 				}
 			}
 		}
-		
+
 		return call_user_func_array($pEventHandler->callback, $aArguments);
 	}
-	
-	
+
+
 	/**
 	 *	Adds a virtual function into the bot.
 	 */
@@ -327,12 +327,12 @@ class Core
 		{
 			return false;
 		}
-		
+
 		self::$pFunctionList->$sFunctionName = $cMethodCallback;
 		return true;
 	}
-	
-	
+
+
 	/**
 	 *	Removes a virtual function from the bot.
 	 */
@@ -340,8 +340,8 @@ class Core
 	{
 		unset(self::$pFunctionList->$sFunctionName);
 	}
-	
-	
+
+
 	/**
 	 *	Error handler for OUTRAGEbot
 	 */
@@ -355,41 +355,41 @@ class Core
 			"line" => $errline,
 		);
 	}
-	
-	
+
+
 	/**
 	 *	Return (and purge if necessary) the error log.
 	 */
 	static function getErrorLog($bPurge = false)
 	{
 		$aErrorLog = self::$aErrorLog;
-		
+
 		if($bPurge)
 		{
 			self::$aErrorLog = array();
 		}
-		
+
 		return $aErrorLog;
 	}
-	
-	
+
+
 	/**
 	 *	Parse a string from the IRC server.
 	 */
 	static function getMessageObject($sString)
 	{
 		$pMessage = new stdClass();
-		
+
 		$pMessage->Raw = $sString;
 		$pMessage->Parts = explode(' ', $sString);
 		$pMessage->Numeric = $pMessage->Parts[1];
 		$pMessage->User = CoreMaster::parseHostmask(substr($pMessage->Parts[0], 1));
 		$pMessage->Payload = (($iPosition = strpos($sString, ':', 2)) !== false) ? substr($sString, $iPosition + 1) : '';
-		
+
 		return $pMessage;
 	}
-	
-	
+
+
 	/**
 	 *	What? Someone spelled a function call wrong? Let's protect against a crash!
 	 */

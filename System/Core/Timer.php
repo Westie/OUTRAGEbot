@@ -4,9 +4,9 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
- *	Version:        <version>
- *	Git commit:     <commitHash>
- *	Committed at:   <commitTime>
+ *	Version:        2.0.0-Alpha
+ *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
+ *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -16,18 +16,18 @@ class CoreTimer
 {
 	private static
 		$aTimers = array();
-	
-	
+
+
 	/**
 	 *	Called when the module is loaded.
 	 */
 	static function initModule()
-	{		
+	{
 		Core::introduceFunction("addTimer", array(__CLASS__, "Add"));
 		Core::introduceFunction("removeTimer", array(__CLASS__, "Remove"));
 	}
-	
-	
+
+
 	/**
 	 *	Called on every loop iteration.
 	 */
@@ -37,46 +37,46 @@ class CoreTimer
 		{
 			return;
 		}
-		
+
 		foreach(self::$aTimers as $sTimerKey => &$aTimerInfo)
 		{
 			if(microtime(true) <= $aTimerInfo['time'])
 			{
 				continue;
 			}
-			
+
 			call_user_func_array($aTimerInfo['call'], $aTimerInfo['args']);
-			
+
 			$aTimerInfo['time'] = (float) microtime(true) + (float) $aTimerInfo['interval'];
-			
+
 			if($aTimerInfo['repeat'] == -1)
 			{
 				continue;
 			}
-			
+
 			--$aTimerInfo['repeat'];
-			
+
 			if($aTimerInfo['repeat'] == 0)
 			{
 				unset(self::$aTimers[$sTimerKey]);
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 *	Add a timer
 	 */
 	static function Add($cCallback, $iInterval, $iRepeat = 1, $aArguments = array(), $pContext = null)
 	{
 		$sTimerKey = substr(sha1(time().uniqid()), 4, 10);
-		
+
 		# A little hack, we can presume that it's this script...
 		if(is_array($cCallback) && ($cCallback[0] instanceof Script))
 		{
 			$cCallback[0]->aTimerScriptLocalCache[] = $sTimerKey;
 		}
-		
+
 		self::$aTimers[$sTimerKey] = array
 		(
 			"id" => $sTimerKey,
@@ -87,11 +87,11 @@ class CoreTimer
 			"args" => $aArguments,
 			"context" => $pContext,
 		);
-		
+
 		return $sTimerKey;
 	}
-	
-	
+
+
 	/**
 	 *	Remove a timer
 	 */

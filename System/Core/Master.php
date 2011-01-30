@@ -4,9 +4,9 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
- *	Version:        <version>
- *	Git commit:     <commitHash>
- *	Committed at:   <commitTime>
+ *	Version:        2.0.0-Alpha
+ *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
+ *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -18,58 +18,58 @@ class CoreMaster
 		$pSocket = null,
 		$pMessage = null,
 		$pConfig = null,
-		
+
 		$pEventHandlers = null,
 		$pCurrentScript = null,
 		$pChannels = null;
-	
-	
+
+
 	private
 		$aScripts = array(),
 		$aSockets = array(),
-		
+
 		$pBotItter = null;
-	
-	
+
+
 	/**
 	 *	Called when the network is loaded.
 	 */
 	public function __construct($pConfig)
 	{
 		$this->pConfig = $pConfig;
-		
+
 		$this->pMessage = new stdClass();
 		$this->pChannels = new stdClass();
 		$this->pEventHandlers = new stdClass();
-		
+
 		$this->pBotItter = (object) array
 		(
 			"iIndex" => 0,
 			"iPosition" => 0,
 		);
-		
+
 		$pNetwork = $this->pConfig->Network;
-		
+
 		foreach($pNetwork->scriptArray as $sScriptName)
 		{
 			$this->activateScript($sScriptName);
 		}
-		
+
 		foreach($this->pConfig->Bots as $pBot)
-		{			
+		{
 			$pBot->handle = $pBot->nickname;
 			$pBot->host = $pNetwork->host;
 			$pBot->port = $pNetwork->port;
-			
+
 			$this->aSockets[] = new CoreSocket($this, $pBot);
-			
+
 			println(" - Loaded {$pNetwork->name}/{$pBot->handle}");
-			
+
 			++$this->pBotItter->iCount;
 		}
 	}
-	
-	
+
+
 	/**
 	 *	Function to scan through all the sockets.
 	 */
@@ -80,25 +80,25 @@ class CoreMaster
 			$pSocket->Socket();
 		}
 	}
-	
-	
+
+
 	/**
 	 *	This function gets the next child along in the queue.
 	 */
 	public function getNextSocket()
-	{	
+	{
 		if($this->pBotItter->iIndex >= $this->pBotItter->iCount)
 		{
 			$this->pBotItter->iIndex = 0;
 		}
-		
+
 		$pBot = $this->aSockets[$this->pBotItter->iIndex];
 		++$this->pBotItter->iIndex;
-		
+
 		return $pBot;
 	}
-	
-	
+
+
 	/**
 	 *	Returns the current in use socket.
 	 */
@@ -106,8 +106,8 @@ class CoreMaster
 	{
 		return $this->pSocket;
 	}
-	
-	
+
+
 	/**
 	 *	Returns a list of all callable functions in OUTRAGEbot.
 	 *	You have got to love Reflection.
@@ -116,21 +116,21 @@ class CoreMaster
 	{
 		$pClass = new ReflectionClass(__CLASS__);
 		$aMethods = array();
-		
+
 		foreach($pClass->getMethods() as $pMethod)
 		{
 			$aMethods[] = $pMethod->name;
 		}
-		
+
 		foreach(array_keys(Core::$pFunctionList) as $sFunctionName)
 		{
 			$aMethods[] = $sFunctionName;
 		}
-		
+
 		return $aMethods;
 	}
-	
-	
+
+
 	/**
 	 *	This function returns the network configuration.
 	 */
@@ -138,8 +138,8 @@ class CoreMaster
 	{
 		return $sConfigKey == null ? $this->pConfig->Network : $this->pConfig->Network->$sConfigKey;
 	}
-	
-	
+
+
 	/**
 	 *	This function returns the network configuration.
 	 */
@@ -147,8 +147,8 @@ class CoreMaster
 	{
 		return $sConfigKey == null ? $this->pConfig->Server : $this->pConfig->Server->$sConfigKey;
 	}
-	
-	
+
+
 	/**
 	 *	This function returns the current socket's configuration.
 	 */
@@ -156,32 +156,32 @@ class CoreMaster
 	{
 		return $sConfigKey == null ? $this->pConfig->Socket : $this->pConfig->Socket->$sConfigKey;
 	}
-	
-	
+
+
 	/**
 	 *	This function to deal with the input data.
 	 */
 	public function Portkey(CoreSocket $pSocket, $sString)
 	{
 		$pMessage = Core::getMessageObject($sString);
-		
+
 		if($pMessage->Parts[0] == "PING")
 		{
 			return $pSocket->Output("PONG ".$pMessage->Parts[1]);
 		}
-		
+
 		$this->pMessage = $pMessage;
 		$this->pSocket = $pSocket;
-		
+
 		if($pSocket->isSocketSlave())
 		{
 			return CoreHandler::Unhandled($this, $pMessage);
 		}
-		
+
 		return Core::Handler($this, $pMessage);
 	}
-	
-	
+
+
 	/**
 	 *	Send stuff to the outside world.
 	 */
@@ -191,29 +191,29 @@ class CoreMaster
 		{
 			$mOption = $this->pConfig->Network->rotation;
 		}
-		
+
 		switch($mOption)
 		{
 			case SEND_MAST:
 			{
 				return $this->aSockets[0]->Output($sRawString);
 			}
-			
+
 			case SEND_CURR:
 			{
 				return $this->pSocket->Output($sRawString);
 			}
-			
+
 			case SEND_ALL:
 			{
 				foreach($this->aSockets as $pSocket)
 				{
 					$pSocket->Output($sRawString);
 				}
-				
+
 				return;
 			}
-			
+
 			case SEND_DIST:
 			default:
 			{
@@ -221,8 +221,8 @@ class CoreMaster
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 *	Sends a message to the specified channel.
 	 */
@@ -230,8 +230,8 @@ class CoreMaster
 	{
 		return $this->Raw("PRIVMSG {$sChannel} :{$sMessage}", $mOption);
 	}
-	
-	
+
+
 	/**
 	 *	Sends an action to the specified channel.
 	 */
@@ -239,8 +239,8 @@ class CoreMaster
 	{
 		return $this->Raw("PRIVMSG {$sChannel} :".chr(1)."ACTION {$sMessage}".chr(1), $mOption);
 	}
-	
-	
+
+
 	/**
 	 *	Sends a notice to the specified channel.
 	 */
@@ -248,8 +248,8 @@ class CoreMaster
 	{
 		return $this->Raw("NOTICE {$sNickname} :{$sMessage}", $mOption);
 	}
-	
-	
+
+
 	/**
 	 *	Sends a CTCP reply.
 	 */
@@ -257,8 +257,8 @@ class CoreMaster
 	{
 		return $this->Raw("NOTICE {$sNickname} :".chr(1).trim($sMessage).chr(1), SEND_CURR);
 	}
-	
-	
+
+
 	/**
 	 *	Sends a CTCP request.
 	 *	I'll eventually make this.
@@ -268,8 +268,8 @@ class CoreMaster
 		$this->Raw("PRIVMSG {$sNickname} :".chr(1).trim($sRequest).chr(1), SEND_CURR);
 		return null;
 	}
-	
-	
+
+
 	/**
 	 *	Checks if that user has voice in that channel. Voicers have the
 	 *	mode ' + '.
@@ -277,16 +277,16 @@ class CoreMaster
 	public function isUserVoice($sChannel, $sUser)
 	{
 		$pChannel = $this->getChannel($sChannel);
-		
+
 		if(!isset($pChannel->pUsers->$sUser))
 		{
 			return false;
 		}
-		
+
 		return preg_match('/[qaohv]/', $pChannel->pUsers->$sUser) == true;
 	}
-	
-	
+
+
 	/**
 	 *	Checks if that user has half-op in that channel. Half operators
 	 *	have the mode ' % ', and may not be available on all networks.
@@ -294,16 +294,16 @@ class CoreMaster
 	public function isUserHalfOp($sChannel, $sUser)
 	{
 		$pChannel = $this->getChannel($sChannel);
-		
+
 		if(!isset($pChannel->pUsers->$sUser))
 		{
 			return false;
 		}
-		
+
 		return preg_match('/[qaoh]/', $pChannel->pUsers->$sUser) == true;
 	}
-	
-	
+
+
 	/**
 	 *	Checks if that user has operator in that channel. Operators have
 	 *	the mode ' @ '.
@@ -311,16 +311,16 @@ class CoreMaster
 	public function isUserOp($sChannel, $sUser)
 	{
 		$pChannel = $this->getChannel($sChannel);
-		
+
 		if(!isset($pChannel->pUsers->$sUser))
 		{
 			return false;
 		}
-		
+
 		return preg_match('/[qao]/', $pChannel->pUsers->$sUser) == true;
 	}
-	
-	
+
+
 	/**
 	 *	Checks if that user has admin in that channel. Admins have the
 	 *	mode ' & ', and may not be available on all networks.
@@ -328,33 +328,33 @@ class CoreMaster
 	public function isUserAdmin($sChannel, $sUser)
 	{
 		$pChannel = $this->getChannel($sChannel);
-		
+
 		if(!isset($pChannel->pUsers->$sUser))
 		{
 			return false;
 		}
-		
+
 		return preg_match('/[qa]/', $pChannel->pUsers->$sUser) == true;
 	}
-	
-	
+
+
 	/**
 	 *	Checks if that user has owner in that channel. Owners have the
 	 *	mode ' ~ ', and may not be available on all networks.
 	 */
 	public function isUserOwner($sChannel, $sUser)
-	{	
+	{
 		$pChannel = $this->getChannel($sChannel);
-		
+
 		if(!isset($pChannel->pUsers->$sUser))
 		{
 			return false;
 		}
-		
+
 		return preg_match('/[q]/', $pChannel->pUsers->$sUser) == true;
 	}
-		
-	
+
+
 	/**
 	 *	Check if the current, active IRC user is a bot admin.
 	 */
@@ -362,8 +362,8 @@ class CoreMaster
 	{
 		return in_array($this->pMessage->User->Hostname, $this->pConfig->Network->ownerArray) !== false;
 	}
-	
-	
+
+
 	/**
 	 *	Get the users username from a hostname string.
 	 */
@@ -371,8 +371,8 @@ class CoreMaster
 	{
 		return self::parseHostmask($sHostname)->Username;
 	}
-	
-	
+
+
 	/**
 	 *	Get the users nickname from a hostname string.
 	 */
@@ -380,8 +380,8 @@ class CoreMaster
 	{
 		return self::parseHostmask($sHostname)->Nickname;
 	}
-	
-	
+
+
 	/**
 	 *	Get the users hostname from a hostname string.
 	 */
@@ -389,15 +389,15 @@ class CoreMaster
 	{
 		return self::parseHostmask($sHostname)->Hostname;
 	}
-	
-	
+
+
 	/**
 	 *	Get the hostmask info as an array.
 	 */
 	static function parseHostmask($sHostname)
 	{
 		$bMatch = preg_match('/(.*)!(.*)@(.*)/', $sHostname, $aDetails);
-		
+
 		if($bMatch)
 		{
 			return (object) array
@@ -417,27 +417,27 @@ class CoreMaster
 			);
 		}
 	}
-	
-	
+
+
 	/**
 	 *	Activate a Script from the Script directory.
 	 */
 	public function activateScript($sScriptName)
 	{
 		$sIdentifier = CoreUtilities::getScriptIdentifier($sScriptName);
-		
+
 		if($sIdentifier == false)
 		{
 			return false;
 		}
-		
+
 		println(" * Activated script '{$sScriptName}'");
-		
+
 		$this->aScripts[$sScriptName] = new $sIdentifier($this, $sScriptName);
 		return true;
 	}
-	
-	
+
+
 	/**
 	 *	Remove a Script from the local instance.
 	 */
@@ -447,28 +447,28 @@ class CoreMaster
 		{
 			return false;
 		}
-		
+
 		foreach($this->aScripts[$sScriptName]->aHandlerScriptLocalCache as $sHandlerID)
 		{
 			$this->removeEventHandler($sHandlerID);
 		}
-		
+
 		foreach($this->aScripts[$sScriptName]->aTimerScriptLocalCache as $sTimerID)
 		{
 			$this->removeTimer($sTimerID);
 		}
 
 		$this->aScripts[$sScriptName]->onDestruct();
-		
+
 		println(" * Deactivated script '{$sScriptName}'");
-		
+
 		unset($this->aScripts[$sScriptName]->aHandlerScriptLocalCache);
 		unset($this->aScripts[$sScriptName]);
-		
+
 		return true;
 	}
-	
-	
+
+
 	/**
 	 *	Reactivate a Script, used when there's an update for instance.
 	 */
@@ -477,8 +477,8 @@ class CoreMaster
 		$this->deactivateScript($sScriptName);
 		return $this->activateScript($sScriptName);
 	}
-	
-	
+
+
 	/**
 	 *	Return a list of activated Scripts.
 	 */
@@ -486,8 +486,8 @@ class CoreMaster
 	{
 		return array_keys($this->aScripts);
 	}
-	
-	
+
+
 	/**
 	 *	Add an event handler into the local instance.
 	 */
@@ -497,10 +497,10 @@ class CoreMaster
 		{
 			$cCallback = array($this->pCurrentScript, $cCallback);
 		}
-		
+
 		$sHandlerID = uniqid("vca");
 		$sEventName = strtoupper($sEventName);
-		
+
 		$this->pCurrentScript->aHandlerScriptLocalCache[] = $sHandlerID;
 		$this->pEventHandlers->{$sEventName}[$sHandlerID] = (object) array
 		(
@@ -508,21 +508,21 @@ class CoreMaster
 			"argFormat" => $sArgumentFormat,
 			"arguments" => $mArguments,
 		);
-		
+
 		return $sHandlerID;
 	}
-	
-	
+
+
 	/**
 	 *	Add a command handler into the local instance.
 	 *	I'm cheating with this, aren't I?
 	 */
 	public function addCommandHandler($sCommandName, $cCallback)
-	{		
+	{
 		return $this->addEventHandler('PRIVMSG', $cCallback, 120, $sCommandName);
 	}
-	
-	
+
+
 	/**
 	 *	Remove an event handler from the local instance.
 	 */
@@ -537,15 +537,15 @@ class CoreMaster
 					unset($pEvent[$sHandlerID]);
 				}
 			}
-			
+
 			if(count($pEvent) == 0)
 			{
 				unset($pEvent);
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 *	Trigger an event for loaded Scripts.
 	 */
@@ -553,42 +553,42 @@ class CoreMaster
 	{
 		$aArguments = func_get_args();
 		$sEventName = array_shift($aArguments);
-		
+
 		foreach($this->aScripts as $pScriptInstance)
 		{
 			$mReturn = null;
-			
+
 			if(method_exists($pScriptInstance, $sEventName))
 			{
 				$mReturn = call_user_func_array(array($pScriptInstance, $sEventName), $aArguments);
 			}
-			
+
 			if($mReturn == END_EVENT_EXEC)
 			{
 				return;
 			}
 		}
-		
+
 		return;
 	}
-	
-	
+
+
 	/**
 	 *	Retrieve the channel object.
 	 */
 	public function getChannel($sChannel)
 	{
 		$sChannel = strtolower($sChannel);
-		
+
 		if(!isset($this->pChannels->$sChannel))
 		{
 			$this->pChannels->$sChannel = new CoreChannel($this, $sChannel);
 		}
-		
+
 		return $this->pChannels->$sChannel;
 	}
-	
-	
+
+
 	/**
 	 *	Adds formatting to the text.
 	 */
@@ -596,17 +596,17 @@ class CoreMaster
 	{
 		return Format($sInputText);
 	}
-	
-	
+
+
 	/**
 	 *	Strips the text of formatting.
 	 */
-	public function stripFormat($sText) 
+	public function stripFormat($sText)
 	{
 		return preg_replace("/[\002\017\001\026\001\037]/", "", $sText);
 	}
-	
-	
+
+
 	/**
 	 *	Strips the text of colours.
 	 */
@@ -614,18 +614,18 @@ class CoreMaster
 	{
 		return preg_replace("/\003[0-9]{1,2}(,[0-9]{1,2})?/", "", $sText);
 	}
-	
-	
+
+
 	/**
 	 *	Strips the text of formatting and colours.
 	 */
 	public function stripAll($sText)
 	{
-		return preg_replace("/[\002\017\001\026\001\037]/", "", 
+		return preg_replace("/[\002\017\001\026\001\037]/", "",
 		preg_replace("/\003[0-9]{1,2}(,[0-9]{1,2})?/", "", $sText));
 	}
-	
-	
+
+
 	/**
 	 *	Makes the bot join a channel.
 	 */
@@ -633,24 +633,24 @@ class CoreMaster
 	{
 		return $this->Raw("JOIN {$sChannel}", $mOption);
 	}
-	
-	
+
+
 	/**
 	 *	Makes the bot leave a channel.
 	 */
 	public function Part($sChannel, $sReason = null, $mOption = SEND_DEF)
 	{
 		$sPart = "PART {$sChannel}";
-		
+
 		if($sReason != null)
 		{
 			$sPart .= " :{$sReason}";
 		}
-		
+
 		return $this->Raw($sPart, $mOption);
 	}
-	
-	
+
+
 	/**
 	 *	Invite a user to the channel
 	 */

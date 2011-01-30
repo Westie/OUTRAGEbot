@@ -4,9 +4,9 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
- *	Version:        <version>
- *	Git commit:     <commitHash>
- *	Committed at:   <commitTime>
+ *	Version:        2.0.0-Alpha
+ *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
+ *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -25,8 +25,8 @@ class Format
 		Inverse = "\026",
 		Tab = "\011",
 		Underline = "\037";
-		
-		
+
+
 	/**
 	 *	Defining colours
 	 */
@@ -47,8 +47,8 @@ class Format
 		Pink = "\00313",
 		DarkGrey = "\00314",
 		Grey = "\00315";
-	
-	
+
+
 	/**
 	 *	Defining backgrounds too!
 	 */
