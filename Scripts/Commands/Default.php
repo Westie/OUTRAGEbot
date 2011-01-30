@@ -79,6 +79,12 @@ class Commands extends Script
 			return END_EVENT_EXEC;
 		}
 		
+		if(!$sArguments)
+		{
+			$this->Notice($sNickname, "Usage: !cmdadd [Command Name] [PHP Evaluation Code]");
+			return END_EVENT_EXEC;
+		}
+		
 		$aArguments = explode(' ', $sArguments, 2);
 		
 		$sCommandName = $aArguments[0];
@@ -114,6 +120,12 @@ class Commands extends Script
 	{
 		if(!$this->isAdmin())
 		{
+			return END_EVENT_EXEC;
+		}
+		
+		if(!$sArguments)
+		{
+			$this->Notice($sNickname, "Usage: !cmddel [Command Name]");
 			return END_EVENT_EXEC;
 		}
 		
