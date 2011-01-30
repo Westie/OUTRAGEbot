@@ -17,7 +17,7 @@ class CoreTimer
 	{		
 		Core::introduceFunction("addTimer", array(__CLASS__, "Add"));
 		Core::introduceFunction("removeTimer", array(__CLASS__, "Remove"));
-	}
+	} 
 	
 	
 	/**
