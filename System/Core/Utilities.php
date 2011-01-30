@@ -27,7 +27,7 @@ class CoreUtilities
 	 *	Parsing and modifying the Script files.
 	 *	Caution: Messy code! Needs improving!
 	 */
-	static function getScriptIdentifier($sScriptName)
+	public static function getScriptIdentifier($sScriptName)
 	{
 		$sScriptLocation = ROOT."/Scripts/{$sScriptName}/Default.php";
 		
@@ -78,7 +78,7 @@ class CoreUtilities
 	/**
 	 *	Internal: Function to get the date since something.
 	 */
-	static function Duration($iDate1, $iDate2 = null)
+	public static function Duration($iDate1, $iDate2 = null)
 	{
 		if(empty($iDate2))
 		{
@@ -138,7 +138,7 @@ class CoreUtilities
 	/**
 	 *	Replaces the character with a letter in a mode string.
 	 */
-	static function modeCharToLetter($sModeString)
+	public static function modeCharToLetter($sModeString)
 	{
 		return str_replace
 		(
@@ -168,7 +168,7 @@ class CoreUtilities
 	/**
 	 *	Replaces the letter with a character in a mode string.
 	 */
-	static function modeLetterToChar($sModeString)
+	public static function modeLetterToChar($sModeString)
 	{
 		return str_replace
 		(
