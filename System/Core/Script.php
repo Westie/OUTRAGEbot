@@ -1,6 +1,14 @@
 <?php
 /**
- *	OUTRAGEbot development
+ *	OUTRAGEbot - PHP 5.3 based IRC bot
+ *
+ *	Author:		David Weston <westie@typefish.co.uk>
+ *
+ *	Version:	release name
+ *	Git commit:	commit hash
+ *	Committed at:	update time
+ *
+ *	Licence:	http://www.typefish.co.uk/licences/
  */
 
 
