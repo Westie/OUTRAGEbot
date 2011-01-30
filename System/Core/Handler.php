@@ -409,7 +409,7 @@ class CoreHandler
 			
 			case "UPTIME":
 			{
-				$aDuration = CoreUtilities::Duration($pInstance->pCurrentSocket->pConfig->StartTime);
+				$aDuration = CoreUtilities::Duration($pInstance->pSocket->pConfig->StartTime);
 				$sString = "UPTIME {$aDuration['weeks']} weeks, {$aDuration['days']} days, {$aDuration['hours']} hours, {$aDuration['minutes']} minutes, {$aDuration['seconds']} seconds.";
 				
 				return $pInstance->ctcpReply($pMessage->User->Nickname, $sString);
@@ -417,7 +417,7 @@ class CoreHandler
 			
 			case "START":
 			{
-				return $pInstance->ctcpReply($pMessage->User->Nickname, "START ".date("d/m/Y H:i:s", time($pInstance->pCurrentSocket->pConfig->StartTime)));
+				return $pInstance->ctcpReply($pMessage->User->Nickname, "START ".date("d/m/Y H:i:s", time($pInstance->pSocket->pConfig->StartTime)));
 			}
 		}
 	}

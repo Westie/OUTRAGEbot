@@ -253,11 +253,12 @@ class CoreMaster
 	
 	/**
 	 *	Sends a CTCP request.
-	 *	Not fully implemented yet.
+	 *	I'll eventually make this.
 	 */
 	public function ctcpRequest($sNickname, $sRequest)
 	{
-		return $this->Raw("PRIVMSG {$sNickname} :".chr(1).trim($sRequest).chr(1), SEND_CURR);
+		$this->Raw("PRIVMSG {$sNickname} :".chr(1).trim($sRequest).chr(1), SEND_CURR);
+		return null;
 	}
 	
 	
@@ -489,7 +490,7 @@ class CoreMaster
 			$cCallback = array($this->pCurrentScript, $cCallback);
 		}
 		
-		$sHandlerID = uniqid("nat");
+		$sHandlerID = uniqid("vca");
 		$sEventName = strtoupper($sEventName);
 		
 		$this->pCurrentScript->aHandlerScriptLocalCache[] = $sHandlerID;

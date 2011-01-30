@@ -49,7 +49,7 @@ class CoreUtilities
 		}
 
 		$sClass = preg_replace("/(class[\s]+?)".$sScriptName."([\s]+?extends[\s]+?Script[\s]+?{)/", "\\1".$sIdentifier."\\2", $sClass);
-		$sFile = tempnam(dirname($sScriptLocation), "nat"); // Stops the __FILE__ bugs.
+		$sFile = tempnam(dirname($sScriptLocation), "vca"); // Stops the __FILE__ bugs.
 
 		file_put_contents($sFile, $sClass);				
 		unset($sClass); // Weight off the shoulders anyone?
