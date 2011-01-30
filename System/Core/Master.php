@@ -439,16 +439,21 @@ class CoreMaster
 			return false;
 		}
 		
-		foreach($this->aScripts[$sScriptName]->aHandlerCache as $sHandlerID)
+		foreach($this->aScripts[$sScriptName]->aHandlerScriptLocalCache as $sHandlerID)
 		{
 			$this->removeEventHandler($sHandlerID);
+		}
+		
+		foreach($this->aScripts[$sScriptName]->aTimerScriptLocalCache as $sTimerID)
+		{
+			$this->removeTimer($sTimerID);
 		}
 
 		$this->aScripts[$sScriptName]->onDestruct();
 		
 		println(" * Deactivated script '{$sScriptName}'");
 		
-		unset($this->aScripts[$sScriptName]->aHandlerCache);
+		unset($this->aScripts[$sScriptName]->aHandlerScriptLocalCache);
 		unset($this->aScripts[$sScriptName]);
 		
 		return true;
@@ -487,7 +492,7 @@ class CoreMaster
 		$sHandlerID = uniqid("nat");
 		$sEventName = strtoupper($sEventName);
 		
-		$this->pCurrentScript->aHandlerCache[] = $sHandlerID;
+		$this->pCurrentScript->aHandlerScriptLocalCache[] = $sHandlerID;
 		$this->pEventHandlers->{$sEventName}[$sHandlerID] = (object) array
 		(
 			"callback" => $cCallback,

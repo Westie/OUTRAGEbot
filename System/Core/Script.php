@@ -14,7 +14,8 @@ abstract class Script
 	public
 		$sScriptID,
 		$sScriptName,
-		$aHandlerCache = array();
+		$aTimerScriptLocalCache = array(),
+		$aHandlerScriptLocalCache = array();
 	
 	
 	/**

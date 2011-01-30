@@ -17,7 +17,7 @@ class CoreTimer
 	{		
 		Core::introduceFunction("addTimer", array(__CLASS__, "Add"));
 		Core::introduceFunction("removeTimer", array(__CLASS__, "Remove"));
-	} 
+	}
 	
 	
 	/**
@@ -61,7 +61,13 @@ class CoreTimer
 	 */
 	static function Add($cCallback, $iInterval, $iRepeat = 1, $aArguments = array(), $pContext = null)
 	{
-		$sTimerKey = substr(sha1(time()."-".uniqid()), 4, 10);
+		$sTimerKey = substr(sha1(time().uniqid()), 4, 10);
+		
+		# A little hack, we can presume that it's this script...
+		if(is_array($cCallback) && ($cCallback[0] instanceof Script))
+		{
+			$cCallback[0]->aTimerScriptLocalCache[] = $sTimerKey;
+		}
 		
 		self::$aTimers[$sTimerKey] = array
 		(
