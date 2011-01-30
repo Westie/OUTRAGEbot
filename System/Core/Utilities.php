@@ -4,9 +4,9 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
- *	Version:        <version>
- *	Git commit:     <commitHash>
- *	Committed at:   <commitTime>
+ *	Version:        2.0.0-Alpha
+ *	Git commit:     5f3c5dc48c318e5816178faf46724e9be87ce8c4
+ *	Committed at:   Sun Jan 30 19:02:55 2011 +0000
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -30,18 +30,18 @@ class CoreUtilities
 	public static function getScriptIdentifier($sScriptName)
 	{
 		$sScriptLocation = ROOT."/Scripts/{$sScriptName}/Default.php";
-		
+
 		if(!file_exists($sScriptLocation))
 		{
 			return false;
 		}
-		
+
 		if(isset(Core::$aScriptCache[$sScriptName]))
 		{
 			$aScriptCache = Core::$aScriptCache[$sScriptName];
-			
+
 			clearstatcache();
-			
+
 			if($aScriptCache['modifytime'] >= filemtime($sScriptLocation))
 			{
 				return $aScriptCache['identifier'];
@@ -49,7 +49,7 @@ class CoreUtilities
 		}
 
 		$sIdentifier = substr($sScriptName, 0, 8).'_'.substr(sha1(microtime()."-".uniqid()), 2, 10);
-		$sClass = file_get_contents($sScriptLocation); // Ouch, this has gotta hurt.
+		$sClass = file_get_contents($sScriptLocation); # Ouch, this has gotta hurt.
 
 		if(!preg_match("/class[\s]+?".$sScriptName."[\s]+?extends[\s]+?Script[\s]+?{/", $sClass))
 		{
@@ -57,10 +57,10 @@ class CoreUtilities
 		}
 
 		$sClass = preg_replace("/(class[\s]+?)".$sScriptName."([\s]+?extends[\s]+?Script[\s]+?{)/", "\\1".$sIdentifier."\\2", $sClass);
-		$sFile = tempnam(dirname($sScriptLocation), "vca"); // Stops the __FILE__ bugs.
+		$sFile = tempnam(dirname($sScriptLocation), "vca"); # Stops the __FILE__ bugs.
 
-		file_put_contents($sFile, $sClass);				
-		unset($sClass); // Weight off the shoulders anyone?
+		file_put_contents($sFile, $sClass);
+		unset($sClass); # Weight off the shoulders anyone?
 
 		include $sFile;
 		unlink($sFile);
@@ -73,8 +73,8 @@ class CoreUtilities
 
 		return $sIdentifier;
 	}
-	
-	
+
+
 	/**
 	 *	Internal: Function to get the date since something.
 	 */
@@ -92,7 +92,7 @@ class CoreUtilities
 			'hours' => 0,
 			'days' => 0,
 			'weeks' => 0,
-			
+
 			'totalSeconds' => 0,
 			'totalMinutes' => 0,
 			'totalHours' => 0,
@@ -124,7 +124,7 @@ class CoreUtilities
 		$iTemp -= $aDifferences['minutes'] * 60;
 
 		$aDifferences['seconds'] = $iTemp;
-		
+
 		$aDifferences['totalWeeks'] = floor($iSeconds / 604800);
 		$aDifferences['totalDays'] = floor($iSeconds / 86400);
 		$aDifferences['totalHours'] = floor($iSeconds / 3600);
@@ -133,8 +133,8 @@ class CoreUtilities
 
 		return $aDifferences;
 	}
-	
-	
+
+
 	/**
 	 *	Replaces the character with a letter in a mode string.
 	 */
@@ -150,7 +150,7 @@ class CoreUtilities
 				'&',
 				'~',
 			),
-			
+
 			array
 			(
 				'v',
@@ -159,12 +159,12 @@ class CoreUtilities
 				'a',
 				'q',
 			),
-			
+
 			$sModeString
 		);
 	}
-	
-	
+
+
 	/**
 	 *	Replaces the letter with a character in a mode string.
 	 */
@@ -180,7 +180,7 @@ class CoreUtilities
 				'a',
 				'q',
 			),
-			
+
 			array
 			(
 				'+',
@@ -189,7 +189,7 @@ class CoreUtilities
 				'&',
 				'~',
 			),
-			
+
 			$sModeString
 		);
 	}
