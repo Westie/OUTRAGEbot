@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
- *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
+ *	Git commit:     5e4fff1d09af5aaa4db1671275cf3dd47a978e4c
+ *	Committed at:   Mon Jan 31 09:41:38 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -21,7 +21,7 @@ class ModuleList
 	/**
 	 *	Called when the module is loaded.
 	 */
-	static function initModule()
+	public static function initModule()
 	{
 		Core::introduceFunction("getChannelList", array(__CLASS__, "sendList"));
 	}
@@ -30,7 +30,7 @@ class ModuleList
 	/**
 	 *	The command handler
 	 */
-	static function sendList()
+	public static function sendList()
 	{
 		self::$pTempObject = array();
 
@@ -57,7 +57,7 @@ class ModuleList
 	/**
 	 *	Parses the input
 	 */
-	static function parseLineResponse($sString)
+	public static function parseLineResponse($sString)
 	{
 		$pMessage = Core::getMessageObject($sString);
 
