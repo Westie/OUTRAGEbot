@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     85afeb688f7ca5db50b99229665ff01e8cec8868
- *	Committed at:   Sun Jan 30 19:41:46 2011 +0000
+ *	Git commit:     11bac7bce8e8a3ed38e9d90e43b3c99073c82478
+ *	Committed at:   Sat Feb  5 17:09:02 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -19,7 +19,7 @@ class Debug extends Script
 	 */
 	public function onConstruct()
 	{
-		println("# Script Debug loaded, class version ".__CLASS__.".");
+		println("> Script Debug loaded, class version ".__CLASS__.".");
 
 
 		/**
@@ -67,7 +67,7 @@ class Debug extends Script
 	 */
 	public function onDestruct()
 	{
-		println("# Script Debug removed from active usage.");
+		println("> Script Debug removed from active usage.");
 	}
 
 
@@ -76,7 +76,7 @@ class Debug extends Script
 	 */
 	public function onConnect()
 	{
-		println("# It looks like the Debug Script has connected!");
+		println("> It looks like the Debug Script has connected!");
 	}
 
 
@@ -85,7 +85,7 @@ class Debug extends Script
 	 */
 	public function onChannelJoin($sChannel, $sNickname)
 	{
-		println("# {$sNickname} has joined {$sChannel}.");
+		println("> {$sNickname} has joined {$sChannel}.");
 	}
 
 
@@ -94,7 +94,7 @@ class Debug extends Script
 	 */
 	public function onChannelPart($sChannel, $sNickname)
 	{
-		println("# {$sNickname} has left {$sChannel}.");
+		println("> {$sNickname} has left {$sChannel}.");
 	}
 
 
@@ -103,7 +103,7 @@ class Debug extends Script
 	 */
 	public function onChannelKick($sChannel, $sAdminUser, $sKickedUser, $sReason)
 	{
-		println("# {$sKickedUser} was kicked from {$sChannel} by {$sAdmin}: {$sReason}");
+		println("> {$sKickedUser} was kicked from {$sChannel} by {$sAdmin}: {$sReason}");
 	}
 
 
@@ -112,7 +112,7 @@ class Debug extends Script
 	 */
 	public function onChannelTopic($sChannel, $sNickname, $sTopic)
 	{
-		println("# {$sNickname} set {$sChannel}'s topic to {$sTopic}");
+		println("> {$sNickname} set {$sChannel}'s topic to {$sTopic}");
 	}
 
 
@@ -121,7 +121,7 @@ class Debug extends Script
 	 */
 	public function onNicknameChange($sOldNickname, $sNewNickname)
 	{
-		println("# {$sOldNickname} has changed their nick to {$sNewNickname}.");
+		println("> {$sOldNickname} has changed their nick to {$sNewNickname}.");
 	}
 
 
@@ -130,7 +130,7 @@ class Debug extends Script
 	 */
 	public function onUserQuit($sNickname, $sReason)
 	{
-		println("# {$sNickname} has quit the network: {$sReason}");
+		println("> {$sNickname} has quit the network: {$sReason}");
 	}
 
 
@@ -139,7 +139,7 @@ class Debug extends Script
 	 */
 	public function onUserNotice($sSender, $sRecipient, $sMessage)
 	{
-		println("# {$sSender} sent via notice {$sRecipient} {$sMessage}");
+		println("> {$sSender} sent via notice {$sRecipient} {$sMessage}");
 	}
 
 
@@ -148,7 +148,7 @@ class Debug extends Script
 	 */
 	public function onChannelMessage($sChannel, $sNickname, $sMessage)
 	{
-		println("# {$sNickname} in {$sChannel}: {$sMessage}");
+		println("> {$sNickname} in {$sChannel}: {$sMessage}");
 	}
 
 
@@ -157,7 +157,7 @@ class Debug extends Script
 	 */
 	public function onChannelCommand($sChannel, $sNickname, $sCommand, $sArguments)
 	{
-		println("# {$sNickname} in {$sChannel}: command {$sCommand}, argument {$sArguments}");
+		println("> {$sNickname} in {$sChannel}: command {$sCommand}, argument {$sArguments}");
 	}
 
 
@@ -166,7 +166,7 @@ class Debug extends Script
 	 */
 	public function onPrivateMessage($sSender, $sRecipient, $sMessage)
 	{
-		println("# {$sSender} sent {$sRecipient} {$sMessage}");
+		println("> {$sSender} sent {$sRecipient} {$sMessage}");
 	}
 
 
@@ -175,7 +175,7 @@ class Debug extends Script
 	 */
 	public function onCTCPRequest($sNickname, $sPayload)
 	{
-		println("# {$sNickname} has requested '{$sPayload}'.");
+		println("> {$sNickname} has requested '{$sPayload}'.");
 	}
 
 
@@ -184,7 +184,7 @@ class Debug extends Script
 	 */
 	public function onCTCPResponse($sNickname, $sPayload)
 	{
-		println("# {$sNickname} has replied with '{$sPayload}'.");
+		println("> {$sNickname} has replied with '{$sPayload}'.");
 	}
 
 
@@ -194,6 +194,6 @@ class Debug extends Script
 	 */
 	public function onUnhandledEvent($pMessage)
 	{
-		println("# Unhandled: {$pMessage->Raw}");
+		println("> Unhandled: {$pMessage->Raw}");
 	}
 }

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     2d3119f16a9d2d27e57a6bfd78df466bed2c320b
- *	Committed at:   Sat Feb  5 14:58:50 GMT 2011
+ *	Git commit:     11bac7bce8e8a3ed38e9d90e43b3c99073c82478
+ *	Committed at:   Sat Feb  5 17:09:03 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -134,11 +134,11 @@ class ModuleConsole
 		{
 			$pInstance = Core::getSpecificInstance($sInstance);
 
-			$aServerConfig = $pInstance->getServerConfiguration();
-			$aNetworkConfig = $pInstance->getNetworkConfiguration();
+			$pServerConfig = $pInstance->getServerConfiguration();
+			$pNetworkConfig = $pInstance->getNetworkConfiguration();
 
 			println("** Instance: {$sInstance} **");
-			println(" Network: {$aServerConfig->NETWORK} - {$aNetworkConfig->host}:{$aNetworkConfig->port}");
+			println(" Network: {$pServerConfig->NETWORK} - {$pNetworkConfig->host}:{$pNetworkConfig->port}");
 			println(" Start of connection: ".date("d/m/Y H:i:s", $pInstance->pSocket->pConfig->StartTime));
 			println("");
 		}

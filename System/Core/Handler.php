@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
- *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
+ *	Git commit:     11bac7bce8e8a3ed38e9d90e43b3c99073c82478
+ *	Committed at:   Sat Feb  5 17:09:03 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -186,13 +186,12 @@ class CoreHandler
 	 */
 	static function Nick(CoreMaster $pInstance, $pMessage)
 	{
-		/* TODO: Add the self-check for force nick change. */
 		foreach($pInstance->pChannels as $pChannel)
 		{
-			$pChannel->renameUserInChannel($pMessage->Payload, $pMessage->User->Nickname);
+			$pChannel->renameUserInChannel($pMessage->User->Nickname, $pMessage->Payload);
 		}
 
-		$pInstance->triggerEvent("onNicknameChange", $pMessage->Payload, $pMessage->User->Nickname);
+		$pInstance->triggerEvent("onNicknameChange", $pMessage->User->Nickname, $pMessage->Payload);
 	}
 
 

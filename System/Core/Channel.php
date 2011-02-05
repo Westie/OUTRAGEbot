@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     307f5c5b28807306205113a4b3e60bb6a2a261e3
- *	Committed at:   Sun Jan 30 19:47:09 2011 +0000
+ *	Git commit:     11bac7bce8e8a3ed38e9d90e43b3c99073c82478
+ *	Committed at:   Sat Feb  5 17:09:03 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -122,9 +122,9 @@ class CoreChannel
 	 *	Users: Rename a user from the internal database
 	 *	@ignore
 	 */
-	public function renameUserInChannel($sNewNickname, $sOldNickname)
+	public function renameUserInChannel($sOldNickname, $sNewNickname)
 	{
-		$this->pUsers->$sNewNickname = $this->pUsers->$sOldNickname;
+		$this->pUsers->$sNewNickname = $this->pUsers->$sOldNickname; # Why do you error. WHY!?
 		unset($this->pUsers->$sOldNickname);
 	}
 
