@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
- *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
+ *	Git commit:     2d3119f16a9d2d27e57a6bfd78df466bed2c320b
+ *	Committed at:   Sat Feb  5 14:58:49 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -150,6 +150,15 @@ class Core
 		}
 
 		return null;
+	}
+
+
+	/**
+	 *	Return the list of CoreMaster instances.
+	 */
+	static function getListOfInstances()
+	{
+		return array_keys(self::$aInstances);
 	}
 
 
