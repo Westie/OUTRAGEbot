@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     2d3119f16a9d2d27e57a6bfd78df466bed2c320b
- *	Committed at:   Sat Feb  5 14:58:49 GMT 2011
+ *	Git commit:     0df973021ea0202962d60b019457abeaa279febd
+ *	Committed at:   Mon Feb  7 20:42:28 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -594,7 +594,7 @@ class CoreMaster
 	 */
 	public function Format($sInputText)
 	{
-		return Format($sInputText);
+		return Format::parseInputString($sInputText);
 	}
 
 

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
- *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
+ *	Git commit:     0df973021ea0202962d60b019457abeaa279febd
+ *	Committed at:   Mon Feb  7 20:42:28 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -24,6 +24,7 @@ class Format
 		CTCP = "\001",
 		Inverse = "\026",
 		Tab = "\011",
+		Italic = "\035",
 		Underline = "\037";
 
 
@@ -69,6 +70,97 @@ class Format
 		Back_Pink = ',13',
 		Back_DarkGrey = ',14',
 		Back_Grey = ',15';
+
+
+	/**
+	 *	Parse the input string.
+	 *
+	 *	Simple tags:	{b}		Emboldens the string past that point.
+	 *			{i}		Puts the text into italics.
+	 *			{r}		Cancels all formatting and colours after that point.
+	 *			{u}		Underlines the string past that point.
+	 *			{v}		Inverts the background and foreground colours.
+	 *
+	 *	Colour tags:	{c:blue}	Colourises the text blue.
+	 *			{c:blue:red}	Colourises the text blue, and the background red.
+	 *
+	 *	Sample: {b}Welcome to the {u}channel{u}!
+	 */
+	public static function parseInputString($sInputString)
+	{
+		$sInputString = preg_replace_callback("/\{[biruv]\}/", array("Format", "parseSimpleTag"), $sInputString);
+		$sInputString = preg_replace_callback("/\{c:(.*?)(:(.*?))?\}/", array("Format", "parseColourTag"), $sInputString);
+
+		return $sInputString;
+	}
+
+
+	/**
+	 *	Parses the simple tags.
+	 */
+	private static function parseSimpleTag($aMatches)
+	{
+		$cTag = $aMatches[0][1];
+
+		switch($cTag)
+		{
+			case 'b':
+			{
+				return Format::Bold;
+			}
+
+			case 'i':
+			{
+				return Format::Italic;
+			}
+
+			case 'r':
+			{
+				return Format::Clear;
+			}
+
+			case 'u':
+			{
+				return Format::Underline;
+			}
+
+			case 'v':
+			{
+				return Format::Inverse;
+			}
+		}
+
+		return;
+	}
+
+
+	/**
+	 *	Parse colour tags
+	 */
+	private static function parseColourTag($aMatches)
+	{
+		$iOption = count($aMatches);
+		$sColour = ucfirst(strtolower($aMatches[1]));
+
+		if(!defined("Format::{$sColour}"))
+		{
+			return;
+		}
+
+		if($iOption == 4)
+		{
+			$sBack = ucfirst(strtolower($aMatches[3]));
+
+			if(!defined("Format::Back_{$sBack}"))
+			{
+				return;
+			}
+
+			return constant("Format::{$sColour}").constant("Format::Back_{$sBack}");
+		}
+
+		return constant("Format::{$sColour}");
+	}
 }
 
 
@@ -77,4 +169,5 @@ class Format
  */
 function Format($sInputString)
 {
+	return Format::parseInputString($sInputString);
 }
