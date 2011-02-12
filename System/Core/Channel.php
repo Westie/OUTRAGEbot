@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     11bac7bce8e8a3ed38e9d90e43b3c99073c82478
- *	Committed at:   Sat Feb  5 17:09:03 GMT 2011
+ *	Git commit:     22b055838e4cd26d2523a24d116d0f9b3522f323
+ *	Committed at:   Sat Feb 12 18:06:30 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -124,8 +124,15 @@ class CoreChannel
 	 */
 	public function renameUserInChannel($sOldNickname, $sNewNickname)
 	{
-		$this->pUsers->$sNewNickname = $this->pUsers->$sOldNickname; # Why do you error. WHY!?
+		if(!isset($this->pUsers->$sOldNickname))
+		{
+			return;
+		}
+
+		$this->pUsers->$sNewNickname = $this->pUsers->$sOldNickname;
 		unset($this->pUsers->$sOldNickname);
+
+		return;
 	}
 
 
