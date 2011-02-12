@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     5e4fff1d09af5aaa4db1671275cf3dd47a978e4c
- *	Committed at:   Mon Jan 31 09:41:38 GMT 2011
+ *	Git commit:     b228861c00021f0dc1c46bf380744085af741abc
+ *	Committed at:   Sat Feb 12 22:40:48 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -70,11 +70,14 @@ class ModuleList
 
 			case "322":
 			{
+				$aList = explode(' ', $pMessage->Payload, 2);
+
 				self::$pTempObject[] = (object) array
 				(
 					"channel" => $pMessage->Parts[3],
 					"count" => $pMessage->Parts[4],
-					"topic" => $pMessage->Payload,
+					"modes" => substr($aList[0], 1, -1),
+					"topic" => $aList[1],
 				);
 
 				return false;
