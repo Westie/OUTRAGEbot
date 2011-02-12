@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
- *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
+ *	Git commit:     560596e0d6aba9e984a81e1b8c48c400f287116a
+ *	Committed at:   Sat Feb 12 16:29:48 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -103,6 +103,21 @@ abstract class Script
 	public function getResource($sFileString, $sMode = "w+")
 	{
 		return new CoreResources($this->spScript, $sFileString, $sMode);
+	}
+
+
+	/**
+	 *	Retrieves a list of all available Resources, matching a pattern.
+	 */
+	public function getListOfResources($sPattern)
+	{
+		$sCurrentDirectory = getcwd();
+
+		chdir(ROOT."/Resources/{$this->spScript}/");
+		$aMatches = glob($sPattern);
+
+		chdir($sCurrentDirectory);
+		return $aMatches;
 	}
 
 
