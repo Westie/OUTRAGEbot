@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
- *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
+ *	Git commit:     71c8bbcf15ff5946c2e8f33ebbba92ddb610fd65
+ *	Committed at:   Sat Feb 12 14:29:09 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -74,8 +74,11 @@ class CoreSocket
 	/**
 	 *	Close the connection to the IRC network.
 	 */
-	public function closeConnection()
+	public function destroyConnection($sReason)
 	{
+		$this->Output('QUIT :'.($sReason == null ? $this->pMaster->pConfig->Network->quitmsg : $sReason));
+		fclose($this->rSocket);
+
 		return;
 	}
 

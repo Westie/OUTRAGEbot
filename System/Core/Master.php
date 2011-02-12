@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     0df973021ea0202962d60b019457abeaa279febd
- *	Committed at:   Mon Feb  7 20:42:28 GMT 2011
+ *	Git commit:     71c8bbcf15ff5946c2e8f33ebbba92ddb610fd65
+ *	Committed at:   Sat Feb 12 14:29:09 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -66,6 +66,78 @@ class CoreMaster
 			println(" - Loaded {$pNetwork->name}/{$pBot->handle}");
 
 			++$this->pBotItter->iCount;
+		}
+	}
+
+
+	/**
+	 *	Creates a new Socket instance.
+	 */
+	public function addChild($sNickname, $aOptions = array())
+	{
+		if(!isset($aOptions['username']))
+		{
+			$aOptions['username'] = strtolower($sNickname);
+		}
+
+		if(!isset($aOptions['realname']))
+		{
+			$aOptions['realname'] = $sNickname;
+		}
+
+		$aOptions['nickname'] = $sNickname;
+		$aOptions['handle'] = $sNickname;
+		$aOptions['slave'] = true;
+
+		$aOptions['host'] = $this->pConfig->Network->host;
+		$aOptions['port'] = $this->pConfig->Network->port;
+
+		$this->aSockets[] = new CoreSocket($this, (object) $aOptions);
+		++$this->pBotItter->iCount;
+
+		println(" - Loaded {$this->pConfig->Network->name}/{$aOptions['handle']}");
+		return $aOptions['handle'];
+	}
+
+
+	/**
+	 *	Returns a list of Sockets.
+	 */
+	public function getListOfChildren()
+	{
+		$aReturn = array();
+
+		foreach($this->aSockets as $pSocket)
+		{
+			$aReturn[$pSocket->pConfig->handle] = $pSocket->pConfig->nickname;
+		}
+
+		return $aReturn;
+	}
+
+
+	/**
+	 *	Removes a Socket instance.
+	 */
+	public function removeChild($sHandle, $sReason = null)
+	{
+		foreach($this->aSockets as $pSocket)
+		{
+			if($pSocket->pConfig->handle != $sHandle)
+			{
+				continue;
+			}
+
+			if(!$pSocket->pConfig->slave)
+			{
+				return false;
+			}
+
+			$pSocket->destroyConnection($sReason);
+			unset($pSocket);
+
+			--$this->pBotItter->iCount;
+			$this->aSockets = array_values($this->aSockets);
 		}
 	}
 
@@ -187,39 +259,50 @@ class CoreMaster
 	 */
 	public function Raw($sRawString, $mOption = SEND_DEF)
 	{
-		if($mOption == SEND_DEF)
+		if(is_array($sRawString))
+		{
+			foreach($sRawString as $sString)
+			{
+				$this->Raw($sString, $mOption);
+			}
+
+			return;
+		}
+
+		/* The message modifications */
+		if($mOption & FORMAT)
+		{
+			$sRawString = Format::parseInputString($sRawString);
+		}
+
+
+		/* The outbound channels */
+		if($mOption & SEND_DEF)
 		{
 			$mOption = $this->pConfig->Network->rotation;
 		}
 
-		switch($mOption)
+		if($mOption & SEND_MAST)
 		{
-			case SEND_MAST:
-			{
-				return $this->aSockets[0]->Output($sRawString);
-			}
-
-			case SEND_CURR:
-			{
-				return $this->pSocket->Output($sRawString);
-			}
-
-			case SEND_ALL:
-			{
-				foreach($this->aSockets as $pSocket)
-				{
-					$pSocket->Output($sRawString);
-				}
-
-				return;
-			}
-
-			case SEND_DIST:
-			default:
-			{
-				return $this->getNextChild()->Output($sRawString);
-			}
+			return $this->aSockets[0]->Output($sRawString);
 		}
+
+		elseif($mOption & SEND_CURR)
+		{
+			return $this->pSocket->Output($sRawString);
+		}
+
+		elseif($mOption & SEND_ALL)
+		{
+			foreach($this->aSockets as $pSocket)
+			{
+				$pSocket->Output($sRawString);
+			}
+
+			return;
+		}
+
+		return $this->getNextSocket()->Output($sRawString);
 	}
 
 

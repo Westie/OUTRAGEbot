@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
- *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
+ *	Git commit:     71c8bbcf15ff5946c2e8f33ebbba92ddb610fd65
+ *	Committed at:   Sat Feb 12 14:29:09 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -27,18 +27,24 @@ define("BOT_TICKRATE", 2600);
 /**
  *	Some bot-brag-relating things.
  */
-define("BOT_VERSION", "2.0.0-Alpha-95e2731");
+define("BOT_VERSION", "2.0.0-Alpha-71c8bbc");
 define("BOT_RELDATE", "");
 
 
 /**
  *	The ways of the bots of sending messages.
  */
-define("SEND_DEF", 0);
-define("SEND_MAST", 1);
-define("SEND_CURR", 2);
-define("SEND_DIST", 4);
-define("SEND_ALL", 8);
+define("SEND_DEF", 0x0);
+define("SEND_MAST", 0x1);
+define("SEND_CURR", 0x2);
+define("SEND_DIST", 0x4);
+define("SEND_ALL", 0x8);
+
+
+/**
+ *	Message modifier definitions
+ */
+define("FORMAT", 0x20);
 
 
 /**
