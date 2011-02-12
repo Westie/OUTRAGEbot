@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     0df973021ea0202962d60b019457abeaa279febd
- *	Committed at:   Mon Feb  7 20:42:28 GMT 2011
+ *	Git commit:     c819c5b12f7f5b04e40035978a784dc988e043d6
+ *	Committed at:   Sat Feb 12 15:10:06 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -73,6 +73,13 @@ class Format
 
 
 	/**
+	 *	The private stuff.
+	 */
+	private static
+		$aConstants = null;
+
+
+	/**
 	 *	Parse the input string.
 	 *
 	 *	Simple tags:	{b}		Emboldens the string past that point.
@@ -88,10 +95,48 @@ class Format
 	 */
 	public static function parseInputString($sInputString)
 	{
+		if(self::$aConstants == null)
+		{
+			self::populateConstantList();
+		}
+
 		$sInputString = preg_replace_callback("/\{[biruv]\}/", array("Format", "parseSimpleTag"), $sInputString);
 		$sInputString = preg_replace_callback("/\{c:(.*?)(:(.*?))?\}/", array("Format", "parseColourTag"), $sInputString);
 
 		return $sInputString;
+	}
+
+
+	/**
+	 *	Populates the internal cache of constants.
+	 */
+	private static function populateConstantList()
+	{
+		$pReflection = new ReflectionClass(__CLASS__);
+		$aConstants = array_keys($pReflection->getConstants());
+
+		foreach($aConstants as $sConstant)
+		{
+			self::$aConstants[strtolower($sConstant)] = $sConstant;
+		}
+
+		return;
+	}
+
+
+	/**
+	 *	Returns the colour definition.
+	 */
+	private static function getColourConstant($sColour)
+	{
+		$sColour = strtolower($sColour);
+
+		if(isset(self::$aConstants[$sColour]))
+		{
+			return constant("Format::".self::$aConstants[$sColour]);
+		}
+
+		return "";
 	}
 
 
@@ -140,26 +185,16 @@ class Format
 	private static function parseColourTag($aMatches)
 	{
 		$iOption = count($aMatches);
-		$sColour = ucfirst(strtolower($aMatches[1]));
-
-		if(!defined("Format::{$sColour}"))
-		{
-			return;
-		}
+		$sColour = self::getColourConstant($aMatches[1]);
 
 		if($iOption == 4)
 		{
-			$sBack = ucfirst(strtolower($aMatches[3]));
+			$sBack = self::getColourConstant('Back_'.$aMatches[3]);
 
-			if(!defined("Format::Back_{$sBack}"))
-			{
-				return;
-			}
-
-			return constant("Format::{$sColour}").constant("Format::Back_{$sBack}");
+			return $sColour.$sBack;
 		}
 
-		return constant("Format::{$sColour}");
+		return $sColour;
 	}
 }
 
