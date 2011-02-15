@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     38fb3c4f22acf74f171cab72e46deae0e093ece4
- *	Committed at:   Sat Feb 12 16:28:45 GMT 2011
+ *	Git commit:     e75544e55f1917e98a40c6eabfd2a530262ab803
+ *	Committed at:   Tue Feb 15 22:05:13 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -40,7 +40,7 @@ class Weather extends Script
 		$pCurrentConditions = $pXML->xPath("//xml_api_reply/weather/current_conditions");
 		$pLocationDetails = $pXML->xPath("//xml_api_reply/weather/forecast_information");
 
-		if(!$pLocationDetails[0]->city['data'])
+		if(!$pLocationDetails)
 		{
 			$this->Notice($sNickname, "Nope, give me a real town name, please!");
 			return END_EVENT_EXEC;

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     22b055838e4cd26d2523a24d116d0f9b3522f323
- *	Committed at:   Sat Feb 12 18:06:30 GMT 2011
+ *	Git commit:     e75544e55f1917e98a40c6eabfd2a530262ab803
+ *	Committed at:   Tue Feb 15 22:05:13 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -102,9 +102,9 @@ class CoreChannel
 	/**
 	 *	Sends stuff to the channel. It's a shortcut, basically.
 	 */
-	public function __invoke($sMessage)
+	public function __invoke($sMessage, $mOption = SEND_DEF)
 	{
-		return $this->pMaster->Message($this->sChannel, $sMessage);
+		return $this->pMaster->Message($this->sChannel, $sMessage, $mOption);
 	}
 
 

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     11bac7bce8e8a3ed38e9d90e43b3c99073c82478
- *	Committed at:   Sat Feb  5 17:09:02 GMT 2011
+ *	Git commit:     e75544e55f1917e98a40c6eabfd2a530262ab803
+ *	Committed at:   Tue Feb 15 22:05:13 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -185,6 +185,15 @@ class Debug extends Script
 	public function onCTCPResponse($sNickname, $sPayload)
 	{
 		println("> {$sNickname} has replied with '{$sPayload}'.");
+	}
+
+
+	/**
+	 *	There's been a server error and the bot has been disconnected. Whoops!
+	 */
+	public function onServerError($sErrorMessage)
+	{
+		println("> Error message: {$sErrorMessage}");
 	}
 
 

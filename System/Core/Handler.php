@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     11bac7bce8e8a3ed38e9d90e43b3c99073c82478
- *	Committed at:   Sat Feb  5 17:09:03 GMT 2011
+ *	Git commit:     e75544e55f1917e98a40c6eabfd2a530262ab803
+ *	Committed at:   Tue Feb 15 22:05:13 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -17,7 +17,7 @@ class CoreHandler
 	/**
 	 *	Called when there are no available handlers for a specific numeric.
 	 */
-	static function Unhandled(CoreMaster $pInstance, $pMessage)
+	public static function Unhandled(CoreMaster $pInstance, $pMessage)
 	{
 		switch($pMessage->Numeric)
 		{
@@ -37,7 +37,7 @@ class CoreHandler
 	/**
 	 *	Called when the bot connects to the network.
 	 */
-	static function onConnect(CoreMaster $pInstance, $pMessage)
+	public static function onConnect(CoreMaster $pInstance, $pMessage)
 	{
 		$pNetwork = $pInstance->pConfig->Network;
 
@@ -62,7 +62,7 @@ class CoreHandler
 	 *	Called when recieving the server settings.
 	 *	Numeric: 005 - Server settings and capabilities.
 	 */
-	static function N005(CoreMaster $pInstance, $pMessage)
+	public static function N005(CoreMaster $pInstance, $pMessage)
 	{
 		$aParts = $pMessage->Parts;
 
@@ -103,7 +103,7 @@ class CoreHandler
 	 *	Called when a user enters a channel.
 	 *	Numeric: 332 - Topic string.
 	 */
-	static function N332(CoreMaster $pInstance, $pMessage)
+	public static function N332(CoreMaster $pInstance, $pMessage)
 	{
 		$pInstance->getChannel($pMessage->Parts[3])->pTopic->chantopic = $pMessage->Payload;
 	}
@@ -113,7 +113,7 @@ class CoreHandler
 	 *	Called when a user enters a channel.
 	 *	Numeric: 332 - Topic information.
 	 */
-	static function N333(CoreMaster $pInstance, $pMessage)
+	public static function N333(CoreMaster $pInstance, $pMessage)
 	{
 		$pChannel = $pInstance->getChannel($pMessage->Parts[3]);
 
@@ -126,7 +126,7 @@ class CoreHandler
 	 *	Called when we recieve a NAMES response.
 	 *	Numeric: 353 - Names response.
 	 */
-	static function N353(CoreMaster $pInstance, $pMessage)
+	public static function N353(CoreMaster $pInstance, $pMessage)
 	{
 		$aUserList = explode(' ', trim($pMessage->Payload));
 
@@ -147,7 +147,7 @@ class CoreHandler
 	/**
 	 *	Called when a user joins a channel.
 	 */
-	static function Join(CoreMaster $pInstance, $pMessage)
+	public static function Join(CoreMaster $pInstance, $pMessage)
 	{
 		$pChannel = $pInstance->getChannel(substr($pMessage->Parts[2], 1));
 
@@ -159,7 +159,7 @@ class CoreHandler
 	/**
 	 *	Called when a user leaves a channel.
 	 */
-	static function Part(CoreMaster $pInstance, $pMessage)
+	public static function Part(CoreMaster $pInstance, $pMessage)
 	{
 		$pChannel = $pInstance->getChannel($pMessage->Parts[2]);
 
@@ -172,7 +172,7 @@ class CoreHandler
 	 *	Called when a user is forcibly removed from a channel.
 	 *	Sorry, I mean kicked.
 	 */
-	static function Kick(CoreMaster $pInstance, $pMessage)
+	public static function Kick(CoreMaster $pInstance, $pMessage)
 	{
 		$pChannel = $pInstance->getChannel($pMessage->Parts[2]);
 
@@ -184,7 +184,7 @@ class CoreHandler
 	/**
 	 *	Called when a user changes their nickname.
 	 */
-	static function Nick(CoreMaster $pInstance, $pMessage)
+	public static function Nick(CoreMaster $pInstance, $pMessage)
 	{
 		foreach($pInstance->pChannels as $pChannel)
 		{
@@ -198,7 +198,7 @@ class CoreHandler
 	/**
 	 *	Called when a user quits from the network.
 	 */
-	static function Quit(CoreMaster $pInstance, $pMessage)
+	public static function Quit(CoreMaster $pInstance, $pMessage)
 	{
 		foreach($pInstance->pChannels as $pChannel)
 		{
@@ -212,7 +212,7 @@ class CoreHandler
 	/**
 	 *	Called when a notice is recieved.
 	 */
-	static function Notice(CoreMaster $pInstance, $pMessage)
+	public static function Notice(CoreMaster $pInstance, $pMessage)
 	{
 		if($pMessage->Payload[0] == Format::CTCP)
 		{
@@ -227,7 +227,7 @@ class CoreHandler
 	/**
 	 *	Called when a message is sent to the user.
 	 */
-	static function Privmsg(CoreMaster $pInstance, $pMessage)
+	public static function Privmsg(CoreMaster $pInstance, $pMessage)
 	{
 		if($pMessage->Payload[0] == Format::CTCP)
 		{
@@ -271,7 +271,7 @@ class CoreHandler
 	/**
 	 *	Called when a user changes the topic.
 	 */
-	static function Topic(CoreMaster $pInstance, $pMessage)
+	public static function Topic(CoreMaster $pInstance, $pMessage)
 	{
 		$pChannel = $pInstance->getChannel($pMessage->Parts[3]);
 
@@ -289,7 +289,7 @@ class CoreHandler
 	 *	Yeah, no need for any other methods, just huge variables.
 	 *	I might seperate this and make it useable later.
 	 */
-	static function Mode(CoreMaster $pInstance, $pMessage)
+	public static function Mode(CoreMaster $pInstance, $pMessage)
 	{
 		$aParts = $pMessage->Parts;
 		$aModes = array();
@@ -386,7 +386,7 @@ class CoreHandler
 	/**
 	 *	Alright, I'm cheating with the CTCP stuff.
 	 */
-	static function CTCP(CoreMaster $pInstance, $pMessage)
+	public static function CTCP(CoreMaster $pInstance, $pMessage)
 	{
 		$pMessage->Payload = substr($pMessage->Payload, 1, -1);
 
@@ -427,5 +427,20 @@ class CoreHandler
 				return $pInstance->ctcpReply($pMessage->User->Nickname, "START ".date("d/m/Y H:i:s", time($pInstance->pSocket->pConfig->StartTime)));
 			}
 		}
+	}
+
+
+	/**
+	 *	Called when there's an error - when someone decides to disconnect the bot.
+	 */
+	public static function onServerError(CoreMaster $pInstance, $pMessage)
+	{
+		$pSocket = $pInstance->pSocket;
+
+		$pSocket->destroyConnection();
+		sleep(1);
+		$pSocket->createConnection();
+
+		return $pInstance->triggerEvent("onServerError", $pMessage->Payload);
 	}
 }
