@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     e75544e55f1917e98a40c6eabfd2a530262ab803
- *	Committed at:   Tue Feb 15 22:05:13 GMT 2011
+ *	Git commit:     120646693ff8352874523a88d6a5166675cad01a
+ *	Committed at:   Wed Feb 16 23:38:17 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -194,6 +194,16 @@ class Debug extends Script
 	public function onServerError($sErrorMessage)
 	{
 		println("> Error message: {$sErrorMessage}");
+	}
+
+
+	/**
+	 *	Function is called when the Socket's nickname has failed to be changed,
+	 *	because that nick already exists, so it's been changed to something else.
+	 */
+	public function onNicknameConflict($sNewNickname)
+	{
+		println("> Nickname changed to {$sNewNickname} because the first choice is already in use.");
 	}
 
 

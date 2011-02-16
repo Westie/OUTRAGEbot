@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     85afeb688f7ca5db50b99229665ff01e8cec8868
- *	Committed at:   Sun Jan 30 19:41:46 2011 +0000
+ *	Git commit:     120646693ff8352874523a88d6a5166675cad01a
+ *	Committed at:   Wed Feb 16 23:38:17 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  *
@@ -132,6 +132,23 @@ class Blank extends Script
 	 *	Called on a CTCP request from a fellow user.
 	 */
 	public function onCTCPResponse($sNickname, $sPayload)
+	{
+	}
+
+
+	/**
+	 *	There's been a server error and the bot has been disconnected. Whoops!
+	 */
+	public function onServerError($sErrorMessage)
+	{
+	}
+
+
+	/**
+	 *	Function is called when the Socket's nickname has failed to be changed,
+	 *	because that nick already exists, so it's been changed to something else.
+	 */
+	public function onNicknameConflict($sNewNickname)
 	{
 	}
 

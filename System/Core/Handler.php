@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     e75544e55f1917e98a40c6eabfd2a530262ab803
- *	Committed at:   Tue Feb 15 22:05:13 GMT 2011
+ *	Git commit:     120646693ff8352874523a88d6a5166675cad01a
+ *	Committed at:   Wed Feb 16 23:38:17 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -23,7 +23,12 @@ class CoreHandler
 		{
 			case "001":
 			{
-				self::onConnect($pInstance, $pMessage);
+				return self::onConnect($pInstance, $pMessage);
+			}
+
+			case "433":
+			{
+				return self::onNicknameConflict($pInstance, $pMessage);
 			}
 		}
 
@@ -438,9 +443,20 @@ class CoreHandler
 		$pSocket = $pInstance->pSocket;
 
 		$pSocket->destroyConnection();
-		sleep(1);
-		$pSocket->createConnection();
+		$pInstance->triggerEvent("onServerError", $pMessage->Payload);
 
-		return $pInstance->triggerEvent("onServerError", $pMessage->Payload);
+		CoreTimer::Add(array($pSocket, "createConnection"), 3);
+	}
+
+
+	/**
+	 *	Called when there's an error - when someone decides to disconnect the bot.
+	 */
+	public static function onNicknameConflict(CoreMaster $pInstance, $pMessage)
+	{
+		$sNewNickname = $pInstance->pSocket->pConfig->altnick.mt_rand(10, 99);
+		$pInstance->pSocket->setSocketNickname($sNewNickname);
+
+		$pInstance->triggerEvent("onNicknameConflict", $pMessage->sNewNickname);
 	}
 }

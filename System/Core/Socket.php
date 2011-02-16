@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     e75544e55f1917e98a40c6eabfd2a530262ab803
- *	Committed at:   Tue Feb 15 22:05:13 GMT 2011
+ *	Git commit:     120646693ff8352874523a88d6a5166675cad01a
+ *	Committed at:   Wed Feb 16 23:38:17 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -51,6 +51,11 @@ class CoreSocket
 		if(isset($this->pConfig->bindto))
 		{
 			$aSocketOptions['socket']['bindto'] = $this->pConfig->bindto;
+		}
+
+		if(!isset($this->pConfig->altnick))
+		{
+			$this->pConfig->altnick = $this->pConfig->nickname;
 		}
 
 		$rSocketOptions = stream_context_create($aSocketOptions);
@@ -235,6 +240,7 @@ class CoreSocket
 		$this->stopCapture();
 	}
 
+
 	/**
 	 *	Stop the capturing of incoming data.
 	 */
@@ -247,5 +253,15 @@ class CoreSocket
 		{
 			call_user_func($this->cSocketHandler, $this, $sString);
 		}
+	}
+
+
+	/**
+	 *	Set the socket's nickname
+	 */
+	public function setSocketNickname($sNewNickname)
+	{
+		$this->pConfig->nickname = $sNewNickname;
+		$this->Output($sNewNickname);
 	}
 }
