@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     aa20fb1ab134d3c23a4b608430d13ef7178b0630
- *	Committed at:   Sat Feb 19 11:56:18 GMT 2011
+ *	Git commit:     56c4170f0cd28ac05693c34ed95a68404d906dbb
+ *	Committed at:   Sat Feb 19 11:59:35 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -19,7 +19,7 @@ error_reporting(E_ALL | E_STRICT);
 
 
 /**
- *	Set the tick rate.
+ *	Set the tick rate. Reduce this to improve performance.
  */
 define("BOT_TICKRATE", 2600);
 
@@ -27,8 +27,8 @@ define("BOT_TICKRATE", 2600);
 /**
  *	Some bot-brag-relating things.
  */
-define("BOT_VERSION", "2.0.0-Alpha-aa20fb1");
-define("BOT_RELDATE", "");
+define("BOT_VERSION", "2.0.0-Alpha-56c4170");
+define("BOT_RELDATE", "19/02/2011");
 
 
 /**
