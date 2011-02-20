@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     120646693ff8352874523a88d6a5166675cad01a
- *	Committed at:   Wed Feb 16 23:38:17 GMT 2011
+ *	Git commit:     c3b4e3a5a2130506701b63985d1fd4510d985b64
+ *	Committed at:   Sun Feb 20 02:32:11 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -105,6 +105,43 @@ class CoreHandler
 
 
 	/**
+	 *	Called when the bot requests MODE information for that channel.
+	 *	I'm presuming that whenever this is requested, it's full of the
+	 *	revelent data.
+	 *
+	 *	Numeric: 324 - Channel modes.
+	 */
+	public static function N324(CoreMaster $pInstance, $pMessage)
+	{
+		$aParts = $pMessage->Parts;
+
+		array_shift($aParts);
+		array_shift($aParts);
+		array_shift($aParts);
+
+		$pInstance->getChannel($aParts[0])->pModes = new stdClass();
+
+		return self::parseModeString($pInstance, $aParts);
+	}
+
+
+	/**
+	 *	Called when the bot requests MODE information for that channel.
+	 *	Numeric: 329 - Channel information.
+	 */
+	public static function N329(CoreMaster $pInstance, $pMessage)
+	{
+		$aParts = $pMessage->Parts;
+
+		array_shift($aParts);
+		array_shift($aParts);
+		array_shift($aParts);
+
+		$pInstance->getChannel(array_shift($aParts))->iCreateTime = array_shift($aParts);
+	}
+
+
+	/**
 	 *	Called when a user enters a channel.
 	 *	Numeric: 332 - Topic string.
 	 */
@@ -154,7 +191,13 @@ class CoreHandler
 	 */
 	public static function Join(CoreMaster $pInstance, $pMessage)
 	{
-		$pChannel = $pInstance->getChannel(substr($pMessage->Parts[2], 1));
+		$sChannelName = substr($pMessage->Parts[2], 1);
+		$pChannel = $pInstance->getChannel($sChannelName);
+
+		if($pInstance->pSocket->pConfig->nickname == $pMessage->User->Nickname)
+		{
+			$pInstance->Raw("MODE {$sChannelName}");
+		}
 
 		$pChannel->addUserToChannel($pMessage->User->Nickname);
 		$pInstance->triggerEvent("onChannelJoin", $pChannel, $pMessage->User->Nickname);
@@ -194,6 +237,11 @@ class CoreHandler
 		foreach($pInstance->pChannels as $pChannel)
 		{
 			$pChannel->renameUserInChannel($pMessage->User->Nickname, $pMessage->Payload);
+		}
+
+		if($pInstance->pSocket->pConfig->nickname == $pMessage->User->Nickname)
+		{
+			$pInstance->pSocket->pConfig->nickname = $pMessage->Payload;
 		}
 
 		$pInstance->triggerEvent("onNicknameChange", $pMessage->User->Nickname, $pMessage->Payload);
@@ -297,12 +345,23 @@ class CoreHandler
 	public static function Mode(CoreMaster $pInstance, $pMessage)
 	{
 		$aParts = $pMessage->Parts;
+
+		array_shift($aParts);
+		array_shift($aParts);
+
+		return self::parseModeString($pInstance, $aParts);
+	}
+
+
+
+	/**
+	 *	It's easier maintaining one bit of code, than keeping two
+	 *	bits.
+	 */
+	private static function parseModeString($pInstance, $aParts)
+	{
 		$aModes = array();
-
 		$pServerConfig = $pInstance->pConfig->Server;
-
-		array_shift($aParts);
-		array_shift($aParts);
 
 		$sChannel = array_shift($aParts);
 		$sSetting = array_shift($aParts);
@@ -345,10 +404,11 @@ class CoreHandler
 					continue;
 				}
 
-				$iGroupID = $iGroup + 1;
+				++$iGroup;
 			}
 
 			$iGroupID = $bIsPrefix ? 2 : $iGroupID;
+			$pChannel = $pInstance->getChannel($sChannel);
 
 			switch($iGroupID)
 			{
@@ -360,10 +420,11 @@ class CoreHandler
 
 					if(preg_match('/['.$pServerConfig->PREFIX.']/', $cMode))
 					{
-						$pChannel = $pInstance->getChannel($sChannel);
 						$pChannel->modifyUserInChannel($sArgument, ($iSet == 1 ? '+' : '-'), $cMode);
+						break;
 					}
 
+					$pChannel->pModes->$cMode = $sArgument;
 					break;
 				}
 
@@ -372,15 +433,18 @@ class CoreHandler
 				{
 					if($iSet == 1)
 					{
-						array_shift($aParts);
+						$pChannel->pModes->$cMode = array_shift($aParts);
+						break;
 					}
 
+					$pChannel->pModes->$cMode = false;
 					break;
 				}
 
 				/* No passed arguments */
 				case 4:
 				{
+					$pChannel->pModes->$cMode = ($iSet == 1);
 					break;
 				}
 			}

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     e75544e55f1917e98a40c6eabfd2a530262ab803
- *	Committed at:   Tue Feb 15 22:05:13 GMT 2011
+ *	Git commit:     c3b4e3a5a2130506701b63985d1fd4510d985b64
+ *	Committed at:   Sun Feb 20 02:32:11 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -24,7 +24,9 @@ class CoreChannel
 
 	public
 		$pUsers = null,
-		$pTopic = null;
+		$pTopic = null,
+		$pModes = null,
+		$iCreateTime = 0;
 
 
 	/**
@@ -36,6 +38,7 @@ class CoreChannel
 		$this->sChannel = strtolower(trim($sChannel));
 
 		$this->pUsers = new stdClass();
+		$this->pModes = new stdClass();
 
 		$this->pTopic = (object) array
 		(
@@ -43,6 +46,19 @@ class CoreChannel
 			"timestamp" => "",
 			"setter" => "",
 		);
+
+		foreach($this->pMaster->pConfig->Server->ChannelModes as $sGroupString)
+		{
+			$aCharacters = preg_split('//', $sGroupString);
+
+			foreach($aCharacters as $sCharacter)
+			{
+				if($sCharacter)
+				{
+					$this->pModes->$sCharacter = false;
+				}
+			}
+		}
 	}
 
 
@@ -61,11 +77,16 @@ class CoreChannel
 	 */
 	public function __get($sKey)
 	{
-		$sKey = "propGet".$sKey;
+		$sProperty = "propGet".$sKey;
 
-		if(method_exists($this, $sKey))
+		if(method_exists($this, $sProperty))
 		{
-			return $this->$sKey();
+			return $this->$sProperty();
+		}
+
+		if(strpos($this->pMaster->pConfig->Server->CHANMODES, $sKey) !== false)
+		{
+			return $this->pModes->$sKey;
 		}
 
 		return null;
@@ -78,14 +99,61 @@ class CoreChannel
 	 */
 	public function __set($sKey, $mValue)
 	{
-		$sKey = "propSet".$sKey;
+		$sProperty = "propSet".$sKey;
 
-		if(method_exists($this, $sKey))
+		if(method_exists($this, $sProperty))
 		{
-			return $this->$sKey($mValue);
+			return $this->$sProperty($mValue);
 		}
 
-		return null;
+		if(strpos($this->pMaster->pConfig->Server->CHANMODES, $sKey) === false)
+		{
+			return null;
+		}
+
+		$aChannelModes = $this->pMaster->pConfig->Server->ChannelModes;
+
+		#
+		#	The code below here doesn't work.
+		#
+
+		/*
+		$iGroupID = function() use($aChannelModes, $sKey)
+		{
+			foreach($aChannelModes as $iGroupID => $sChannelModes)
+			{
+				if(strpos($sChannelModes, $sKey) !== false)
+				{
+					return $iGroupID + 1;
+				}
+			}
+		};
+
+		if(!$mValue)
+		{
+			$this->pModes->$sKey = false;
+			$this->pMaster->Raw("MODE {$this->sChannel} -{$sKey}");
+		}
+		else
+		{
+			switch($iGroupID())
+			{
+				case 1:
+				case 2:
+				case 3:
+				{
+					$this->pModes->$sKey = $mValue;
+					$this->pMaster->Raw("MODE {$this->sChannel} +{$sKey} {$mValue}");
+
+					break;
+				}
+				case 4:
+				{
+					$this->pModes->$sKey = true;
+					$this->pMaster->Raw("MODE {$this->sChannel} +{$sKey}");
+				}
+			}
+		}*/
 	}
 
 
@@ -435,5 +503,14 @@ class CoreChannel
 	public function Mode($sModeString)
 	{
 		return $this->pMaster->Raw("MODE {$this->sChannel} {$sModeString}");
+	}
+
+
+	/**
+	 *	Returns the creation time of the channel.
+	 */
+	public function getCreationTime()
+	{
+		return $this->iCreateTime;
 	}
 }
