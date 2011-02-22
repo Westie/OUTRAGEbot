@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     560596e0d6aba9e984a81e1b8c48c400f287116a
- *	Committed at:   Sat Feb 12 16:29:48 GMT 2011
+ *	Git commit:     9305c32d8608a5ee799ae37c0a9cf6a48426da6b
+ *	Committed at:   Tue Feb 22 21:48:25 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -102,7 +102,7 @@ abstract class Script
 	 */
 	public function getResource($sFileString, $sMode = "w+")
 	{
-		return new CoreResources($this->spScript, $sFileString, $sMode);
+		return new CoreResource($this->spScript, $sFileString, $sMode);
 	}
 
 
