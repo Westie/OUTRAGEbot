@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     e75544e55f1917e98a40c6eabfd2a530262ab803
- *	Committed at:   Tue Feb 15 22:05:13 GMT 2011
+ *	Git commit:     69f20dce78e27504d2872174a340fcf173a3487d
+ *	Committed at:   Fri Feb 25 20:13:10 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -26,7 +26,7 @@ Core::Library("Configuration");
 Core::Library("Format");
 Core::Library("Handler");
 Core::Library("Master");
-Core::Library("Resources");
+Core::Library("Resource");
 Core::Library("Script");
 Core::Library("Socket");
 Core::LModule("Timer");
