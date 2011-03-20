@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     85afeb688f7ca5db50b99229665ff01e8cec8868
- *	Committed at:   Sun Jan 30 19:41:46 2011 +0000
+ *	Git commit:     4c2ddcff35192cd3ce6d7683b8b00a66dc6ab439
+ *	Committed at:   Sun Mar 20 01:34:07 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -51,19 +51,24 @@ class Commands extends Script
 		/* Sort the variables out */
 		$aCommandPayload = explode(' ', $pMessage->Payload, 2);
 
-		$sCommandName = $aCommandPayload[0];
-		$sCommandArguments = isset($aCommandPayload[1]) ? $aCommandPayload[1] : "";
+		$sChannel = $pMessage->Parts[2];
+		$sNickname = $pMessage->User->Nickname;
+
+		$sCommand = $aCommandPayload[0];
+		$sArguments = isset($aCommandPayload[1]) ? $aCommandPayload[1] : "";
+
+		unset($aCommandPayload);
 
 
 		/* Check if the command exists. */
-		if(!$this->doesCommandExist($sCommandName))
+		if(!$this->doesCommandExist($sCommand))
 		{
 			return;
 		}
 
 		ob_start();
 
-		eval($this->pCommands->$sCommandName->code);
+		eval($this->pCommands->$sCommand->code);
 		$sOutput = ob_get_contents();
 
 		ob_end_clean();

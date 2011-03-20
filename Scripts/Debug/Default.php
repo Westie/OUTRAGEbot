@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     120646693ff8352874523a88d6a5166675cad01a
- *	Committed at:   Wed Feb 16 23:38:17 GMT 2011
+ *	Git commit:     4c2ddcff35192cd3ce6d7683b8b00a66dc6ab439
+ *	Committed at:   Sun Mar 20 01:34:07 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -77,6 +77,15 @@ class Debug extends Script
 	public function onConnect()
 	{
 		println("> It looks like the Debug Script has connected!");
+	}
+
+
+	/**
+	 *	Called when the bot has disconnected from the network, for some reason.
+	 */
+	public function onDisconnect()
+	{
+		println("> Gah. We've been disconnected from the server.");
 	}
 
 
@@ -190,6 +199,7 @@ class Debug extends Script
 
 	/**
 	 *	There's been a server error and the bot has been disconnected. Whoops!
+	 *	onDisconnect is also called.
 	 */
 	public function onServerError($sErrorMessage)
 	{

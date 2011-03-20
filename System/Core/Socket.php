@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     120646693ff8352874523a88d6a5166675cad01a
- *	Committed at:   Wed Feb 16 23:38:17 GMT 2011
+ *	Git commit:     4c2ddcff35192cd3ce6d7683b8b00a66dc6ab439
+ *	Committed at:   Sun Mar 20 01:34:07 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -16,12 +16,15 @@ class CoreSocket
 {
 	private
 		$aCaptureStack = array(),
+		$sTimerID = null,
 		$rSocket = null,
 		$pMaster = null,
 		$pSocketHandler = null;
 
 
 	public
+		$iPingTime = 0,
+		$iPingMiss = 0,
 		$pConfig = null;
 
 
@@ -73,6 +76,8 @@ class CoreSocket
 
 		$this->pConfig->StartTime = time();
 
+		$this->sTimerID = CoreTimer::Add(array($this, "pingServer"), 120, -1);
+
 		return;
 	}
 
@@ -85,7 +90,32 @@ class CoreSocket
 		$this->Output('QUIT :'.($sReason == null ? $this->pMaster->pConfig->Network->quitmsg : $sReason));
 		fclose($this->rSocket);
 
+		CoreTimer::Remove($this->sTimerID);
+		$this->sTimerID = null;
+
+		$this->pMaster->triggerEvent("onDisconnect");
+
 		return;
+	}
+
+
+	/**
+	 *	Checks that the bot is connected to the IRC network.
+	 */
+	public function pingServer()
+	{
+		if($this->iPingMiss === true)
+		{
+			$this->destroyConnection();
+			CoreTimer::Add(array($this, "createConnection"), 3);
+
+			return;
+		}
+
+		$this->iPingTime = time();
+		$this->iPingMiss = true;
+
+		$this->Output("PING {$this->iPingTime}");
 	}
 
 

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     c3b4e3a5a2130506701b63985d1fd4510d985b64
- *	Committed at:   Sun Feb 20 02:32:11 GMT 2011
+ *	Git commit:     4c2ddcff35192cd3ce6d7683b8b00a66dc6ab439
+ *	Committed at:   Sun Mar 20 01:34:07 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -496,6 +496,15 @@ class CoreHandler
 				return $pInstance->ctcpReply($pMessage->User->Nickname, "START ".date("d/m/Y H:i:s", time($pInstance->pSocket->pConfig->StartTime)));
 			}
 		}
+	}
+
+
+	/**
+	 *	Called when there's a ping response.
+	 */
+	public static function Pong(CoreMaster $pInstance, $pMessage)
+	{
+		$pInstance->pSocket->iPingMiss = false;
 	}
 
 
