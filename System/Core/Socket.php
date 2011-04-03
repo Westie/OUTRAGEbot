@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4c2ddcff35192cd3ce6d7683b8b00a66dc6ab439
- *	Committed at:   Sun Mar 20 01:34:07 GMT 2011
+ *	Git commit:     73c42fabc1ae1f4549ff642c290009d002d4e51e
+ *	Committed at:   Sun Apr  3 12:07:44 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -92,6 +92,7 @@ class CoreSocket
 
 		CoreTimer::Remove($this->sTimerID);
 		$this->sTimerID = null;
+		$this->iPingMiss = false;
 
 		$this->pMaster->triggerEvent("onDisconnect");
 

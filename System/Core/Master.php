@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4c2ddcff35192cd3ce6d7683b8b00a66dc6ab439
- *	Committed at:   Sun Mar 20 01:34:07 GMT 2011
+ *	Git commit:     73c42fabc1ae1f4549ff642c290009d002d4e51e
+ *	Committed at:   Sun Apr  3 12:07:44 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -643,7 +643,44 @@ class CoreMaster
 
 			if(method_exists($pScriptInstance, $sEventName))
 			{
-				$mReturn = call_user_func_array(array($pScriptInstance, $sEventName), $aArguments);
+				switch(count($aArguments))
+				{
+					case 0:
+					{
+						$mReturn = $pScriptInstance->$sEventName();
+						break;
+					}
+					case 1:
+					{
+						$mReturn = $pScriptInstance->$sEventName($aArguments[0]);
+						break;
+					}
+					case 2:
+					{
+						$mReturn = $pScriptInstance->$sEventName($aArguments[0], $aArguments[1]);
+						break;
+					}
+					case 3:
+					{
+						$mReturn = $pScriptInstance->$sEventName($aArguments[0], $aArguments[1], $aArguments[2]);
+						break;
+					}
+					case 4:
+					{
+						$mReturn = $pScriptInstance->$sEventName($aArguments[0], $aArguments[1], $aArguments[2], $aArguments[3]);
+						break;
+					}
+					case 5:
+					{
+						$mReturn = $pScriptInstance->$sEventName($aArguments[0], $aArguments[1], $aArguments[2], $aArguments[3], $aArguments[4]);
+						break;
+					}
+					default:
+					{
+						$mReturn = call_user_func_array(array($pScriptInstance, $sEventName), $aArguments);
+						break;
+					}
+				}
 			}
 
 			if($mReturn == END_EVENT_EXEC)
