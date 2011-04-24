@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     73c42fabc1ae1f4549ff642c290009d002d4e51e
- *	Committed at:   Sun Apr  3 12:07:44 BST 2011
+ *	Git commit:     2b48e02efaea7239393d064746875a0ae4196245
+ *	Committed at:   Sun Apr 24 19:36:13 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -27,6 +27,7 @@ class CoreMaster
 	private
 		$aScripts = array(),
 		$aSockets = array(),
+		$iNetworksLoaded = false,
 
 		$pBotItter = null;
 
@@ -67,6 +68,8 @@ class CoreMaster
 
 			++$this->pBotItter->iCount;
 		}
+
+		$this->iNetworkLoaded = true;
 	}
 
 
@@ -517,6 +520,12 @@ class CoreMaster
 		println(" * Activated script '{$sScriptName}'");
 
 		$this->aScripts[$sScriptName] = new $sIdentifier($this, $sScriptName);
+
+		if($this->iNetworkLoaded)
+		{
+			$this->triggerEvent("onConnect");
+		}
+
 		return true;
 	}
 
