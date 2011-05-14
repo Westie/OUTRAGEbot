@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     c3b4e3a5a2130506701b63985d1fd4510d985b64
- *	Committed at:   Sun Feb 20 02:32:11 GMT 2011
+ *	Git commit:     36b9fc897f55c54141685c8d5342fe4a631e26ff
+ *	Committed at:   Sat May 14 23:35:04 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -192,7 +192,7 @@ class CoreChannel
 	 */
 	public function renameUserInChannel($sOldNickname, $sNewNickname)
 	{
-		if(!isset($this->pUsers->$sOldNickname))
+		if(!isset($this->pUsers->$sOldNickname) || empty($this->pUsers->$sOldNickname))
 		{
 			return;
 		}
