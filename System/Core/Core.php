@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     e75544e55f1917e98a40c6eabfd2a530262ab803
- *	Committed at:   Tue Feb 15 22:05:13 GMT 2011
+ *	Git commit:     6b7b1d5b4972a453595613ff30cf83f7db65873e
+ *	Committed at:   Thu May 19 14:11:07 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -277,10 +277,10 @@ class Core
 
 		if(is_array($pEventHandler->callback) && ($pEventHandler->callback[0] instanceof Script))
 		{
-			return call_user_func($pEventHandler->callback, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[1]);
+			return call_user_func($pEventHandler->callback, $pInstance->getChannel($pMessage->Parts[2]), $pMessage->User->Nickname, $aCommandPayload[1]);
 		}
 
-		return call_user_func($pEventHandler->callback, $pInstance, $pMessage->Parts[2], $pMessage->User->Nickname, $aCommandPayload[1]);
+		return call_user_func($pEventHandler->callback, $pInstance, $pInstance->getChannel($pMessage->Parts[2]), $pMessage->User->Nickname, $aCommandPayload[1]);
 	}
 
 
