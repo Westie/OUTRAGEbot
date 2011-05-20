@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     73c42fabc1ae1f4549ff642c290009d002d4e51e
- *	Committed at:   Sun Apr  3 12:07:44 BST 2011
+ *	Git commit:     d13254eb1b3c8b49143c5836e064c5cd9e8e3933
+ *	Committed at:   Fri May 20 17:58:05 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -35,10 +35,11 @@ Core::Library("Utilities");
 
 Core::Module("Whois");
 Core::Module("List");
-Core::Module("Console");
-
 
 Core::scanConfig();
+
+
+error_reporting(E_ALL | E_STRICT);
 
 
 while(true)
