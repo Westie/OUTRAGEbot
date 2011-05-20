@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     ecbc253e05347dc64ad3e491867863a56b577d01
- *	Committed at:   Fri May 20 17:56:57 BST 2011
+ *	Git commit:     7d3682aeeb48655779d4f6e1748e427c07f8efe7
+ *	Committed at:   Fri May 20 18:01:13 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -251,7 +251,7 @@ class CoreHandler
 			$pInstance->pSocket->pConfig->nickname = $sNewNickname;
 		}
 
-		$pInstance->triggerEvent("onNicknameChange", $pMessage->User->Nickname, $pMessage->Payload);
+		$pInstance->triggerEvent("onNicknameChange", $pMessage->User->Nickname, $sNewNickname);
 	}
 
 
