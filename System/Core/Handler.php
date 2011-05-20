@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4c2ddcff35192cd3ce6d7683b8b00a66dc6ab439
- *	Committed at:   Sun Mar 20 01:34:07 GMT 2011
+ *	Git commit:     ecbc253e05347dc64ad3e491867863a56b577d01
+ *	Committed at:   Fri May 20 17:56:57 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -234,14 +234,21 @@ class CoreHandler
 	 */
 	public static function Nick(CoreMaster $pInstance, $pMessage)
 	{
+		$sNewNickname = $pMessage->Parts[2];
+
+		if($sNewNickname[0] == ':')
+		{
+			$sNewNickname = substr($sNewNickname, 1);
+		}
+
 		foreach($pInstance->pChannels as $pChannel)
 		{
-			$pChannel->renameUserInChannel($pMessage->User->Nickname, $pMessage->Payload);
+			$pChannel->renameUserInChannel($pMessage->User->Nickname, $sNewNickname);
 		}
 
 		if($pInstance->pSocket->pConfig->nickname == $pMessage->User->Nickname)
 		{
-			$pInstance->pSocket->pConfig->nickname = $pMessage->Payload;
+			$pInstance->pSocket->pConfig->nickname = $sNewNickname;
 		}
 
 		$pInstance->triggerEvent("onNicknameChange", $pMessage->User->Nickname, $pMessage->Payload);
