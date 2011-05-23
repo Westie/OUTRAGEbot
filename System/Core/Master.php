@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     6b7b1d5b4972a453595613ff30cf83f7db65873e
- *	Committed at:   Thu May 19 14:11:07 BST 2011
+ *	Git commit:     be5341ff1752bf6f45bc35690759d1c307b453df
+ *	Committed at:   Mon May 23 21:54:25 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -588,17 +588,43 @@ class CoreMaster
 		if(!is_callable($cCallback))
 		{
 			$cCallback = array($this->pCurrentScript, $cCallback);
+
+			if(!is_callable($cCallback))
+			{
+				return false;
+			}
 		}
 
-		$sHandlerID = uniqid("vca");
-		$sEventName = strtoupper($sEventName);
+		$sHandlerID = uniqid("vce");
+		$iEventType = 0;
 
 		$this->pCurrentScript->aHandlerScriptLocalCache[] = $sHandlerID;
+
+		if(substr($sEventName, 0, 2) == "on")
+		{
+			$sEventName = "+{$sEventName}";
+			$iEventType = EVENT_HANDLER;
+		}
+		else
+		{
+			$sEventName = strtoupper($sEventName);
+
+			if($mArgumentFormat == null)
+			{
+				$iEventType = EVENT_INPUT;
+			}
+			else
+			{
+				$iEventType = EVENT_CUSTOM;
+			}
+		}
+
 		$this->pEventHandlers->{$sEventName}[$sHandlerID] = (object) array
 		(
-			"callback" => $cCallback,
-			"argFormat" => $sArgumentFormat,
-			"arguments" => $mArguments,
+			"eventType" => $iEventType,
+			"eventCallback" => $cCallback,
+			"argumentTypes" => $sArgumentFormat,
+			"argumentPassed" => $mArguments,
 		);
 
 		return $sHandlerID;
@@ -611,7 +637,29 @@ class CoreMaster
 	 */
 	public function addCommandHandler($sCommandName, $cCallback)
 	{
-		return $this->addEventHandler('PRIVMSG', $cCallback, 120, $sCommandName);
+		if(!is_callable($cCallback))
+		{
+			$cCallback = array($this->pCurrentScript, $cCallback);
+
+			if(!is_callable($cCallback))
+			{
+				return false;
+			}
+		}
+
+		$sHandlerID = uniqid("vcc");
+
+		$this->pCurrentScript->aHandlerScriptLocalCache[] = $sHandlerID;
+
+		$this->pEventHandlers->PRIVMSG[$sHandlerID] = (object) array
+		(
+			"eventType" => EVENT_COMMAND,
+			"eventCallback" => $cCallback,
+			"argumentTypes" => null,
+			"argumentPassed" => $sCommandName,
+		);
+
+		return $sHandlerID;
 	}
 
 
@@ -640,22 +688,55 @@ class CoreMaster
 
 	/**
 	 *	Trigger an event for loaded Scripts.
+	 *	Like everything else, needs cleaning up.
 	 */
 	public function triggerEvent()
 	{
 		$aArguments = func_get_args();
 		$sEventName = array_shift($aArguments);
+		$mReturn = null;
 
+		# Go through the handlers - they have high presidence than Scripts.
+		foreach($this->pEventHandlers as $sEventNumeric => $aEventHandlers)
+		{
+			if($sEventNumeric[0] != '+')
+			{
+				continue;
+			}
+
+			if($sEventName != substr($sEventNumeric, 1))
+			{
+				continue;
+			}
+
+			foreach($aEventHandlers as $pEventHandler)
+			{
+				if(Core::isEventScript($pEventHandler->eventCallback))
+				{
+					$mReturn = call_user_func_array($pEventHandler->eventCallback, $aArguments);
+				}
+				else
+				{
+					$aTempArguments = array_merge(array($this), $aArguments);
+					$mReturn = call_user_func_array($pEventHandler->eventCallback, $aTempArguments);
+				}
+
+				if(Core::assert($mReturn))
+				{
+					return;
+				}
+			}
+		}
+
+		# And finally, the scripts.
 		foreach($this->aScripts as $pScriptInstance)
 		{
-			$mReturn = null;
-
 			if(method_exists($pScriptInstance, $sEventName))
 			{
 				$mReturn = call_user_func_array(array($pScriptInstance, $sEventName), $aArguments);
 			}
 
-			if($mReturn == END_EVENT_EXEC)
+			if(Core::assert($mReturn))
 			{
 				return;
 			}

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     6b7b1d5b4972a453595613ff30cf83f7db65873e
- *	Committed at:   Thu May 19 14:11:07 BST 2011
+ *	Git commit:     be5341ff1752bf6f45bc35690759d1c307b453df
+ *	Committed at:   Mon May 23 22:00:40 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -210,21 +210,29 @@ class Core
 
 			foreach($aEventHandlers as $pEventHandler)
 			{
-				if($pEventHandler->argFormat === null)
+				switch($pEventHandler->eventType)
 				{
-					$mReturn = self::DefaultHandler($pInstance, $pMessage, $pEventHandler);
-				}
-				elseif($pEventHandler->argFormat === 120)
-				{
-					$mReturn = self::CommandHandler($pInstance, $pMessage, $pEventHandler);
-				}
-				else
-				{
-					$mReturn = self::CustomHandler($pInstance, $pMessage, $pEventHandler);
+					case EVENT_COMMAND:
+					{
+						$mReturn = self::CommandHandler($pInstance, $pMessage, $pEventHandler);
+						break;
+					}
+
+					case EVENT_CUSTOM:
+					{
+						$mReturn = self::CustomHandler($pInstance, $pMessage, $pEventHandler);
+						break;
+					}
+
+					default:
+					{
+						$mReturn = self::DefaultHandler($pInstance, $pMessage, $pEventHandler);
+						break;
+					}
 				}
 			}
 
-			if($mReturn == END_EVENT_EXEC)
+			if(self::assert($mReturn))
 			{
 				return true;
 			}
@@ -247,16 +255,44 @@ class Core
 
 
 	/**
+	 *	Checks if a section of code has successfully been executed.
+	 */
+	public static function assert($mReturn)
+	{
+		return $mReturn == END_EVENT_EXEC || $mReturn == true;
+	}
+
+
+	/**
+	 *	Checks if the event is a member of Script.
+	 */
+	public static function isEventScript($pEventHandler)
+	{
+		if(!is_array($pEventHandler->eventCallback))
+		{
+			return false;
+		}
+
+		if($pEventHandler->eventCallback[0] instanceof Script)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+
+	/**
 	 *	Deals with the default handlers.
 	 */
 	private static function DefaultHandler(CoreMaster $pInstance, $pMessage, $pEventHandler)
 	{
-		if(is_array($pEventHandler->callback) && ($pEventHandler->callback[0] instanceof Script))
+		if(self::isEventScript($pEventHandler))
 		{
-			return call_user_func($pEventHandler->callback, $pMessage);
+			return call_user_func($pEventHandler->eventCallback, $pMessage);
 		}
 
-		return call_user_func($pEventHandler->callback, $pInstance, $pMessage);
+		return call_user_func($pEventHandler->eventCallback, $pInstance, $pMessage);
 	}
 
 
@@ -265,7 +301,7 @@ class Core
 	 */
 	private static function CommandHandler(CoreMaster $pInstance, $pMessage, $pEventHandler)
 	{
-		$sCommandName = $pInstance->pConfig->Network->delimiter.$pEventHandler->arguments;
+		$sCommandName = $pInstance->pConfig->Network->delimiter.$pEventHandler->argumentPassed;
 		$aCommandPayload = explode(' ', $pMessage->Payload, 2);
 
 		if($sCommandName != $aCommandPayload[0])
@@ -275,12 +311,12 @@ class Core
 
 		$aCommandPayload[1] = isset($aCommandPayload[1]) ? $aCommandPayload[1] : "";
 
-		if(is_array($pEventHandler->callback) && ($pEventHandler->callback[0] instanceof Script))
+		if(self::isEventScript($pEventHandler))
 		{
-			return call_user_func($pEventHandler->callback, $pInstance->getChannel($pMessage->Parts[2]), $pMessage->User->Nickname, $aCommandPayload[1]);
+			return call_user_func($pEventHandler->eventCallback, $pInstance->getChannel($pMessage->Parts[2]), $pMessage->User->Nickname, $aCommandPayload[1]);
 		}
 
-		return call_user_func($pEventHandler->callback, $pInstance, $pInstance->getChannel($pMessage->Parts[2]), $pMessage->User->Nickname, $aCommandPayload[1]);
+		return call_user_func($pEventHandler->eventCallback, $pInstance, $pInstance->getChannel($pMessage->Parts[2]), $pMessage->User->Nickname, $aCommandPayload[1]);
 	}
 
 
@@ -289,8 +325,7 @@ class Core
 	 */
 	private static function CustomHandler(CoreMaster $pInstance, $pMessage, $pEventHandler)
 	{
-		$aArgumentList = preg_split('//', $pEventHandler->argFormat, -1, PREG_SPLIT_NO_EMPTY);
-		$aArguments[] = $pInstance;
+		$aArgumentList = preg_split('//', $pEventHandler->argumentTypes, -1, PREG_SPLIT_NO_EMPTY);
 
 		foreach($aArgumentList as $cArgument)
 		{
@@ -328,7 +363,12 @@ class Core
 			}
 		}
 
-		return call_user_func_array($pEventHandler->callback, $aArguments);
+		if(!self::isEventScript($pEventHandler))
+		{
+			array_unshift($aArguments, $pInstance);
+		}
+
+		return call_user_func_array($pEventHandler->eventCallback, $aArguments);
 	}
 
 

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     7d3682aeeb48655779d4f6e1748e427c07f8efe7
- *	Committed at:   Fri May 20 18:01:13 BST 2011
+ *	Git commit:     be5341ff1752bf6f45bc35690759d1c307b453df
+ *	Committed at:   Mon May 23 21:54:25 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -27,8 +27,8 @@ define("BOT_TICKRATE", 2600);
 /**
  *	Some bot-brag-relating things.
  */
-define("BOT_VERSION", "2.0.0-Alpha-7d3682a");
-define("BOT_RELDATE", "20/05/2011");
+define("BOT_VERSION", "2.0.0-Alpha-be5341f");
+define("BOT_RELDATE", "23/05/2011");
 
 
 /**
@@ -61,3 +61,12 @@ define("MODE_USER_OWNER", 16);
  *	A little trick to do with event handlers.
  */
 define("END_EVENT_EXEC", 0x80000000);
+
+
+/**
+ *	Internal: Event types
+ */
+define("EVENT_INPUT", 1);
+define("EVENT_CUSTOM", 2);
+define("EVENT_HANDLER", 3);
+define("EVENT_COMMAND", 4);
