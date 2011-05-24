@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4c2ddcff35192cd3ce6d7683b8b00a66dc6ab439
- *	Committed at:   Sun Mar 20 01:34:07 GMT 2011
+ *	Git commit:     c928e5133e1a654533acbead6741c32cb35ed017
+ *	Committed at:   Tue May 24 01:02:41 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -14,8 +14,11 @@
 
 class Commands extends Script
 {
+	/**
+	 *	A variable for storing things.
+	 */
 	private
-		$pCommands = null;
+		$aCommands = array();
 
 
 	/**
@@ -23,52 +26,77 @@ class Commands extends Script
 	 */
 	public function onConstruct()
 	{
-		$this->pCommands = new stdClass();
-
-		$this->loadCommands();
-
-		$this->addCommandHandler("cmdadd", "onAddCommand");
-		$this->addCommandHandler("cmddel", "onRemoveCommand");
-		$this->addEventHandler("PRIVMSG", "onMessageInput");
+		$this->addCommandHandler("acommand", "addCommand");
+		$this->addEventHandler("PRIVMSG", "processCommand");
 	}
 
 
 	/**
-	 *	Called when the Script is removed.
+	 *	Add a command into memory.
 	 */
-	public function onDestruct()
+	public function addCommand($sChannel, $sNickname, $sArguments)
 	{
-		$this->saveCommands();
-	}
-
-
-	/**
-	 *	Called when there's an input.
-	 *	I didn't want to use three methods, when I can just use one.
-	 */
-	public function onMessageInput($pMessage)
-	{
-		/* Sort the variables out */
-		$aCommandPayload = explode(' ', $pMessage->Payload, 2);
-
-		$sChannel = $pMessage->Parts[2];
-		$sNickname = $pMessage->User->Nickname;
-
-		$sCommand = $aCommandPayload[0];
-		$sArguments = isset($aCommandPayload[1]) ? $aCommandPayload[1] : "";
-
-		unset($aCommandPayload);
-
-
-		/* Check if the command exists. */
-		if(!$this->doesCommandExist($sCommand))
+		if(!$this->isAdmin())
 		{
-			return;
+			return END_EVENT_EXEC;
+		}
+
+		if(!$sArguments)
+		{
+			$this->Notice($sNickname, "Error: acommand [commandName] [PHP code]");
+			return END_EVENT_EXEC;
+		}
+
+		list($sCommand, $sCode) = explode(' ', $sArguments, 2);
+
+		$this->aCommands[$sCommand] = $sCode;
+		$sCommand = urlencode($sCommand);
+
+		$pResource = $this->getResource("{$sCommand}.txt");
+		$pResource->write($sCode);
+
+		$this->introduceCommands();
+
+		$this->Notice($sNickname, "Successfully enabled {$sCommand} with: { {$sCode} }");
+		return END_EVENT_EXEC;
+	}
+
+
+	/**
+	 *	Load the commands into memory
+	 */
+	private function introduceCommands()
+	{
+		$aResources = $this->getListOfResources("*.txt");
+
+		foreach($aResources as $sResource)
+		{
+			$sCommand = urldecode($sResource);
+			$pResource = $this->getResource($sResource);
+
+			$this->aCommands[$sCommand] = $pResource->read();
+		}
+	}
+
+
+	/**
+	 *	Magic stuff! We can call functions now!
+	 */
+	public function processCommand($pMessage)
+	{
+		$sChannel = $this->getChannel($pMessage->Parts[2]);
+		$sNickname = $pMessage->User->Nickname;
+		$sCommand = substr($pMessage->Parts[3], 1);
+		$sArguments = substr($pMessage->Payload, strlen($pMessage->Parts[3]));
+
+		if(!isset($this->aCommands[$sCommand]))
+		{
+			return false;
 		}
 
 		ob_start();
 
-		eval($this->pCommands->$sCommand->code);
+		eval($this->aCommands[$sCommand]);
 		$sOutput = ob_get_contents();
 
 		ob_end_clean();
@@ -79,131 +107,5 @@ class Commands extends Script
 		}
 
 		return END_EVENT_EXEC;
-	}
-
-
-	/**
-	 *	Add a command into the Command engine.
-	 */
-	public function onAddCommand($sChannel, $sNickname, $sArguments)
-	{
-		if(!$this->isAdmin())
-		{
-			return END_EVENT_EXEC;
-		}
-
-		if(!$sArguments)
-		{
-			$this->Notice($sNickname, "Usage: !cmdadd [Command Name] [PHP Evaluation Code]");
-			return END_EVENT_EXEC;
-		}
-
-		$aArguments = explode(' ', $sArguments, 2);
-
-		$sCommandName = $aArguments[0];
-		$sCommandArguments = isset($aArguments[1]) ? $aArguments[1] : "";
-
-		if($this->doesCommandExist($sCommandName))
-		{
-			$this->Notice($sNickname, "Error: That command name has already been took!");
-			return END_EVENT_EXEC;
-		}
-
-		$this->pCommands->$sCommandName = (object) array
-		(
-			"command" => $sCommandName,
-			"code" => $sCommandArguments,
-			"channel" => null,
-			"perms" => null,
-		);
-
-		$this->saveCommands();
-		$this->loadCommands();
-
-		$this->Notice($sNickname, "Success: {$sCommandName} has been added and saved.");
-
-		return END_EVENT_EXEC;
-	}
-
-
-	/**
-	 *	Add a command into the Command engine.
-	 */
-	public function onRemoveCommand($sChannel, $sNickname, $sArguments)
-	{
-		if(!$this->isAdmin())
-		{
-			return END_EVENT_EXEC;
-		}
-
-		if(!$sArguments)
-		{
-			$this->Notice($sNickname, "Usage: !cmddel [Command Name]");
-			return END_EVENT_EXEC;
-		}
-
-		$aArguments = explode(' ', $sArguments, 2);
-
-		$sCommandName = $aArguments[0];
-
-		if(!$this->doesCommandExist($sCommandName))
-		{
-			$this->Notice($sNickname, "Error: That command name doesn't exist!");
-			return END_EVENT_EXEC;
-		}
-
-		unset($this->pCommands->$sCommandName);
-
-		$this->saveCommands();
-		$this->loadCommands();
-
-		$this->Notice($sNickname, "Success: {$sCommandName} has been removed!");
-
-		return END_EVENT_EXEC;
-	}
-
-
-	/**
-	 *	Checks if the command is loaded into memory.
-	 */
-	private function doesCommandExist($sCommandName)
-	{
-		return isset($this->pCommands->$sCommandName) !== false;
-	}
-
-
-	/**
-	 *	Saves the commands into files
-	 */
-	private function saveCommands()
-	{
-		foreach($this->pCommands as $pCommand)
-		{
-			$pResource = $this->getResource(urlencode($pCommand->command).'.txt');
-			$pResource->write(serialize($pCommand));
-		}
-
-		return true;
-	}
-
-
-	/**
-	 *	Loads the commands into memory
-	 */
-	private function loadCommands()
-	{
-		$this->pCommands = new stdClass();
-
-		$aFileLocation = glob(ROOT."/Resources/Commands/*.txt");
-
-		foreach($aFileLocation as $sFileLocation)
-		{
-			$sFileLocation = basename($sFileLocation);
-
-			$pResource = $this->getResource($sFileLocation);
-			$pCommand = unserialize($pResource->read());
-
-			$this->pCommands->{$pCommand->command} = $pCommand;
-		}
 	}
 }

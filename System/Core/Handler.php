@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     7d3682aeeb48655779d4f6e1748e427c07f8efe7
- *	Committed at:   Fri May 20 18:01:13 BST 2011
+ *	Git commit:     c928e5133e1a654533acbead6741c32cb35ed017
+ *	Committed at:   Tue May 24 01:02:28 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -212,7 +212,7 @@ class CoreHandler
 		$pChannel = $pInstance->getChannel($pMessage->Parts[2]);
 
 		$pChannel->removeUserFromChannel($pMessage->User->Nickname);
-		$pInstance->triggerEvent("onChannelPart", $pChannel, $pMessage->User->Nickname);
+		$pInstance->triggerEvent("onChannelPart", $pChannel, $pMessage->User->Nickname, $pMessage->Payload);
 	}
 
 
