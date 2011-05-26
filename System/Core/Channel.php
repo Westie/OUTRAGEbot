@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     ecbc253e05347dc64ad3e491867863a56b577d01
- *	Committed at:   Fri May 20 17:56:57 BST 2011
+ *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
+ *	Committed at:   Thu May 26 13:52:58 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -42,9 +42,9 @@ class CoreChannel
 
 		$this->pTopic = (object) array
 		(
-			"chantopic" => "",
-			"timestamp" => "",
-			"setter" => "",
+			"topicString" => "",
+			"topicTime" => 0,
+			"topicSetter" => "",
 		);
 
 		foreach($this->pMaster->pConfig->Server->ChannelModes as $sGroupString)
@@ -245,7 +245,7 @@ class CoreChannel
 	 */
 	private function propGetTopic()
 	{
-		return $this->aTopicInformation['String'];
+		return $this->pTopic->topicString;
 	}
 
 
@@ -283,7 +283,7 @@ class CoreChannel
 	 */
 	public function getTopic()
 	{
-		return $this->aTopicInformation;
+		return $this->pTopic;
 	}
 
 

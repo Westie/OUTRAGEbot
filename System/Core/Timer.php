@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
- *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
+ *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
+ *	Committed at:   Thu May 26 13:52:58 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -33,30 +33,25 @@ class CoreTimer
 	 */
 	static function onTick()
 	{
-		if(count(self::$aTimers) == 0)
-		{
-			return;
-		}
-
 		foreach(self::$aTimers as $sTimerKey => &$aTimerInfo)
 		{
-			if(microtime(true) <= $aTimerInfo['time'])
+			if(microtime(true) <= $aTimerInfo['nextTimerCall'])
 			{
 				continue;
 			}
 
-			call_user_func_array($aTimerInfo['call'], $aTimerInfo['args']);
+			call_user_func_array($aTimerInfo['timerCallback'], $aTimerInfo['timerArguments']);
 
-			$aTimerInfo['time'] = (float) microtime(true) + (float) $aTimerInfo['interval'];
+			$aTimerInfo['nextTimerCall'] = (float) microtime(true) + (float) $aTimerInfo['timerInterval'];
 
-			if($aTimerInfo['repeat'] == -1)
+			if($aTimerInfo['timerRepeat'] == -1)
 			{
 				continue;
 			}
 
-			--$aTimerInfo['repeat'];
+			--$aTimerInfo['timerRepeat'];
 
-			if($aTimerInfo['repeat'] == 0)
+			if($aTimerInfo['timerRepeat'] == 0)
 			{
 				unset(self::$aTimers[$sTimerKey]);
 			}
@@ -67,25 +62,33 @@ class CoreTimer
 	/**
 	 *	Add a timer
 	 */
-	static function Add($cCallback, $iInterval, $iRepeat = 1, $aArguments = array(), $pContext = null)
+	static function Add($cCallback, $iInterval, $iRepeat = 1, $aArguments = array())
 	{
-		$sTimerKey = substr(sha1(time().uniqid()), 4, 10);
+		if(!is_callable($cCallback))
+		{
+			$cCallback = array(self::getCurrentInstance()->pCurrentScript, $cCallback);
 
-		# A little hack, we can presume that it's this script...
+			if(!is_callable($cCallback))
+			{
+				return false;
+			}
+		}
+
+		$sTimerKey = uniqid("vct");
+
 		if(is_array($cCallback) && ($cCallback[0] instanceof Script))
 		{
-			$cCallback[0]->aTimerScriptLocalCache[] = $sTimerKey;
+			$cCallback[0]->addLocalTimerHandler($sTimerKey);
 		}
 
 		self::$aTimers[$sTimerKey] = array
 		(
-			"id" => $sTimerKey,
-			"call" => $cCallback,
-			"interval" => (float) $iInterval,
-			"repeat" => $iRepeat,
-			"time" => (float) microtime(true) + (float) $iInterval,
-			"args" => $aArguments,
-			"context" => $pContext,
+			"timerID" => $sTimerKey,
+			"timerCallback" => $cCallback,
+			"timerInterval" => (float) $iInterval,
+			"timerRepeat" => $iRepeat,
+			"nextTimerCall" => (float) microtime(true) + (float) $iInterval,
+			"timerArguments" => $aArguments
 		);
 
 		return $sTimerKey;

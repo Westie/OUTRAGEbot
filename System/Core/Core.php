@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     be5341ff1752bf6f45bc35690759d1c307b453df
- *	Committed at:   Mon May 23 22:00:40 BST 2011
+ *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
+ *	Committed at:   Thu May 26 13:52:58 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -199,43 +199,37 @@ class Core
 	 */
 	static function Handler(CoreMaster $pInstance, $pMessage)
 	{
-		foreach($pInstance->pEventHandlers as $sEventNumeric => $aEventHandlers)
-		{
-			if($sEventNumeric != $pMessage->Numeric)
-			{
-				continue;
-			}
+		$aEventHandlers = $pInstance->pEventHandlers->{$pMessage->Numeric};
 
+		foreach($aEventHandlers as $pEventHandler)
+		{
 			$mReturn = null;
 
-			foreach($aEventHandlers as $pEventHandler)
+			switch($pEventHandler->eventType)
 			{
-				switch($pEventHandler->eventType)
+				case EVENT_COMMAND:
 				{
-					case EVENT_COMMAND:
-					{
-						$mReturn = self::CommandHandler($pInstance, $pMessage, $pEventHandler);
-						break;
-					}
+					$mReturn = self::CommandHandler($pInstance, $pMessage, $pEventHandler);
+					break;
+				}
 
-					case EVENT_CUSTOM:
-					{
-						$mReturn = self::CustomHandler($pInstance, $pMessage, $pEventHandler);
-						break;
-					}
+				case EVENT_CUSTOM:
+				{
+					$mReturn = self::CustomHandler($pInstance, $pMessage, $pEventHandler);
+					break;
+				}
 
-					default:
-					{
-						$mReturn = self::DefaultHandler($pInstance, $pMessage, $pEventHandler);
-						break;
-					}
+				default:
+				{
+					$mReturn = self::DefaultHandler($pInstance, $pMessage, $pEventHandler);
+					break;
 				}
 			}
+		}
 
-			if(self::assert($mReturn))
-			{
-				return true;
-			}
+		if(self::assert($mReturn))
+		{
+			return true;
 		}
 
 		if($pMessage->Parts[0] == "ERROR")

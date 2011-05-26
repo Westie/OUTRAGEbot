@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     be5341ff1752bf6f45bc35690759d1c307b453df
- *	Committed at:   Mon May 23 21:54:25 BST 2011
+ *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
+ *	Committed at:   Thu May 26 13:52:58 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -69,7 +69,7 @@ class CoreMaster
 			++$this->pBotItter->iCount;
 		}
 
-		$this->iNetworkLoaded = true;
+		$this->iNetworksLoaded = true;
 	}
 
 
@@ -521,7 +521,7 @@ class CoreMaster
 
 		$this->aScripts[$sScriptName] = new $sIdentifier($this, $sScriptName);
 
-		if($this->iNetworkLoaded)
+		if($this->iNetworksLoaded)
 		{
 			$this->triggerEvent("onConnect");
 		}
@@ -540,21 +540,20 @@ class CoreMaster
 			return false;
 		}
 
-		foreach($this->aScripts[$sScriptName]->aHandlerScriptLocalCache as $sHandlerID)
+		foreach($this->aScripts[$sScriptName]->getLocalEventHandlers() as $sHandlerID)
 		{
 			$this->removeEventHandler($sHandlerID);
 		}
 
-		foreach($this->aScripts[$sScriptName]->aTimerScriptLocalCache as $sTimerID)
+		foreach($this->aScripts[$sScriptName]->getLocalTimerHandlers() as $sTimerID)
 		{
 			$this->removeTimer($sTimerID);
 		}
 
 		$this->aScripts[$sScriptName]->onDestruct();
+		$this->aScripts[$sScriptName]->prepareRemoval();
 
 		println(" * Deactivated script '{$sScriptName}'");
-
-		unset($this->aScripts[$sScriptName]->aHandlerScriptLocalCache);
 		unset($this->aScripts[$sScriptName]);
 
 		return true;
@@ -598,7 +597,7 @@ class CoreMaster
 		$sHandlerID = uniqid("vce");
 		$iEventType = 0;
 
-		$this->pCurrentScript->aHandlerScriptLocalCache[] = $sHandlerID;
+		$this->pCurrentScript->addLocalEventHandler($sHandlerID);
 
 		if(substr($sEventName, 0, 2) == "on")
 		{
@@ -609,7 +608,7 @@ class CoreMaster
 		{
 			$sEventName = strtoupper($sEventName);
 
-			if($mArgumentFormat == null)
+			if($sArgumentFormat == null)
 			{
 				$iEventType = EVENT_INPUT;
 			}
@@ -621,6 +620,7 @@ class CoreMaster
 
 		$this->pEventHandlers->{$sEventName}[$sHandlerID] = (object) array
 		(
+			"eventID" => $sHandlerID,
 			"eventType" => $iEventType,
 			"eventCallback" => $cCallback,
 			"argumentTypes" => $sArgumentFormat,
@@ -649,10 +649,11 @@ class CoreMaster
 
 		$sHandlerID = uniqid("vcc");
 
-		$this->pCurrentScript->aHandlerScriptLocalCache[] = $sHandlerID;
+		$this->pCurrentScript->addLocalEventHandler($sHandlerID);
 
 		$this->pEventHandlers->PRIVMSG[$sHandlerID] = (object) array
 		(
+			"eventID" => $sHandlerID,
 			"eventType" => EVENT_COMMAND,
 			"eventCallback" => $cCallback,
 			"argumentTypes" => null,
@@ -697,34 +698,23 @@ class CoreMaster
 		$mReturn = null;
 
 		# Go through the handlers - they have high presidence than Scripts.
-		foreach($this->pEventHandlers as $sEventNumeric => $aEventHandlers)
+		$aEventHandlers = $this->pEventHandlers->{"+{$sEventName}"};
+
+		foreach($aEventHandlers as $pEventHandler)
 		{
-			if($sEventNumeric[0] != '+')
+			if(Core::isEventScript($pEventHandler->eventCallback))
 			{
-				continue;
+				$mReturn = call_user_func_array($pEventHandler->eventCallback, $aArguments);
+			}
+			else
+			{
+				$aTempArguments = array_merge(array($this), $aArguments);
+				$mReturn = call_user_func_array($pEventHandler->eventCallback, $aTempArguments);
 			}
 
-			if($sEventName != substr($sEventNumeric, 1))
+			if(Core::assert($mReturn))
 			{
-				continue;
-			}
-
-			foreach($aEventHandlers as $pEventHandler)
-			{
-				if(Core::isEventScript($pEventHandler->eventCallback))
-				{
-					$mReturn = call_user_func_array($pEventHandler->eventCallback, $aArguments);
-				}
-				else
-				{
-					$aTempArguments = array_merge(array($this), $aArguments);
-					$mReturn = call_user_func_array($pEventHandler->eventCallback, $aTempArguments);
-				}
-
-				if(Core::assert($mReturn))
-				{
-					return;
-				}
+				return;
 			}
 		}
 

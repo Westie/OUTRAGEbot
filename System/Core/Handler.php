@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     c928e5133e1a654533acbead6741c32cb35ed017
- *	Committed at:   Tue May 24 01:02:28 BST 2011
+ *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
+ *	Committed at:   Thu May 26 13:52:58 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -147,7 +147,7 @@ class CoreHandler
 	 */
 	public static function N332(CoreMaster $pInstance, $pMessage)
 	{
-		$pInstance->getChannel($pMessage->Parts[3])->pTopic->chantopic = $pMessage->Payload;
+		$pInstance->getChannel($pMessage->Parts[3])->pTopic->topicString = $pMessage->Payload;
 	}
 
 
@@ -159,8 +159,8 @@ class CoreHandler
 	{
 		$pChannel = $pInstance->getChannel($pMessage->Parts[3]);
 
-		$pChannel->pTopic->setter = $pMessage->Parts[4];
-		$pChannel->pTopic->timestamp = $pMessage->Parts[5];
+		$pChannel->pTopic->topicSetter = $pMessage->Parts[4];
+		$pChannel->pTopic->topicTime = $pMessage->Parts[5];
 	}
 
 
@@ -335,9 +335,12 @@ class CoreHandler
 	{
 		$pChannel = $pInstance->getChannel($pMessage->Parts[3]);
 
-		$pChannel->pTopic->chantopic = $pMessage->Payload;
-		$pChannel->pTopic->timestamp = time();
-		$pChannel->pTopic->setter = $pMessage->User->Nickname;
+		$pChannel->pTopic = (object) array
+		(
+			"topicString" => $pMessage->Payload,
+			"topicTime" => time(),
+			"topicSetter" => $pMessage->User->Nickname,
+		);
 
 		$pInstance->triggerEvent("onChannelTopic", $pChannel, $pMessage->User->Nickname, $pMessage->Payload);
 	}

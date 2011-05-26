@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     69f20dce78e27504d2872174a340fcf173a3487d
- *	Committed at:   Fri Feb 25 20:13:16 GMT 2011
+ *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
+ *	Committed at:   Thu May 26 13:52:58 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -16,14 +16,13 @@ abstract class Script
 {
 	private
 		$spScript,
-		$pInstance = null;
-
+		$pInstance = null,
+		$aTimerScriptLocalCache = array(),
+		$aEventScriptLocalCache = array();
 
 	public
 		$sScriptID,
-		$sScriptName,
-		$aTimerScriptLocalCache = array(),
-		$aHandlerScriptLocalCache = array();
+		$sScriptName;
 
 
 	/**
@@ -45,16 +44,22 @@ abstract class Script
 	/**
 	 *	This is called when the Script is removed.
 	 */
-	public final function __destruct()
+	public final function prepareRemoval()
 	{
-		call_user_func(array($this, 'onDestruct'));
-
 		foreach($this as $sKey => $sValue)
 		{
-			$this->$sKey = NULL;
+			$this->$sKey = null;
 		}
 
 		return true;
+	}
+
+
+	/**
+	 *	Also called, when the Script is removed.
+	 */
+	public final function __destruct()
+	{
 	}
 
 
@@ -140,5 +145,41 @@ abstract class Script
 		$sResource = ROOT."/Resources/{$this->spScript}/{$sFileString}";
 
 		return unlink($sResource) !== false;
+	}
+
+
+	/**
+	 *	Add a timer handler to the local cache.
+	 */
+	public function addLocalTimerHandler($sHandler)
+	{
+		$this->aTimerScriptLocalCache[] = $sHandler;
+	}
+
+
+	/**
+	 *	Returns a list of timer handlers.
+	 */
+	public function getLocalTimerHandlers()
+	{
+		return $this->aTimerScriptLocalCache;
+	}
+
+
+	/**
+	 *	Add an event handler to the local cache.
+	 */
+	public function addLocalEventHandler($sHandler)
+	{
+		$this->aEventScriptLocalCache[] = $sHandler;
+	}
+
+
+	/**
+	 *	Returns a list of timer handlers.
+	 */
+	public function getLocalEventHandlers()
+	{
+		return $this->aEventScriptLocalCache;
 	}
 }

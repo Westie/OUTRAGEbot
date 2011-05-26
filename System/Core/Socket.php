@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     73c42fabc1ae1f4549ff642c290009d002d4e51e
- *	Committed at:   Sun Apr  3 12:07:44 BST 2011
+ *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
+ *	Committed at:   Thu May 26 13:52:58 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -165,9 +165,6 @@ class CoreSocket
 			{
 				continue;
 			}
-
-			# I wish for an easier solution, but this wish, like
-			# so many that I have, will never be realised.
 
 			if(!$this->pConfig->Capture)
 			{
