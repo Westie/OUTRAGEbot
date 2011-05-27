@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     3c543a518337ab218d6f9b2006f0415c8444e52c
- *	Committed at:   Fri May 27 14:28:59 BST 2011
+ *	Git commit:     36b94ea5bbde17ea1e6bcce77a2ab5768649fa83
+ *	Committed at:   Fri May 27 19:36:38 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -74,6 +74,8 @@ class Commands extends Script
 		foreach($aResources as $sResource)
 		{
 			$sCommand = urldecode($sResource);
+			$sCommand = substr($sCommand, 0, -4);
+
 			$pResource = $this->getResource($sResource);
 
 			$this->aCommands[$sCommand] = $pResource->read();
