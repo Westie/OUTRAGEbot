@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     c928e5133e1a654533acbead6741c32cb35ed017
- *	Committed at:   Tue May 24 01:02:41 BST 2011
+ *	Git commit:     3c543a518337ab218d6f9b2006f0415c8444e52c
+ *	Committed at:   Fri May 27 14:28:59 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -28,6 +28,8 @@ class Commands extends Script
 	{
 		$this->addCommandHandler("acommand", "addCommand");
 		$this->addEventHandler("PRIVMSG", "processCommand");
+
+		$this->introduceCommands();
 	}
 
 
@@ -49,7 +51,6 @@ class Commands extends Script
 
 		list($sCommand, $sCode) = explode(' ', $sArguments, 2);
 
-		$this->aCommands[$sCommand] = $sCode;
 		$sCommand = urlencode($sCommand);
 
 		$pResource = $this->getResource("{$sCommand}.txt");
@@ -67,6 +68,7 @@ class Commands extends Script
 	 */
 	private function introduceCommands()
 	{
+		$this->aCommands = array();
 		$aResources = $this->getListOfResources("*.txt");
 
 		foreach($aResources as $sResource)
