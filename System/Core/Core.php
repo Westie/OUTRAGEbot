@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     75d3ffd8682a5cfcc60c7736d5ad178c79a705b3
- *	Committed at:   Fri May 27 14:35:54 BST 2011
+ *	Git commit:     b703cd1e3f316715eafca83e0fb2d98f399336f4
+ *	Committed at:   Sun Jun  5 19:23:33 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -18,7 +18,8 @@ class Core
 		$aErrorLog = array(),
 		$aModules = array(),
 		$aInstances = array(),
-		$pCurrentInstance = null;
+		$pCurrentInstance = null,
+		$pCurrentMessage = null;
 
 
 	public static
@@ -32,6 +33,7 @@ class Core
 	static function initClass()
 	{
 		self::$pFunctionList = new stdClass();
+		self::$pCurrentMessage = new MessageObject();
 
 		error_reporting(E_ALL | E_STRICT);
 		set_error_handler(array("Core", "errorHandler"));
@@ -429,15 +431,8 @@ class Core
 	 */
 	static function getMessageObject($sString)
 	{
-		$pMessage = new stdClass();
-
-		$pMessage->Raw = $sString;
-		$pMessage->Parts = explode(' ', $sString);
-		$pMessage->Numeric = $pMessage->Parts[1];
-		$pMessage->User = CoreMaster::parseHostmask(substr($pMessage->Parts[0], 1));
-		$pMessage->Payload = (($iPosition = strpos($sString, ':', 2)) !== false) ? substr($sString, $iPosition + 1) : '';
-
-		return $pMessage;
+		self::$pCurrentMessage->generateObject($sString);
+		return self::$pCurrentMessage;
 	}
 
 

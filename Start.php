@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     be5341ff1752bf6f45bc35690759d1c307b453df
- *	Committed at:   Mon May 23 21:54:55 BST 2011
+ *	Git commit:     b703cd1e3f316715eafca83e0fb2d98f399336f4
+ *	Committed at:   Sun Jun  5 19:23:23 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -31,6 +31,7 @@ Core::Library("Script");
 Core::Library("Socket");
 Core::LModule("Timer");
 Core::Library("Utilities");
+Core::Library("MessageObject");
 
 
 Core::Module("Whois");
