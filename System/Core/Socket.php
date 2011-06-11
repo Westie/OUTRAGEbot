@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     d02d19771e3319b20e35779ea8579340df901336
- *	Committed at:   Sat Jun 11 19:00:49 BST 2011
+ *	Git commit:     a53ca6c5bfdf712e6df4b62e5003c18fa157b2d7
+ *	Committed at:   Sat Jun 11 22:17:11 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -15,6 +15,7 @@
 class CoreSocket extends CoreChild
 {
 	private
+		$cSocketCallback = null,
 		$aCaptureStack = array(),
 		$sTimerID = null,
 		$rSocket = null;
@@ -149,6 +150,7 @@ class CoreSocket extends CoreChild
 	 */
 	public function Socket()
 	{
+		print_r(Core::getErrorLog());
 		if(!$this->isSocketActive())
 		{
 			return;
@@ -183,7 +185,7 @@ class CoreSocket extends CoreChild
 	 */
 	public function setSocketHandler($cCallback)
 	{
-		return $this->getSocketHandler($cCallback);
+		$this->cSocketCallback = $cCallback;
 	}
 
 
@@ -191,18 +193,9 @@ class CoreSocket extends CoreChild
 	 *	Retrieves the socket handler.
 	 *	Only for advanced module operations.
 	 */
-	public function getSocketHandler($cSocket = null)
+	public function getSocketHandler()
 	{
-		static
-			$cSocketCallback;
-
-		if($cSocket === null)
-		{
-			return $cSocketCallback;
-		}
-
-		$cSocketCallback = $cSocket;
-		return null;
+		return $this->cSocketCallback;
 	}
 
 
@@ -212,7 +205,7 @@ class CoreSocket extends CoreChild
 	 */
 	public function resetSocketHandler()
 	{
-		return $this->getSocketHandler(array($this->internalMasterObject(), "Portkey"));
+		$this->cSocketCallback = array($this->internalMasterObject(), "Portkey");
 	}
 
 
