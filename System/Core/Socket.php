@@ -5,21 +5,19 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
- *	Committed at:   Thu May 26 13:52:58 BST 2011
+ *	Git commit:     715e888c1cc36aad4bc58e520cffbe92c8304e76
+ *	Committed at:   Sat Jun 11 18:17:36 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
 
 
-class CoreSocket
+class CoreSocket extends CoreChild
 {
 	private
 		$aCaptureStack = array(),
 		$sTimerID = null,
-		$rSocket = null,
-		$pMaster = null,
-		$pSocketHandler = null;
+		$rSocket = null;
 
 
 	public
@@ -33,13 +31,12 @@ class CoreSocket
 	 */
 	public function __construct($pMaster, $pConfig)
 	{
-		$this->pMaster = $pMaster;
 		$this->pConfig = $pConfig;
-
 		$this->pConfig->Capture = false;
 
-		$this->resetSocketHandler();
+		$this->internalMasterObject($pMaster);
 
+		$this->resetSocketHandler();
 		$this->createConnection();
 	}
 
@@ -94,7 +91,7 @@ class CoreSocket
 		$this->sTimerID = null;
 		$this->iPingMiss = false;
 
-		$this->pMaster->triggerEvent("onDisconnect");
+		$this->internalMasterObject()->triggerEvent("onDisconnect");
 
 		return;
 	}
@@ -168,7 +165,7 @@ class CoreSocket
 
 			if(!$this->pConfig->Capture)
 			{
-				call_user_func($this->cSocketHandler, $this, $sString);
+				call_user_func($this->getSocketHandler(), $this, $sString);
 			}
 			else
 			{
@@ -186,7 +183,7 @@ class CoreSocket
 	 */
 	public function setSocketHandler($cCallback)
 	{
-		$this->cSocketHandler = $cCallback;
+		return $this->getSocketHandler($cCallback);
 	}
 
 
@@ -194,9 +191,18 @@ class CoreSocket
 	 *	Retrieves the socket handler.
 	 *	Only for advanced module operations.
 	 */
-	public function getSocketHandler()
+	public function getSocketHandler($cSocket = null)
 	{
-		return $this->cSocketHandler;
+		static
+			$cSocketCallback;
+
+		if($cSocket === null)
+		{
+			return $cSocketCallback;
+		}
+
+		$cSocketCallback = $cSocket;
+		return null;
 	}
 
 
@@ -206,7 +212,7 @@ class CoreSocket
 	 */
 	public function resetSocketHandler()
 	{
-		$this->cSocketHandler = array($this->pMaster, "Portkey");
+		return $this->getSocketHandler(array($this->internalMasterObject(), "Portkey"));
 	}
 
 
@@ -279,7 +285,7 @@ class CoreSocket
 
 		foreach($this->aCaptureStack as $sString)
 		{
-			call_user_func($this->cSocketHandler, $this, $sString);
+			call_user_func($this->getSocketHandler(), $this, $sString);
 		}
 	}
 

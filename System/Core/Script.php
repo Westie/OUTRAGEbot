@@ -5,18 +5,17 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
- *	Committed at:   Thu May 26 13:52:58 BST 2011
+ *	Git commit:     715e888c1cc36aad4bc58e520cffbe92c8304e76
+ *	Committed at:   Sat Jun 11 18:17:36 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
 
 
-abstract class Script
+abstract class Script extends CoreChild
 {
 	private
 		$spScript,
-		$pInstance = null,
 		$aTimerScriptLocalCache = array(),
 		$aEventScriptLocalCache = array();
 
@@ -30,12 +29,11 @@ abstract class Script
 	 */
 	public final function __construct($pInstance, $sScript)
 	{
-		$this->pInstance = $pInstance;
-
 		$this->sScriptName = $sScript;
 		$this->spScript = $sScript;
 		$this->sScriptID = __CLASS__;
 
+		$this->internalMasterObject($pInstance);
 		$this->onConstruct();
 		return true;
 	}
@@ -68,11 +66,13 @@ abstract class Script
 	 */
 	public final function __call($sFunctionName, $aArgumentList)
 	{
-		$this->pInstance->pCurrentScript = $this;
+		$pInstance = $this->internalMasterObject();
 
-		if(method_exists($this->pInstance, $sFunctionName))
+		$pInstance->pCurrentScript = $this;
+
+		if(method_exists($pInstance, $sFunctionName))
 		{
-			return call_user_func_array(array($this->pInstance, $sFunctionName), $aArgumentList);
+			return call_user_func_array(array($pInstance, $sFunctionName), $aArgumentList);
 		}
 		else
 		{
@@ -81,8 +81,6 @@ abstract class Script
 				return call_user_func_array(Core::$pFunctionList->$sFunctionName, $aArgumentList);
 			}
 		}
-
-		$this->pInstance->pCurrentScript = null;
 
 		return null;
 	}
@@ -93,9 +91,11 @@ abstract class Script
 	 */
 	public final function __get($sKey)
 	{
-		if(property_exists($this->pInstance, $sKey))
+		$pInstance = $this->internalMasterObject();
+
+		if(property_exists($pInstance, $sKey))
 		{
-			return $this->pInstance->$sKey;
+			return $pInstance->$sKey;
 		}
 
 		return null;
@@ -105,7 +105,7 @@ abstract class Script
 	/**
 	 *	Retrieves the file resource from the Resources folder.
 	 */
-	public function getResource($sFileString, $sMode = "w+")
+	public final function getResource($sFileString, $sMode = "w+")
 	{
 		return new CoreResource($this->spScript, $sFileString, $sMode);
 	}
@@ -114,7 +114,7 @@ abstract class Script
 	/**
 	 *	Retrieves a list of all available Resources, matching a pattern.
 	 */
-	public function getListOfResources($sPattern)
+	public final function getListOfResources($sPattern)
 	{
 		$sCurrentDirectory = getcwd();
 
@@ -129,7 +129,7 @@ abstract class Script
 	/**
 	 *	Checks if a resource exists or not.
 	 */
-	public function isResource($sFileString)
+	public final function isResource($sFileString)
 	{
 		$sResource = ROOT."/Resources/{$this->spScript}/{$sFileString}";
 
@@ -140,7 +140,7 @@ abstract class Script
 	/**
 	 *	Removes a resource from the directory.
 	 */
-	public function removeResource($sFileString)
+	public final function removeResource($sFileString)
 	{
 		$sResource = ROOT."/Resources/{$this->spScript}/{$sFileString}";
 
@@ -151,7 +151,7 @@ abstract class Script
 	/**
 	 *	Add a timer handler to the local cache.
 	 */
-	public function addLocalTimerHandler($sHandler)
+	public final function addLocalTimerHandler($sHandler)
 	{
 		$this->aTimerScriptLocalCache[] = $sHandler;
 	}
@@ -160,7 +160,7 @@ abstract class Script
 	/**
 	 *	Returns a list of timer handlers.
 	 */
-	public function getLocalTimerHandlers()
+	public final function getLocalTimerHandlers()
 	{
 		return $this->aTimerScriptLocalCache;
 	}
@@ -169,7 +169,7 @@ abstract class Script
 	/**
 	 *	Add an event handler to the local cache.
 	 */
-	public function addLocalEventHandler($sHandler)
+	public final function addLocalEventHandler($sHandler)
 	{
 		$this->aEventScriptLocalCache[] = $sHandler;
 	}
@@ -178,7 +178,7 @@ abstract class Script
 	/**
 	 *	Returns a list of timer handlers.
 	 */
-	public function getLocalEventHandlers()
+	public final function getLocalEventHandlers()
 	{
 		return $this->aEventScriptLocalCache;
 	}

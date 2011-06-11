@@ -5,18 +5,17 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
- *	Committed at:   Thu May 26 13:52:58 BST 2011
+ *	Git commit:     715e888c1cc36aad4bc58e520cffbe92c8304e76
+ *	Committed at:   Sat Jun 11 18:17:36 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
 
 
-class CoreChannel
+class CoreChannel extends CoreChild
 {
 	/* Define our variables */
 	private
-		$pMaster = null,
 		$sChannel = null;
 
 	static
@@ -34,7 +33,7 @@ class CoreChannel
 	 */
 	public function __construct($pMaster, $sChannel)
 	{
-		$this->pMaster = $pMaster;
+		$this->internalMasterObject($pMaster);
 		$this->sChannel = strtolower(trim($sChannel));
 
 		$this->pUsers = new stdClass();
@@ -84,7 +83,7 @@ class CoreChannel
 			return $this->$sProperty();
 		}
 
-		if(strpos($this->pMaster->pConfig->Server->CHANMODES, $sKey) !== false)
+		if(strpos($this->internalMasterObject()->pConfig->Server->CHANMODES, $sKey) !== false)
 		{
 			return $this->pModes->$sKey;
 		}
@@ -105,55 +104,6 @@ class CoreChannel
 		{
 			return $this->$sProperty($mValue);
 		}
-
-		if(strpos($this->pMaster->pConfig->Server->CHANMODES, $sKey) === false)
-		{
-			return null;
-		}
-
-		$aChannelModes = $this->pMaster->pConfig->Server->ChannelModes;
-
-		#
-		#	The code below here doesn't work.
-		#
-
-		/*
-		$iGroupID = function() use($aChannelModes, $sKey)
-		{
-			foreach($aChannelModes as $iGroupID => $sChannelModes)
-			{
-				if(strpos($sChannelModes, $sKey) !== false)
-				{
-					return $iGroupID + 1;
-				}
-			}
-		};
-
-		if(!$mValue)
-		{
-			$this->pModes->$sKey = false;
-			$this->pMaster->Raw("MODE {$this->sChannel} -{$sKey}");
-		}
-		else
-		{
-			switch($iGroupID())
-			{
-				case 1:
-				case 2:
-				case 3:
-				{
-					$this->pModes->$sKey = $mValue;
-					$this->pMaster->Raw("MODE {$this->sChannel} +{$sKey} {$mValue}");
-
-					break;
-				}
-				case 4:
-				{
-					$this->pModes->$sKey = true;
-					$this->pMaster->Raw("MODE {$this->sChannel} +{$sKey}");
-				}
-			}
-		}*/
 	}
 
 
@@ -172,7 +122,7 @@ class CoreChannel
 	 */
 	public function __invoke($sMessage, $mOption = SEND_DEF)
 	{
-		return $this->pMaster->Message($this->sChannel, $sMessage, $mOption);
+		return $this->internalMasterObject()->Message($this->sChannel, $sMessage, $mOption);
 	}
 
 

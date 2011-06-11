@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     b703cd1e3f316715eafca83e0fb2d98f399336f4
- *	Committed at:   Sun Jun  5 19:23:33 BST 2011
+ *	Git commit:     715e888c1cc36aad4bc58e520cffbe92c8304e76
+ *	Committed at:   Sat Jun 11 18:17:36 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -25,7 +25,7 @@ class MessageObject
 	/**
 	 *	Called when the message object is loaded.
 	 */
-	public function generateObject($sString)
+	public function __construct($sString)
 	{
 		$this->Raw = $sString;
 		$this->Parts = explode(' ', $sString);
