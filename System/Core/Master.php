@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     715e888c1cc36aad4bc58e520cffbe92c8304e76
- *	Committed at:   Sat Jun 11 18:17:51 BST 2011
+ *	Git commit:     d02d19771e3319b20e35779ea8579340df901336
+ *	Committed at:   Sat Jun 11 19:00:49 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -698,23 +698,26 @@ class CoreMaster
 		$mReturn = null;
 
 		# Go through the handlers - they have high presidence than Scripts.
-		$aEventHandlers = $this->pEventHandlers->{"+{$sEventName}"};
-
-		foreach($aEventHandlers as $pEventHandler)
+		if(isset($this->pEventHandlers->{"+{$sEventName}"}))
 		{
-			if(Core::isEventScript($pEventHandler->eventCallback))
-			{
-				$mReturn = call_user_func_array($pEventHandler->eventCallback, $aArguments);
-			}
-			else
-			{
-				$aTempArguments = array_merge(array($this), $aArguments);
-				$mReturn = call_user_func_array($pEventHandler->eventCallback, $aTempArguments);
-			}
+			$aEventHandlers = $this->pEventHandlers->{"+{$sEventName}"};
 
-			if(Core::assert($mReturn))
+			foreach($aEventHandlers as $pEventHandler)
 			{
-				return;
+				if(Core::isEventScript($pEventHandler->eventCallback))
+				{
+					$mReturn = call_user_func_array($pEventHandler->eventCallback, $aArguments);
+				}
+				else
+				{
+					$aTempArguments = array_merge(array($this), $aArguments);
+					$mReturn = call_user_func_array($pEventHandler->eventCallback, $aTempArguments);
+				}
+
+				if(Core::assert($mReturn))
+				{
+					return;
+				}
 			}
 		}
 

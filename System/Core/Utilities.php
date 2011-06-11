@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     b703cd1e3f316715eafca83e0fb2d98f399336f4
- *	Committed at:   Sun Jun  5 19:23:33 BST 2011
+ *	Git commit:     d02d19771e3319b20e35779ea8579340df901336
+ *	Committed at:   Sat Jun 11 19:00:49 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -24,9 +24,13 @@ function println($sString)
 /**
  *	Gets current memory, in kB
  */
-function getMemory()
+function getMemory($sContext = "(none)")
 {
-	return memory_get_usage / 1024;
+	static
+		$iCurrentMemory;
+
+	println("{$sContext}: delta: ".(memory_get_usage() - $iCurrentMemory));
+	$iCurrentMemory = memory_get_usage();
 }
 
 

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     715e888c1cc36aad4bc58e520cffbe92c8304e76
- *	Committed at:   Sat Jun 11 18:17:36 BST 2011
+ *	Git commit:     d02d19771e3319b20e35779ea8579340df901336
+ *	Committed at:   Sat Jun 11 19:00:49 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -197,7 +197,7 @@ class Core
 	 *	The main handler function. This function delegates
 	 *	everything.
 	 */
-	static function Handler(CoreMaster $pInstance, $pMessage)
+	static function Handler(CoreMaster $pInstance, MessageObject $pMessage)
 	{
 		if(isset($pInstance->pEventHandlers->{$pMessage->Numeric}))
 		{
@@ -227,12 +227,12 @@ class Core
 						break;
 					}
 				}
-			}
-		}
 
-		if(self::assert($mReturn))
-		{
-			return true;
+				if(self::assert($mReturn))
+				{
+					return true;
+				}
+			}
 		}
 
 		if($pMessage->Parts[0] == "ERROR")
@@ -282,7 +282,7 @@ class Core
 	/**
 	 *	Deals with the default handlers.
 	 */
-	private static function DefaultHandler(CoreMaster $pInstance, $pMessage, $pEventHandler)
+	private static function DefaultHandler(CoreMaster $pInstance, MessageObject $pMessage, $pEventHandler)
 	{
 		if(self::isEventScript($pEventHandler))
 		{
@@ -296,7 +296,7 @@ class Core
 	/**
 	 *	Deals with command handlers.
 	 */
-	private static function CommandHandler(CoreMaster $pInstance, $pMessage, $pEventHandler)
+	private static function CommandHandler(CoreMaster $pInstance, MessageObject $pMessage, $pEventHandler)
 	{
 		$sCommandName = $pInstance->pConfig->Network->delimiter.$pEventHandler->argumentPassed;
 		$aCommandPayload = explode(' ', $pMessage->Payload, 2);
@@ -320,7 +320,7 @@ class Core
 	/**
 	 *	Deals with the more complex custom command handlers.
 	 */
-	private static function CustomHandler(CoreMaster $pInstance, $pMessage, $pEventHandler)
+	private static function CustomHandler(CoreMaster $pInstance, MessageObject $pMessage, $pEventHandler)
 	{
 		$aArgumentList = preg_split('//', $pEventHandler->argumentTypes, -1, PREG_SPLIT_NO_EMPTY);
 
@@ -400,10 +400,10 @@ class Core
 	{
 		self::$aErrorLog[] = (object) array
 		(
-			"number" => $errno,
-			"string" => $errstr,
-			"file" => $errfile,
-			"line" => $errline,
+			"errorCode" => $errno,
+			"errorString" => $errstr,
+			"offendingFile" => $errfile,
+			"offendingLine" => $errline,
 		);
 	}
 
@@ -440,10 +440,10 @@ class Core
 	{
 		self::$aErrorLog[] = (object) array
 		(
-			"number" => E_WARNING,
-			"string" => "Call to undefined function, Core library.",
-			"file" => "",
-			"line" => "",
+			"errorCode" => E_WARNING,
+			"errorString" => "Call to undefined function, Core library.",
+			"offendingFile" => __FILE__,
+			"offendingLine" => __LINE__,
 		);
 	}
 }

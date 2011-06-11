@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     715e888c1cc36aad4bc58e520cffbe92c8304e76
- *	Committed at:   Sat Jun 11 18:17:36 BST 2011
+ *	Git commit:     d02d19771e3319b20e35779ea8579340df901336
+ *	Committed at:   Sat Jun 11 19:00:49 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -46,7 +46,9 @@ class CoreChannel extends CoreChild
 			"topicSetter" => "",
 		);
 
-		foreach($this->pMaster->pConfig->Server->ChannelModes as $sGroupString)
+		$aChannelModes = $this->internalMasterObject()->getServerConfiguration("ChannelModes");
+
+		foreach($aChannelModes as $sGroupString)
 		{
 			$aCharacters = preg_split('//', $sGroupString);
 
@@ -83,7 +85,7 @@ class CoreChannel extends CoreChild
 			return $this->$sProperty();
 		}
 
-		if(strpos($this->internalMasterObject()->pConfig->Server->CHANMODES, $sKey) !== false)
+		if(strpos($this->internalMasterObject()->getServerConfiguration("CHANMODES"), $sKey) !== false)
 		{
 			return $this->pModes->$sKey;
 		}
