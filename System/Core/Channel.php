@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     d02d19771e3319b20e35779ea8579340df901336
- *	Committed at:   Sat Jun 11 19:00:49 BST 2011
+ *	Git commit:     761d5bc2b7269bd3a4f85e8cb82d08c93972c0bc
+ *	Committed at:   Sun Jun 12 13:39:18 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -188,7 +188,14 @@ class CoreChannel extends CoreChild
 	 */
 	private function propGetCount()
 	{
-		return count($this->pUsers);
+		$iCount = 0;
+
+		foreach($this->pUsers as $pUser)
+		{
+			++$iCount;
+		}
+
+		return $iCount;
 	}
 
 
@@ -206,7 +213,7 @@ class CoreChannel extends CoreChild
 	 */
 	private function propSetTopic($sString)
 	{
-		return $this->pMaster->Raw("TOPIC {$this->sChannel} :{$sString}");
+		return $this->internalMasterObject()->Raw("TOPIC {$this->sChannel} :{$sString}");
 	}
 
 
@@ -246,7 +253,7 @@ class CoreChannel extends CoreChild
 	{
 		CoreChannel::$mTemp = array();
 
-		$pSocket = $this->pMaster->getCurrentSocket();
+		$pSocket = $this->internalMasterObject()->getCurrentSocket();
 
 		$pSocket->Output("MODE {$this->sChannel} +b");
 
@@ -260,9 +267,10 @@ class CoreChannel extends CoreChild
 				{
 					CoreChannel::$mTemp[] = (object) array
 					(
-						'mask' => $pMessage->Parts[4],
-						'admin' => $pMessage->Parts[5],
-						'time' => $pMessage->Parts[6],
+						'hostmaskString' => $pMessage->Parts[4],
+						'hostmaskObject' => CoreMaster::parseHostmask($pMessage->Parts[4]),
+						'modeSetter' => $pMessage->Parts[5],
+						'modeTime' => $pMessage->Parts[6],
 					);
 
 					return false;
@@ -291,7 +299,7 @@ class CoreChannel extends CoreChild
 	{
 		CoreChannel::$mTemp = array();
 
-		$pSocket = $this->pMaster->getCurrentSocket();
+		$pSocket = $this->internalMasterObject()->getCurrentSocket();
 
 		$pSocket->Output("MODE {$this->sChannel} +I");
 
@@ -305,9 +313,10 @@ class CoreChannel extends CoreChild
 				{
 					CoreChannel::$mTemp[] = (object) array
 					(
-						'mask' => $pMessage->Parts[4],
-						'admin' => $pMessage->Parts[5],
-						'time' => $pMessage->Parts[6],
+						'hostmaskString' => $pMessage->Parts[4],
+						'hostmaskObject' => CoreMaster::parseHostmask($pMessage->Parts[4]),
+						'modeSetter' => $pMessage->Parts[5],
+						'modeTime' => $pMessage->Parts[6],
 					);
 
 					return false;
@@ -336,7 +345,7 @@ class CoreChannel extends CoreChild
 	{
 		CoreChannel::$mTemp = array();
 
-		$pSocket = $this->pMaster->getCurrentSocket();
+		$pSocket = $this->internalMasterObject()->getCurrentSocket();
 
 		$pSocket->Output("MODE {$this->sChannel} +e");
 
@@ -350,9 +359,10 @@ class CoreChannel extends CoreChild
 				{
 					CoreChannel::$mTemp[] = (object) array
 					(
-						'mask' => $pMessage->Parts[4],
-						'admin' => $pMessage->Parts[5],
-						'time' => $pMessage->Parts[6],
+						'hostmaskString' => $pMessage->Parts[4],
+						'hostmaskObject' => CoreMaster::parseHostmask($pMessage->Parts[4]),
+						'modeSetter' => $pMessage->Parts[5],
+						'modeTime' => $pMessage->Parts[6],
 					);
 
 					return false;
@@ -454,7 +464,7 @@ class CoreChannel extends CoreChild
 	 */
 	public function Mode($sModeString)
 	{
-		return $this->pMaster->Raw("MODE {$this->sChannel} {$sModeString}");
+		return $this->internalMasterObject()->Raw("MODE {$this->sChannel} {$sModeString}");
 	}
 
 

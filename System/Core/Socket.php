@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     a53ca6c5bfdf712e6df4b62e5003c18fa157b2d7
- *	Committed at:   Sat Jun 11 22:17:11 BST 2011
+ *	Git commit:     761d5bc2b7269bd3a4f85e8cb82d08c93972c0bc
+ *	Committed at:   Sun Jun 12 13:39:19 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -150,7 +150,6 @@ class CoreSocket extends CoreChild
 	 */
 	public function Socket()
 	{
-		print_r(Core::getErrorLog());
 		if(!$this->isSocketActive())
 		{
 			return;
