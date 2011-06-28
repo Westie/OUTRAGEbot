@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     761d5bc2b7269bd3a4f85e8cb82d08c93972c0bc
- *	Committed at:   Sun Jun 12 13:39:19 BST 2011
+ *	Git commit:     35e8fa1395bbe0c6346ffa2e2dac4b69fed37039
+ *	Committed at:   Tue Jun 28 18:00:53 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -15,16 +15,16 @@
 class CoreSocket extends CoreChild
 {
 	private
-		$cSocketCallback = null,
+		$cSocketCallback = false,
 		$aCaptureStack = array(),
-		$sTimerID = null,
-		$rSocket = null;
+		$sTimerID = false,
+		$rSocket = false;
 
 
 	public
 		$iPingTime = 0,
 		$iPingMiss = 0,
-		$pConfig = null;
+		$pConfig = false;
 
 
 	/**
@@ -62,6 +62,13 @@ class CoreSocket extends CoreChild
 		$rSocketOptions = stream_context_create($aSocketOptions);
 
 		$this->rSocket = stream_socket_client("tcp://{$this->pConfig->host}:{$this->pConfig->port}", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $rSocketOptions);
+
+		if($this->rSocket === false)
+		{
+			CoreTimer::Add(array($this, "createConnection"), 60, 1);
+			return;
+		}
+
 		$this->setSocketBlocking(false);
 
 		if(isset($this->pConfig->password))
@@ -83,16 +90,18 @@ class CoreSocket extends CoreChild
 	/**
 	 *	Close the connection to the IRC network.
 	 */
-	public function destroyConnection($sReason)
+	public function destroyConnection($sReason = null)
 	{
+		$this->internalMasterObject()->triggerEvent("onDisconnect");
+
 		$this->Output('QUIT :'.($sReason == null ? $this->internalMasterObject()->getNetworkConfiguration("quitmsg") : $sReason));
 		fclose($this->rSocket);
 
 		CoreTimer::Remove($this->sTimerID);
-		$this->sTimerID = null;
-		$this->iPingMiss = false;
 
-		$this->internalMasterObject()->triggerEvent("onDisconnect");
+		$this->rSocket = false;
+		$this->sTimerID = false;
+		$this->iPingMiss = false;
 
 		return;
 	}
