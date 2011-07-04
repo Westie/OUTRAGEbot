@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     35e8fa1395bbe0c6346ffa2e2dac4b69fed37039
- *	Committed at:   Tue Jun 28 18:00:53 BST 2011
+ *	Git commit:     c4b0310d54d08608fa7e83818ebf75150aa23aee
+ *	Committed at:   Mon Jul  4 20:50:16 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -234,9 +234,25 @@ class CoreMaster
 
 
 	/**
-	 *	This function to deal with the input data.
+	 *	The public entry point for all inbound socket communication.
 	 */
 	public function Portkey(CoreSocket $pSocket, $sString)
+	{
+		$pMessage = $this->internalPortkey($pSocket, $sString);
+
+		if($pSocket->isSocketSlave())
+		{
+			return CoreHandler::Unhandled($this, $pMessage);
+		}
+
+		return Core::Handler($this, $pMessage);
+	}
+
+
+	/**
+	 *	This private method deals with the construction of the portkey.
+	 */
+	public function internalPortkey(CoreSocket $pSocket, $sString)
 	{
 		$pMessage = Core::getMessageObject($sString);
 
@@ -248,12 +264,7 @@ class CoreMaster
 		$this->pMessage = $pMessage;
 		$this->pSocket = $pSocket;
 
-		if($pSocket->isSocketSlave())
-		{
-			return CoreHandler::Unhandled($this, $pMessage);
-		}
-
-		return Core::Handler($this, $pMessage);
+		return $pMessage;
 	}
 
 
@@ -333,26 +344,6 @@ class CoreMaster
 	public function Notice($sNickname, $sMessage, $mOption = SEND_DEF)
 	{
 		return $this->Raw("NOTICE {$sNickname} :{$sMessage}", $mOption);
-	}
-
-
-	/**
-	 *	Sends a CTCP reply.
-	 */
-	public function ctcpReply($sNickname, $sMessage)
-	{
-		return $this->Raw("NOTICE {$sNickname} :".chr(1).trim($sMessage).chr(1), SEND_CURR);
-	}
-
-
-	/**
-	 *	Sends a CTCP request.
-	 *	I'll eventually make this.
-	 */
-	public function ctcpRequest($sNickname, $sRequest)
-	{
-		$this->Raw("PRIVMSG {$sNickname} :".chr(1).trim($sRequest).chr(1), SEND_CURR);
-		return null;
 	}
 
 

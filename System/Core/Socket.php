@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     35e8fa1395bbe0c6346ffa2e2dac4b69fed37039
- *	Committed at:   Tue Jun 28 18:00:53 BST 2011
+ *	Git commit:     c4b0310d54d08608fa7e83818ebf75150aa23aee
+ *	Committed at:   Mon Jul  4 20:50:17 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -288,6 +288,8 @@ class CoreSocket extends CoreChild
 		{
 			call_user_func($this->getSocketHandler(), $this, $sString);
 		}
+
+		$this->aCaptureStack = array();
 	}
 
 

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     d02d19771e3319b20e35779ea8579340df901336
- *	Committed at:   Sat Jun 11 19:00:49 BST 2011
+ *	Git commit:     c4b0310d54d08608fa7e83818ebf75150aa23aee
+ *	Committed at:   Mon Jul  4 20:50:16 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -480,17 +480,17 @@ class CoreHandler
 		{
 			case "VERSION":
 			{
-				return $pInstance->ctcpReply($pMessage->User->Nickname, "VERSION {$pInstance->pConfig->Network->version}");
+				return $pInstance->Notice($pMessage->User->Nickname, chr(1)."VERSION {$pInstance->pConfig->Network->version}".chr(1));
 			}
 
 			case "TIME":
 			{
-				return $pInstance->ctcpReply($pMessage->User->Nickname, "TIME ".date("d/m/Y H:i:s", time()));
+				return $pInstance->Notice($pMessage->User->Nickname, chr(1)."TIME ".date("d/m/Y H:i:s", time()).chr(1));
 			}
 
 			case "PING":
 			{
-				return $pInstance->ctcpReply($pMessage->User->Nickname, "PING {$aCTCP[1]}");
+				return $pInstance->Notice($pMessage->User->Nickname, chr(1)."PING {$aCTCP[1]}".chr(1));
 			}
 
 			case "UPTIME":
@@ -498,12 +498,12 @@ class CoreHandler
 				$aDuration = CoreUtilities::Duration($pInstance->pSocket->pConfig->StartTime);
 				$sString = "UPTIME {$aDuration['weeks']} weeks, {$aDuration['days']} days, {$aDuration['hours']} hours, {$aDuration['minutes']} minutes, {$aDuration['seconds']} seconds.";
 
-				return $pInstance->ctcpReply($pMessage->User->Nickname, $sString);
+				return $pInstance->Notice($pMessage->User->Nickname, chr(1).$sString.chr(1));
 			}
 
 			case "START":
 			{
-				return $pInstance->ctcpReply($pMessage->User->Nickname, "START ".date("d/m/Y H:i:s", time($pInstance->pSocket->pConfig->StartTime)));
+				return $pInstance->Notice($pMessage->User->Nickname, chr(1)."START ".date("d/m/Y H:i:s", time($pInstance->pSocket->pConfig->StartTime)).chr(1));
 			}
 		}
 	}

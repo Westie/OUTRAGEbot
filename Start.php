@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     a53ca6c5bfdf712e6df4b62e5003c18fa157b2d7
- *	Committed at:   Sat Jun 11 22:17:10 BST 2011
+ *	Git commit:     c4b0310d54d08608fa7e83818ebf75150aa23aee
+ *	Committed at:   Mon Jul  4 20:50:07 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -35,6 +35,7 @@ Core::Library("Utilities");
 Core::Library("MessageObject");
 
 
+Core::Module("CTCP");
 Core::Module("Whois");
 Core::Module("List");
 

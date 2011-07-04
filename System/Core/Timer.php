@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4e992f4e81116e0ad9695e183ee5dee3a32eb7b2
- *	Committed at:   Thu May 26 13:52:58 BST 2011
+ *	Git commit:     c4b0310d54d08608fa7e83818ebf75150aa23aee
+ *	Committed at:   Mon Jul  4 20:50:17 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -35,23 +35,23 @@ class CoreTimer
 	{
 		foreach(self::$aTimers as $sTimerKey => &$aTimerInfo)
 		{
-			if(microtime(true) <= $aTimerInfo['nextTimerCall'])
+			if(microtime(true) <= $aTimerInfo->nextTimerCall)
 			{
 				continue;
 			}
 
-			call_user_func_array($aTimerInfo['timerCallback'], $aTimerInfo['timerArguments']);
+			call_user_func_array($aTimerInfo->timerCallback, $aTimerInfo->timerArguments);
 
-			$aTimerInfo['nextTimerCall'] = (float) microtime(true) + (float) $aTimerInfo['timerInterval'];
+			$aTimerInfo->nextTimerCall = (float) microtime(true) + (float) $aTimerInfo->timerInterval;
 
-			if($aTimerInfo['timerRepeat'] == -1)
+			if($aTimerInfo->timerRepeat == -1)
 			{
 				continue;
 			}
 
-			--$aTimerInfo['timerRepeat'];
+			--$aTimerInfo->timerRepeat;
 
-			if($aTimerInfo['timerRepeat'] == 0)
+			if($aTimerInfo->timerRepeat == 0)
 			{
 				unset(self::$aTimers[$sTimerKey]);
 			}
@@ -66,7 +66,7 @@ class CoreTimer
 	{
 		if(!is_callable($cCallback))
 		{
-			$cCallback = array(self::getCurrentInstance()->pCurrentScript, $cCallback);
+			$cCallback = array(Core::getCurrentInstance()->pCurrentScript, $cCallback);
 
 			if(!is_callable($cCallback))
 			{
@@ -81,14 +81,14 @@ class CoreTimer
 			$cCallback[0]->addLocalTimerHandler($sTimerKey);
 		}
 
-		self::$aTimers[$sTimerKey] = array
+		self::$aTimers[$sTimerKey] = (object) array
 		(
 			"timerID" => $sTimerKey,
 			"timerCallback" => $cCallback,
 			"timerInterval" => (float) $iInterval,
 			"timerRepeat" => $iRepeat,
 			"nextTimerCall" => (float) microtime(true) + (float) $iInterval,
-			"timerArguments" => $aArguments
+			"timerArguments" => $aArguments,
 		);
 
 		return $sTimerKey;
