@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     a53ca6c5bfdf712e6df4b62e5003c18fa157b2d7
- *	Committed at:   Sat Jun 11 22:17:11 BST 2011
+ *	Git commit:     0ff759c76277e70602a53631b1c787f238d39a59
+ *	Committed at:   Mon Jul  4 21:07:34 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -33,7 +33,7 @@ class ModuleAutoUpdater
 		# Prepare the variables
 		$sZipResource = ROOT."/Resources/AutoUpdater.zip";
 		$sZipFolder = ROOT."/Resources/AutoUpdaterFolder";
-		$sSystemFolder = ROOT."/System";
+		$sSystemFolder = ROOT."/System/";
 
 		# Download the file
 		$sZip = file_get_contents($sURL);
@@ -50,12 +50,17 @@ class ModuleAutoUpdater
 		# What is the folder name?
 		$aZipFolder = glob(ROOT."/Resources/AutoUpdaterFolder/*");
 
-		# Move all the system files (that's all we will replace!)
+		# Move all the system files
 		self::rmdir($sSystemFolder);
-		rename("{$sZipFolder}/{$aZipFolder[0]}/System", $sSystemFolder);
+		rename("{$aZipFolder[0]}/System/", $sSystemFolder);
+
+		# Move the Start.php
+		unlink(ROOT.'/Start.php');
+		rename("{$aZipFolder[0]}/Start.php", ROOT.'/Start.php');
 
 		# And now, clean up our mess.
 		self::rmdir($sZipResource);
+		unlink($aZipFolder[0]);
 
 		println(" > Successfully updated the System files.");
 	}
