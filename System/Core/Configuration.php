@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95e273100e115ed48f7d6cc58cb28dceaded9c3c
- *	Committed at:   Sun Jan 30 19:34:48 2011 +0000
+ *	Git commit:     feb769fa604708e8e67d7f182cf9bf3b3abf098e
+ *	Committed at:   Tue Jul  5 18:41:30 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -54,16 +54,17 @@ class CoreConfiguration
 			$bSlave = true;
 		}
 
-		self::verifyConfiguration($pConfig);
+		$sInstance = $sConfigName.' (#'.uniqid().')';
+		self::verifyConfiguration($pConfig, $sInstance);
 
-		return Core::addInstance($sConfigName, new CoreMaster($pConfig));
+		Core::addInstance($sInstance, new CoreMaster($pConfig));
 	}
 
 
 	/**
 	 *	Ensures that the required variables are indeed in memory.
 	 */
-	static function verifyConfiguration($pConfig)
+	static function verifyConfiguration($pConfig, $sInstance)
 	{
 		$pConfig->Server = new stdClass();
 		$pNetwork = $pConfig->Network;
@@ -120,6 +121,8 @@ class CoreConfiguration
 				$pNetwork->scriptArray[] = trim($sScriptName);
 			}
 		}
+
+		$pConfig->sInstance = $sInstance;
 
 		return $pConfig;
 	}

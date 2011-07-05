@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     a53ca6c5bfdf712e6df4b62e5003c18fa157b2d7
- *	Committed at:   Sat Jun 11 22:17:10 BST 2011
+ *	Git commit:     feb769fa604708e8e67d7f182cf9bf3b3abf098e
+ *	Committed at:   Tue Jul  5 18:41:30 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -15,7 +15,7 @@
 abstract class CoreChild
 {
 	private
-		$pInternalMasterObject = null;
+		$sInternalMasterObject = null;
 
 
 	/**
@@ -23,11 +23,11 @@ abstract class CoreChild
 	 */
 	protected final function internalMasterObject($pMaster = null)
 	{
-		if($this->pInternalMasterObject === null)
+		if($this->sInternalMasterObject === null)
 		{
-			return $this->pInternalMasterObject = $pMaster;
+			$this->sInternalMasterObject = $pMaster->pConfig->sInstance;
 		}
 
-		return $this->pInternalMasterObject;
+		return Core::getSpecificInstance($this->sInternalMasterObject);
 	}
 }

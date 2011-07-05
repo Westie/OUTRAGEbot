@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     c4b0310d54d08608fa7e83818ebf75150aa23aee
- *	Committed at:   Mon Jul  4 20:50:16 BST 2011
+ *	Git commit:     feb769fa604708e8e67d7f182cf9bf3b3abf098e
+ *	Committed at:   Tue Jul  5 18:41:30 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -33,7 +33,7 @@ class CoreMaster
 
 
 	/**
-	 *	Called when the network is loaded.
+	 *	Called when the instance is created.
 	 */
 	public function __construct($pConfig)
 	{
@@ -48,7 +48,14 @@ class CoreMaster
 			"iIndex" => 0,
 			"iPosition" => 0,
 		);
+	}
 
+
+	/**
+	 *	Called when the bot is ready to be run.
+	 */
+	public function initiateInstance()
+	{
 		$pNetwork = $this->pConfig->Network;
 
 		foreach($pNetwork->scriptArray as $sScriptName)
@@ -240,6 +247,11 @@ class CoreMaster
 	{
 		$pMessage = $this->internalPortkey($pSocket, $sString);
 
+		if($pMessage === null)
+		{
+			return false;
+		}
+
 		if($pSocket->isSocketSlave())
 		{
 			return CoreHandler::Unhandled($this, $pMessage);
@@ -256,13 +268,14 @@ class CoreMaster
 	{
 		$pMessage = Core::getMessageObject($sString);
 
-		if($pMessage->Parts[0] == "PING")
-		{
-			return $pSocket->Output("PONG ".$pMessage->Parts[1]);
-		}
-
 		$this->pMessage = $pMessage;
 		$this->pSocket = $pSocket;
+
+		if($pMessage->Parts[0] == "PING")
+		{
+			$pSocket->Output("PONG ".$pMessage->Parts[1]);
+			return null;
+		}
 
 		return $pMessage;
 	}
@@ -283,14 +296,14 @@ class CoreMaster
 			return;
 		}
 
-		/* The message modifications */
+		# The message modifications
 		if($mOption & FORMAT)
 		{
 			$sRawString = Format::parseInputString($sRawString);
 		}
 
 
-		/* The outbound channels */
+		# The outbound channels
 		if($mOption & SEND_DEF)
 		{
 			$mOption = $this->pConfig->Network->rotation;

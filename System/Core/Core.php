@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     35e8fa1395bbe0c6346ffa2e2dac4b69fed37039
- *	Committed at:   Tue Jun 28 18:00:53 BST 2011
+ *	Git commit:     feb769fa604708e8e67d7f182cf9bf3b3abf098e
+ *	Committed at:   Tue Jul  5 18:41:30 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -180,6 +180,8 @@ class Core
 	static function addInstance($sInstance, $pInstance)
 	{
 		self::$aInstances[$sInstance] = $pInstance;
+
+		$pInstance->initiateInstance();
 	}
 
 

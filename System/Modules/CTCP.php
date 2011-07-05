@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     c4b0310d54d08608fa7e83818ebf75150aa23aee
- *	Committed at:   Mon Jul  4 20:50:17 BST 2011
+ *	Git commit:     feb769fa604708e8e67d7f182cf9bf3b3abf098e
+ *	Committed at:   Tue Jul  5 18:41:30 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -86,6 +86,11 @@ class ModuleCTCP
 		$pSocket = $pInstance->getCurrentSocket();
 
 		$pMessage = $pInstance->internalPortkey($pSocket, $sString);
+
+		if($pMessage === null)
+		{
+			return false;
+		}
 
 		if($pSocket->isSocketSlave())
 		{
