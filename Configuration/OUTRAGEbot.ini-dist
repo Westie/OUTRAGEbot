@@ -1,4 +1,9 @@
 ;
+; This is a sample configuration file. Copy it to OUTRAGEbot.ini and make
+; the nessecary adjustments.
+;
+
+;
 ; This header has a '~' suffix, which denotes that it is NOT
 ; an IRC bot, but rather a needed config file. (It must be named ~Network.)
 ;
