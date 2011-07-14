@@ -1,24 +1,50 @@
 ;
-; This is a sample configuration file. Copy it to OUTRAGEbot.ini and make
-; the nessecary adjustments.
+; This is the sample configuration file for OUTRAGEbot. Copy this file
+; and rename it to anything - even the name of your favourite Auntie,
+; but hopefully you'll choose a filename representative of the bot,
+; something like the network name perhaps?
+;
+; Please note however, 'OUTRAGEbot.ini' is ignored during GIT transactions,
+; so if you're wanting to keep the bot up to date via means of GIT rather
+; than the AutoUpdater module, use 'OUTRAGEbot.ini' to keep your data from
+; being overwritten!
 ;
 
+
 ;
-; This header has a '~' suffix, which denotes that it is NOT
-; an IRC bot, but rather a needed config file. (It must be named ~Network.)
+; This section begins with a tilde (~). This means therefore, that this
+; section does not contain details regarding to
+; the IRC instances.
 ;
+; For more information regarding the choice of keys, please look at a
+; dictionary.
+;
+; Also, 'delimiter' refers to the prefix before commands.
+;
+
 [~Network]
-; These keys are needed for the bot to operate.
 name = AndroidIRC
-host = irc.androidirc.org
+host = irc.sc
 port = 6667
-owners = raptor.typefish.co.uk
+owners = your.hostname.here
 channels = #OUTRAGEbot
-scripts = Evaluation, Commands, AutoInvite, Weather, BOFH, Translation, Blank
+scripts = Evaluation, Commands, AutoInvite, Blank
 rotation = SEND_MAST
 quitmsg = "Bye, Said The Bot."
 delimiter = "~"
 
+;
+; You can also send messages/commands when the bot successfully joins
+; the network. These will be sent before the bot joins channels, like
+; this example of a single perform string:
+;
+;perform = "PRIVMSG User1 :I have successfully connected!"
+;
+; Or, if you want to send more than one perform string:
+;
+;perform[] = "PRIVMSG User1 :I have successfully connected!"
+;perform[] = "PRIVMSG User2 :I have successfully connected!"
+;
 
 
 ;
@@ -26,8 +52,10 @@ delimiter = "~"
 ; is an IRC bot. All three are needed.
 ; The text inbetween the [ and ] is the bot's nickname, just so you know.
 ; If you want to name the bot as 'Natalie', rename the text to [Natalie].
-; The first defined bot is the master bot, order does matter.
+; The first defined bot is the master bot, in this instance, order does
+; matter.
 ;
+
 [OUTRAGEbot]
 altnick = OUTRAGEbot`
 username = OUTRAGEbot
