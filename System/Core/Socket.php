@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     c4b0310d54d08608fa7e83818ebf75150aa23aee
- *	Committed at:   Mon Jul  4 20:50:17 BST 2011
+ *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
+ *	Committed at:   Tue Jul 26 23:19:16 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -61,7 +61,7 @@ class CoreSocket extends CoreChild
 
 		$rSocketOptions = stream_context_create($aSocketOptions);
 
-		$this->rSocket = stream_socket_client("tcp://{$this->pConfig->host}:{$this->pConfig->port}", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $rSocketOptions);
+		$this->rSocket = @stream_socket_client("tcp://{$this->pConfig->host}:{$this->pConfig->port}", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $rSocketOptions);
 
 		if($this->rSocket === false)
 		{

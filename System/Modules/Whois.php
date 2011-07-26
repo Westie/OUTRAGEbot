@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     35e8fa1395bbe0c6346ffa2e2dac4b69fed37039
- *	Committed at:   Tue Jun 28 18:00:53 BST 2011
+ *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
+ *	Committed at:   Tue Jul 26 23:19:17 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -23,6 +23,7 @@ class ModuleWhois
 	 */
 	static function initModule()
 	{
+		Core::introduceFunction("getWhois", array(__CLASS__, "sendWhoisRequest"));
 		Core::introduceFunction("getWhoisData", array(__CLASS__, "sendWhoisRequest"));
 	}
 
