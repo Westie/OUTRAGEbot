@@ -1,0 +1,1661 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta name="description" content="Personal Website" />
+		<meta name="author" content="David Weston" />
+		<meta http-equiv="Content-Type" content="application/xhtml+xml" charset=utf-8" />
+	</head>
+	
+	<style type="text/css">
+		body
+		{
+			font-family: "Tahoma", sans-serif;
+			font-size: 12px;
+			
+			line-height: 18px;
+		}
+		
+		code
+		{
+			padding: 5px;
+			padding-left: 10px;
+			
+			background-color: #FEE;
+			
+			display: block;
+			
+			font-size: 12px;
+			
+			font-family: "Monaco", monospace;
+		}
+		
+		li
+		{
+			list-style-type: square;
+		}
+		
+		.Prototype
+		{
+			border: 1px solid #999;
+			border-left: 5px solid #080;
+			margin: 10px;
+		}
+		
+		.Description
+		{
+			padding-left: 10px;
+		}
+		
+		.Source
+		{
+			border-left: 5px solid #00A600;
+			margin: 10px;
+		}
+		
+		.Output
+		{
+			border-left: 5px solid #00BF00;
+			margin: 10px;
+		}
+		
+		a.Name
+		{
+			text-decoration: none;
+			color: #000;
+			
+			font-size: 14px;
+		}
+		
+		.DefMethod,
+		.DefVariable
+		{
+			margin: 10px;
+			margin-bottom: 15px;
+			
+			padding: 10px;
+			
+			border: 1px solid #F33;
+			border-left: 5px solid #F33;
+			
+			background-color: #FCC;
+		}
+		
+		.DefVariable
+		{
+			border: 1px solid #33F;
+			border-left: 3px solid #33F;
+			
+			background-color: #CCF;
+		}
+	</style>
+	
+	<body>
+		<h1>OUTRAGEbot documentation</h1>
+		
+		<h2>Documentation overview</h2>
+		
+		<ul>
+			<li><a name="Core">Core</a></li>
+			<ul>
+				<li><a href="#Core::getMessageObject">Core::getMessageObject()</a></li>
+			</ul>
+
+			<li><a name="CoreChannel">CoreChannel</a></li>
+			<ul>
+				<li><a href="#CoreChannel::count">CoreChannel::$count</a></li>
+				<li><a href="#CoreChannel::getBanList">CoreChannel::getBanList()</a></li>
+				<li><a href="#CoreChannel::getCreationTime">CoreChannel::getCreationTime()</a></li>
+				<li><a href="#CoreChannel::getExceptionList">CoreChannel::getExceptionList()</a></li>
+				<li><a href="#CoreChannel::getInviteList">CoreChannel::getInviteList()</a></li>
+				<li><a href="#CoreChannel::isUserAdmin">CoreChannel::isUserAdmin()</a></li>
+				<li><a href="#CoreChannel::isUserHalfOp">CoreChannel::isUserHalfOp()</a></li>
+				<li><a href="#CoreChannel::isUserInChannel">CoreChannel::isUserInChannel()</a></li>
+				<li><a href="#CoreChannel::isUserOp">CoreChannel::isUserOp()</a></li>
+				<li><a href="#CoreChannel::isUserOwner">CoreChannel::isUserOwner()</a></li>
+				<li><a href="#CoreChannel::isUserVoice">CoreChannel::isUserVoice()</a></li>
+				<li><a href="#CoreChannel::__toString">CoreChannel::__toString()</a></li>
+				<li><a href="#CoreChannel::topic">CoreChannel::$topic</a></li>
+				<li><a href="#CoreChannel::users">CoreChannel::$users</a></li>
+			</ul>
+
+			<li><a name="CoreMaster">CoreMaster</a></li>
+			<ul>
+				<li><a href="#CoreMaster::Action">CoreMaster::Action()</a></li>
+				<li><a href="#CoreMaster::Format">CoreMaster::Format()</a></li>
+				<li><a href="#CoreMaster::Invite">CoreMaster::Invite()</a></li>
+				<li><a href="#CoreMaster::Join">CoreMaster::Join()</a></li>
+				<li><a href="#CoreMaster::Message">CoreMaster::Message()</a></li>
+				<li><a href="#CoreMaster::Notice">CoreMaster::Notice()</a></li>
+				<li><a href="#CoreMaster::Part">CoreMaster::Part()</a></li>
+				<li><a href="#CoreMaster::Raw">CoreMaster::Raw()</a></li>
+				<li><a href="#CoreMaster::activateScript">CoreMaster::activateScript()</a></li>
+				<li><a href="#CoreMaster::addChild">CoreMaster::addChild()</a></li>
+				<li><a href="#CoreMaster::addCommandHandler">CoreMaster::addCommandHandler()</a></li>
+				<li><a href="#CoreMaster::addEventHandler">CoreMaster::addEventHandler()</a></li>
+				<li><a href="#CoreMaster::addTimer">CoreMaster::addTimer()</a></li>
+				<li><a href="#CoreMaster::deactivateScript">CoreMaster::deactivateScript()</a></li>
+				<li><a href="#CoreMaster::getActivatedScripts">CoreMaster::getActivatedScripts()</a></li>
+				<li><a href="#CoreMaster::getCallableMethods">CoreMaster::getCallableMethods()</a></li>
+				<li><a href="#CoreMaster::getChannel">CoreMaster::getChannel()</a></li>
+				<li><a href="#CoreMaster::getChannelList">CoreMaster::getChannelList()</a></li>
+				<li><a href="#CoreMaster::getCurrentSocket">CoreMaster::getCurrentSocket()</a></li>
+				<li><a href="#CoreMaster::getListOfChildren">CoreMaster::getListOfChildren()</a></li>
+				<li><a href="#CoreMaster::isResource">CoreMaster::isResource()</a></li>
+				<li><a href="#CoreMaster::getNetworkConfiguration">CoreMaster::getNetworkConfiguration()</a></li>
+				<li><a href="#CoreMaster::getNextSocket">CoreMaster::getNextSocket()</a></li>
+				<li><a href="#CoreMaster::getResource">CoreMaster::getResource()</a></li>
+				<li><a href="#CoreMaster::getServerConfiguration">CoreMaster::getServerConfiguration()</a></li>
+				<li><a href="#CoreMaster::getSocketConfiguration">CoreMaster::getSocketConfiguration()</a></li>
+				<li><a href="#CoreMaster::getWhoisData">CoreMaster::getWhoisData()</a></li>
+				<li><a href="#CoreMaster::isAdmin">CoreMaster::isAdmin()</a></li>
+				<li><a href="#CoreMaster::isResource">CoreMaster::isResource()</a></li>
+				<li><a href="#CoreMaster::isUserAdmin">CoreMaster::isUserAdmin()</a></li>
+				<li><a href="#CoreMaster::isUserHalfOp">CoreMaster::isUserHalfOp()</a></li>
+				<li><a href="#CoreMaster::isUserOp">CoreMaster::isUserOp()</a></li>
+				<li><a href="#CoreMaster::isUserOwner">CoreMaster::isUserOwner()</a></li>
+				<li><a href="#CoreMaster::isUserVoice">CoreMaster::isUserVoice()</a></li>
+				<li><a href="#CoreMaster::reactivateScript">CoreMaster::reactivateScript()</a></li>
+				<li><a href="#CoreMaster::removeChild">CoreMaster::removeChild()</a></li>
+				<li><a href="#CoreMaster::removeEventHandler">CoreMaster::removeEventHandler()</a></li>
+				<li><a href="#CoreMaster::isResource">CoreMaster::isResource()</a></li>
+				<li><a href="#CoreMaster::removeTimer">CoreMaster::removeTimer()</a></li>
+				<li><a href="#CoreMaster::replyCTCPMessage">CoreMaster::replyCTCPMessage()</a></li>
+				<li><a href="#CoreMaster::requestCTCPMessage">CoreMaster::requestCTCPMessage()</a></li>
+				<li><a href="#CoreMaster::stripAll">CoreMaster::stripAll()</a></li>
+				<li><a href="#CoreMaster::stripColour">CoreMaster::stripColour()</a></li>
+				<li><a href="#CoreMaster::stripFormat">CoreMaster::stripFormat()</a></li>
+				<li><a href="#CoreMaster::triggerEvent">CoreMaster::triggerEvent()</a></li>
+			</ul>
+
+			<li><a name="CoreResource">CoreResource</a></li>
+			<ul>
+				<li><a href="#CoreResource::Read">CoreResource::Read()</a></li>
+				<li><a href="#CoreResource::Write">CoreResource::Write()</a></li>
+				<li><a href="#CoreResource::isNew">CoreResource::isNew()</a></li>
+				<li><a href="#CoreResource::modifyTime">CoreResource::modifyTime()</a></li>
+				<li><a href="#CoreResource::__toString">CoreResource::__toString()</a></li>
+			</ul>
+		</ul>
+		
+		<h2>Methods and variables</h2>
+
+		<h3>Core</h3>
+
+		<div class="DefMethod">
+			<a name="Core::getMessageObject" class="Name">Core::getMessageObject()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns an objectised view of an IRC message string.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">stdClass&nbsp;Core</span><span style="color: #007700">::</span><span style="color: #0000BB">getMessageObject</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sString</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">(</span><span style="color: #0000BB">no&nbsp;available&nbsp;examples</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">stdClass&nbsp;Object<br /></span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Raw</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;:</span><span style="color: #0000BB">Westie</span><span style="color: #007700">!</span><span style="color: #0000BB">westie</span><span style="color: #007700">@</span><span style="color: #0000BB">raptor</span><span style="color: #007700">.</span><span style="color: #0000BB">typefish</span><span style="color: #007700">.</span><span style="color: #0000BB">co</span><span style="color: #007700">.</span><span style="color: #0000BB">uk&nbsp;PRIVMSG&nbsp;</span><span style="color: #FF8000">#OUTRAGEbot&nbsp;:@@&nbsp;print_r($this-&gt;pMessage);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Parts</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;Array<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;:</span><span style="color: #0000BB">Westie</span><span style="color: #007700">!</span><span style="color: #0000BB">westie</span><span style="color: #007700">@</span><span style="color: #0000BB">raptor</span><span style="color: #007700">.</span><span style="color: #0000BB">typefish</span><span style="color: #007700">.</span><span style="color: #0000BB">co</span><span style="color: #007700">.</span><span style="color: #0000BB">uk<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">PRIVMSG<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#OUTRAGEbot<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">3</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;:@@<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">4</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">pMessage</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Numeric</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">PRIVMSG<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">User</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Westie<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">westie<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Hostname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">raptor</span><span style="color: #007700">.</span><span style="color: #0000BB">typefish</span><span style="color: #007700">.</span><span style="color: #0000BB">co</span><span style="color: #007700">.</span><span style="color: #0000BB">uk<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Payload</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;@@&nbsp;</span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">pMessage</span><span style="color: #007700">);<br />)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<h3>CoreChannel</h3>
+
+		<div class="DefVariable">
+			<a name="CoreChannel::count" class="Name">CoreChannel::$count</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property the current amount of users in a channel.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">integer&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">$count</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sChannel&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$iCount&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">count</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">7</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::getBanList" class="Name">CoreChannel::getBanList()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the channel ban list.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">getBanList</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sChannel&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$aBanList&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getBanList</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">hostmaskString</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">exampleUser</span><span style="color: #007700">!</span><span style="color: #0000BB">identifier</span><span style="color: #007700">@</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">hostmaskObject</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">exampleUser<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">identifier<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Hostname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">modeSetter</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Westie<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">modeTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1307880973<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">hostmaskString</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Jessica</span><span style="color: #007700">!</span><span style="color: #0000BB">identifier</span><span style="color: #007700">@</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">hostmaskObject</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Jessica<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">identifier<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Hostname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">modeSetter</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Westie<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">modeTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1307880968<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::getCreationTime" class="Name">CoreChannel::getCreationTime()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the time the channel was created.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">getCreationTime</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sChannel&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$iCreationTime&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getCreationTime</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">1281317782</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::getExceptionList" class="Name">CoreChannel::getExceptionList()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the channel exception list.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">getExceptionList</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sChannel&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$aExceptionList&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getExceptionList</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">hostmaskString</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">exampleUser</span><span style="color: #007700">!</span><span style="color: #0000BB">identifier</span><span style="color: #007700">@</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">hostmaskObject</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">exampleUser<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">identifier<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Hostname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">modeSetter</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Westie<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">modeTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1307880973<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">hostmaskString</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Jessica</span><span style="color: #007700">!</span><span style="color: #0000BB">identifier</span><span style="color: #007700">@</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">hostmaskObject</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Jessica<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">identifier<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Hostname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">modeSetter</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Westie<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">modeTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1307880968<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::getInviteList" class="Name">CoreChannel::getInviteList()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the channel invited list.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">getInviteList</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sChannel&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$aInviteList&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getInviteList</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">hostmaskString</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">exampleUser</span><span style="color: #007700">!</span><span style="color: #0000BB">identifier</span><span style="color: #007700">@</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">hostmaskObject</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">exampleUser<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">identifier<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Hostname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">modeSetter</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Westie<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">modeTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1307880973<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">hostmaskString</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Jessica</span><span style="color: #007700">!</span><span style="color: #0000BB">identifier</span><span style="color: #007700">@</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">hostmaskObject</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Jessica<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">identifier<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Hostname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">fakedomain</span><span style="color: #007700">.</span><span style="color: #0000BB">net<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">modeSetter</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Westie<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">modeTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1307880968<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::isUserAdmin" class="Name">CoreChannel::isUserAdmin()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user in that channel has been granted Admin permissions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserAdmin</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserAdmin</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;a&nbsp;channel&nbsp;admin!"</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::isUserHalfOp" class="Name">CoreChannel::isUserHalfOp()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user in that channel has been granted Half-Operator permissions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserHalfOp</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserHalfOp</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;a&nbsp;half-operator!"</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::isUserInChannel" class="Name">CoreChannel::isUserInChannel()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user is present in the channel.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserInChannel</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserInChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"Yeah,&nbsp;good&nbsp;news!&nbsp;He's&nbsp;here,&nbsp;in&nbsp;the&nbsp;channel,&nbsp;waiting&nbsp;for&nbsp;you!"</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::isUserOp" class="Name">CoreChannel::isUserOp()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user in that channel has been granted Operator permissions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserOp</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserOp</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;a&nbsp;channel&nbsp;operator!"</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::isUserOwner" class="Name">CoreChannel::isUserOwner()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user in that channel has been granted Operator permissions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserOwner</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserOwner</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;the&nbsp;channel&nbsp;owner!&nbsp;Don't&nbsp;mess&nbsp;with&nbsp;him."</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::isUserVoice" class="Name">CoreChannel::isUserVoice()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user in that channel has been granted Voice permissions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserVoice</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserVoice</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;an&nbsp;admin!"</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreChannel::__toString" class="Name">CoreChannel::__toString()</a>
+
+			<h4>Description</h4>
+			<div class="Description">String representation of the channel name. Refer to <a href="http://www.php.net/manual/en/language.oop5.magic.php#language.oop5.magic.tostring">the PHP docs</a> regarding magic methods.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">__toString</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">echo&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">;</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #FF8000">#android</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreChannel::topic" class="Name">CoreChannel::$topic</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property the current channel topic.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">$topic</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sChannel&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$sTopic&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">topic</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">&nbsp;</span><span style="color: #007700">[&nbsp;</span><span style="color: #0000BB">OUTRAGEbot&nbsp;</span><span style="color: #007700">(&nbsp;</span><span style="color: #0000BB">no&nbsp;date&nbsp;</span><span style="color: #007700">)&nbsp;]&gt;&nbsp;</span><span style="color: #0000BB">devel</span><span style="color: #007700">/</span><span style="color: #0000BB">support&nbsp;channel&nbsp;</span><span style="color: #007700">-&nbsp;::&nbsp;@</span><span style="color: #0000BB">func&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">functionName</span><span style="color: #007700">]&nbsp;::&nbsp;</span><span style="color: #0000BB">Github&nbsp;</span><span style="color: #007700">(</span><span style="color: #0000BB">latest</span><span style="color: #007700">):&nbsp;</span><span style="color: #0000BB">http</span><span style="color: #007700">:</span><span style="color: #FF8000">//bit.ly/9AdHHb&nbsp;::&nbsp;</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreChannel::users" class="Name">CoreChannel::$users</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property the current users in the channel.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">$users</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sChannel&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$aUsers&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">users</span><span style="color: #007700">;</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">OUTRAGEbot<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Usermode</span><span style="color: #007700">]&nbsp;=&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Happycat<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">Usermode</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">q<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;...<br />)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<h3>CoreMaster</h3>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::Action" class="Name">CoreMaster::Action()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Sends an action string to the specified channel.<br /><br />More details on the optional $mOptionvalue are available from <a href="#CoreMaster::Raw">CoreMaster::Raw</a>.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Action</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">integer&nbsp;$mOption&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">SEND_DEF&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Action</span><span style="color: #007700">(</span><span style="color: #DD0000">"#ffs"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"walks&nbsp;away&nbsp;from&nbsp;the&nbsp;cow."</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">*&nbsp;</span><span style="color: #0000BB">OUTRAGEbot&nbsp;walks&nbsp;away&nbsp;from&nbsp;the&nbsp;cow</span><span style="color: #007700">.</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::Format" class="Name">CoreMaster::Format()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Formats a string to mIRC-like colours and formatting.
+<br /><br />
+List of current modifiers:
+<br />
+<ul>
+	<li>
+		Formatting modifiers
+		
+		<ul>
+			<li><span class="Code">{b}</span> - Emboldens the string past that point.</li>
+			<li><span class="Code">{i}</span> - Puts the text into italics.</li>
+			<li><span class="Code">{r}</span> - Cancels all formatting and colours after that point.</li>
+			<li><span class="Code">{u}</span> - Underlines the string past that point.</li>
+			<li><span class="Code">{v}</span> - Inverts the background and foreground colours.</li>
+		</ul>
+	</li>
+	
+	<li>
+		Colour modifiers - these follow the scheme of either:
+		
+		<br /><br />
+		
+		<span class="Code">{c:<strong>foregroundColour</strong>}</span><br />
+		<span class="Code">{c:<strong>foregroundColour</strong>:<strong>backgroundColour</strong>}</span>
+		
+		<br /><br />
+		
+		These names are case insensitive:
+		
+		<ul>
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #FFF; padding-left: 13px;"></div> White
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #EEE; margin-right: 3px; background-color: #000; padding-left: 13px;"></div> Black
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #00007F; padding-left: 13px;"></div> DarkBlue
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #009300; padding-left: 13px;"></div> DarkGreen
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #F00; padding-left: 13px;"></div> Red
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #7F0000; padding-left: 13px;"></div> Brown
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #9C009C; padding-left: 13px;"></div> Purple
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #FC7C00; padding-left: 13px;"></div> Orange
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #FF0; padding-left: 13px;"></div> Yellow
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #00FC00; padding-left: 13px;"></div> Green
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #009393; padding-left: 13px;"></div> Teal
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #0FF; padding-left: 13px;"></div> LightBlue
+			</li>
+
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #0000D2; padding-left: 13px;"></div> Blue
+			</li>
+
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #F0F; padding-left: 13px;"></div> Pink
+			</li>
+
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #7C7C7C; padding-left: 13px;"></div> DarkGrey
+			</li>
+
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #D2D2D2; padding-left: 13px;"></div> Grey
+			</li>
+		</ul>
+	</li>
+		
+</ul></div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Format</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sInputString</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Format</span><span style="color: #007700">(</span><span style="color: #DD0000">"{b}This&nbsp;string&nbsp;is&nbsp;in&nbsp;bold&nbsp;and&nbsp;{c:yellow}this&nbsp;text&nbsp;is&nbsp;yellow{r},&nbsp;but&nbsp;this&nbsp;section&nbsp;has&nbsp;no&nbsp;custom&nbsp;formatting."</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">&lt;</span><span style="color: #0000BB">strong</span><span style="color: #007700">&gt;</span><span style="color: #0000BB">This&nbsp;string&nbsp;is&nbsp;in&nbsp;bold&nbsp;</span><span style="color: #007700">and&nbsp;&lt;</span><span style="color: #0000BB">span&nbsp;style</span><span style="color: #007700">=</span><span style="color: #DD0000">"color:yellow"</span><span style="color: #007700">&gt;</span><span style="color: #0000BB">this&nbsp;text&nbsp;is&nbsp;yellow</span><span style="color: #007700">&lt;/</span><span style="color: #0000BB">span</span><span style="color: #007700">&gt;&lt;/</span><span style="color: #0000BB">strong</span><span style="color: #007700">&gt;,&nbsp;</span><span style="color: #0000BB">but&nbsp;this&nbsp;section&nbsp;has&nbsp;no&nbsp;custom&nbsp;formatting</span><span style="color: #007700">.</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::Invite" class="Name">CoreMaster::Invite()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Invites a user to the channel.<br /><br />More details on the optional $mOptionvalue are available from <a href="#CoreMaster::Raw">CoreMaster::Raw</a>.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Invite</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string</span><span style="color: #007700">/</span><span style="color: #0000BB">CoreChannel&nbsp;$sChannel&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">mixed&nbsp;$mOption&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">SEND_DEF&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Invite</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"#westie.private"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::Join" class="Name">CoreMaster::Join()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Joins the bot to a channel.<br /><br />More details on the optional $mOptionvalue are available from <a href="#CoreMaster::Raw">CoreMaster::Raw</a>.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Join</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">mixed&nbsp;$mOption&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">SEND_DEF&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Join</span><span style="color: #007700">(</span><span style="color: #DD0000">"#westie-public"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Join</span><span style="color: #007700">(</span><span style="color: #DD0000">"#westie-private&nbsp;passw0rd3d"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::Message" class="Name">CoreMaster::Message()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Sends a message to either a channel or a IRC nickname.<br /><br />More details on the optional $mOptionvalue are available from <a href="#CoreMaster::Raw">CoreMaster::Raw</a>.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">mixed&nbsp;$mOption&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">SEND_DEF&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"Your&nbsp;face&nbsp;is&nbsp;rather&nbsp;blue!"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::Notice" class="Name">CoreMaster::Notice()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Sends a notice to either a channel or a IRC nickname.<br /><br />More details on the optional $mOptionvalue are available from <a href="#CoreMaster::Raw">CoreMaster::Raw</a>.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Notice</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sRecipient</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">mixed&nbsp;$mOption&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">SEND_DEF&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Notice</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"Your&nbsp;face&nbsp;is&nbsp;rather&nbsp;blue!"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::Part" class="Name">CoreMaster::Part()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Forces the bot to leave the channel.<br /><br />More details on the optional $mOptionvalue are available from <a href="#CoreMaster::Raw">CoreMaster::Raw</a>.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Part</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">mixed&nbsp;$mOption&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">SEND_DEF&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Part</span><span style="color: #007700">(</span><span style="color: #DD0000">"#westie-public"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::Raw" class="Name">CoreMaster::Raw()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Sends a raw message to the IRC server.
+<br /><br />List of possible types for $mOption:
+<ul>
+	<li>
+		Output options
+		
+		<ul>
+			<li>SEND_DEF - option defined in configuration file</li>
+			<li>SEND_MAST - sent from the first defined IRC slave (in this case, the master)</li>
+			<li>SEND_CURR - sent from the current IRC child</li>
+			<li>SEND_ALL - sent from all at once</li>
+			<li>SEND_DIST - each message is distributed between each bot.</li>
+		</ul>
+	</li>
+	
+	<li>
+		Output modification
+		
+		<ul>
+			<li>FORMAT - formats the string in accordance with CoreMaster::Format()</li>
+		</ul>
+	</li>
+</ul>
+
+<br />Setting the $mOption argument null, will result in the second argument becoming SEND_DIST.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Raw</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sMessage&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">mixed&nbsp;$mOption&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">SEND_DEF&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Raw</span><span style="color: #007700">(</span><span style="color: #DD0000">"PRIVMSG&nbsp;#channelname&nbsp;:this&nbsp;is&nbsp;a&nbsp;string"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::activateScript" class="Name">CoreMaster::activateScript()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Loads and activates a Script into the CoreMaster instance.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">activateScript</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sScriptName</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">activateScript</span><span style="color: #007700">(</span><span style="color: #DD0000">"Debug"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::addChild" class="Name">CoreMaster::addChild()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Adds a Socket instance to the bot. Returns the Handle name, which is important should you need to access this specific child again.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addChild</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname&nbsp;</span><span style="color: #007700">[,&nbsp;array&nbsp;</span><span style="color: #0000BB">$aOptions&nbsp;</span><span style="color: #007700">=&nbsp;array()&nbsp;])</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addChild</span><span style="color: #007700">(</span><span style="color: #DD0000">"HickyBot"</span><span style="color: #007700">,&nbsp;array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">"username"&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">"hicksftw"</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">"realname"&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">"Inbred&nbsp;American"</span><span style="color: #007700">,<br />);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">HickyBot</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::addCommandHandler" class="Name">CoreMaster::addCommandHandler()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Creates a command handler.
+
+<br /><br />If the method is in a <span class="Var">Script</span>, then the first argument will <strong>not</strong> be the <span class="Var">Master</span> class.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addCommandHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sCommandName</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$cCallback</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">Example&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onConstruct</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addCommandHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"time1"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"onRequestTime"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Note&nbsp;the&nbsp;extra&nbsp;argument<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addCommandHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"time2"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$pInstance</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sArguments</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pInstance</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"The&nbsp;date&nbsp;is:&nbsp;"</span><span style="color: #007700">.</span><span style="color: #0000BB">date</span><span style="color: #007700">(</span><span style="color: #DD0000">"d/m/Y&nbsp;H:i:s"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">time</span><span style="color: #007700">()));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">END_EVENT_EXEC</span><span style="color: #007700">;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onRequestTime</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sArguments</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"The&nbsp;date&nbsp;is:&nbsp;"</span><span style="color: #007700">.</span><span style="color: #0000BB">date</span><span style="color: #007700">(</span><span style="color: #DD0000">"d/m/Y&nbsp;H:i:s"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">time</span><span style="color: #007700">()));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">END_EVENT_EXEC</span><span style="color: #007700">;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::addEventHandler" class="Name">CoreMaster::addEventHandler()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Creates an event handler.
+<br /><h4>Options for <span class="Var">$sCommandName</span>:</h4><br />
+<ul>
+	<li>"PRIVMSG" style - receive raw input from the IRC server. Check the RFC for all available commands.</li>
+	<li>"onChannelMessage" style - receive input similiar to Scripts. [Resource Miscellaneous/Callbacks] for callback listings.</li>
+</ul>
+
+<br /><h4>List of possible types for <span class="Var">$sArgumentFormat</span>:</h4><br />
+<ul>
+	<li><a href="#Core::getMessageObject">Core::getMessageObject</a></li>
+	<li>c - Message parts as an array.</li>
+	<li>m - Message object.</li>
+	<li>p - The payload, or rather the bit after the semi-colon.</li>
+	<li>r - The raw, unparsed input string.</li>
+	<li>u - The parsed hostname, as an object.</li>
+</ul>
+
+<br />Leaving the <span class="Var">$sArgumentFormat</span> argument null, will result in the second parameter being the Message object, or 'm'.
+
+<br /><br />If the method is in a <span class="Var">Script</span>, then the first argument will <strong>not</strong> be the <span class="Var">Master</span> class.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sCommandName</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$cCallback&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sArgumentFormat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">Example&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onConstruct</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"INVITE"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"anotherInviteFunction"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"up"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Note&nbsp;the&nbsp;extra&nbsp;argument<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"INVITE"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$p</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$u</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$c</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$p</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #DD0000">"#westie"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"(custom&nbsp;args,&nbsp;lambda)&nbsp;OUTRAGEbot&nbsp;has&nbsp;been&nbsp;invited&nbsp;into&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$c</span><span style="color: #007700">}</span><span style="color: #DD0000">&nbsp;by&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$u</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">}</span><span style="color: #DD0000">"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;</span><span style="color: #DD0000">"up"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">anotherInviteFunction</span><span style="color: #007700">(</span><span style="color: #0000BB">$pUserObject</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$p</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #DD0000">"#westie"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"(custom&nbsp;args,&nbsp;class)&nbsp;OUTRAGEbot&nbsp;has&nbsp;been&nbsp;invited&nbsp;into&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">}</span><span style="color: #DD0000">&nbsp;by&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$pUserObject</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">}</span><span style="color: #DD0000">"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::addTimer" class="Name">CoreMaster::addTimer()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Creates a timer which will be executed.<br />
+<br />
+List of options for <span class=\"Code\">$iRepeat</span>:<br />
+<ul><li><span class=\"Code\">0</span> - Infinitely execute.</li><li><span class=\"Code\">1</span> - Repeat once</li><li><span class=\"Code\">2</span> - Repeat twice, and so on.</li></ul></div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">callback&nbsp;$cCallback</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">integer&nbsp;$iInterval&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">integer&nbsp;$iRepeat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">1&nbsp;</span><span style="color: #007700">[,&nbsp;array&nbsp;</span><span style="color: #0000BB">$aArguments&nbsp;</span><span style="color: #007700">=&nbsp;array()&nbsp;]])</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sTimerHandler&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addTimer</span><span style="color: #007700">(function(</span><span style="color: #0000BB">$pInstance</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pInstance</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #DD0000">"#android"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"This&nbsp;is&nbsp;a&nbsp;message&nbsp;executed&nbsp;every&nbsp;one&nbsp;second,&nbsp;five&nbsp;times."</span><span style="color: #007700">);<br />},&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">5</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">string</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::deactivateScript" class="Name">CoreMaster::deactivateScript()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Removes a Script into the CoreMaster instance.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">deactivateScript</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sScriptName</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">deactivateScript</span><span style="color: #007700">(</span><span style="color: #DD0000">"Debug"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getActivatedScripts" class="Name">CoreMaster::getActivatedScripts()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Removes and reloads a Script into the CoreMaster instance.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getActivatedScripts</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$aScriptList&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getActivatedScripts</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Evaluation<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Commands<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">AutoInvite<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">3</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Weather<br /></span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getCallableMethods" class="Name">CoreMaster::getCallableMethods()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns an array with a list of all callable methods in the Master instance of OUTRAGEbot.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getCallableMethods</span><span style="color: #007700">(&nbsp;</span><span style="color: #0000BB">void&nbsp;</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$aMethods&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getCallableMethods</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">__construct<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Socket<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">getNextSocket<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">3</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">getCurrentSocket<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">4</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">getCallableMethods<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">...<br />)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getChannel" class="Name">CoreMaster::getChannel()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the instance of CoreChannel for that channel.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">CoreChannel&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pChannel&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"#android"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">object&nbsp;CoreChannel</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getChannelList" class="Name">CoreMaster::getChannelList()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns an array containing all the public channels on the network. Only available if the List module is enabled - it is by default. Also, the output won't be so "questionable" when really used...</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getChannelList</span><span style="color: #007700">()</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pChannels&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getChannelList</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">channel</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#android<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">count</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">24<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">modes</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;+</span><span style="color: #0000BB">ntrTf<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">topic</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">here&nbsp;is&nbsp;a&nbsp;topic<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getCurrentSocket" class="Name">CoreMaster::getCurrentSocket()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the current Socket instance.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">CoreSocket&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getCurrentSocket</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pSocket&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getCurrentSocket</span><span style="color: #007700">();<br />&nbsp;<br /></span><span style="color: #0000BB">$pSocket</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Output</span><span style="color: #007700">(</span><span style="color: #DD0000">"PRIVMSG&nbsp;#ffs&nbsp;:I&nbsp;don't&nbsp;know!"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">object&nbsp;CoreSocket</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getListOfChildren" class="Name">CoreMaster::getListOfChildren()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the list of Sockets connected to the Master class.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getListOfChildren</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$aChildren&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getListOfChildren</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">OUTRAGEbot<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">HickyBot</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">HickyBot<br /></span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::isResource" class="Name">CoreMaster::isResource()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns a match with relative Resource locations for a pattern.<br /><br />
+
+Take note that this is Script specific, a Resource available in one Script is not accessable to another.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;Script</span><span style="color: #007700">::</span><span style="color: #0000BB">getListOfResources</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sPattern</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$aMatches&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getListOfResources</span><span style="color: #007700">(</span><span style="color: #DD0000">"Account/*.user"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Account</span><span style="color: #007700">/</span><span style="color: #0000BB">Westie</span><span style="color: #007700">.</span><span style="color: #0000BB">user<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Account</span><span style="color: #007700">/</span><span style="color: #0000BB">Sarah</span><span style="color: #007700">.</span><span style="color: #0000BB">user<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Account</span><span style="color: #007700">/</span><span style="color: #0000BB">Vicky</span><span style="color: #007700">.</span><span style="color: #0000BB">user<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">3</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Account</span><span style="color: #007700">/</span><span style="color: #0000BB">Natalie</span><span style="color: #007700">.</span><span style="color: #0000BB">user<br /></span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getNetworkConfiguration" class="Name">CoreMaster::getNetworkConfiguration()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the network connection settings, or if $sConfigurationKey is provided, the specific key.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">stdClass&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getNetworkConfiguration</span><span style="color: #007700">([&nbsp;</span><span style="color: #0000BB">string&nbsp;$sConfigurationKey&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$aNetworkConfig&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getNetworkConfiguration</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">stdClass&nbsp;Object<br /></span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">name</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">AndroidIRC<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">host</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">irc</span><span style="color: #007700">.</span><span style="color: #0000BB">androidirc</span><span style="color: #007700">.</span><span style="color: #0000BB">org<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">port</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">6667<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">owners</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">raptor</span><span style="color: #007700">.</span><span style="color: #0000BB">typefish</span><span style="color: #007700">.</span><span style="color: #0000BB">co</span><span style="color: #007700">.</span><span style="color: #0000BB">uk<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">channels</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#OUTRAGEbot,&nbsp;#westie<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">scripts</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Evaluation<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">rotation</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">quitmsg</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Bye</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">Said&nbsp;The&nbsp;Bot</span><span style="color: #007700">.<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">delimiter</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;~<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">version</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">OUTRAGEbot&nbsp;2.0.0</span><span style="color: #007700">-</span><span style="color: #0000BB">Alpha</span><span style="color: #007700">-</span><span style="color: #0000BB">0&nbsp;</span><span style="color: #007700">(</span><span style="color: #0000BB">rel</span><span style="color: #007700">.&nbsp;-</span><span style="color: #0000BB">today</span><span style="color: #007700">-);&nbsp;</span><span style="color: #0000BB">David&nbsp;Weston</span><span style="color: #007700">;&nbsp;</span><span style="color: #0000BB">http</span><span style="color: #007700">:</span><span style="color: #FF8000">//outrage.typefish.co.uk<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">perform</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;Array<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">ownerArray</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;Array<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">raptor</span><span style="color: #007700">.</span><span style="color: #0000BB">typefish</span><span style="color: #007700">.</span><span style="color: #0000BB">co</span><span style="color: #007700">.</span><span style="color: #0000BB">uk<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">scriptArray</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;Array<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Evaluation<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">channelArray</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;Array<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#OUTRAGEbot<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#westie<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getNextSocket" class="Name">CoreMaster::getNextSocket()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the next Socket instance. This is in order of Socket creation.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">CoreSocket&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getNextSocket</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pSocket&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getNextSocket</span><span style="color: #007700">();<br /><br /></span><span style="color: #0000BB">$pSocket</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Output</span><span style="color: #007700">(</span><span style="color: #DD0000">"PRIVMSG&nbsp;#ffs&nbsp;:I&nbsp;don't&nbsp;know!"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">object&nbsp;CoreSocket</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getResource" class="Name">CoreMaster::getResource()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns an instance of <a href="#CoreResource">CoreResource</a> for that resource.<br /><br />
+
+Take note that this is Script specific, a Resource available in one Script is not accessable to another.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">CoreResource&nbsp;Script</span><span style="color: #007700">::</span><span style="color: #0000BB">getResource</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sResource&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMode&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"w+"&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getResource</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie.txt"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">object&nbsp;CoreResource</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getServerConfiguration" class="Name">CoreMaster::getServerConfiguration()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the server settings, or if $sConfigurationKey is provided, the specific key.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">stdClass&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getServerConfiguration</span><span style="color: #007700">([&nbsp;</span><span style="color: #0000BB">string&nbsp;$sConfigurationKey&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$aServerConfig&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getServerConfiguration</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">stdClass&nbsp;Object<br /></span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">CMDS</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">KNOCK</span><span style="color: #007700">,</span><span style="color: #0000BB">MAP</span><span style="color: #007700">,</span><span style="color: #0000BB">DCCALLOW</span><span style="color: #007700">,</span><span style="color: #0000BB">USERIP<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">UHNAMES</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">NAMESX</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">SAFELIST</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">HCN</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">MAXCHANNELS</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">100<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">CHANLIMIT</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#:100<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">MAXLIST</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">b</span><span style="color: #007700">:</span><span style="color: #0000BB">60</span><span style="color: #007700">,</span><span style="color: #0000BB">e</span><span style="color: #007700">:</span><span style="color: #0000BB">60</span><span style="color: #007700">,</span><span style="color: #0000BB">I</span><span style="color: #007700">:</span><span style="color: #0000BB">60<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">NICKLEN</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">30<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">CHANNELLEN</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">32<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">TOPICLEN</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">307<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">KICKLEN</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">307<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">AWAYLEN</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">307<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">MAXTARGETS</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">20<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">WALLCHOPS</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">WATCH</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">128<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">WATCHOPTS</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">A<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">SILENCE</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">15<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">MODES</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">12<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">CHANTYPES</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">PREFIX</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;(</span><span style="color: #0000BB">qaohv</span><span style="color: #007700">)~&amp;@%+<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">ChannelModes</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;Array<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">beI<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">kfL<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">lj<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">3</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">psmntirRcOAQKVCuzNSMTG<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">CHANMODES</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">beI</span><span style="color: #007700">,</span><span style="color: #0000BB">kfL</span><span style="color: #007700">,</span><span style="color: #0000BB">lj</span><span style="color: #007700">,</span><span style="color: #0000BB">psmntirRcOAQKVCuzNSMTG<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">NETWORK</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">irc</span><span style="color: #007700">.</span><span style="color: #0000BB">sc<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">CASEMAPPING</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">ascii<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">EXTBAN</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;~,</span><span style="color: #0000BB">cqnr<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">ELIST</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">MNUCT<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">STATUSMSG</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;~&amp;@%+<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">EXCEPTS</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">INVEX</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1<br /></span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getSocketConfiguration" class="Name">CoreMaster::getSocketConfiguration()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the socket settings, or if $sConfigurationKey is provided, the specific key.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">stdClass&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getSocketConfiguration</span><span style="color: #007700">([&nbsp;</span><span style="color: #0000BB">string&nbsp;$sConfigurationKey&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$aServerConfig&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getServerConfiguration</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">(</span><span style="color: #0000BB">populate&nbsp;me</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getWhoisData" class="Name">CoreMaster::getWhoisData()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns an object containing all the user information. Only available if the Whois module is enabled - it is by default.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">stdClass&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getWhoisData</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pWhois&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getWhoisData</span><span style="color: #007700">(</span><span style="color: #DD0000">"Cameron"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">stdClass&nbsp;Object<br /></span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">away</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">false<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">helper</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">false<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">user</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">nick</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Cameron<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Cameron<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">address</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">no1servers</span><span style="color: #007700">.</span><span style="color: #0000BB">com<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">info</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Cameron&nbsp;Banfield<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">server</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">address</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">nl</span><span style="color: #007700">.</span><span style="color: #0000BB">irc</span><span style="color: #007700">.</span><span style="color: #0000BB">androidirc</span><span style="color: #007700">.</span><span style="color: #0000BB">org<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">name</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">AndroidIRC<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">ircop</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">false<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">idleTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">5<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">signonTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1309163378<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">channels</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;Array<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;~</span><span style="color: #FF8000">#Cameron<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;%</span><span style="color: #FF8000">#TWiY-RP<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#italymafia<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::isAdmin" class="Name">CoreMaster::isAdmin()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user is a Bot administrator. Nothing to do with channel rights.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">isAdmin</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isAdmin</span><span style="color: #007700">())<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;an&nbsp;admin!"</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;an&nbsp;admin</span><span style="color: #007700">!</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::isResource" class="Name">CoreMaster::isResource()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if that Resource exists.<br /><br />
+
+Take note that this is Script specific, a Resource available in one Script is not accessable to another.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;Script</span><span style="color: #007700">::</span><span style="color: #0000BB">isResource</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sResource</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isResource</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie.txt"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">false</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::isUserAdmin" class="Name">CoreMaster::isUserAdmin()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user in that channel has been granted Admin permissions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserAdmin</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserAdmin</span><span style="color: #007700">(</span><span style="color: #DD0000">"#android"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;a&nbsp;channel&nbsp;admin!"</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">true</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::isUserHalfOp" class="Name">CoreMaster::isUserHalfOp()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user in that channel has been granted Half-Operator permissions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserHalfOp</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserHalfOp</span><span style="color: #007700">(</span><span style="color: #DD0000">"#android"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;a&nbsp;half-operator!"</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">true</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::isUserOp" class="Name">CoreMaster::isUserOp()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user in that channel has been granted Operator permissions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserOp</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserOp</span><span style="color: #007700">(</span><span style="color: #DD0000">"#android"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;a&nbsp;channel&nbsp;operator!"</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">true</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::isUserOwner" class="Name">CoreMaster::isUserOwner()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user in that channel has been granted Operator permissions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserOwner</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserOwner</span><span style="color: #007700">(</span><span style="color: #DD0000">"#android"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;the&nbsp;channel&nbsp;owner!&nbsp;Don't&nbsp;mess&nbsp;with&nbsp;him."</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">true</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::isUserVoice" class="Name">CoreMaster::isUserVoice()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Checks if the user in that channel has been granted Voice permissions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">isUserVoice</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #007700">if(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isUserVoice</span><span style="color: #007700">(</span><span style="color: #DD0000">"#android"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">))<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"It&nbsp;looks&nbsp;like&nbsp;this&nbsp;user&nbsp;is&nbsp;actually&nbsp;an&nbsp;admin!"</span><span style="color: #007700">);<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::reactivateScript" class="Name">CoreMaster::reactivateScript()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Removes and reloads a Script into the CoreMaster instance.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">reactivateScript</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sScriptName</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">reactivateScript</span><span style="color: #007700">(</span><span style="color: #DD0000">"Debug"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::removeChild" class="Name">CoreMaster::removeChild()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Removes the Socket from the instance. The first instance cannot be removed, ever. That would just be stupid.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">removeChild</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sHandle&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sReason&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null&nbsp;</span><span style="color: #007700">]);</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">removeChild</span><span style="color: #007700">(</span><span style="color: #DD0000">"HickyBot"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::removeEventHandler" class="Name">CoreMaster::removeEventHandler()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Remove an event or command handler. There is no need to call this when a script is unloaded,
+because the software automatically scans for these handlers, and removes them beforehand.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">removeEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sEventHandlerID</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">removeEventHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"32321dac5d"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::isResource" class="Name">CoreMaster::isResource()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Removes that Resource.<br /><br />
+
+Take note that this is Script specific, a Resource available in one Script is not accessable to another.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;Script</span><span style="color: #007700">::</span><span style="color: #0000BB">removeResource</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sResource</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">removeResource</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie.txt"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::removeTimer" class="Name">CoreMaster::removeTimer()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Removes a timer from being called.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">removeTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sTimerID</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">removeTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">$sTimerID</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">true</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::replyCTCPMessage" class="Name">CoreMaster::replyCTCPMessage()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Responds to a CTCP message.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">replyCTCPMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">replyCTCPMessage</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"VERSION&nbsp;Err,&nbsp;unknown&nbsp;version&nbsp;here?"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::requestCTCPMessage" class="Name">CoreMaster::requestCTCPMessage()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Requests a CTCP message.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">requestCTCPMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">integer&nbsp;$iTimeout&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">5&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">requestCTCPMessage</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"VERSION"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">mIRC&nbsp;v7.19&nbsp;Khaled&nbsp;Mardam</span><span style="color: #007700">-</span><span style="color: #0000BB">Bey</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::stripAll" class="Name">CoreMaster::stripAll()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Removes all formatting and colouring codes from the input string.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">stripAll</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sInputText</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sCleanString&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">stripAll</span><span style="color: #007700">(</span><span style="color: #0000BB">Format</span><span style="color: #007700">::</span><span style="color: #0000BB">Bold</span><span style="color: #007700">.</span><span style="color: #0000BB">Format</span><span style="color: #007700">::</span><span style="color: #0000BB">Blue</span><span style="color: #007700">.</span><span style="color: #DD0000">"Sample&nbsp;string!"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">Sample&nbsp;string</span><span style="color: #007700">!</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::stripColour" class="Name">CoreMaster::stripColour()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Removes all colouring codes from the input string.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">stripColour</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sInputText</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sCleanString&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">stripColour</span><span style="color: #007700">(</span><span style="color: #0000BB">Format</span><span style="color: #007700">::</span><span style="color: #0000BB">Blue</span><span style="color: #007700">.</span><span style="color: #DD0000">"Sample&nbsp;string!"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">Sample&nbsp;string</span><span style="color: #007700">!</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::stripFormat" class="Name">CoreMaster::stripFormat()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Removes all formatting codes from the input string.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">stripFormat</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sInputText</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$sCleanString&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">stripFormat</span><span style="color: #007700">(</span><span style="color: #0000BB">Format</span><span style="color: #007700">::</span><span style="color: #0000BB">Bold</span><span style="color: #007700">.</span><span style="color: #DD0000">"Sample&nbsp;string!"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">Sample&nbsp;string</span><span style="color: #007700">!</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::triggerEvent" class="Name">CoreMaster::triggerEvent()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Fires an event to the Scripts, and to any event handlers that have been hooked to this particular event.
+
+<br />You can find a list of all callbacks and their arguments here.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">triggerEvent</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sEvent&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">mixed&nbsp;</span><span style="color: #007700">$...&nbsp;])</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">triggerEvent</span><span style="color: #007700">(</span><span style="color: #DD0000">"onChannelCommand"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sCommand</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$aArguments</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+		</div>
+
+		<h3>CoreResource</h3>
+
+		<div class="DefMethod">
+			<a name="CoreResource::Read" class="Name">CoreResource::Read()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the contents of a resource.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreResource</span><span style="color: #007700">::</span><span style="color: #0000BB">Read</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pResource&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getResource</span><span style="color: #007700">(</span><span style="color: #DD0000">"Accounts/Westie.user"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pResource</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">read</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">whatever&nbsp;is&nbsp;in&nbsp;your&nbsp;resource</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">I&nbsp;suppose</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreResource::Write" class="Name">CoreResource::Write()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Either wipes the file and writes with new contents, or appends to the file.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreResource</span><span style="color: #007700">::</span><span style="color: #0000BB">Write</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sFileContents&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">boolean&nbsp;$bAppend&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">false&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pResource&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getResource</span><span style="color: #007700">(</span><span style="color: #DD0000">"Accounts/Westie.user"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pResource</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">write</span><span style="color: #007700">(</span><span style="color: #DD0000">"hello&nbsp;there"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreResource::isNew" class="Name">CoreResource::isNew()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns a boolean value on whether the file was just created or not.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreResource</span><span style="color: #007700">::</span><span style="color: #0000BB">isNew</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pResource&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getResource</span><span style="color: #007700">(</span><span style="color: #DD0000">"Accounts/Westie.user"</span><span style="color: #007700">);<br /><br />if(</span><span style="color: #0000BB">$pResource</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isNew</span><span style="color: #007700">())<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"This&nbsp;was&nbsp;just&nbsp;created...&nbsp;now!"</span><span style="color: #007700">;<br />}</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">true</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreResource::modifyTime" class="Name">CoreResource::modifyTime()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns a boolean value on whether the file was just created or not. Resistant to cache problems.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">integer&nbsp;CoreResource</span><span style="color: #007700">::</span><span style="color: #0000BB">modifyTime</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pResource&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getResource</span><span style="color: #007700">(</span><span style="color: #DD0000">"Accounts/Westie.user"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pResource</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">modifyTime</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">133050650&nbsp;</span><span style="color: #007700">(</span><span style="color: #0000BB">it</span><span style="color: #DD0000">'s&nbsp;a&nbsp;timestamp.)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreResource::__toString" class="Name">CoreResource::__toString()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns a string representation of the resources location on the computer. Useful with native PHP file functions.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreResource</span><span style="color: #007700">::</span><span style="color: #0000BB">__toString</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pResource&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getResource</span><span style="color: #007700">(</span><span style="color: #DD0000">"Accounts/Westie.user"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">filectime</span><span style="color: #007700">((string)&nbsp;</span><span style="color: #0000BB">$pResource</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">/</span><span style="color: #0000BB">home</span><span style="color: #007700">/</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">/</span><span style="color: #0000BB">Resources</span><span style="color: #007700">/</span><span style="color: #0000BB">ScriptName</span><span style="color: #007700">/</span><span style="color: #0000BB">Accounts</span><span style="color: #007700">/</span><span style="color: #0000BB">Westie</span><span style="color: #007700">.</span><span style="color: #0000BB">user</span>
+</span>
+</code></div>
+
+		</div>
+	
+	<p>
+		This documentation is up to date as of Fri, 29 Jul 2011 19:18:02 +0100, and it is generated from the
+		<a href="http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/">official online documentation</a>.
+	</p>
+	
+	</body>
+</html>

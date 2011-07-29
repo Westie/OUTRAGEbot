@@ -6,8 +6,8 @@
 Licence
 -------
 
-The contents of this file are covered by my licence, where this
-can be found at http://www.typefish.co.uk/licences/.
+ The contents of this file are covered by my licence, where this
+ can be found at http://www.typefish.co.uk/licences/.
 
 
 Installation
@@ -21,8 +21,10 @@ Installation
 Documentation
 -------------
 
- You can find documentation for the bot by going to http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/
- There will soon be an offline version available to download.
+ One can go to the online documentation (http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/)
+ or view the off-line documentation, in the /Documentation/ folder.
+
+ The source XML and generated HTML are both available in this folder for your convenience.
 
 
 Script Creation

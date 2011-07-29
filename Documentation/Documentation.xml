@@ -1,0 +1,503 @@
+<?xml version="1.0"?>
+<documentation><function class="Core" name="getMessageObject"><description><![CDATA[Returns an objectised view of an IRC message string.]]></description><prototype returnType="stdClass"><string>stdClass Core::getMessageObject(string $sString)</string><arguments><argument type="string" name="$sString"/></arguments></prototype><example><source><![CDATA[(no available examples)]]></source><output><![CDATA[stdClass Object
+(
+    [Raw] => :Westie!westie@raptor.typefish.co.uk PRIVMSG #OUTRAGEbot :@@ print_r($this->pMessage);
+    [Parts] => Array
+        (
+            [0] => :Westie!westie@raptor.typefish.co.uk
+            [1] => PRIVMSG
+            [2] => #OUTRAGEbot
+            [3] => :@@
+            [4] => print_r($this->pMessage);
+        )
+    [Numeric] => PRIVMSG
+    [User] => stdClass Object
+        (
+            [Nickname] => Westie
+            [Username] => westie
+            [Hostname] => raptor.typefish.co.uk
+        )
+    [Payload] => @@ print_r($this->pMessage);
+)]]></output></example><modificationTime>1310589674</modificationTime></function><variable class="CoreChannel" name="count"><description><![CDATA[This property the current amount of users in a channel.]]></description><prototype returnType="integer"><string>integer CoreChannel::$count</string></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+
+$iCount = $sChannel->count]]></source><output><![CDATA[7]]></output></example><modificationTime>1310983380</modificationTime></variable><function class="CoreChannel" name="getBanList"><description><![CDATA[Returns the channel ban list.]]></description><prototype returnType="array"><string>array CoreChannel::getBanList(void)</string><arguments/></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+
+$aBanList = $sChannel->getBanList();]]></source><output><![CDATA[Array
+(
+    [0] => stdClass Object
+        (
+            [hostmaskString] => exampleUser!identifier@fakedomain.net
+            [hostmaskObject] => stdClass Object
+                (
+                    [Nickname] => exampleUser
+                    [Username] => identifier
+                    [Hostname] => fakedomain.net
+                )
+            [modeSetter] => Westie
+            [modeTime] => 1307880973
+        )
+    [1] => stdClass Object
+        (
+            [hostmaskString] => Jessica!identifier@fakedomain.net
+            [hostmaskObject] => stdClass Object
+                (
+                    [Nickname] => Jessica
+                    [Username] => identifier
+                    [Hostname] => fakedomain.net
+                )
+            [modeSetter] => Westie
+            [modeTime] => 1307880968
+        )
+)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreChannel" name="getCreationTime"><description><![CDATA[Returns the time the channel was created.]]></description><prototype returnType="array"><string>array CoreChannel::getCreationTime(void)</string><arguments/></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+
+$iCreationTime = $sChannel->getCreationTime();]]></source><output><![CDATA[1281317782]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreChannel" name="getExceptionList"><description><![CDATA[Returns the channel exception list.]]></description><prototype returnType="array"><string>array CoreChannel::getExceptionList(void)</string><arguments/></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+
+$aExceptionList = $sChannel->getExceptionList();]]></source><output><![CDATA[Array
+(
+    [0] => stdClass Object
+        (
+            [hostmaskString] => exampleUser!identifier@fakedomain.net
+            [hostmaskObject] => stdClass Object
+                (
+                    [Nickname] => exampleUser
+                    [Username] => identifier
+                    [Hostname] => fakedomain.net
+                )
+            [modeSetter] => Westie
+            [modeTime] => 1307880973
+        )
+    [1] => stdClass Object
+        (
+            [hostmaskString] => Jessica!identifier@fakedomain.net
+            [hostmaskObject] => stdClass Object
+                (
+                    [Nickname] => Jessica
+                    [Username] => identifier
+                    [Hostname] => fakedomain.net
+                )
+            [modeSetter] => Westie
+            [modeTime] => 1307880968
+        )
+)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreChannel" name="getInviteList"><description><![CDATA[Returns the channel invited list.]]></description><prototype returnType="array"><string>array CoreChannel::getInviteList(void)</string><arguments/></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+
+$aInviteList = $sChannel->getInviteList();]]></source><output><![CDATA[Array
+(
+    [0] => stdClass Object
+        (
+            [hostmaskString] => exampleUser!identifier@fakedomain.net
+            [hostmaskObject] => stdClass Object
+                (
+                    [Nickname] => exampleUser
+                    [Username] => identifier
+                    [Hostname] => fakedomain.net
+                )
+            [modeSetter] => Westie
+            [modeTime] => 1307880973
+        )
+    [1] => stdClass Object
+        (
+            [hostmaskString] => Jessica!identifier@fakedomain.net
+            [hostmaskObject] => stdClass Object
+                (
+                    [Nickname] => Jessica
+                    [Username] => identifier
+                    [Hostname] => fakedomain.net
+                )
+            [modeSetter] => Westie
+            [modeTime] => 1307880968
+        )
+)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreChannel" name="isUserAdmin"><description><![CDATA[Checks if the user in that channel has been granted Admin permissions.]]></description><prototype returnType="boolean"><string>boolean CoreChannel::isUserAdmin(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($sChannel->isUserAdmin("Westie"))
+{
+        $sChannel("It looks like this user is actually a channel admin!");
+}]]></source><output><![CDATA[true]]></output></example><modificationTime>1311716921</modificationTime></function><function class="CoreChannel" name="isUserHalfOp"><description><![CDATA[Checks if the user in that channel has been granted Half-Operator permissions.]]></description><prototype returnType="boolean"><string>boolean CoreChannel::isUserHalfOp(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($sChannel->isUserHalfOp("Westie"))
+{
+        $sChannel("It looks like this user is actually a half-operator!");
+}]]></source><output><![CDATA[true]]></output></example><modificationTime>1311716923</modificationTime></function><function class="CoreChannel" name="isUserInChannel"><description><![CDATA[Checks if the user is present in the channel.]]></description><prototype returnType="boolean"><string>boolean CoreChannel::isUserInChannel(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($sChannel->isUserInChannel("Westie"))
+{
+        $sChannel("Yeah, good news! He's here, in the channel, waiting for you!");
+}]]></source><output><![CDATA[true]]></output></example><modificationTime>1311717017</modificationTime></function><function class="CoreChannel" name="isUserOp"><description><![CDATA[Checks if the user in that channel has been granted Operator permissions.]]></description><prototype returnType="boolean"><string>boolean CoreChannel::isUserOp(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($sChannel->isUserOp("Westie"))
+{
+        $sChannel("It looks like this user is actually a channel operator!");
+}]]></source><output><![CDATA[true]]></output></example><modificationTime>1311716926</modificationTime></function><function class="CoreChannel" name="isUserOwner"><description><![CDATA[Checks if the user in that channel has been granted Operator permissions.]]></description><prototype returnType="boolean"><string>boolean CoreChannel::isUserOwner(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($sChannel->isUserOwner("Westie"))
+{
+        $sChannel("It looks like this user is actually the channel owner! Don't mess with him.");
+}]]></source><output><![CDATA[true]]></output></example><modificationTime>1311716928</modificationTime></function><function class="CoreChannel" name="isUserVoice"><description><![CDATA[Checks if the user in that channel has been granted Voice permissions.]]></description><prototype returnType="boolean"><string>boolean CoreChannel::isUserVoice(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($sChannel->isUserVoice("Westie"))
+{
+        $sChannel("It looks like this user is actually an admin!");
+}]]></source><output><![CDATA[true]]></output></example><modificationTime>1311716929</modificationTime></function><function class="CoreChannel" name="__toString"><description><![CDATA[String representation of the channel name. Refer to <a href="http://www.php.net/manual/en/language.oop5.magic.php#language.oop5.magic.tostring">the PHP docs</a> regarding magic methods.]]></description><prototype returnType="string"><string>string CoreChannel::__toString(void)</string><arguments/></prototype><example><source><![CDATA[echo $sChannel;]]></source><output><![CDATA[#android]]></output></example><modificationTime>1311721471</modificationTime></function><variable class="CoreChannel" name="topic"><description><![CDATA[This property the current channel topic.]]></description><prototype returnType="string"><string>string CoreChannel::$topic</string></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+
+$sTopic = $sChannel->topic]]></source><output><![CDATA[ [ OUTRAGEbot ( no date ) ]> devel/support channel - :: @func [functionName] :: Github (latest): http://bit.ly/9AdHHb :: ]]></output></example><modificationTime>1310589674</modificationTime></variable><variable class="CoreChannel" name="users"><description><![CDATA[This property the current users in the channel.]]></description><prototype returnType="array"><string>array CoreChannel::$users</string></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+
+$aUsers = $sChannel->users;]]></source><output><![CDATA[Array
+(
+    [0] => stdClass Object
+        (
+            [Nickname] => OUTRAGEbot
+            [Usermode] =>
+        )
+    [1] => stdClass Object
+        (
+            [Nickname] => Happycat
+            [Usermode] => q
+        )
+    ...
+)]]></output></example><modificationTime>1310589674</modificationTime></variable><function class="CoreMaster" name="Action"><description><![CDATA[Sends an action string to the specified channel.<br /><br />More details on the optional $mOptionvalue are available from [Method CoreMaster::Raw].]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Action(string $sChannel, string $sMessage [, integer $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sMessage"/><argument type="integer" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Action("#ffs", "walks away from the cow.");]]></source><output><![CDATA[* OUTRAGEbot walks away from the cow.]]></output></example><modificationTime>1311961821</modificationTime></function><function class="CoreMaster" name="Format"><description><![CDATA[Formats a string to mIRC-like colours and formatting.
+<br /><br />
+List of current modifiers:
+<br />
+<ul>
+	<li>
+		Formatting modifiers
+		
+		<ul>
+			<li><span class="Code">{b}</span> - Emboldens the string past that point.</li>
+			<li><span class="Code">{i}</span> - Puts the text into italics.</li>
+			<li><span class="Code">{r}</span> - Cancels all formatting and colours after that point.</li>
+			<li><span class="Code">{u}</span> - Underlines the string past that point.</li>
+			<li><span class="Code">{v}</span> - Inverts the background and foreground colours.</li>
+		</ul>
+	</li>
+	
+	<li>
+		Colour modifiers - these follow the scheme of either:
+		
+		<br /><br />
+		
+		<span class="Code">{c:<strong>foregroundColour</strong>}</span><br />
+		<span class="Code">{c:<strong>foregroundColour</strong>:<strong>backgroundColour</strong>}</span>
+		
+		<br /><br />
+		
+		These names are case insensitive:
+		
+		<ul>
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #FFF; padding-left: 13px;"></div> White
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #EEE; margin-right: 3px; background-color: #000; padding-left: 13px;"></div> Black
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #00007F; padding-left: 13px;"></div> DarkBlue
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #009300; padding-left: 13px;"></div> DarkGreen
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #F00; padding-left: 13px;"></div> Red
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #7F0000; padding-left: 13px;"></div> Brown
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #9C009C; padding-left: 13px;"></div> Purple
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #FC7C00; padding-left: 13px;"></div> Orange
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #FF0; padding-left: 13px;"></div> Yellow
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #00FC00; padding-left: 13px;"></div> Green
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #009393; padding-left: 13px;"></div> Teal
+			</li>
+			
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #0FF; padding-left: 13px;"></div> LightBlue
+			</li>
+
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #0000D2; padding-left: 13px;"></div> Blue
+			</li>
+
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #F0F; padding-left: 13px;"></div> Pink
+			</li>
+
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #7C7C7C; padding-left: 13px;"></div> DarkGrey
+			</li>
+
+			<li>
+				<div style="display: inline; border: 1px solid #000; margin-right: 3px; background-color: #D2D2D2; padding-left: 13px;"></div> Grey
+			</li>
+		</ul>
+	</li>
+		
+</ul>]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Format(string $sInputString)</string><arguments><argument type="string" name="$sInputString"/></arguments></prototype><example><source><![CDATA[$this->Format("{b}This string is in bold and {c:yellow}this text is yellow{r}, but this section has no custom formatting.");]]></source><output><![CDATA[<strong>This string is in bold and <span style="color:yellow">this text is yellow</span></strong>, but this section has no custom formatting.]]></output></example><modificationTime>1311962406</modificationTime></function><function class="CoreMaster" name="Invite"><description><![CDATA[Invites a user to the channel.<br /><br />More details on the optional $mOptionvalue are available from [Method CoreMaster::Raw].]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Invite(string $sNickname, string/CoreChannel $sChannel [, mixed $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sNickname"/><argument type="string/CoreChannel" name="$sChannel"/><argument type="mixed" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Invite("Westie", "#westie.private");]]></source><output><![CDATA[]]></output></example><modificationTime>1311961821</modificationTime></function><function class="CoreMaster" name="Join"><description><![CDATA[Joins the bot to a channel.<br /><br />More details on the optional $mOptionvalue are available from [Method CoreMaster::Raw].]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Join(string $sChannel [, mixed $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sChannel"/><argument type="mixed" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Join("#westie-public");
+$this->Join("#westie-private passw0rd3d");]]></source><output><![CDATA[]]></output></example><modificationTime>1311961822</modificationTime></function><function class="CoreMaster" name="Message"><description><![CDATA[Sends a message to either a channel or a IRC nickname.<br /><br />More details on the optional $mOptionvalue are available from [Method CoreMaster::Raw].]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Message(string $sChannel, string $sMessage [, mixed $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sMessage"/><argument type="mixed" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Message($sChannel, "Your face is rather blue!");]]></source><output><![CDATA[]]></output></example><modificationTime>1311961822</modificationTime></function><function class="CoreMaster" name="Notice"><description><![CDATA[Sends a notice to either a channel or a IRC nickname.<br /><br />More details on the optional $mOptionvalue are available from [Method CoreMaster::Raw].]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Notice(string $sRecipient, string $sMessage [, mixed $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sRecipient"/><argument type="string" name="$sMessage"/><argument type="mixed" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Notice("Westie", "Your face is rather blue!");]]></source><output><![CDATA[]]></output></example><modificationTime>1311961819</modificationTime></function><function class="CoreMaster" name="Part"><description><![CDATA[Forces the bot to leave the channel.<br /><br />More details on the optional $mOptionvalue are available from [Method CoreMaster::Raw].]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Part(string $sChannel [, mixed $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sChannel"/><argument type="mixed" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Part("#westie-public");]]></source><output><![CDATA[]]></output></example><modificationTime>1311961820</modificationTime></function><function class="CoreMaster" name="Raw"><description><![CDATA[Sends a raw message to the IRC server.
+<br /><br />List of possible types for $mOption:
+<ul>
+	<li>
+		Output options
+		
+		<ul>
+			<li>SEND_DEF - option defined in configuration file</li>
+			<li>SEND_MAST - sent from the first defined IRC slave (in this case, the master)</li>
+			<li>SEND_CURR - sent from the current IRC child</li>
+			<li>SEND_ALL - sent from all at once</li>
+			<li>SEND_DIST - each message is distributed between each bot.</li>
+		</ul>
+	</li>
+	
+	<li>
+		Output modification
+		
+		<ul>
+			<li>FORMAT - formats the string in accordance with CoreMaster::Format()</li>
+		</ul>
+	</li>
+</ul>
+
+<br />Setting the $mOption argument null, will result in the second argument becoming SEND_DIST.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Raw(string $sMessage [, mixed $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sMessage"/><argument type="mixed" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Raw("PRIVMSG #channelname :this is a string");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="activateScript"><description><![CDATA[Loads and activates a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::activateScript(string $sScriptName)</string><arguments><argument type="string" name="$sScriptName"/></arguments></prototype><example><source><![CDATA[$this->activateScript("Debug");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="addChild"><description><![CDATA[Adds a Socket instance to the bot. Returns the Handle name, which is important should you need to access this specific child again.]]></description><prototype returnType="string"><string>string CoreMaster::addChild(string $sNickname [, array $aOptions = array() ])</string><arguments><argument type="string" name="$sNickname"/><argument type="array" name="$aOptions" value="array()" optional="1"/></arguments></prototype><example><source><![CDATA[$this->addChild("HickyBot", array
+(
+        "username" => "hicksftw",
+        "realname" => "Inbred American",
+);]]></source><output><![CDATA[HickyBot]]></output></example><modificationTime>1310983448</modificationTime></function><function class="CoreMaster" name="addCommandHandler"><description><![CDATA[Creates a command handler.
+
+<br /><br />If the method is in a <span class="Var">Script</span>, then the first argument will <strong>not</strong> be the <span class="Var">Master</span> class.]]></description><prototype returnType="string"><string>string CoreMaster::addCommandHandler(string $sCommandName, string $cCallback)</string><arguments><argument type="string" name="$sCommandName"/><argument type="string" name="$cCallback"/></arguments></prototype><example><source><![CDATA[class Example extends Script
+{
+        public function onConstruct()
+        {        
+                $this->addCommandHandler("time1", "onRequestTime");
+                
+                // Note the extra argument
+                $this->addCommandHandler("time2", function($pInstance, $sChannel, $sNickname, $sArguments)
+                {
+                        $pInstance->Message($sChannel, "The date is: ".date("d/m/Y H:i:s", time()));
+                        return END_EVENT_EXEC;
+                });
+        }
+        
+        public function onRequestTime($sChannel, $sNickname, $sArguments)
+        {
+                $this->Message($sChannel, "The date is: ".date("d/m/Y H:i:s", time()));
+                return END_EVENT_EXEC;
+        }
+}]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="addEventHandler"><description><![CDATA[Creates an event handler.
+<br /><h4>Options for <span class="Var">$sCommandName</span>:</h4><br />
+<ul>
+	<li>"PRIVMSG" style - receive raw input from the IRC server. Check the RFC for all available commands.</li>
+	<li>"onChannelMessage" style - receive input similiar to Scripts. [Resource Miscellaneous/Callbacks] for callback listings.</li>
+</ul>
+
+<br /><h4>List of possible types for <span class="Var">$sArgumentFormat</span>:</h4><br />
+<ul>
+	<li>[Method Core::getMessageObject]</li>
+	<li>c - Message parts as an array.</li>
+	<li>m - Message object.</li>
+	<li>p - The payload, or rather the bit after the semi-colon.</li>
+	<li>r - The raw, unparsed input string.</li>
+	<li>u - The parsed hostname, as an object.</li>
+</ul>
+
+<br />Leaving the <span class="Var">$sArgumentFormat</span> argument null, will result in the second parameter being the Message object, or 'm'.
+
+<br /><br />If the method is in a <span class="Var">Script</span>, then the first argument will <strong>not</strong> be the <span class="Var">Master</span> class.]]></description><prototype returnType="string"><string>string CoreMaster::addEventHandler(string $sCommandName, string $cCallback [, string $sArgumentFormat = null ])</string><arguments><argument type="string" name="$sCommandName"/><argument type="string" name="$cCallback"/><argument type="string" name="$sArgumentFormat" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[class Example extends Script
+{
+        public function onConstruct()
+        {        
+                $this->addEventHandler("INVITE", "anotherInviteFunction", "up");
+                
+                // Note the extra argument
+                $this->addEventHandler("INVITE", function($p, $u, $c)
+                {
+                        $p->Message("#westie", "(custom args, lambda) OUTRAGEbot has been invited into {$c} by {$u->Nickname}");
+                }, "up");
+        }
+        
+        public function anotherInviteFunction($pUserObject, $sChannel)
+        {
+                $p->Message("#westie", "(custom args, class) OUTRAGEbot has been invited into {$sChannel} by {$pUserObject->Nickname}");
+        }
+}]]></source><output><![CDATA[]]></output></example><modificationTime>1311796094</modificationTime></function><function class="CoreMaster" name="addTimer"><description><![CDATA[Creates a timer which will be executed.<br />
+<br />
+List of options for <span class=\"Code\">$iRepeat</span>:<br />
+<ul><li><span class=\"Code\">0</span> - Infinitely execute.</li><li><span class=\"Code\">1</span> - Repeat once</li><li><span class=\"Code\">2</span> - Repeat twice, and so on.</li></ul>]]></description><prototype returnType="string"><string>string CoreMaster::addTimer(callback $cCallback, integer $iInterval [, integer $iRepeat = 1 [, array $aArguments = array() ]])</string><arguments><argument type="callback" name="$cCallback"/><argument type="integer" name="$iInterval"/><argument type="integer" name="$iRepeat" value="1" optional="1"/><argument type="array" name="$aArguments" value="array()" optional="1"/></arguments></prototype><example><source><![CDATA[$sTimerHandler = $this->addTimer(function($pInstance)
+{
+        $pInstance->Message("#android", "This is a message executed every one second, five times.");
+}, 1, 5, $this);]]></source><output><![CDATA[[string]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="deactivateScript"><description><![CDATA[Removes a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::deactivateScript(string $sScriptName)</string><arguments><argument type="string" name="$sScriptName"/></arguments></prototype><example><source><![CDATA[$this->deactivateScript("Debug");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getActivatedScripts"><description><![CDATA[Removes and reloads a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::getActivatedScripts(void)</string><arguments/></prototype><example><source><![CDATA[$aScriptList = $this->getActivatedScripts();]]></source><output><![CDATA[Array
+(
+    [0] => Evaluation
+    [1] => Commands
+    [2] => AutoInvite
+    [3] => Weather
+)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getCallableMethods"><description><![CDATA[Returns an array with a list of all callable methods in the Master instance of OUTRAGEbot.]]></description><prototype returnType="array"><string>array CoreMaster::getCallableMethods( void )</string><arguments/></prototype><example><source><![CDATA[$aMethods = $this->getCallableMethods();]]></source><output><![CDATA[Array
+(
+    [0] => __construct
+    [1] => Socket
+    [2] => getNextSocket
+    [3] => getCurrentSocket
+    [4] => getCallableMethods
+    ...
+)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getChannel"><description><![CDATA[Returns the instance of CoreChannel for that channel.]]></description><prototype returnType="CoreChannel"><string>CoreChannel CoreMaster::getChannel(string $sChannel)</string><arguments><argument type="string" name="$sChannel"/></arguments></prototype><example><source><![CDATA[$pChannel = $this->getChannel("#android");]]></source><output><![CDATA[[object CoreChannel]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getChannelList"><description><![CDATA[Returns an array containing all the public channels on the network. Only available if the List module is enabled - it is by default. Also, the output won't be so "questionable" when really used...]]></description><prototype returnType="array"><string>array CoreMaster::getChannelList()</string><arguments/></prototype><example><source><![CDATA[$pChannels = CoreMaster::getChannelList();]]></source><output><![CDATA[Array
+(
+    [1] => stdClass Object
+        (
+            [channel] => #android
+            [count] => 24
+            [modes] => +ntrTf
+            [topic] => here is a topic
+        )
+)]]></output></example><modificationTime>1311961977</modificationTime></function><function class="CoreMaster" name="getCurrentSocket"><description><![CDATA[Returns the current Socket instance.]]></description><prototype returnType="CoreSocket"><string>CoreSocket CoreMaster::getCurrentSocket(void)</string><arguments/></prototype><example><source><![CDATA[$pSocket = $this->getCurrentSocket();
+ 
+$pSocket->Output("PRIVMSG #ffs :I don't know!");]]></source><output><![CDATA[[object CoreSocket]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getListOfChildren"><description><![CDATA[Returns the list of Sockets connected to the Master class.]]></description><prototype returnType="array"><string>array CoreMaster::getListOfChildren(void)</string><arguments/></prototype><example><source><![CDATA[$aChildren = $this->getListOfChildren();]]></source><output><![CDATA[Array
+(
+    [OUTRAGEbot] => OUTRAGEbot
+    [HickyBot] => HickyBot
+)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="isResource"><description><![CDATA[Returns a match with relative Resource locations for a pattern.<br /><br />
+
+Take note that this is Script specific, a Resource available in one Script is not accessable to another.]]></description><prototype returnType="boolean"><string>boolean Script::getListOfResources(string $sPattern)</string><arguments><argument type="string" name="$sPattern"/></arguments></prototype><example><source><![CDATA[$aMatches = $this->getListOfResources("Account/*.user");]]></source><output><![CDATA[Array
+(
+    [0] => Account/Westie.user
+    [1] => Account/Sarah.user
+    [2] => Account/Vicky.user
+    [3] => Account/Natalie.user
+)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getNetworkConfiguration"><description><![CDATA[Returns the network connection settings, or if $sConfigurationKey is provided, the specific key.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getNetworkConfiguration([ string $sConfigurationKey = null ])</string><arguments><argument type="string" name="$sConfigurationKey" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[$aNetworkConfig = $this->getNetworkConfiguration();]]></source><output><![CDATA[stdClass Object
+(
+    [name] => AndroidIRC
+    [host] => irc.androidirc.org
+    [port] => 6667
+    [owners] => raptor.typefish.co.uk
+    [channels] => #OUTRAGEbot, #westie
+    [scripts] => Evaluation
+    [rotation] => 1
+    [quitmsg] => Bye, Said The Bot.
+    [delimiter] => ~
+    [version] => OUTRAGEbot 2.0.0-Alpha-0 (rel. -today-); David Weston; http://outrage.typefish.co.uk
+    [perform] => Array
+        (
+        )
+    [ownerArray] => Array
+        (
+            [0] => raptor.typefish.co.uk
+        )
+    [scriptArray] => Array
+        (
+            [0] => Evaluation
+        )
+    [channelArray] => Array
+        (
+            [0] => #OUTRAGEbot
+            [1] => #westie
+        )
+)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getNextSocket"><description><![CDATA[Returns the next Socket instance. This is in order of Socket creation.]]></description><prototype returnType="CoreSocket"><string>CoreSocket CoreMaster::getNextSocket(void)</string><arguments/></prototype><example><source><![CDATA[$pSocket = $this->getNextSocket();
+
+$pSocket->Output("PRIVMSG #ffs :I don't know!");]]></source><output><![CDATA[[object CoreSocket]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getResource"><description><![CDATA[Returns an instance of [Class CoreResource] for that resource.<br /><br />
+
+Take note that this is Script specific, a Resource available in one Script is not accessable to another.]]></description><prototype returnType="CoreResource"><string>CoreResource Script::getResource(string $sResource [, string $sMode = "w+" ])</string><arguments><argument type="string" name="$sResource"/><argument type="string" name="$sMode" value="&quot;w+&quot;" optional="1"/></arguments></prototype><example><source><![CDATA[$this->getResource("Westie.txt");]]></source><output><![CDATA[[object CoreResource]]]></output></example><modificationTime>1311795320</modificationTime></function><function class="CoreMaster" name="getServerConfiguration"><description><![CDATA[Returns the server settings, or if $sConfigurationKey is provided, the specific key.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getServerConfiguration([ string $sConfigurationKey = null ])</string><arguments><argument type="string" name="$sConfigurationKey" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[$aServerConfig = $this->getServerConfiguration();]]></source><output><![CDATA[stdClass Object
+(
+    [CMDS] => KNOCK,MAP,DCCALLOW,USERIP
+    [UHNAMES] => 1
+    [NAMESX] => 1
+    [SAFELIST] => 1
+    [HCN] => 1
+    [MAXCHANNELS] => 100
+    [CHANLIMIT] => #:100
+    [MAXLIST] => b:60,e:60,I:60
+    [NICKLEN] => 30
+    [CHANNELLEN] => 32
+    [TOPICLEN] => 307
+    [KICKLEN] => 307
+    [AWAYLEN] => 307
+    [MAXTARGETS] => 20
+    [WALLCHOPS] => 1
+    [WATCH] => 128
+    [WATCHOPTS] => A
+    [SILENCE] => 15
+    [MODES] => 12
+    [CHANTYPES] => #
+    [PREFIX] => (qaohv)~&@%+
+    [ChannelModes] => Array
+        (
+            [0] => beI
+            [1] => kfL
+            [2] => lj
+            [3] => psmntirRcOAQKVCuzNSMTG
+        )
+
+    [CHANMODES] => beI,kfL,lj,psmntirRcOAQKVCuzNSMTG
+    [NETWORK] => irc.sc
+    [CASEMAPPING] => ascii
+    [EXTBAN] => ~,cqnr
+    [ELIST] => MNUCT
+    [STATUSMSG] => ~&@%+
+    [EXCEPTS] => 1
+    [INVEX] => 1
+)]]></output></example><modificationTime>1311873626</modificationTime></function><function class="CoreMaster" name="getSocketConfiguration"><description><![CDATA[Returns the socket settings, or if $sConfigurationKey is provided, the specific key.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getSocketConfiguration([ string $sConfigurationKey = null ])</string><arguments><argument type="string" name="$sConfigurationKey" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[$aServerConfig = $this->getServerConfiguration();]]></source><output><![CDATA[(populate me)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getWhoisData"><description><![CDATA[Returns an object containing all the user information. Only available if the Whois module is enabled - it is by default.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getWhoisData(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[$pWhois = $this->getWhoisData("Cameron");]]></source><output><![CDATA[stdClass Object
+(
+    [away] => false
+    [helper] => false
+    [user] => stdClass Object
+        (
+            [nick] => Cameron
+            [username] => Cameron
+            [address] => no1servers.com
+            [info] => Cameron Banfield
+        )
+    [server] => stdClass Object
+        (
+            [address] => nl.irc.androidirc.org
+            [name] => AndroidIRC
+        )
+    [ircop] => false
+    [idleTime] => 5
+    [signonTime] => 1309163378
+    [channels] => Array
+        (
+            [0] => ~#Cameron
+            [1] => %#TWiY-RP
+            [2] => #italymafia
+        )
+)]]></output></example><modificationTime>1311873346</modificationTime></function><function class="CoreMaster" name="isAdmin"><description><![CDATA[Checks if the user is a Bot administrator. Nothing to do with channel rights.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::isAdmin(void)</string><arguments/></prototype><example><source><![CDATA[if($this->isAdmin())
+{
+        $this->Message($sChannel, "It looks like this user is actually an admin!");
+}]]></source><output><![CDATA[It looks like this user is actually an admin!]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="isResource"><description><![CDATA[Checks if that Resource exists.<br /><br />
+
+Take note that this is Script specific, a Resource available in one Script is not accessable to another.]]></description><prototype returnType="boolean"><string>boolean Script::isResource(string $sResource)</string><arguments><argument type="string" name="$sResource"/></arguments></prototype><example><source><![CDATA[$this->isResource("Westie.txt");]]></source><output><![CDATA[false]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="isUserAdmin"><description><![CDATA[Checks if the user in that channel has been granted Admin permissions.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::isUserAdmin(string $sChannel, string $sNickname)</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($this->isUserAdmin("#android", "Westie"))
+{
+        $this->Message($sChannel, "It looks like this user is actually a channel admin!");
+}]]></source><output><![CDATA[[true]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="isUserHalfOp"><description><![CDATA[Checks if the user in that channel has been granted Half-Operator permissions.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::isUserHalfOp(string $sChannel, string $sNickname)</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($this->isUserHalfOp("#android", "Westie"))
+{
+        $this->Message($sChannel, "It looks like this user is actually a half-operator!");
+}]]></source><output><![CDATA[[true]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="isUserOp"><description><![CDATA[Checks if the user in that channel has been granted Operator permissions.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::isUserOp(string $sChannel, string $sNickname)</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($this->isUserOp("#android", "Westie"))
+{
+        $this->Message($sChannel, "It looks like this user is actually a channel operator!");
+}]]></source><output><![CDATA[[true]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="isUserOwner"><description><![CDATA[Checks if the user in that channel has been granted Operator permissions.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::isUserOwner(string $sChannel, string $sNickname)</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($this->isUserOwner("#android", "Westie"))
+{
+        $this->Message($sChannel, "It looks like this user is actually the channel owner! Don't mess with him.");
+}]]></source><output><![CDATA[[true]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="isUserVoice"><description><![CDATA[Checks if the user in that channel has been granted Voice permissions.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::isUserVoice(string $sChannel, string $sNickname)</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[if($this->isUserVoice("#android", "Westie"))
+{
+        $this->Message($sChannel, "It looks like this user is actually an admin!");
+}]]></source><output><![CDATA[true]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="reactivateScript"><description><![CDATA[Removes and reloads a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::reactivateScript(string $sScriptName)</string><arguments><argument type="string" name="$sScriptName"/></arguments></prototype><example><source><![CDATA[$this->reactivateScript("Debug");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="removeChild"><description><![CDATA[Removes the Socket from the instance. The first instance cannot be removed, ever. That would just be stupid.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::removeChild(string $sHandle [, string $sReason = null ]);</string><arguments><argument type="string" name="$sHandle"/><argument type="string" name="$sReason" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[$this->removeChild("HickyBot");]]></source><output><![CDATA[true]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="removeEventHandler"><description><![CDATA[Remove an event or command handler. There is no need to call this when a script is unloaded,
+because the software automatically scans for these handlers, and removes them beforehand.]]></description><prototype returnType="string"><string>string CoreMaster::removeEventHandler(string $sEventHandlerID)</string><arguments><argument type="string" name="$sEventHandlerID"/></arguments></prototype><example><source><![CDATA[$this->removeEventHandler("32321dac5d");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="isResource"><description><![CDATA[Removes that Resource.<br /><br />
+
+Take note that this is Script specific, a Resource available in one Script is not accessable to another.]]></description><prototype returnType="boolean"><string>boolean Script::removeResource(string $sResource)</string><arguments><argument type="string" name="$sResource"/></arguments></prototype><example><source><![CDATA[$this->removeResource("Westie.txt");]]></source><output><![CDATA[true]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="removeTimer"><description><![CDATA[Removes a timer from being called.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::removeTimer(string $sTimerID)</string><arguments><argument type="string" name="$sTimerID"/></arguments></prototype><example><source><![CDATA[$this->removeTimer($sTimerID);]]></source><output><![CDATA[[true]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="replyCTCPMessage"><description><![CDATA[Responds to a CTCP message.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::replyCTCPMessage(string $sNickname, string $sMessage)</string><arguments><argument type="string" name="$sNickname"/><argument type="string" name="$sMessage"/></arguments></prototype><example><source><![CDATA[$this->replyCTCPMessage("Westie", "VERSION Err, unknown version here?");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="requestCTCPMessage"><description><![CDATA[Requests a CTCP message.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::requestCTCPMessage(string $sNickname, string $sMessage [, integer $iTimeout = 5 ])</string><arguments><argument type="string" name="$sNickname"/><argument type="string" name="$sMessage"/><argument type="integer" name="$iTimeout" value="5" optional="1"/></arguments></prototype><example><source><![CDATA[$this->requestCTCPMessage("Westie", "VERSION");]]></source><output><![CDATA[mIRC v7.19 Khaled Mardam-Bey]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="stripAll"><description><![CDATA[Removes all formatting and colouring codes from the input string.]]></description><prototype returnType="string"><string>string CoreMaster::stripAll(string $sInputText)</string><arguments><argument type="string" name="$sInputText"/></arguments></prototype><example><source><![CDATA[$sCleanString = $this->stripAll(Format::Bold.Format::Blue."Sample string!");]]></source><output><![CDATA[Sample string!]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="stripColour"><description><![CDATA[Removes all colouring codes from the input string.]]></description><prototype returnType="string"><string>string CoreMaster::stripColour(string $sInputText)</string><arguments><argument type="string" name="$sInputText"/></arguments></prototype><example><source><![CDATA[$sCleanString = $this->stripColour(Format::Blue."Sample string!");]]></source><output><![CDATA[Sample string!]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="stripFormat"><description><![CDATA[Removes all formatting codes from the input string.]]></description><prototype returnType="string"><string>string CoreMaster::stripFormat(string $sInputText)</string><arguments><argument type="string" name="$sInputText"/></arguments></prototype><example><source><![CDATA[$sCleanString = $this->stripFormat(Format::Bold."Sample string!");]]></source><output><![CDATA[Sample string!]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="triggerEvent"><description><![CDATA[Fires an event to the Scripts, and to any event handlers that have been hooked to this particular event.
+
+<br />You can find a list of all callbacks and their arguments here.]]></description><prototype returnType="string"><string>string CoreMaster::triggerEvent(string $sEvent [, mixed $... ])</string><arguments><argument type="string" name="$sEvent"/><argument type="mixed" name="$..." optional="1" multiarg="1"/></arguments></prototype><example><source><![CDATA[$this->triggerEvent("onChannelCommand", $sChannel, $sNickname, $sCommand, $aArguments);]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreResource" name="Read"><description><![CDATA[Returns the contents of a resource.]]></description><prototype returnType="string"><string>string CoreResource::Read(void)</string><arguments/></prototype><example><source><![CDATA[$pResource = $this->getResource("Accounts/Westie.user");
+
+echo $pResource->read();]]></source><output><![CDATA[[whatever is in your resource, I suppose]]]></output></example><modificationTime>1311722355</modificationTime></function><function class="CoreResource" name="Write"><description><![CDATA[Either wipes the file and writes with new contents, or appends to the file.]]></description><prototype returnType="boolean"><string>boolean CoreResource::Write(string $sFileContents [, boolean $bAppend = false ])</string><arguments><argument type="string" name="$sFileContents"/><argument type="boolean" name="$bAppend" value="false" optional="1"/></arguments></prototype><example><source><![CDATA[$pResource = $this->getResource("Accounts/Westie.user");
+
+echo $pResource->write("hello there");]]></source><output><![CDATA[true]]></output></example><modificationTime>1311722731</modificationTime></function><function class="CoreResource" name="isNew"><description><![CDATA[Returns a boolean value on whether the file was just created or not.]]></description><prototype returnType="boolean"><string>boolean CoreResource::isNew(void)</string><arguments/></prototype><example><source><![CDATA[$pResource = $this->getResource("Accounts/Westie.user");
+
+if($pResource->isNew())
+{
+        echo "This was just created... now!";
+}]]></source><output><![CDATA[true]]></output></example><modificationTime>1311722721</modificationTime></function><function class="CoreResource" name="modifyTime"><description><![CDATA[Returns a boolean value on whether the file was just created or not. Resistant to cache problems.]]></description><prototype returnType="integer"><string>integer CoreResource::modifyTime(void)</string><arguments/></prototype><example><source><![CDATA[$pResource = $this->getResource("Accounts/Westie.user");
+
+echo $pResource->modifyTime();]]></source><output><![CDATA[133050650 (it's a timestamp.)]]></output></example><modificationTime>1311722784</modificationTime></function><function class="CoreResource" name="__toString"><description><![CDATA[Returns a string representation of the resources location on the computer. Useful with native PHP file functions.]]></description><prototype returnType="string"><string>string CoreResource::__toString(void)</string><arguments/></prototype><example><source><![CDATA[$pResource = $this->getResource("Accounts/Westie.user");
+
+echo filectime((string) $pResource);]]></source><output><![CDATA[/home/OUTRAGEbot/Resources/ScriptName/Accounts/Westie.user]]></output></example><modificationTime>1311722946</modificationTime></function></documentation>
