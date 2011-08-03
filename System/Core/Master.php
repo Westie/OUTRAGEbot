@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
- *	Committed at:   Tue Jul 26 23:19:16 BST 2011
+ *	Git commit:     8d5a28cd8b7745a13b76a617b22bcd1c5111e6c8
+ *	Committed at:   Wed Aug  3 23:22:40 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -48,6 +48,20 @@ class CoreMaster
 			"iIndex" => 0,
 			"iPosition" => 0,
 		);
+	}
+
+
+	/**
+	 *	Called when any other undefined method is called.
+	 */
+	public final function __call($sFunctionName, $aArgumentList)
+	{
+		if(isset(Core::$pFunctionList->$sFunctionName))
+		{
+			return call_user_func_array(Core::$pFunctionList->$sFunctionName, $aArgumentList);
+		}
+
+		return null;
 	}
 
 
