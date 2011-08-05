@@ -14,6 +14,11 @@
 			font-size: 12px;
 			
 			line-height: 18px;
+			
+			width: 70%;
+			
+			margin-left: auto;
+			margin-right: auto;
 		}
 		
 		code
@@ -68,7 +73,8 @@
 		}
 		
 		.DefMethod,
-		.DefVariable
+		.DefVariable,
+		.DefCallback
 		{
 			margin: 10px;
 			margin-bottom: 15px;
@@ -84,18 +90,63 @@
 		.DefVariable
 		{
 			border: 1px solid #33F;
-			border-left: 3px solid #33F;
+			border-left: 5px solid #33F;
 			
 			background-color: #CCF;
+		}
+		
+		.DefCallback
+		{
+			border: 1px solid #AAE5AA;
+			border-left: 5px solid #AAE5AA;
+			
+			background-color: #DDFFE3;
 		}
 	</style>
 	
 	<body>
 		<h1>OUTRAGEbot documentation</h1>
 		
+		<hr />
+		
+		<h2>Introduction</h2>
+		
+		<p>
+			This is pretty much the entire OUTRAGEbot documentation, put into a web page. <br />
+			Note how there are callbacks listed - they are to be used in the Scripts, or in
+			<a href="#CoreMaster::addEventHandler">CoreMaster::addEventHandler()</a>.
+		</p>
+		
+		<p>
+			Have fun!
+		</p>
+		
 		<h2>Documentation overview</h2>
 		
 		<ul>
+			<li><a name="Callbacks">Callbacks</a></li>
+			<ul>
+				<li><a href="#onConstruct">onConstruct()</a></li>
+				<li><a href="#onDestruct">onDestruct()</a></li>
+				<li><a href="#onConnect">onConnect()</a></li>
+				<li><a href="#onDisconnect">onDisconnect()</a></li>
+				<li><a href="#onChannelJoin">onChannelJoin()</a></li>
+				<li><a href="#onChannelPart">onChannelPart()</a></li>
+				<li><a href="#onChannelPart">onChannelPart()</a></li>
+				<li><a href="#onChannelTopic">onChannelTopic()</a></li>
+				<li><a href="#onUserNotice">onUserNotice()</a></li>
+				<li><a href="#onChannelMessage">onChannelMessage()</a></li>
+				<li><a href="#onChannelCommand">onChannelCommand()</a></li>
+				<li><a href="#onCTCPRequest">onCTCPRequest()</a></li>
+				<li><a href="#onCTCPResponse">onCTCPResponse()</a></li>
+				<li><a href="#onPrivateMessage">onPrivateMessage()</a></li>
+				<li><a href="#onNicknameChange">onNicknameChange()</a></li>
+				<li><a href="#onUserQuit">onUserQuit()</a></li>
+				<li><a href="#onUserQuit">onUserQuit()</a></li>
+				<li><a href="#onNicknameConflict">onNicknameConflict()</a></li>
+				<li><a href="#onUnhandledEvent">onUnhandledEvent()</a></li>
+			</ul>
+
 			<li><a name="Core">Core</a></li>
 			<ul>
 				<li><a href="#Core::getMessageObject">Core::getMessageObject()</a></li>
@@ -178,7 +229,331 @@
 			</ul>
 		</ul>
 		
-		<h2>Methods and variables</h2>
+		<h2>Callbacks</h2>
+
+		<div class="DefCallback">
+			<a name="onConstruct" class="Name">onConstruct()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when the script is loaded into the bot.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onConstruct</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onConstruct</span><span style="color: #007700">()<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onDestruct" class="Name">onDestruct()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when the script is removed.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onDestruct</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onDestruct</span><span style="color: #007700">()<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onConnect" class="Name">onConnect()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called either when the bot connects to the network, or when script is loaded, whatever is first.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onConnect</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onConnect</span><span style="color: #007700">()<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onDisconnect" class="Name">onDisconnect()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called either when the bot disconnects from the network.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onDisconnect</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onDisconnect</span><span style="color: #007700">()<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onChannelJoin" class="Name">onChannelJoin()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when someone joins the channel.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelJoin</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelJoin</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$nick</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onChannelPart" class="Name">onChannelPart()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when someone parts the channel.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelPart</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sReason</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelPart</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$nick</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$reason</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onChannelPart" class="Name">onChannelPart()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when someone is kicked from the channel.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelKick</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sAdminUser</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sKickedUser</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;sReason</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelKick</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$admin</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$kicked</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$reason</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onChannelTopic" class="Name">onChannelTopic()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when the channel's topic has been changed.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelTopic</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sTopic</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelTopic</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$admin</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$newTopic</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onUserNotice" class="Name">onUserNotice()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when the channel or bot recieves a NOTICE command.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUserNotice</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sSender</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sRecipient</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelTopic</span><span style="color: #007700">(</span><span style="color: #0000BB">$from</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$to</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onChannelMessage" class="Name">onChannelMessage()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when there is talk in the channel.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$from</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onChannelCommand" class="Name">onChannelCommand()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when someone in the channel issues a command.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelCommand</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sCommand</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sArguments</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelCommand</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$from</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$command</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$arguments</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onCTCPRequest" class="Name">onCTCPRequest()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when someone issues a CTCP request.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onCTCPRequest</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sPayload</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onCTCPRequest</span><span style="color: #007700">(</span><span style="color: #0000BB">$from</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$payload</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onCTCPResponse" class="Name">onCTCPResponse()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when replies to a CTCP request.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onCTCPResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sPayload</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onCTCPResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">$from</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$payload</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onPrivateMessage" class="Name">onPrivateMessage()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when someone private messages the bot.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onPrivateMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sSender</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sRecipient</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onPrivateMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">$from</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$to</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onNicknameChange" class="Name">onNicknameChange()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when someone changes their name.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onNicknameChange</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sOldNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNewNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onNicknameChange</span><span style="color: #007700">(</span><span style="color: #0000BB">$old</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$new</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onUserQuit" class="Name">onUserQuit()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when someone quits the network.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUserQuit</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sReason</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUserQuit</span><span style="color: #007700">(</span><span style="color: #0000BB">$quitter</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$why</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onUserQuit" class="Name">onUserQuit()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called when there is a fatal server error. The client usually is disconnected after this.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onServerError</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sErrorMessage</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onServerError</span><span style="color: #007700">(</span><span style="color: #0000BB">$error</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onNicknameConflict" class="Name">onNicknameConflict()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called whenever there is another user with the same nickname as the bot.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onNicknameConflict</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNewNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onNicknameConflict</span><span style="color: #007700">(</span><span style="color: #0000BB">$nick</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefCallback">
+			<a name="onUnhandledEvent" class="Name">onUnhandledEvent()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Called whenever the bot recieves an event/numeric that has no active handler.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUnhandledEvent</span><span style="color: #007700">(</span><span style="color: #0000BB">MessageObject&nbsp;$pMessage</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUnhandledEvent</span><span style="color: #007700">(</span><span style="color: #0000BB">$messageObj</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />}</span>
+</span>
+</code></div>
+		</div>
+<h2>Methods and variables</h2>
 
 		<h3>Core</h3>
 
@@ -1653,7 +2028,7 @@ Take note that this is Script specific, a Resource available in one Script is no
 		</div>
 	
 	<p>
-		This documentation is up to date as of Fri, 29 Jul 2011 19:18:02 +0100, and it is generated from the
+		This documentation is up to date as of Fri, 05 Aug 2011 16:25:55 +0100, and it is generated from the
 		<a href="http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/">official online documentation</a>.
 	</p>
 	

@@ -1,5 +1,322 @@
 <?xml version="1.0"?>
-<documentation><function class="Core" name="getMessageObject"><description><![CDATA[Returns an objectised view of an IRC message string.]]></description><prototype returnType="stdClass"><string>stdClass Core::getMessageObject(string $sString)</string><arguments><argument type="string" name="$sString"/></arguments></prototype><example><source><![CDATA[(no available examples)]]></source><output><![CDATA[stdClass Object
+<documentation>
+	<callback name="onConstruct">
+		<description><![CDATA[Called when the script is loaded into the bot.]]></description>
+		<prototype>
+			<string>public function onConstruct(void)</string>
+			<arguments/>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onConstruct()
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onDestruct">
+		<description><![CDATA[Called when the script is removed.]]></description>
+		<prototype>
+			<string>public function onDestruct(void)</string>
+			<arguments/>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onDestruct()
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onConnect">
+		<description><![CDATA[Called either when the bot connects to the network, or when script is loaded, whatever is first.]]></description>
+		<prototype>
+			<string>public function onConnect(void)</string>
+			<arguments/>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onConnect()
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onDisconnect">
+		<description><![CDATA[Called either when the bot disconnects from the network.]]></description>
+		<prototype>
+			<string>public function onDisconnect(void)</string>
+			<arguments/>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onDisconnect()
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onChannelJoin">
+		<description><![CDATA[Called when someone joins the channel.]]></description>
+		<prototype>
+			<string>public function onChannelJoin(Channel $sChannel, string $sNickname)</string>
+			<arguments>
+				<argument type="Channel" name="$sString"/>
+				<argument type="string" name="$sNickname"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onChannelJoin($channel, $nick)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onChannelPart">
+		<description><![CDATA[Called when someone parts the channel.]]></description>
+		<prototype>
+			<string>public function onChannelPart(Channel $sChannel, string $sNickname, string $sReason)</string>
+			<arguments>
+				<argument type="Channel" name="$sString"/>
+				<argument type="string" name="$sNickname"/>
+				<argument type="string" name="$sReason"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onChannelPart($channel, $nick, $reason)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onChannelPart">
+		<description><![CDATA[Called when someone is kicked from the channel.]]></description>
+		<prototype>
+			<string>public function onChannelKick(Channel $sChannel, string $sAdminUser, string $sKickedUser, string sReason)</string>
+			<arguments>
+				<argument type="Channel" name="$sString"/>
+				<argument type="string" name="$sAdminUser"/>
+				<argument type="string" name="$sKickedUser"/>
+				<argument type="string" name="$sReason"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onChannelKick($channel, $admin, $kicked, $reason)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onChannelTopic">
+		<description><![CDATA[Called when the channel's topic has been changed.]]></description>
+		<prototype>
+			<string>public function onChannelTopic(Channel $sChannel, string $sNickname, string $sTopic)</string>
+			<arguments>
+				<argument type="Channel" name="$sString"/>
+				<argument type="string" name="$sNickname"/>
+				<argument type="string" name="$sTopic"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onChannelTopic($channel, $admin, $newTopic)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onUserNotice">
+		<description><![CDATA[Called when the channel or bot recieves a NOTICE command.]]></description>
+		<prototype>
+			<string>public function onUserNotice(string $sSender, string $sRecipient, string $sMessage)</string>
+			<arguments>
+				<argument type="string" name="$sSender"/>
+				<argument type="string" name="$sRecipient"/>
+				<argument type="string" name="$sMessage"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onChannelTopic($from, $to, $message)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onChannelMessage">
+		<description><![CDATA[Called when there is talk in the channel.]]></description>
+		<prototype>
+			<string>public function onChannelMessage(Channel $sChannel, string $sNickname, string $sMessage)</string>
+			<arguments>
+				<argument type="Channel" name="$sString"/>
+				<argument type="string" name="$sNickname"/>
+				<argument type="string" name="$sMessage"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onChannelMessage($channel, $from, $message)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onChannelCommand">
+		<description><![CDATA[Called when someone in the channel issues a command.]]></description>
+		<prototype>
+			<string>public function onChannelCommand(Channel $sChannel, string $sNickname, string $sCommand, string $sArguments)</string>
+			<arguments>
+				<argument type="Channel" name="$sString"/>
+				<argument type="string" name="$sNickname"/>
+				<argument type="string" name="$sCommand"/>
+				<argument type="string" name="$sArguments"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onChannelCommand($channel, $from, $command, $arguments)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onCTCPRequest">
+		<description><![CDATA[Called when someone issues a CTCP request.]]></description>
+		<prototype>
+			<string>public function onCTCPRequest(string $sNickname, string $sPayload)</string>
+			<arguments>
+				<argument type="string" name="$sNickname"/>
+				<argument type="string" name="$sPayload"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onCTCPRequest($from, $payload)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onCTCPResponse">
+		<description><![CDATA[Called when replies to a CTCP request.]]></description>
+		<prototype>
+			<string>public function onCTCPResponse(string $sNickname, string $sPayload)</string>
+			<arguments>
+				<argument type="string" name="$sNickname"/>
+				<argument type="string" name="$sPayload"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onCTCPResponse($from, $payload)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onPrivateMessage">
+		<description><![CDATA[Called when someone private messages the bot.]]></description>
+		<prototype>
+			<string>public function onPrivateMessage(string $sSender, string $sRecipient, string $sMessage)</string>
+			<arguments>
+				<argument type="string" name="$sSender"/>
+				<argument type="string" name="$sRecipient"/>
+				<argument type="string" name="$sMessage"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onPrivateMessage($from, $to, $message)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onNicknameChange">
+		<description><![CDATA[Called when someone changes their name.]]></description>
+		<prototype>
+			<string>public function onNicknameChange(string $sOldNickname, string $sNewNickname)</string>
+			<arguments>
+				<argument type="string" name="$sOldNickname"/>
+				<argument type="string" name="$sNewNickname"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onNicknameChange($old, $new)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onUserQuit">
+		<description><![CDATA[Called when someone quits the network.]]></description>
+		<prototype>
+			<string>public function onUserQuit(string $sNickname, string $sReason)</string>
+			<arguments>
+				<argument type="string" name="$sNickname"/>
+				<argument type="string" name="$sReason"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onUserQuit($quitter, $why)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onUserQuit">
+		<description><![CDATA[Called when there is a fatal server error. The client usually is disconnected after this.]]></description>
+		<prototype>
+			<string>public function onServerError(string $sErrorMessage)</string>
+			<arguments>
+				<argument type="string" name="$sErrorMessage"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onServerError($error)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onNicknameConflict">
+		<description><![CDATA[Called whenever there is another user with the same nickname as the bot.]]></description>
+		<prototype>
+			<string>public function onNicknameConflict(string $sNewNickname)</string>
+			<arguments>
+				<argument type="string" name="$sNewNickname"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onNicknameConflict($nick)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+	
+	<callback name="onUnhandledEvent">
+		<description><![CDATA[Called whenever the bot recieves an event/numeric that has no active handler.]]></description>
+		<prototype>
+			<string>public function onUnhandledEvent(MessageObject $pMessage)</string>
+			<arguments>
+				<argument type="MessageObject" name="$pMessage"/>
+			</arguments>
+		</prototype>
+		<example>
+			<source><![CDATA[public function onUnhandledEvent($messageObj)
+{
+	...
+}]]></source>
+		</example>
+	</callback>
+<function class="Core" name="getMessageObject"><description><![CDATA[Returns an objectised view of an IRC message string.]]></description><prototype returnType="stdClass"><string>stdClass Core::getMessageObject(string $sString)</string><arguments><argument type="string" name="$sString"/></arguments></prototype><example><source><![CDATA[(no available examples)]]></source><output><![CDATA[stdClass Object
 (
     [Raw] => :Westie!westie@raptor.typefish.co.uk PRIVMSG #OUTRAGEbot :@@ print_r($this->pMessage);
     [Parts] => Array
