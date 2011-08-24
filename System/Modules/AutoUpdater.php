@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
- *	Committed at:   Tue Jul 26 23:19:17 BST 2011
+ *	Git commit:     0638fa8bb13e1aca64885a4be9e6b7d78aab0af7
+ *	Committed at:   Wed Aug 24 23:16:56 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -53,10 +53,12 @@ class ModuleAutoUpdater
 		# Move all the system files
 		self::rmdir($sSystemFolder);
 		rename("{$aZipFolder[0]}/System/", $sSystemFolder);
+		println(" * {$aZipFolder[0]}/System/ -> {$sSystemFolder}");
 
 		# Move the Start.php
 		unlink(ROOT.'/Start.php');
 		rename("{$aZipFolder[0]}/Start.php", ROOT.'/Start.php');
+		println(" * {$aZipFolder[0]}/Start.php -> ".ROOT.'/Start.php');
 
 		# And now, clean up our mess.
 		self::rmdir($sZipResource);

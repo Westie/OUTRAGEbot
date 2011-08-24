@@ -15,7 +15,7 @@
 			
 			line-height: 18px;
 			
-			width: 70%;
+			width: 75%;
 			
 			margin-left: auto;
 			margin-right: auto;
@@ -102,6 +102,13 @@
 			
 			background-color: #DDFFE3;
 		}
+		
+		.Section
+		{
+			margin-left: 20px;
+			
+			color: #666;
+		}
 	</style>
 	
 	<body>
@@ -142,7 +149,7 @@
 				<li><a href="#onPrivateMessage">onPrivateMessage()</a></li>
 				<li><a href="#onNicknameChange">onNicknameChange()</a></li>
 				<li><a href="#onUserQuit">onUserQuit()</a></li>
-				<li><a href="#onUserQuit">onUserQuit()</a></li>
+				<li><a href="#onServerError">onServerError()</a></li>
 				<li><a href="#onNicknameConflict">onNicknameConflict()</a></li>
 				<li><a href="#onUnhandledEvent">onUnhandledEvent()</a></li>
 			</ul>
@@ -183,7 +190,8 @@
 				<li><a href="#CoreMaster::activateScript">CoreMaster::activateScript()</a></li>
 				<li><a href="#CoreMaster::addChild">CoreMaster::addChild()</a></li>
 				<li><a href="#CoreMaster::addCommandHandler">CoreMaster::addCommandHandler()</a></li>
-				<li><a href="#CoreMaster::addEventHandler">CoreMaster::addEventHandler()</a></li>
+				<li><a href="#CoreMaster::addEventHandler/Event-handlers">CoreMaster::addEventHandler()</a><span class="Section">Event handlers</span></li>
+				<li><a href="#CoreMaster::addEventHandler/Numeric-handlers">CoreMaster::addEventHandler()</a><span class="Section">Numeric handlers</span></li>
 				<li><a href="#CoreMaster::addTimer">CoreMaster::addTimer()</a></li>
 				<li><a href="#CoreMaster::deactivateScript">CoreMaster::deactivateScript()</a></li>
 				<li><a href="#CoreMaster::getActivatedScripts">CoreMaster::getActivatedScripts()</a></li>
@@ -504,7 +512,7 @@
 		</div>
 
 		<div class="DefCallback">
-			<a name="onUserQuit" class="Name">onUserQuit()</a>
+			<a name="onServerError" class="Name">onServerError()</a>
 
 			<h4>Description</h4>
 			<div class="Description">Called when there is a fatal server error. The client usually is disconnected after this.</div>
@@ -584,7 +592,7 @@
 			<a name="CoreChannel::count" class="Name">CoreChannel::$count</a>
 
 			<h4>Description</h4>
-			<div class="Description">This property the current amount of users in a channel.</div>
+			<div class="Description">This property the current amount of users in a channel. This class is also implements Countable, so this could be achieved from count().</div>
 
 			<h4>Prototype</h4>
 			<div class="Prototype"><code><span style="color: #0000BB">integer&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">$count</span>
@@ -592,7 +600,7 @@
 </code></div>
 
 			<h4>Example and Output</h4>
-			<div class="Source"><code><span style="color: #0000BB">$sChannel&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$iCount&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">count</span>
+			<div class="Source"><code><span style="color: #0000BB">$sChannel&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">#&nbsp;Using&nbsp;the&nbsp;object's&nbsp;property<br /></span><span style="color: #0000BB">$iCount&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">count</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">#&nbsp;Using&nbsp;PHP's&nbsp;count()<br /></span><span style="color: #0000BB">$iCount&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">count</span><span style="color: #007700">(</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 			<div class="Output"><code><span style="color: #0000BB">7</span>
@@ -857,7 +865,7 @@
 			<a name="CoreChannel::users" class="Name">CoreChannel::$users</a>
 
 			<h4>Description</h4>
-			<div class="Description">This property the current users in the channel.</div>
+			<div class="Description">This property the current users in the channel. Because this class implements ArrayAccess and Iterator, you can cycle through this object using foreach(), or access user's objects like an array.</div>
 
 			<h4>Prototype</h4>
 			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">$users</span>
@@ -1198,37 +1206,49 @@ List of current modifiers:
 		</div>
 
 		<div class="DefMethod">
-			<a name="CoreMaster::addEventHandler" class="Name">CoreMaster::addEventHandler()</a>
+			<a name="CoreMaster::addEventHandler/Event-handlers" class="Name">CoreMaster::addEventHandler()</a><span class="Section">Event handlers</span>
 
 			<h4>Description</h4>
-			<div class="Description">Creates an event handler.
-<br /><h4>Options for <span class="Var">$sCommandName</span>:</h4><br />
-<ul>
-	<li>"PRIVMSG" style - receive raw input from the IRC server. Check the RFC for all available commands.</li>
-	<li>"onChannelMessage" style - receive input similiar to Scripts. [Resource Miscellaneous/Callbacks] for callback listings.</li>
-</ul>
+			<div class="Description">One of the uses for addEventHandler is to listen into a built in event. You can do this by creating an event handler with the <a href="#Callbacks">pre-registered callbacks</a>, such as onChannelMessage().
 
-<br /><h4>List of possible types for <span class="Var">$sArgumentFormat</span>:</h4><br />
-<ul>
-	<li><a href="#Core::getMessageObject">Core::getMessageObject</a></li>
-	<li>c - Message parts as an array.</li>
-	<li>m - Message object.</li>
-	<li>p - The payload, or rather the bit after the semi-colon.</li>
-	<li>r - The raw, unparsed input string.</li>
-	<li>u - The parsed hostname, as an object.</li>
-</ul>
-
-<br />Leaving the <span class="Var">$sArgumentFormat</span> argument null, will result in the second parameter being the Message object, or 'm'.
-
-<br /><br />If the method is in a <span class="Var">Script</span>, then the first argument will <strong>not</strong> be the <span class="Var">Master</span> class.</div>
+<br /><br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra argument.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sCommandName</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$cCallback&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sArgumentFormat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null&nbsp;</span><span style="color: #007700">])</span>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sEvent</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">callback&nbsp;$cCallback</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
 			<h4>Example</h4>
-			<div class="Source"><code><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">Example&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onConstruct</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"INVITE"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"anotherInviteFunction"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"up"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Note&nbsp;the&nbsp;extra&nbsp;argument<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"INVITE"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$p</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$u</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$c</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$p</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #DD0000">"#westie"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"(custom&nbsp;args,&nbsp;lambda)&nbsp;OUTRAGEbot&nbsp;has&nbsp;been&nbsp;invited&nbsp;into&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$c</span><span style="color: #007700">}</span><span style="color: #DD0000">&nbsp;by&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$u</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">}</span><span style="color: #DD0000">"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;</span><span style="color: #DD0000">"up"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">anotherInviteFunction</span><span style="color: #007700">(</span><span style="color: #0000BB">$pUserObject</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$p</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #DD0000">"#westie"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"(custom&nbsp;args,&nbsp;class)&nbsp;OUTRAGEbot&nbsp;has&nbsp;been&nbsp;invited&nbsp;into&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">}</span><span style="color: #DD0000">&nbsp;by&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$pUserObject</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Nickname</span><span style="color: #007700">}</span><span style="color: #DD0000">"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />}</span>
+			<div class="Source"><code><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">EventExample&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called&nbsp;when&nbsp;the&nbsp;script&nbsp;is&nbsp;constructed.<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onConstruct</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">#&nbsp;This&nbsp;will&nbsp;require&nbsp;the&nbsp;CoreMaster&nbsp;instance&nbsp;as&nbsp;the&nbsp;first&nbsp;argument.<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"onChannelMessage"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$irc</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$irc</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"</span><span style="color: #007700">{</span><span style="color: #0000BB">$user</span><span style="color: #007700">}</span><span style="color: #DD0000">&nbsp;said&nbsp;something,&nbsp;therefore&nbsp;he&nbsp;just&nbsp;got&nbsp;nick&nbsp;alerted."</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">#&nbsp;This&nbsp;example&nbsp;doesn't&nbsp;need&nbsp;the&nbsp;prepended&nbsp;argument,&nbsp;however.<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"onChannelMessage"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"Hello"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called&nbsp;when&nbsp;someone&nbsp;speaks&nbsp;in&nbsp;the&nbsp;channel.<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">Hello</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(</span><span style="color: #0000BB">preg_match</span><span style="color: #007700">(</span><span style="color: #DD0000">"/^hello$/"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$m</span><span style="color: #007700">))<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$c</span><span style="color: #007700">(</span><span style="color: #DD0000">"hello&nbsp;world!"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />}</span>
+</span>
+</code></div>
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::addEventHandler/Numeric-handlers" class="Name">CoreMaster::addEventHandler()</a><span class="Section">Numeric handlers</span>
+
+			<h4>Description</h4>
+			<div class="Description">One of the uses for addEventHandler is to listen for IRC numerics and commands. You can do this by creating an event handler, listening for perhaps, invite requests. The format codes, mentioned below, can be placed in any order, dependent on how they're needed.
+
+<h4>List of format codes</h4>
+<ul>
+	<li>c - Message parts as an array.</li>
+	<li>m - Message object. (<a href="#Core::getMessageObject">Core::getMessageObject</a>)</li>
+	<li>p - The payload, or rather the bit after the semi-colon.</li>
+	<li>r - The raw, unparsed input string.</li>
+	<li>h - The parsed hostname, as an object.</li>
+	<li>u - User's nickname, as a string.</li>
+</ul>
+
+<br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra argument.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNumerics</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">callback&nbsp;$cCallback&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sArgumentFormat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"m"&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example</h4>
+			<div class="Source"><code><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">NumericExample&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called&nbsp;when&nbsp;the&nbsp;script&nbsp;is&nbsp;constructed.<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onConstruct</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">#&nbsp;This&nbsp;will&nbsp;require&nbsp;the&nbsp;CoreMaster&nbsp;instance&nbsp;as&nbsp;the&nbsp;first&nbsp;argument.<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"INVITE"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$irc</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$messageObject</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"The&nbsp;bot&nbsp;was&nbsp;invited&nbsp;into&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$messageObject</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Payload</span><span style="color: #007700">}</span><span style="color: #DD0000">."</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">#&nbsp;This&nbsp;example&nbsp;doesn't&nbsp;need&nbsp;the&nbsp;prepended&nbsp;argument,&nbsp;however.<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #DD0000">"INVITE"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"botInvited"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"up"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called&nbsp;when&nbsp;someone&nbsp;speaks&nbsp;in&nbsp;the&nbsp;channel.<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">botInvited</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$channel</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"The&nbsp;bot&nbsp;was&nbsp;invited&nbsp;into&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$channel</span><span style="color: #007700">}</span><span style="color: #DD0000">&nbsp;by&nbsp;</span><span style="color: #007700">{</span><span style="color: #0000BB">$user</span><span style="color: #007700">}</span><span style="color: #DD0000">.&nbsp;Decide&nbsp;already!"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />}</span>
 </span>
 </code></div>
 		</div>
@@ -1915,7 +1935,7 @@ Take note that this is Script specific, a Resource available in one Script is no
 </code></div>
 
 			<h4>Example</h4>
-			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">triggerEvent</span><span style="color: #007700">(</span><span style="color: #DD0000">"onChannelCommand"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sCommand</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$aArguments</span><span style="color: #007700">);</span>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">triggerEvent</span><span style="color: #007700">(</span><span style="color: #DD0000">"onChannelCommand"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sCommand</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$sArguments</span><span style="color: #007700">);</span>
 </span>
 </code></div>
 		</div>
@@ -2028,7 +2048,7 @@ Take note that this is Script specific, a Resource available in one Script is no
 		</div>
 	
 	<p>
-		This documentation is up to date as of Fri, 05 Aug 2011 16:25:55 +0100, and it is generated from the
+		This documentation is up to date as of Wed, 24 Aug 2011 22:39:35 +0100, and it is generated from the
 		<a href="http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/">official online documentation</a>.
 	</p>
 	

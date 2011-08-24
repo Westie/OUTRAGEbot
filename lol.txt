@@ -1,0 +1,67 @@
+Array
+(
+    [0] => stdClass Object
+        (
+            [errorCode] => 4096
+            [errorString] => Argument 2 passed to Core::Handler() must be an instance of MessageObject, integer given, called in /home/Westie/Development/OUTRAGEbot/System/Core/Master.php on line 248 and defined
+            [offendingFile] => /home/Westie/Development/OUTRAGEbot/System/Core/Core.php
+            [offendingLine] => 200
+        )
+
+    [1] => stdClass Object
+        (
+            [errorCode] => 8
+            [errorString] => Trying to get property of non-object
+            [offendingFile] => /home/Westie/Development/OUTRAGEbot/System/Core/Core.php
+            [offendingLine] => 202
+        )
+
+    [2] => stdClass Object
+        (
+            [errorCode] => 8
+            [errorString] => Trying to get property of non-object
+            [offendingFile] => /home/Westie/Development/OUTRAGEbot/System/Core/Core.php
+            [offendingLine] => 238
+        )
+
+    [3] => stdClass Object
+        (
+            [errorCode] => 8
+            [errorString] => Trying to get property of non-object
+            [offendingFile] => /home/Westie/Development/OUTRAGEbot/System/Core/Core.php
+            [offendingLine] => 243
+        )
+
+    [4] => stdClass Object
+        (
+            [errorCode] => 8
+            [errorString] => Trying to get property of non-object
+            [offendingFile] => /home/Westie/Development/OUTRAGEbot/System/Core/Core.php
+            [offendingLine] => 243
+        )
+
+    [5] => stdClass Object
+        (
+            [errorCode] => 4096
+            [errorString] => Argument 2 passed to CoreHandler::Unhandled() must be an instance of MessageObject, integer given, called in /home/Westie/Development/OUTRAGEbot/System/Core/Core.php on line 247 and defined
+            [offendingFile] => /home/Westie/Development/OUTRAGEbot/System/Core/Handler.php
+            [offendingLine] => 20
+        )
+
+    [6] => stdClass Object
+        (
+            [errorCode] => 8
+            [errorString] => Trying to get property of non-object
+            [offendingFile] => /home/Westie/Development/OUTRAGEbot/System/Core/Handler.php
+            [offendingLine] => 22
+        )
+
+    [7] => stdClass Object
+        (
+            [errorCode] => 2
+            [errorString] => file_put_contents(Development/lol.txt): failed to open stream: No such file or directory
+            [offendingFile] => /home/Westie/Development/OUTRAGEbot/Scripts/Evaluation/vcajUFZ98(28) : eval()'d code
+            [offendingLine] => 1
+        )
+
+)

@@ -5,14 +5,14 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
- *	Committed at:   Tue Jul 26 23:19:16 BST 2011
+ *	Git commit:     0638fa8bb13e1aca64885a4be9e6b7d78aab0af7
+ *	Committed at:   Wed Aug 24 23:16:56 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
 
 
-class CoreChannel extends CoreChild
+class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 {
 	/* Define our variables */
 	private
@@ -22,7 +22,7 @@ class CoreChannel extends CoreChild
 		$mTemp = null;
 
 	public
-		$pUsers = null,
+		$aUsers = null,
 		$pTopic = null,
 		$pModes = null,
 		$iCreateTime = 0;
@@ -36,7 +36,7 @@ class CoreChannel extends CoreChild
 		$this->internalMasterObject($pMaster);
 		$this->sChannel = strtolower(trim($sChannel));
 
-		$this->pUsers = new stdClass();
+		$this->aUsers = array();
 		$this->pModes = new stdClass();
 
 		$this->pTopic = (object) array
@@ -115,7 +115,7 @@ class CoreChannel extends CoreChild
 	 */
 	public function isUserInChannel($sNickname)
 	{
-		return isset($this->pUsers->$sNickname);
+		return isset($this->aUsers[$sNickname]);
 	}
 
 
@@ -134,7 +134,7 @@ class CoreChannel extends CoreChild
 	 */
 	public function addUserToChannel($sNickname, $sChannelMode = "")
 	{
-		$this->pUsers->$sNickname = $sChannelMode;
+		$this->aUsers[$sNickname] = $sChannelMode;
 	}
 
 
@@ -144,13 +144,13 @@ class CoreChannel extends CoreChild
 	 */
 	public function renameUserInChannel($sOldNickname, $sNewNickname)
 	{
-		if(!isset($this->pUsers->$sOldNickname) || empty($this->pUsers->$sOldNickname))
+		if(!isset($this->aUsers[$sOldNickname]) || empty($this->aUsers[$sOldNickname]))
 		{
 			return;
 		}
 
-		$this->pUsers->$sNewNickname = $this->pUsers->$sOldNickname;
-		unset($this->pUsers->$sOldNickname);
+		$this->aUsers[$sNewNickname] = $this->aUsers[$sOldNickname];
+		unset($this->aUsers[$sOldNickname]);
 
 		return;
 	}
@@ -164,11 +164,11 @@ class CoreChannel extends CoreChild
 	{
 		if($sMode == '+')
 		{
-			$this->pUsers->$sNickname .= $sChannelMode;
+			$this->aUsers[$sNickname] .= $sChannelMode;
 		}
 		else
 		{
-			$this->pUsers->$sNickname = str_replace($sChannelMode, "", $this->pUsers->$sNickname);
+			$this->aUsers[$sNickname] = str_replace($sChannelMode, "", $this->aUsers[$sNickname]);
 		}
 	}
 
@@ -179,7 +179,7 @@ class CoreChannel extends CoreChild
 	 */
 	public function removeUserFromChannel($sNickname)
 	{
-		unset($this->pUsers->$sNickname);
+		unset($this->aUsers[$sNickname]);
 	}
 
 
@@ -190,7 +190,7 @@ class CoreChannel extends CoreChild
 	{
 		$iCount = 0;
 
-		foreach($this->pUsers as $pUser)
+		foreach($this->aUsers as $pUser)
 		{
 			++$iCount;
 		}
@@ -224,7 +224,7 @@ class CoreChannel extends CoreChild
 	{
 		$aUsers = array();
 
-		foreach($this->pUsers as $sNickname => $sChannelMode)
+		foreach($this->aUsers as $sNickname => $sChannelMode)
 		{
 			$aUsers[] = (object) array
 			(
@@ -390,12 +390,12 @@ class CoreChannel extends CoreChild
 	 */
 	public function isUserVoice($sUser)
 	{
-		if(!isset($this->pUsers->$sUser))
+		if(!isset($this->aUsers[$sUser]))
 		{
 			return false;
 		}
 
-		return preg_match('/[qaohv]/', $this->pUsers->$sUser) == true;
+		return preg_match('/[qaohv]/', $this->aUsers[$sUser]) == true;
 	}
 
 
@@ -405,12 +405,12 @@ class CoreChannel extends CoreChild
 	 */
 	public function isUserHalfOp($sUser)
 	{
-		if(!isset($this->pUsers->$sUser))
+		if(!isset($this->aUsers[$sUser]))
 		{
 			return false;
 		}
 
-		return preg_match('/[qaoh]/', $this->pUsers->$sUser) == true;
+		return preg_match('/[qaoh]/', $this->aUsers[$sUser]) == true;
 	}
 
 
@@ -420,12 +420,12 @@ class CoreChannel extends CoreChild
 	 */
 	public function isUserOp($sUser)
 	{
-		if(!isset($this->pUsers->$sUser))
+		if(!isset($this->aUsers[$sUser]))
 		{
 			return false;
 		}
 
-		return preg_match('/[qao]/', $this->pUsers->$sUser) == true;
+		return preg_match('/[qao]/', $this->aUsers[$sUser]) == true;
 	}
 
 
@@ -435,12 +435,12 @@ class CoreChannel extends CoreChild
 	 */
 	public function isUserAdmin($sUser)
 	{
-		if(!isset($this->pUsers->$sUser))
+		if(!isset($this->aUsers[$sUser]))
 		{
 			return false;
 		}
 
-		return preg_match('/[qa]/', $this->pUsers->$sUser) == true;
+		return preg_match('/[qa]/', $this->aUsers[$sUser]) == true;
 	}
 
 
@@ -450,12 +450,12 @@ class CoreChannel extends CoreChild
 	 */
 	public function isUserOwner($sUser)
 	{
-		if(!isset($this->pUsers->$sUser))
+		if(!isset($this->aUsers[$sUser]))
 		{
 			return false;
 		}
 
-		return preg_match('/[q]/', $this->pUsers->$sUser) == true;
+		return preg_match('/[q]/', $this->aUsers[$sUser]) == true;
 	}
 
 
@@ -474,5 +474,98 @@ class CoreChannel extends CoreChild
 	public function getCreationTime()
 	{
 		return $this->iCreateTime;
+	}
+
+
+	/**
+	 *	Countable interface: Returns the number of users in the channel.
+	 */
+	public function count()
+	{
+		return $this->propGetCount();
+	}
+
+
+	/**
+	 *	ArrayAccess interface: Checks if the user is in the channel.
+	 */
+	public function offsetExists($sUser)
+	{
+		return isset($this->aUsers[$sUser]);
+	}
+
+
+	/**
+	 *	ArrayAccess interface: Returns the offset.
+	 *
+	 *	Yeah, it's stupid, I know. Let's just return the key at the moment,
+	 *	'cos there's no usable user object.
+	 */
+	public function offsetGet($sUser)
+	{
+		return $sUser;
+	}
+
+
+	/**
+	 *	ArrayAccess interface: Sets the offset.
+	 */
+	public function offsetSet($sUser, $mValue)
+	{
+		return false;
+	}
+
+
+	/**
+	 *	ArrayAccess interface: Unsets the offset.
+	 */
+	public function offsetUnset($sUser)
+	{
+		return false;
+	}
+
+
+	/**
+	 *	Iterator interface: Rewinds the user array.
+	 */
+	public final function rewind()
+	{
+		return reset($this->aUsers);
+	}
+
+
+	/**
+	 *	Iterator interface: Returns the current user element.
+	 */
+	public final function current()
+	{
+		return current($this->aUsers);
+	}
+
+
+	/**
+	 *	Iterator interface: Returns the user key
+	 */
+	public final function key()
+	{
+		return key($this->aUsers);
+	}
+
+
+	/**
+	 *	Iterator interface: Moves the user array pointer on by one.
+	 */
+	public final function next()
+	{
+		return next($this->aUsers);
+	}
+
+
+	/**
+	 *	Iterator interface: Checks if the user key is valid.
+	 */
+	public final function valid()
+	{
+		return (key($this->aUsers) !== null);
 	}
 }

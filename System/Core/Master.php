@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     8d5a28cd8b7745a13b76a617b22bcd1c5111e6c8
- *	Committed at:   Wed Aug  3 23:22:40 BST 2011
+ *	Git commit:     0638fa8bb13e1aca64885a4be9e6b7d78aab0af7
+ *	Committed at:   Wed Aug 24 23:16:56 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -54,7 +54,7 @@ class CoreMaster
 	/**
 	 *	Called when any other undefined method is called.
 	 */
-	public final function __call($sFunctionName, $aArgumentList)
+	public function __call($sFunctionName, $aArgumentList)
 	{
 		if(isset(Core::$pFunctionList->$sFunctionName))
 		{
@@ -62,6 +62,15 @@ class CoreMaster
 		}
 
 		return null;
+	}
+
+
+	/**
+	 *	Called when the class is invoked.
+	 */
+	public function __invoke($sMessage, $mFlags)
+	{
+		return $this->Raw($sMessage, $mFlags);
 	}
 
 
@@ -246,15 +255,6 @@ class CoreMaster
 
 
 	/**
-	 *	This function returns the current socket's configuration.
-	 */
-	public function getSocketConfiguration($sConfigKey = null)
-	{
-		return $sConfigKey == null ? $this->pConfig->Socket : $this->pConfig->Socket->$sConfigKey;
-	}
-
-
-	/**
 	 *	The public entry point for all inbound socket communication.
 	 */
 	public function Portkey(CoreSocket $pSocket, $sString)
@@ -278,7 +278,7 @@ class CoreMaster
 	/**
 	 *	This private method deals with the construction of the portkey.
 	 */
-	public function internalPortkey(CoreSocket $pSocket, $sString)
+	private function internalPortkey(CoreSocket $pSocket, $sString)
 	{
 		$pMessage = Core::getMessageObject($sString);
 
@@ -298,42 +298,42 @@ class CoreMaster
 	/**
 	 *	Send stuff to the outside world.
 	 */
-	public function Raw($sRawString, $mOption = SEND_DEF)
+	public function Raw($sRawString, $mFlags = SEND_DEF)
 	{
 		if(is_array($sRawString))
 		{
 			foreach($sRawString as $sString)
 			{
-				$this->Raw($sString, $mOption);
+				$this->Raw($sString, $mFlags);
 			}
 
 			return;
 		}
 
 		# The message modifications
-		if($mOption & FORMAT)
+		if($mFlags & FORMAT)
 		{
 			$sRawString = Format::parseInputString($sRawString);
 		}
 
 
 		# The outbound channels
-		if($mOption & SEND_DEF)
+		if($mFlags & SEND_DEF)
 		{
-			$mOption = $this->pConfig->Network->rotation;
+			$mFlags = $this->pConfig->Network->rotation;
 		}
 
-		if($mOption & SEND_MAST)
+		if($mFlags & SEND_MAST)
 		{
 			return $this->aSockets[0]->Output($sRawString);
 		}
 
-		elseif($mOption & SEND_CURR)
+		elseif($mFlags & SEND_CURR)
 		{
 			return $this->pSocket->Output($sRawString);
 		}
 
-		elseif($mOption & SEND_ALL)
+		elseif($mFlags & SEND_ALL)
 		{
 			foreach($this->aSockets as $pSocket)
 			{
@@ -350,27 +350,27 @@ class CoreMaster
 	/**
 	 *	Sends a message to the specified channel.
 	 */
-	public function Message($sChannel, $sMessage, $mOption = SEND_DEF)
+	public function Message($sChannel, $sMessage, $mFlags = SEND_DEF)
 	{
-		return $this->Raw("PRIVMSG {$sChannel} :{$sMessage}", $mOption);
+		return $this->Raw("PRIVMSG {$sChannel} :{$sMessage}", $mFlags);
 	}
 
 
 	/**
 	 *	Sends an action to the specified channel.
 	 */
-	public function Action($sChannel, $sMessage, $mOption = SEND_DEF)
+	public function Action($sChannel, $sMessage, $mFlags = SEND_DEF)
 	{
-		return $this->Raw("PRIVMSG {$sChannel} :".chr(1)."ACTION {$sMessage}".chr(1), $mOption);
+		return $this->Raw("PRIVMSG {$sChannel} :".chr(1)."ACTION {$sMessage}".chr(1), $mFlags);
 	}
 
 
 	/**
 	 *	Sends a notice to the specified channel.
 	 */
-	public function Notice($sNickname, $sMessage, $mOption = SEND_DEF)
+	public function Notice($sNickname, $sMessage, $mFlags = SEND_DEF)
 	{
-		return $this->Raw("NOTICE {$sNickname} :{$sMessage}", $mOption);
+		return $this->Raw("NOTICE {$sNickname} :{$sMessage}", $mFlags);
 	}
 
 
@@ -812,16 +812,16 @@ class CoreMaster
 	/**
 	 *	Makes the bot join a channel.
 	 */
-	public function Join($sChannel, $mOption = SEND_DEF)
+	public function Join($sChannel, $mFlags = SEND_DEF)
 	{
-		return $this->Raw("JOIN {$sChannel}", $mOption);
+		return $this->Raw("JOIN {$sChannel}", $mFlags);
 	}
 
 
 	/**
 	 *	Makes the bot leave a channel.
 	 */
-	public function Part($sChannel, $sReason = null, $mOption = SEND_DEF)
+	public function Part($sChannel, $sReason = null, $mFlags = SEND_DEF)
 	{
 		$sPart = "PART {$sChannel}";
 
@@ -830,7 +830,7 @@ class CoreMaster
 			$sPart .= " :{$sReason}";
 		}
 
-		return $this->Raw($sPart, $mOption);
+		return $this->Raw($sPart, $mFlags);
 	}
 
 

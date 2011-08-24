@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
- *	Committed at:   Tue Jul 26 23:19:16 BST 2011
+ *	Git commit:     0638fa8bb13e1aca64885a4be9e6b7d78aab0af7
+ *	Committed at:   Wed Aug 24 23:16:56 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -354,9 +354,15 @@ class Core
 					break;
 				}
 
-				case 'u':
+				case 'h':
 				{
 					$aArguments[] = $pMessage->User;
+					break;
+				}
+
+				case 'u':
+				{
+					$aArguments[] = $pMessage->User->Nickname;
 					break;
 				}
 			}
@@ -378,7 +384,6 @@ class Core
 	{
 		if(!is_callable($cMethodCallback))
 		{
-			print_r("hay");
 			return false;
 		}
 

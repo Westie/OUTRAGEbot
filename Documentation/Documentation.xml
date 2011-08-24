@@ -269,7 +269,7 @@
 		</example>
 	</callback>
 	
-	<callback name="onUserQuit">
+	<callback name="onServerError">
 		<description><![CDATA[Called when there is a fatal server error. The client usually is disconnected after this.]]></description>
 		<prototype>
 			<string>public function onServerError(string $sErrorMessage)</string>
@@ -335,9 +335,13 @@
             [Hostname] => raptor.typefish.co.uk
         )
     [Payload] => @@ print_r($this->pMessage);
-)]]></output></example><modificationTime>1310589674</modificationTime></function><variable class="CoreChannel" name="count"><description><![CDATA[This property the current amount of users in a channel.]]></description><prototype returnType="integer"><string>integer CoreChannel::$count</string></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+)]]></output></example><modificationTime>1310589674</modificationTime></function><variable class="CoreChannel" name="count"><description><![CDATA[This property the current amount of users in a channel. This class is also implements Countable, so this could be achieved from count().]]></description><prototype returnType="integer"><string>integer CoreChannel::$count</string></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
 
-$iCount = $sChannel->count]]></source><output><![CDATA[7]]></output></example><modificationTime>1310983380</modificationTime></variable><function class="CoreChannel" name="getBanList"><description><![CDATA[Returns the channel ban list.]]></description><prototype returnType="array"><string>array CoreChannel::getBanList(void)</string><arguments/></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+# Using the object's property
+$iCount = $sChannel->count;
+
+# Using PHP's count()
+$iCount = count($sChannel)]]></source><output><![CDATA[7]]></output></example><modificationTime>1314218201</modificationTime></variable><function class="CoreChannel" name="getBanList"><description><![CDATA[Returns the channel ban list.]]></description><prototype returnType="array"><string>array CoreChannel::getBanList(void)</string><arguments/></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
 
 $aBanList = $sChannel->getBanList();]]></source><output><![CDATA[Array
 (
@@ -443,7 +447,7 @@ $aInviteList = $sChannel->getInviteList();]]></source><output><![CDATA[Array
         $sChannel("It looks like this user is actually an admin!");
 }]]></source><output><![CDATA[true]]></output></example><modificationTime>1311716929</modificationTime></function><function class="CoreChannel" name="__toString"><description><![CDATA[String representation of the channel name. Refer to <a href="http://www.php.net/manual/en/language.oop5.magic.php#language.oop5.magic.tostring">the PHP docs</a> regarding magic methods.]]></description><prototype returnType="string"><string>string CoreChannel::__toString(void)</string><arguments/></prototype><example><source><![CDATA[echo $sChannel;]]></source><output><![CDATA[#android]]></output></example><modificationTime>1311721471</modificationTime></function><variable class="CoreChannel" name="topic"><description><![CDATA[This property the current channel topic.]]></description><prototype returnType="string"><string>string CoreChannel::$topic</string></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
 
-$sTopic = $sChannel->topic]]></source><output><![CDATA[ [ OUTRAGEbot ( no date ) ]> devel/support channel - :: @func [functionName] :: Github (latest): http://bit.ly/9AdHHb :: ]]></output></example><modificationTime>1310589674</modificationTime></variable><variable class="CoreChannel" name="users"><description><![CDATA[This property the current users in the channel.]]></description><prototype returnType="array"><string>array CoreChannel::$users</string></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+$sTopic = $sChannel->topic]]></source><output><![CDATA[ [ OUTRAGEbot ( no date ) ]> devel/support channel - :: @func [functionName] :: Github (latest): http://bit.ly/9AdHHb :: ]]></output></example><modificationTime>1310589674</modificationTime></variable><variable class="CoreChannel" name="users"><description><![CDATA[This property the current users in the channel. Because this class implements ArrayAccess and Iterator, you can cycle through this object using foreach(), or access user's objects like an array.]]></description><prototype returnType="array"><string>array CoreChannel::$users</string></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
 
 $aUsers = $sChannel->users;]]></source><output><![CDATA[Array
 (
@@ -458,7 +462,7 @@ $aUsers = $sChannel->users;]]></source><output><![CDATA[Array
             [Usermode] => q
         )
     ...
-)]]></output></example><modificationTime>1310589674</modificationTime></variable><function class="CoreMaster" name="Action"><description><![CDATA[Sends an action string to the specified channel.<br /><br />More details on the optional $mOptionvalue are available from [Method CoreMaster::Raw].]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Action(string $sChannel, string $sMessage [, integer $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sMessage"/><argument type="integer" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Action("#ffs", "walks away from the cow.");]]></source><output><![CDATA[* OUTRAGEbot walks away from the cow.]]></output></example><modificationTime>1311961821</modificationTime></function><function class="CoreMaster" name="Format"><description><![CDATA[Formats a string to mIRC-like colours and formatting.
+)]]></output></example><modificationTime>1314218465</modificationTime></variable><function class="CoreMaster" name="Action"><description><![CDATA[Sends an action string to the specified channel.<br /><br />More details on the optional $mOptionvalue are available from [Method CoreMaster::Raw].]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Action(string $sChannel, string $sMessage [, integer $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sMessage"/><argument type="integer" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Action("#ffs", "walks away from the cow.");]]></source><output><![CDATA[* OUTRAGEbot walks away from the cow.]]></output></example><modificationTime>1311961821</modificationTime></function><function class="CoreMaster" name="Format"><description><![CDATA[Formats a string to mIRC-like colours and formatting.
 <br /><br />
 List of current modifiers:
 <br />
@@ -604,43 +608,76 @@ $this->Join("#westie-private passw0rd3d");]]></source><output><![CDATA[]]></outp
                 $this->Message($sChannel, "The date is: ".date("d/m/Y H:i:s", time()));
                 return END_EVENT_EXEC;
         }
-}]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="addEventHandler"><description><![CDATA[Creates an event handler.
-<br /><h4>Options for <span class="Var">$sCommandName</span>:</h4><br />
-<ul>
-	<li>"PRIVMSG" style - receive raw input from the IRC server. Check the RFC for all available commands.</li>
-	<li>"onChannelMessage" style - receive input similiar to Scripts. [Resource Miscellaneous/Callbacks] for callback listings.</li>
-</ul>
+}]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="addEventHandler" section="Event handlers"><description><![CDATA[One of the uses for addEventHandler is to listen into a built in event. You can do this by creating an event handler with the <a href="#Callbacks">pre-registered callbacks</a>, such as onChannelMessage().
 
-<br /><h4>List of possible types for <span class="Var">$sArgumentFormat</span>:</h4><br />
-<ul>
-	<li>[Method Core::getMessageObject]</li>
-	<li>c - Message parts as an array.</li>
-	<li>m - Message object.</li>
-	<li>p - The payload, or rather the bit after the semi-colon.</li>
-	<li>r - The raw, unparsed input string.</li>
-	<li>u - The parsed hostname, as an object.</li>
-</ul>
-
-<br />Leaving the <span class="Var">$sArgumentFormat</span> argument null, will result in the second parameter being the Message object, or 'm'.
-
-<br /><br />If the method is in a <span class="Var">Script</span>, then the first argument will <strong>not</strong> be the <span class="Var">Master</span> class.]]></description><prototype returnType="string"><string>string CoreMaster::addEventHandler(string $sCommandName, string $cCallback [, string $sArgumentFormat = null ])</string><arguments><argument type="string" name="$sCommandName"/><argument type="string" name="$cCallback"/><argument type="string" name="$sArgumentFormat" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[class Example extends Script
+<br /><br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra argument.]]></description><prototype returnType="string"><string>string CoreMaster::addEventHandler(string $sEvent, callback $cCallback)</string><arguments><argument type="string" name="$sEvent"/><argument type="callback" name="$cCallback"/></arguments></prototype><example><source><![CDATA[class EventExample extends Script
 {
+        /**
+         *      Called when the script is constructed.
+         */
         public function onConstruct()
-        {        
-                $this->addEventHandler("INVITE", "anotherInviteFunction", "up");
-                
-                // Note the extra argument
-                $this->addEventHandler("INVITE", function($p, $u, $c)
+        {
+                # This will require the CoreMaster instance as the first argument.
+                $this->addEventHandler("onChannelMessage", function($irc, $channel, $user, $message)
                 {
-                        $p->Message("#westie", "(custom args, lambda) OUTRAGEbot has been invited into {$c} by {$u->Nickname}");
-                }, "up");
+                        $irc->Message($channel, "{$user} said something, therefore he just got nick alerted.");
+                });
+                
+                
+                # This example doesn't need the prepended argument, however.
+                $this->addEventHandler("onChannelMessage", "Hello");
         }
         
-        public function anotherInviteFunction($pUserObject, $sChannel)
+        
+        /**
+         *      Called when someone speaks in the channel.
+         */
+        public function Hello($channel, $user, $message)
         {
-                $p->Message("#westie", "(custom args, class) OUTRAGEbot has been invited into {$sChannel} by {$pUserObject->Nickname}");
+                if(preg_match("/^hello$/", $m))
+                {
+                        $c("hello world!");
+                }
         }
-}]]></source><output><![CDATA[]]></output></example><modificationTime>1311796094</modificationTime></function><function class="CoreMaster" name="addTimer"><description><![CDATA[Creates a timer which will be executed.<br />
+}]]></source><output><![CDATA[]]></output></example><modificationTime>1314217120</modificationTime></function><function class="CoreMaster" name="addEventHandler" section="Numeric handlers"><description><![CDATA[One of the uses for addEventHandler is to listen for IRC numerics and commands. You can do this by creating an event handler, listening for perhaps, invite requests. The format codes, mentioned below, can be placed in any order, dependent on how they're needed.
+
+<h4>List of format codes</h4>
+<ul>
+	<li>c - Message parts as an array.</li>
+	<li>m - Message object. ([Method Core::getMessageObject])</li>
+	<li>p - The payload, or rather the bit after the semi-colon.</li>
+	<li>r - The raw, unparsed input string.</li>
+	<li>h - The parsed hostname, as an object.</li>
+	<li>u - User's nickname, as a string.</li>
+</ul>
+
+<br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra argument.]]></description><prototype returnType="string"><string>string CoreMaster::addEventHandler(string $sNumerics, callback $cCallback [, string $sArgumentFormat = "m" ])</string><arguments><argument type="string" name="$sNumerics"/><argument type="callback" name="$cCallback"/><argument type="string" name="$sArgumentFormat" value="&quot;m&quot;" optional="1"/></arguments></prototype><example><source><![CDATA[class NumericExample extends Script
+{
+        /**
+         *      Called when the script is constructed.
+         */
+        public function onConstruct()
+        {
+                # This will require the CoreMaster instance as the first argument.
+                $this->addEventHandler("INVITE", function($irc, $messageObject)
+                {
+                        $this->Message("#OUTRAGEbot", "The bot was invited into {$messageObject->Payload}.");
+                });
+                
+                
+                # This example doesn't need the prepended argument, however.
+                $this->addEventHandler("INVITE", "botInvited", "up");
+        }
+        
+        
+        /**
+         *      Called when someone speaks in the channel.
+         */
+        public function botInvited($user, $channel)
+        {
+                $this->Message("#OUTRAGEbot", "The bot was invited into {$channel} by {$user}. Decide already!");
+        }
+}]]></source><output><![CDATA[]]></output></example><modificationTime>1314217873</modificationTime></function><function class="CoreMaster" name="addTimer"><description><![CDATA[Creates a timer which will be executed.<br />
 <br />
 List of options for <span class=\"Code\">$iRepeat</span>:<br />
 <ul><li><span class=\"Code\">0</span> - Infinitely execute.</li><li><span class=\"Code\">1</span> - Repeat once</li><li><span class=\"Code\">2</span> - Repeat twice, and so on.</li></ul>]]></description><prototype returnType="string"><string>string CoreMaster::addTimer(callback $cCallback, integer $iInterval [, integer $iRepeat = 1 [, array $aArguments = array() ]])</string><arguments><argument type="callback" name="$cCallback"/><argument type="integer" name="$iInterval"/><argument type="integer" name="$iRepeat" value="1" optional="1"/><argument type="array" name="$aArguments" value="array()" optional="1"/></arguments></prototype><example><source><![CDATA[$sTimerHandler = $this->addTimer(function($pInstance)
@@ -804,7 +841,7 @@ because the software automatically scans for these handlers, and removes them be
 
 Take note that this is Script specific, a Resource available in one Script is not accessable to another.]]></description><prototype returnType="boolean"><string>boolean Script::removeResource(string $sResource)</string><arguments><argument type="string" name="$sResource"/></arguments></prototype><example><source><![CDATA[$this->removeResource("Westie.txt");]]></source><output><![CDATA[true]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="removeTimer"><description><![CDATA[Removes a timer from being called.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::removeTimer(string $sTimerID)</string><arguments><argument type="string" name="$sTimerID"/></arguments></prototype><example><source><![CDATA[$this->removeTimer($sTimerID);]]></source><output><![CDATA[[true]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="replyCTCPMessage"><description><![CDATA[Responds to a CTCP message.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::replyCTCPMessage(string $sNickname, string $sMessage)</string><arguments><argument type="string" name="$sNickname"/><argument type="string" name="$sMessage"/></arguments></prototype><example><source><![CDATA[$this->replyCTCPMessage("Westie", "VERSION Err, unknown version here?");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="requestCTCPMessage"><description><![CDATA[Requests a CTCP message.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::requestCTCPMessage(string $sNickname, string $sMessage [, integer $iTimeout = 5 ])</string><arguments><argument type="string" name="$sNickname"/><argument type="string" name="$sMessage"/><argument type="integer" name="$iTimeout" value="5" optional="1"/></arguments></prototype><example><source><![CDATA[$this->requestCTCPMessage("Westie", "VERSION");]]></source><output><![CDATA[mIRC v7.19 Khaled Mardam-Bey]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="stripAll"><description><![CDATA[Removes all formatting and colouring codes from the input string.]]></description><prototype returnType="string"><string>string CoreMaster::stripAll(string $sInputText)</string><arguments><argument type="string" name="$sInputText"/></arguments></prototype><example><source><![CDATA[$sCleanString = $this->stripAll(Format::Bold.Format::Blue."Sample string!");]]></source><output><![CDATA[Sample string!]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="stripColour"><description><![CDATA[Removes all colouring codes from the input string.]]></description><prototype returnType="string"><string>string CoreMaster::stripColour(string $sInputText)</string><arguments><argument type="string" name="$sInputText"/></arguments></prototype><example><source><![CDATA[$sCleanString = $this->stripColour(Format::Blue."Sample string!");]]></source><output><![CDATA[Sample string!]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="stripFormat"><description><![CDATA[Removes all formatting codes from the input string.]]></description><prototype returnType="string"><string>string CoreMaster::stripFormat(string $sInputText)</string><arguments><argument type="string" name="$sInputText"/></arguments></prototype><example><source><![CDATA[$sCleanString = $this->stripFormat(Format::Bold."Sample string!");]]></source><output><![CDATA[Sample string!]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="triggerEvent"><description><![CDATA[Fires an event to the Scripts, and to any event handlers that have been hooked to this particular event.
 
-<br />You can find a list of all callbacks and their arguments here.]]></description><prototype returnType="string"><string>string CoreMaster::triggerEvent(string $sEvent [, mixed $... ])</string><arguments><argument type="string" name="$sEvent"/><argument type="mixed" name="$..." optional="1" multiarg="1"/></arguments></prototype><example><source><![CDATA[$this->triggerEvent("onChannelCommand", $sChannel, $sNickname, $sCommand, $aArguments);]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreResource" name="Read"><description><![CDATA[Returns the contents of a resource.]]></description><prototype returnType="string"><string>string CoreResource::Read(void)</string><arguments/></prototype><example><source><![CDATA[$pResource = $this->getResource("Accounts/Westie.user");
+<br />You can find a list of all callbacks and their arguments here.]]></description><prototype returnType="string"><string>string CoreMaster::triggerEvent(string $sEvent [, mixed $... ])</string><arguments><argument type="string" name="$sEvent"/><argument type="mixed" name="$..." optional="1" multiarg="1"/></arguments></prototype><example><source><![CDATA[$this->triggerEvent("onChannelCommand", $sChannel, $sNickname, $sCommand, $sArguments);]]></source><output><![CDATA[]]></output></example><modificationTime>1314217248</modificationTime></function><function class="CoreResource" name="Read"><description><![CDATA[Returns the contents of a resource.]]></description><prototype returnType="string"><string>string CoreResource::Read(void)</string><arguments/></prototype><example><source><![CDATA[$pResource = $this->getResource("Accounts/Westie.user");
 
 echo $pResource->read();]]></source><output><![CDATA[[whatever is in your resource, I suppose]]]></output></example><modificationTime>1311722355</modificationTime></function><function class="CoreResource" name="Write"><description><![CDATA[Either wipes the file and writes with new contents, or appends to the file.]]></description><prototype returnType="boolean"><string>boolean CoreResource::Write(string $sFileContents [, boolean $bAppend = false ])</string><arguments><argument type="string" name="$sFileContents"/><argument type="boolean" name="$bAppend" value="false" optional="1"/></arguments></prototype><example><source><![CDATA[$pResource = $this->getResource("Accounts/Westie.user");
 
