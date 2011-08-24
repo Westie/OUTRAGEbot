@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     0638fa8bb13e1aca64885a4be9e6b7d78aab0af7
- *	Committed at:   Wed Aug 24 23:16:56 BST 2011
+ *	Git commit:     72dcd361ddbd66db711dbc45552ab766bc6bbf84
+ *	Committed at:   Wed Aug 24 23:26:52 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -49,9 +49,16 @@ class WhatPulse extends Script
 	 */
 	public function getWPStats($sChannel, $sNickname, $sArguments)
 	{
+		$sPerson = $sNickname;
+
+		if($sArguments)
+		{
+			$sNickname = $sArguments;
+		}
+
 		if(!$this->isResource("Users/{$sNickname}"))
 		{
-			$this->Notice($sNickname, "Nope, you don't have an WP id with us, use setwp.");
+			$this->Notice($sPerson, "Nope, you don't have an WP id with us, use setwp.");
 			return END_EVENT_EXEC;
 		}
 
@@ -59,7 +66,7 @@ class WhatPulse extends Script
 
 		if(!($pWhatpulse instanceof SimpleXMLElement))
 		{
-			$this->Notice($sNickname, "There seems to be an error. Sorry about that!");
+			$this->Notice($sPerson, "There seems to be an error. Sorry about that!");
 			return END_EVENT_EXEC;
 		}
 
@@ -71,7 +78,11 @@ class WhatPulse extends Script
 		$iRank = number_format("{$pWhatpulse->Rank}");
 		$iPulses = number_format("{$pWhatpulse->Pulses}");
 
+		$iDelta = (strtotime(date("Y-m-d")) - strtotime($pWhatpulse->DateJoined)) / 86400;
+		$iKeyAvg = number_format((string) ($pWhatpulse->TotalKeyCount / $iDelta));
+
 		$this->Message($sChannel, "Since ".Format::DarkGreen."{$sDate}".Format::Clear.", ".Format::DarkGreen."{$sNickname}".Format::Clear." has typed ".Format::DarkGreen."{$iKeys}".Format::Clear." characters, clicked ".Format::DarkGreen."{$iClicks}".Format::Clear." times and moved their mouse ".Format::DarkGreen."{$iMouseDistance}".Format::Clear." miles.");
+		$this->Message($sChannel, "This gives ".Format::DarkGreen."{$sNickname}".Format::Clear." an average of ".Format::DarkGreen."{$iKeyAvg}".Format::Clear." keys per day.");
 		$this->Message($sChannel, Format::DarkGreen."{$sNickname}".Format::Clear." has sent ".Format::DarkGreen."{$iPulses}".Format::Clear." pulses during this time, giving them a rank of ".Format::DarkGreen."{$iRank}".Format::Clear.".");
 
 		return END_EVENT_EXEC;
@@ -87,15 +98,7 @@ class WhatPulse extends Script
 		$iUserID = $pUser->read();
 		unset($pUser);
 
-		$pCache = $this->getResource("Cache/{$iUserID}");
-
-		if($pCache->isNew() || $pCache->timeModify + 400 > time())
-		{
-			$sXML = file_get_contents("http://whatpulse.org/api/user.php?UserID={$iUserID}");
-			$pCache->write($sXML);
-		}
-
-		$sXML = $pCache->read();
+		$sXML = file_get_contents("http://whatpulse.org/api/user.php?UserID={$iUserID}");
 
 		if(!stristr($sXML, "<?xml"))
 		{
