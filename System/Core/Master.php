@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     0638fa8bb13e1aca64885a4be9e6b7d78aab0af7
- *	Committed at:   Wed Aug 24 23:16:56 BST 2011
+ *	Git commit:     b4261585b7804e8c46a15f36d4cb274a811f0586
+ *	Committed at:   Mon Aug 29 23:47:12 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -14,6 +14,9 @@
 
 class CoreMaster
 {
+	/**
+	 *	Required variables.
+	 */
 	public
 		$pSocket = null,
 		$pMessage = null,
@@ -21,6 +24,7 @@ class CoreMaster
 
 		$pEventHandlers = null,
 		$pCurrentScript = null,
+		$pUsers = null,
 		$pChannels = null;
 
 
@@ -41,6 +45,7 @@ class CoreMaster
 
 		$this->pMessage = new stdClass();
 		$this->pChannels = new stdClass();
+		$this->pUsers = new stdClass();
 		$this->pEventHandlers = new stdClass();
 
 		$this->pBotItter = (object) array
@@ -232,7 +237,7 @@ class CoreMaster
 			$aMethods[] = $sFunctionName;
 		}
 
-		return $aMethods;
+		return sort($aMethods);
 	}
 
 
@@ -758,10 +763,50 @@ class CoreMaster
 
 
 	/**
+	 *	Retrieves a user or a channel object.
+	 */
+	public function getObject($sObject)
+	{
+		$sPattern = "/[".$this->getServerConfiguration('CHANTYPES')."]/";
+
+		if(preg_match($sPattern, $sObject[0]))
+		{
+			return $this->getChannel($sObject);
+		}
+
+		return $this->getUser($sObject);
+	}
+
+
+	/**
+	 *	Retrieve the user object.
+	 */
+	public function getUser($sNickname)
+	{
+		if($sNickname instanceof CoreUser)
+		{
+			return $sNickname;
+		}
+
+		if(!isset($this->pUsers->$sNickname))
+		{
+			$this->pUsers->$sNickname = new CoreUser($this, $sNickname);
+		}
+
+		return $this->pUsers->$sNickname;
+	}
+
+
+	/**
 	 *	Retrieve the channel object.
 	 */
 	public function getChannel($sChannel)
 	{
+		if($sChannel instanceof CoreChannel)
+		{
+			return $sChannel;
+		}
+
 		$sChannel = strtolower($sChannel);
 
 		if(!isset($this->pChannels->$sChannel))

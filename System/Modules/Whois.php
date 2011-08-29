@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
- *	Committed at:   Tue Jul 26 23:19:17 BST 2011
+ *	Git commit:     b4261585b7804e8c46a15f36d4cb274a811f0586
+ *	Committed at:   Mon Aug 29 23:47:12 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -40,7 +40,7 @@ class ModuleWhois
 			'helper' => false,
 			'user' => new stdClass(),
 			'server' => new stdClass(),
-			'ircop' => false,
+			'ircOp' => false,
 			'idleTime' => 0,
 			'signonTime' => 0,
 			'channels' => array(),
@@ -105,7 +105,7 @@ class ModuleWhois
 
 			case "313":
 			{
-				self::$pTempObject->ircop = true;
+				self::$pTempObject->ircOp = true;
 
 				return false;
 			}

@@ -59,10 +59,10 @@
 	<callback name="onChannelJoin">
 		<description><![CDATA[Called when someone joins the channel.]]></description>
 		<prototype>
-			<string>public function onChannelJoin(Channel $sChannel, string $sNickname)</string>
+			<string>public function onChannelJoin(CoreChannel $sChannel, CoreUser $sNickname)</string>
 			<arguments>
-				<argument type="Channel" name="$sString"/>
-				<argument type="string" name="$sNickname"/>
+				<argument type="CoreChannel" name="$sString"/>
+				<argument type="CoreUser" name="$sNickname"/>
 			</arguments>
 		</prototype>
 		<example>
@@ -76,10 +76,10 @@
 	<callback name="onChannelPart">
 		<description><![CDATA[Called when someone parts the channel.]]></description>
 		<prototype>
-			<string>public function onChannelPart(Channel $sChannel, string $sNickname, string $sReason)</string>
+			<string>public function onChannelPart(CoreChannel $sChannel, CoreUser $sNickname, string $sReason)</string>
 			<arguments>
-				<argument type="Channel" name="$sString"/>
-				<argument type="string" name="$sNickname"/>
+				<argument type="CoreChannel" name="$sString"/>
+				<argument type="CoreUser" name="$sNickname"/>
 				<argument type="string" name="$sReason"/>
 			</arguments>
 		</prototype>
@@ -91,14 +91,14 @@
 		</example>
 	</callback>
 	
-	<callback name="onChannelPart">
+	<callback name="onChannelKick">
 		<description><![CDATA[Called when someone is kicked from the channel.]]></description>
 		<prototype>
-			<string>public function onChannelKick(Channel $sChannel, string $sAdminUser, string $sKickedUser, string sReason)</string>
+			<string>public function onChannelKick(CoreChannel $sChannel, CoreUser $sAdminUser, CoreUser $sKickedUser, string $sReason)</string>
 			<arguments>
-				<argument type="Channel" name="$sString"/>
-				<argument type="string" name="$sAdminUser"/>
-				<argument type="string" name="$sKickedUser"/>
+				<argument type="CoreChannel" name="$sString"/>
+				<argument type="CoreUser" name="$sAdminUser"/>
+				<argument type="CoreUser" name="$sKickedUser"/>
 				<argument type="string" name="$sReason"/>
 			</arguments>
 		</prototype>
@@ -113,10 +113,10 @@
 	<callback name="onChannelTopic">
 		<description><![CDATA[Called when the channel's topic has been changed.]]></description>
 		<prototype>
-			<string>public function onChannelTopic(Channel $sChannel, string $sNickname, string $sTopic)</string>
+			<string>public function onChannelTopic(CoreChannel $sChannel, CoreUser $sNickname, string $sTopic)</string>
 			<arguments>
-				<argument type="Channel" name="$sString"/>
-				<argument type="string" name="$sNickname"/>
+				<argument type="CoreChannel" name="$sString"/>
+				<argument type="CoreUser" name="$sNickname"/>
 				<argument type="string" name="$sTopic"/>
 			</arguments>
 		</prototype>
@@ -131,10 +131,10 @@
 	<callback name="onUserNotice">
 		<description><![CDATA[Called when the channel or bot recieves a NOTICE command.]]></description>
 		<prototype>
-			<string>public function onUserNotice(string $sSender, string $sRecipient, string $sMessage)</string>
+			<string>public function onUserNotice(CoreUser $sSender, CoreUser $sRecipient, string $sMessage)</string>
 			<arguments>
-				<argument type="string" name="$sSender"/>
-				<argument type="string" name="$sRecipient"/>
+				<argument type="CoreUser" name="$sSender"/>
+				<argument type="CoreUser" name="$sRecipient"/>
 				<argument type="string" name="$sMessage"/>
 			</arguments>
 		</prototype>
@@ -149,10 +149,10 @@
 	<callback name="onChannelMessage">
 		<description><![CDATA[Called when there is talk in the channel.]]></description>
 		<prototype>
-			<string>public function onChannelMessage(Channel $sChannel, string $sNickname, string $sMessage)</string>
+			<string>public function onChannelMessage(CoreChannel $sChannel, CoreUser $sNickname, string $sMessage)</string>
 			<arguments>
-				<argument type="Channel" name="$sString"/>
-				<argument type="string" name="$sNickname"/>
+				<argument type="CoreChannel" name="$sString"/>
+				<argument type="CoreUser" name="$sNickname"/>
 				<argument type="string" name="$sMessage"/>
 			</arguments>
 		</prototype>
@@ -167,10 +167,10 @@
 	<callback name="onChannelCommand">
 		<description><![CDATA[Called when someone in the channel issues a command.]]></description>
 		<prototype>
-			<string>public function onChannelCommand(Channel $sChannel, string $sNickname, string $sCommand, string $sArguments)</string>
+			<string>public function onChannelCommand(CoreChannel $sChannel, CoreUser $sNickname, string $sCommand, string $sArguments)</string>
 			<arguments>
-				<argument type="Channel" name="$sString"/>
-				<argument type="string" name="$sNickname"/>
+				<argument type="CoreChannel" name="$sString"/>
+				<argument type="CoreUser" name="$sNickname"/>
 				<argument type="string" name="$sCommand"/>
 				<argument type="string" name="$sArguments"/>
 			</arguments>
@@ -186,9 +186,9 @@
 	<callback name="onCTCPRequest">
 		<description><![CDATA[Called when someone issues a CTCP request.]]></description>
 		<prototype>
-			<string>public function onCTCPRequest(string $sNickname, string $sPayload)</string>
+			<string>public function onCTCPRequest(CoreUser $sNickname, string $sPayload)</string>
 			<arguments>
-				<argument type="string" name="$sNickname"/>
+				<argument type="CoreUser" name="$sNickname"/>
 				<argument type="string" name="$sPayload"/>
 			</arguments>
 		</prototype>
@@ -203,9 +203,9 @@
 	<callback name="onCTCPResponse">
 		<description><![CDATA[Called when replies to a CTCP request.]]></description>
 		<prototype>
-			<string>public function onCTCPResponse(string $sNickname, string $sPayload)</string>
+			<string>public function onCTCPResponse(CoreUser $sNickname, string $sPayload)</string>
 			<arguments>
-				<argument type="string" name="$sNickname"/>
+				<argument type="CoreUser" name="$sNickname"/>
 				<argument type="string" name="$sPayload"/>
 			</arguments>
 		</prototype>
@@ -220,10 +220,10 @@
 	<callback name="onPrivateMessage">
 		<description><![CDATA[Called when someone private messages the bot.]]></description>
 		<prototype>
-			<string>public function onPrivateMessage(string $sSender, string $sRecipient, string $sMessage)</string>
+			<string>public function onPrivateMessage(CoreUser $sSender, CoreUser $sRecipient, string $sMessage)</string>
 			<arguments>
-				<argument type="string" name="$sSender"/>
-				<argument type="string" name="$sRecipient"/>
+				<argument type="CoreUser" name="$sSender"/>
+				<argument type="CoreUser" name="$sRecipient"/>
 				<argument type="string" name="$sMessage"/>
 			</arguments>
 		</prototype>
@@ -255,9 +255,9 @@
 	<callback name="onUserQuit">
 		<description><![CDATA[Called when someone quits the network.]]></description>
 		<prototype>
-			<string>public function onUserQuit(string $sNickname, string $sReason)</string>
+			<string>public function onUserQuit(CoreUser $sNickname, string $sReason)</string>
 			<arguments>
-				<argument type="string" name="$sNickname"/>
+				<argument type="CoreUser" name="$sNickname"/>
 				<argument type="string" name="$sReason"/>
 			</arguments>
 		</prototype>
@@ -697,7 +697,7 @@ List of options for <span class=\"Code\">$iRepeat</span>:<br />
     [3] => getCurrentSocket
     [4] => getCallableMethods
     ...
-)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getChannel"><description><![CDATA[Returns the instance of CoreChannel for that channel.]]></description><prototype returnType="CoreChannel"><string>CoreChannel CoreMaster::getChannel(string $sChannel)</string><arguments><argument type="string" name="$sChannel"/></arguments></prototype><example><source><![CDATA[$pChannel = $this->getChannel("#android");]]></source><output><![CDATA[[object CoreChannel]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getChannelList"><description><![CDATA[Returns an array containing all the public channels on the network. Only available if the List module is enabled - it is by default. Also, the output won't be so "questionable" when really used...]]></description><prototype returnType="array"><string>array CoreMaster::getChannelList()</string><arguments/></prototype><example><source><![CDATA[$pChannels = CoreMaster::getChannelList();]]></source><output><![CDATA[Array
+)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getChannel"><description><![CDATA[Returns the instance of [Class CoreChannel] for that channel.]]></description><prototype returnType="CoreChannel"><string>CoreChannel CoreMaster::getChannel(string $sChannel)</string><arguments><argument type="string" name="$sChannel"/></arguments></prototype><example><source><![CDATA[$pChannel = $this->getChannel("#android");]]></source><output><![CDATA[[object CoreChannel]]]></output></example><modificationTime>1314657636</modificationTime></function><function class="CoreMaster" name="getChannelList"><description><![CDATA[Returns an array containing all the public channels on the network. Only available if the List module is enabled - it is by default. Also, the output won't be so "questionable" when really used...]]></description><prototype returnType="array"><string>array CoreMaster::getChannelList()</string><arguments/></prototype><example><source><![CDATA[$pChannels = CoreMaster::getChannelList();]]></source><output><![CDATA[Array
 (
     [1] => stdClass Object
         (
@@ -750,7 +750,7 @@ Take note that this is Script specific, a Resource available in one Script is no
         )
 )]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getNextSocket"><description><![CDATA[Returns the next Socket instance. This is in order of Socket creation.]]></description><prototype returnType="CoreSocket"><string>CoreSocket CoreMaster::getNextSocket(void)</string><arguments/></prototype><example><source><![CDATA[$pSocket = $this->getNextSocket();
 
-$pSocket->Output("PRIVMSG #ffs :I don't know!");]]></source><output><![CDATA[[object CoreSocket]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getResource"><description><![CDATA[Returns an instance of [Class CoreResource] for that resource.<br /><br />
+$pSocket->Output("PRIVMSG #ffs :I don't know!");]]></source><output><![CDATA[[object CoreSocket]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getObject"><description><![CDATA[Returns an instance of CoreUser or CoreChannel for the requested string.]]></description><prototype returnType="CoreUser/CoreChannel"><string>CoreUser/CoreChannel CoreMaster::getObject(string $sObject)</string><arguments><argument type="string" name="$sObject"/></arguments></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");]]></source><output><![CDATA[[object CoreUser]]]></output></example><modificationTime>1314657892</modificationTime></function><function class="CoreMaster" name="getResource"><description><![CDATA[Returns an instance of [Class CoreResource] for that resource.<br /><br />
 
 Take note that this is Script specific, a Resource available in one Script is not accessable to another.]]></description><prototype returnType="CoreResource"><string>CoreResource Script::getResource(string $sResource [, string $sMode = "w+" ])</string><arguments><argument type="string" name="$sResource"/><argument type="string" name="$sMode" value="&quot;w+&quot;" optional="1"/></arguments></prototype><example><source><![CDATA[$this->getResource("Westie.txt");]]></source><output><![CDATA[[object CoreResource]]]></output></example><modificationTime>1311795320</modificationTime></function><function class="CoreMaster" name="getServerConfiguration"><description><![CDATA[Returns the server settings, or if $sConfigurationKey is provided, the specific key.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getServerConfiguration([ string $sConfigurationKey = null ])</string><arguments><argument type="string" name="$sConfigurationKey" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[$aServerConfig = $this->getServerConfiguration();]]></source><output><![CDATA[stdClass Object
 (
@@ -791,7 +791,7 @@ Take note that this is Script specific, a Resource available in one Script is no
     [STATUSMSG] => ~&@%+
     [EXCEPTS] => 1
     [INVEX] => 1
-)]]></output></example><modificationTime>1311873626</modificationTime></function><function class="CoreMaster" name="getSocketConfiguration"><description><![CDATA[Returns the socket settings, or if $sConfigurationKey is provided, the specific key.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getSocketConfiguration([ string $sConfigurationKey = null ])</string><arguments><argument type="string" name="$sConfigurationKey" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[$aServerConfig = $this->getServerConfiguration();]]></source><output><![CDATA[(populate me)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getWhoisData"><description><![CDATA[Returns an object containing all the user information. Only available if the Whois module is enabled - it is by default.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getWhoisData(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[$pWhois = $this->getWhoisData("Cameron");]]></source><output><![CDATA[stdClass Object
+)]]></output></example><modificationTime>1311873626</modificationTime></function><function class="CoreMaster" name="getSocketConfiguration"><description><![CDATA[Returns the socket settings, or if $sConfigurationKey is provided, the specific key.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getSocketConfiguration([ string $sConfigurationKey = null ])</string><arguments><argument type="string" name="$sConfigurationKey" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[$aServerConfig = $this->getServerConfiguration();]]></source><output><![CDATA[(populate me)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getUser"><description><![CDATA[Returns the instance of [Class CoreUser] for that user.]]></description><prototype returnType="CoreUser"><string>CoreUser CoreMaster::getUser(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");]]></source><output><![CDATA[[object CoreUser]]]></output></example><modificationTime>1314657638</modificationTime></function><function class="CoreMaster" name="getWhoisData"><description><![CDATA[Returns an object containing all the user information. Only available if the Whois module is enabled - it is by default.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getWhoisData(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[$pWhois = $this->getWhoisData("Cameron");]]></source><output><![CDATA[stdClass Object
 (
     [away] => false
     [helper] => false

@@ -139,7 +139,7 @@
 				<li><a href="#onDisconnect">onDisconnect()</a></li>
 				<li><a href="#onChannelJoin">onChannelJoin()</a></li>
 				<li><a href="#onChannelPart">onChannelPart()</a></li>
-				<li><a href="#onChannelPart">onChannelPart()</a></li>
+				<li><a href="#onChannelKick">onChannelKick()</a></li>
 				<li><a href="#onChannelTopic">onChannelTopic()</a></li>
 				<li><a href="#onUserNotice">onUserNotice()</a></li>
 				<li><a href="#onChannelMessage">onChannelMessage()</a></li>
@@ -203,9 +203,11 @@
 				<li><a href="#CoreMaster::isResource">CoreMaster::isResource()</a></li>
 				<li><a href="#CoreMaster::getNetworkConfiguration">CoreMaster::getNetworkConfiguration()</a></li>
 				<li><a href="#CoreMaster::getNextSocket">CoreMaster::getNextSocket()</a></li>
+				<li><a href="#CoreMaster::getObject">CoreMaster::getObject()</a></li>
 				<li><a href="#CoreMaster::getResource">CoreMaster::getResource()</a></li>
 				<li><a href="#CoreMaster::getServerConfiguration">CoreMaster::getServerConfiguration()</a></li>
 				<li><a href="#CoreMaster::getSocketConfiguration">CoreMaster::getSocketConfiguration()</a></li>
+				<li><a href="#CoreMaster::getUser">CoreMaster::getUser()</a></li>
 				<li><a href="#CoreMaster::getWhoisData">CoreMaster::getWhoisData()</a></li>
 				<li><a href="#CoreMaster::isAdmin">CoreMaster::isAdmin()</a></li>
 				<li><a href="#CoreMaster::isResource">CoreMaster::isResource()</a></li>
@@ -314,7 +316,7 @@
 			<div class="Description">Called when someone joins the channel.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelJoin</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelJoin</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreChannel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CoreUser&nbsp;$sNickname</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -331,7 +333,7 @@
 			<div class="Description">Called when someone parts the channel.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelPart</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sReason</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelPart</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreChannel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CoreUser&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sReason</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -342,13 +344,13 @@
 		</div>
 
 		<div class="DefCallback">
-			<a name="onChannelPart" class="Name">onChannelPart()</a>
+			<a name="onChannelKick" class="Name">onChannelKick()</a>
 
 			<h4>Description</h4>
 			<div class="Description">Called when someone is kicked from the channel.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelKick</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sAdminUser</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sKickedUser</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;sReason</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelKick</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreChannel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CoreUser&nbsp;$sAdminUser</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CoreUser&nbsp;$sKickedUser</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sReason</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -365,7 +367,7 @@
 			<div class="Description">Called when the channel's topic has been changed.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelTopic</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sTopic</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelTopic</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreChannel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CoreUser&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sTopic</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -382,7 +384,7 @@
 			<div class="Description">Called when the channel or bot recieves a NOTICE command.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUserNotice</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sSender</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sRecipient</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUserNotice</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreUser&nbsp;$sSender</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CoreUser&nbsp;$sRecipient</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -399,7 +401,7 @@
 			<div class="Description">Called when there is talk in the channel.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreChannel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CoreUser&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -416,7 +418,7 @@
 			<div class="Description">Called when someone in the channel issues a command.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelCommand</span><span style="color: #007700">(</span><span style="color: #0000BB">Channel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sCommand</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sArguments</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelCommand</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreChannel&nbsp;$sChannel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CoreUser&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sCommand</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sArguments</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -433,7 +435,7 @@
 			<div class="Description">Called when someone issues a CTCP request.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onCTCPRequest</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sPayload</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onCTCPRequest</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreUser&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sPayload</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -450,7 +452,7 @@
 			<div class="Description">Called when replies to a CTCP request.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onCTCPResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sPayload</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onCTCPResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreUser&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sPayload</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -467,7 +469,7 @@
 			<div class="Description">Called when someone private messages the bot.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onPrivateMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sSender</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sRecipient</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onPrivateMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreUser&nbsp;$sSender</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">CoreUser&nbsp;$sRecipient</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sMessage</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -501,7 +503,7 @@
 			<div class="Description">Called when someone quits the network.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUserQuit</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sReason</span><span style="color: #007700">)</span>
+			<div class="Prototype"><code><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUserQuit</span><span style="color: #007700">(</span><span style="color: #0000BB">CoreUser&nbsp;$sNickname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sReason</span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -1340,7 +1342,7 @@ List of options for <span class=\"Code\">$iRepeat</span>:<br />
 			<a name="CoreMaster::getChannel" class="Name">CoreMaster::getChannel()</a>
 
 			<h4>Description</h4>
-			<div class="Description">Returns the instance of CoreChannel for that channel.</div>
+			<div class="Description">Returns the instance of <a href="#CoreChannel">CoreChannel</a> for that channel.</div>
 
 			<h4>Prototype</h4>
 			<div class="Prototype"><code><span style="color: #0000BB">CoreChannel&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel</span><span style="color: #007700">)</span>
@@ -1486,6 +1488,27 @@ Take note that this is Script specific, a Resource available in one Script is no
 		</div>
 
 		<div class="DefMethod">
+			<a name="CoreMaster::getObject" class="Name">CoreMaster::getObject()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns an instance of CoreUser or CoreChannel for the requested string.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">CoreUser</span><span style="color: #007700">/</span><span style="color: #0000BB">CoreChannel&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getObject</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sObject</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">object&nbsp;CoreUser</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
 			<a name="CoreMaster::getResource" class="Name">CoreMaster::getResource()</a>
 
 			<h4>Description</h4>
@@ -1545,6 +1568,27 @@ Take note that this is Script specific, a Resource available in one Script is no
 </span>
 </code></div>
 			<div class="Output"><code><span style="color: #007700">(</span><span style="color: #0000BB">populate&nbsp;me</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getUser" class="Name">CoreMaster::getUser()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns the instance of <a href="#CoreUser">CoreUser</a> for that user.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">CoreUser&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNickname</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">object&nbsp;CoreUser</span><span style="color: #007700">]</span>
 </span>
 </code></div>
 
@@ -2048,7 +2092,7 @@ Take note that this is Script specific, a Resource available in one Script is no
 		</div>
 	
 	<p>
-		This documentation is up to date as of Wed, 24 Aug 2011 22:39:35 +0100, and it is generated from the
+		This documentation is up to date as of Mon, 29 Aug 2011 23:46:55 +0100, and it is generated from the
 		<a href="http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/">official online documentation</a>.
 	</p>
 	
