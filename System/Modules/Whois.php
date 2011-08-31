@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     b4261585b7804e8c46a15f36d4cb274a811f0586
- *	Committed at:   Mon Aug 29 23:47:12 BST 2011
+ *	Git commit:     31ad7f1e21fb1a1676f99c6ce89e2e51a6897a0e
+ *	Committed at:   Wed Aug 31 21:37:31 UTC 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -36,14 +36,18 @@ class ModuleWhois
 		/* Send the request, and sort out the handler */
 		self::$pTempObject = (object) array
 		(
+			'address' => false,
 			'away' => false,
-			'helper' => false,
-			'user' => new stdClass(),
-			'server' => new stdClass(),
-			'ircOp' => false,
-			'idleTime' => 0,
-			'signonTime' => 0,
 			'channels' => array(),
+			'helper' => false,
+			'idleTime' => 0,
+			'ircOp' => false,
+			'nickname' => false,
+			'realname' => false,
+			'serverAddress' => false,
+			'serverName' => false,
+			'signonTime' => 0,
+			'username' => false,
 		);
 
 		$pInstance = Core::getCurrentInstance();
@@ -81,24 +85,18 @@ class ModuleWhois
 
 			case "311":
 			{
-				self::$pTempObject->user = (object) array
-				(
-					'nick' => $pMessage->Parts[3],
-					'username' => $pMessage->Parts[4],
-					'address' => $pMessage->Parts[5],
-					'info' => $pMessage->Payload,
-				);
+				self::$pTempObject->nickname = $pMessage->Parts[3];
+				self::$pTempObject->username = $pMessage->Parts[4];
+				self::$pTempObject->address = $pMessage->Parts[5];
+				self::$pTempObject->realname = $pMessage->Payload;
 
 				return false;
 			}
 
 			case "312":
 			{
-				self::$pTempObject->server = (object) array
-				(
-					'address' => $pMessage->Parts[4],
-					'name' => $pMessage->Payload,
-				);
+				self::$pTempObject->serverAddress = $pMessage->Parts[4];
+				self::$pTempObject->serverName = $pMessage->Payload;
 
 				return false;
 			}

@@ -237,6 +237,23 @@
 				<li><a href="#CoreResource::modifyTime">CoreResource::modifyTime()</a></li>
 				<li><a href="#CoreResource::__toString">CoreResource::__toString()</a></li>
 			</ul>
+
+			<li><a name="CoreUser">CoreUser</a></li>
+			<ul>
+				<li><a href="#CoreUser::address">CoreUser::$address</a></li>
+				<li><a href="#CoreUser::away">CoreUser::$away</a></li>
+				<li><a href="#CoreUser::channels">CoreUser::$channels</a></li>
+				<li><a href="#CoreUser::helper">CoreUser::$helper</a></li>
+				<li><a href="#CoreUser::idleTime">CoreUser::$idleTime</a></li>
+				<li><a href="#CoreUser::ircOp">CoreUser::$ircOp</a></li>
+				<li><a href="#CoreUser::nickname">CoreUser::$nickname</a></li>
+				<li><a href="#CoreUser::realname">CoreUser::$realname</a></li>
+				<li><a href="#CoreUser::serverAddress">CoreUser::$serverAddress</a></li>
+				<li><a href="#CoreUser::serverName">CoreUser::$serverName</a></li>
+				<li><a href="#CoreUser::signonTime">CoreUser::$signonTime</a></li>
+				<li><a href="#CoreUser::username">CoreUser::$username</a></li>
+				<li><a href="#CoreUser::version">CoreUser::version()</a></li>
+			</ul>
 		</ul>
 		
 		<h2>Callbacks</h2>
@@ -594,7 +611,7 @@
 			<a name="CoreChannel::count" class="Name">CoreChannel::$count</a>
 
 			<h4>Description</h4>
-			<div class="Description">This property the current amount of users in a channel. This class is also implements Countable, so this could be achieved from count().</div>
+			<div class="Description">This property returns the current amount of users in a channel. This class is also implements Countable, so this could be achieved from count().</div>
 
 			<h4>Prototype</h4>
 			<div class="Prototype"><code><span style="color: #0000BB">integer&nbsp;CoreChannel</span><span style="color: #007700">::</span><span style="color: #0000BB">$count</span>
@@ -1606,10 +1623,10 @@ Take note that this is Script specific, a Resource available in one Script is no
 </code></div>
 
 			<h4>Example and Output</h4>
-			<div class="Source"><code><span style="color: #0000BB">$pWhois&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getWhoisData</span><span style="color: #007700">(</span><span style="color: #DD0000">"Cameron"</span><span style="color: #007700">);</span>
+			<div class="Source"><code><span style="color: #0000BB">$pWhois&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getWhoisData</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);</span>
 </span>
 </code></div>
-			<div class="Output"><code><span style="color: #0000BB">stdClass&nbsp;Object<br /></span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">away</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">false<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">helper</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">false<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">user</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">nick</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Cameron<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Cameron<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">address</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">no1servers</span><span style="color: #007700">.</span><span style="color: #0000BB">com<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">info</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Cameron&nbsp;Banfield<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">server</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">address</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">nl</span><span style="color: #007700">.</span><span style="color: #0000BB">irc</span><span style="color: #007700">.</span><span style="color: #0000BB">androidirc</span><span style="color: #007700">.</span><span style="color: #0000BB">org<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">name</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">AndroidIRC<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">ircop</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">false<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">idleTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">5<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">signonTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1309163378<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">channels</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;Array<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;~</span><span style="color: #FF8000">#Cameron<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;%</span><span style="color: #FF8000">#TWiY-RP<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#italymafia<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />)</span>
+			<div class="Output"><code><span style="color: #0000BB">stdClass&nbsp;Object<br /></span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">address</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">icarus</span><span style="color: #007700">.</span><span style="color: #0000BB">typefish</span><span style="color: #007700">.</span><span style="color: #0000BB">co</span><span style="color: #007700">.</span><span style="color: #0000BB">uk<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">away</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">false<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">channels</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;Array<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;&amp;</span><span style="color: #FF8000">#android<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;&amp;</span><span style="color: #FF8000">#php<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">3</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#services<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">4</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;@</span><span style="color: #FF8000">#opers<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">5</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#countr<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">6</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#relations<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">7</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;+</span><span style="color: #FF8000">#music<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">8</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;~</span><span style="color: #FF8000">#OUTRAGEbot<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">helper</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">true<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">idleTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">0<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">ircOp</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">true<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Westie<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">realname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">David&nbsp;Weston<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">serverAddress</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">nl</span><span style="color: #007700">.</span><span style="color: #0000BB">irc</span><span style="color: #007700">.</span><span style="color: #0000BB">sc<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">serverName</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">irc</span><span style="color: #007700">.</span><span style="color: #0000BB">sc<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">signonTime</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">1313004064<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">westie<br /></span><span style="color: #007700">)</span>
 </span>
 </code></div>
 
@@ -2090,9 +2107,284 @@ Take note that this is Script specific, a Resource available in one Script is no
 </code></div>
 
 		</div>
+
+		<h3>CoreUser</h3>
+
+		<div class="DefVariable">
+			<a name="CoreUser::address" class="Name">CoreUser::$address</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property returns the user's address.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$address</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">address</span><span style="color: #007700">;</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">raptor</span><span style="color: #007700">.</span><span style="color: #0000BB">typefish</span><span style="color: #007700">.</span><span style="color: #0000BB">co</span><span style="color: #007700">.</span><span style="color: #0000BB">uk</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::away" class="Name">CoreUser::$away</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property checks if the user is away or not.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$away</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">away</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">bool</span><span style="color: #007700">(</span><span style="color: #0000BB">false</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::channels" class="Name">CoreUser::$channels</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property returns an array of all the channels this person is on, along with their channel modes.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$channels</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">channels</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;&amp;</span><span style="color: #FF8000">#android<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;&amp;</span><span style="color: #FF8000">#php<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">3</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#services<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">4</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;@</span><span style="color: #FF8000">#opers<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">5</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#countr<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">6</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#relations<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">7</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;+</span><span style="color: #FF8000">#music<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">8</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;~</span><span style="color: #FF8000">#OUTRAGEbot<br /></span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::helper" class="Name">CoreUser::$helper</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property checks if the user is available as an IRC helper.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$helper</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">away</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">bool</span><span style="color: #007700">(</span><span style="color: #0000BB">true</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::idleTime" class="Name">CoreUser::$idleTime</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property returns how many seconds the user has been idle.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">integer&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$idleTime</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">idleTime</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">integer</span><span style="color: #007700">(</span><span style="color: #0000BB">0</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::ircOp" class="Name">CoreUser::$ircOp</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property checks if the user is an IRC operator.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$ircOp</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">ircOp</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">bool</span><span style="color: #007700">(</span><span style="color: #0000BB">true</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::nickname" class="Name">CoreUser::$nickname</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property returns the user's nickname. Rather superfluous (you used the nickname to access this...) but it's provided here for completeness.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$nickname</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">nickname</span><span style="color: #007700">;</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">Westie</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::realname" class="Name">CoreUser::$realname</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property returns the user's real name. Well, that's when they give real names...</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$realname</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">realname</span><span style="color: #007700">;</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">David&nbsp;Weston</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::serverAddress" class="Name">CoreUser::$serverAddress</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property returns the IRC server's address that this user is connected to.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$serverAddress</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">serverAddress</span><span style="color: #007700">;</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">nl</span><span style="color: #007700">.</span><span style="color: #0000BB">irc</span><span style="color: #007700">.</span><span style="color: #0000BB">sc</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::serverName" class="Name">CoreUser::$serverName</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property returns the IRC server's network name that this user is connected to.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$serverName</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">serverName</span><span style="color: #007700">;</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">irc</span><span style="color: #007700">.</span><span style="color: #0000BB">sc</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::signonTime" class="Name">CoreUser::$signonTime</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property returns in a timestamp, when the user signed on to the network.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">integer&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$signonTime</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">signonTime</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">integer</span><span style="color: #007700">(</span><span style="color: #0000BB">1313004064</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
+			<a name="CoreUser::username" class="Name">CoreUser::$username</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property returns the user's username.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$username</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">username</span><span style="color: #007700">;</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">westie</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreUser::version" class="Name">CoreUser::version()</a>
+
+			<h4>Description</h4>
+			<div class="Description">This method returns the user's client version.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">version</span><span style="color: #007700">(</span><span style="color: #0000BB">void</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">version</span><span style="color: #007700">();</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">mIRC&nbsp;v7.19&nbsp;Khaled&nbsp;Mardam</span><span style="color: #007700">-</span><span style="color: #0000BB">Bey</span>
+</span>
+</code></div>
+
+		</div>
 	
 	<p>
-		This documentation is up to date as of Mon, 29 Aug 2011 23:46:55 +0100, and it is generated from the
+		This documentation is up to date as of Wed, 31 Aug 2011 22:37:22 +0100, and it is generated from the
 		<a href="http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/">official online documentation</a>.
 	</p>
 	

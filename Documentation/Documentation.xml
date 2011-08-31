@@ -335,13 +335,13 @@
             [Hostname] => raptor.typefish.co.uk
         )
     [Payload] => @@ print_r($this->pMessage);
-)]]></output></example><modificationTime>1310589674</modificationTime></function><variable class="CoreChannel" name="count"><description><![CDATA[This property the current amount of users in a channel. This class is also implements Countable, so this could be achieved from count().]]></description><prototype returnType="integer"><string>integer CoreChannel::$count</string></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+)]]></output></example><modificationTime>1310589674</modificationTime></function><variable class="CoreChannel" name="count"><description><![CDATA[This property returns the current amount of users in a channel. This class is also implements Countable, so this could be achieved from count().]]></description><prototype returnType="integer"><string>integer CoreChannel::$count</string></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
 
 # Using the object's property
 $iCount = $sChannel->count;
 
 # Using PHP's count()
-$iCount = count($sChannel)]]></source><output><![CDATA[7]]></output></example><modificationTime>1314218201</modificationTime></variable><function class="CoreChannel" name="getBanList"><description><![CDATA[Returns the channel ban list.]]></description><prototype returnType="array"><string>array CoreChannel::getBanList(void)</string><arguments/></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
+$iCount = count($sChannel)]]></source><output><![CDATA[7]]></output></example><modificationTime>1314823855</modificationTime></variable><function class="CoreChannel" name="getBanList"><description><![CDATA[Returns the channel ban list.]]></description><prototype returnType="array"><string>array CoreChannel::getBanList(void)</string><arguments/></prototype><example><source><![CDATA[$sChannel = $this->getChannel("#OUTRAGEbot");
 
 $aBanList = $sChannel->getBanList();]]></source><output><![CDATA[Array
 (
@@ -791,32 +791,31 @@ Take note that this is Script specific, a Resource available in one Script is no
     [STATUSMSG] => ~&@%+
     [EXCEPTS] => 1
     [INVEX] => 1
-)]]></output></example><modificationTime>1311873626</modificationTime></function><function class="CoreMaster" name="getSocketConfiguration"><description><![CDATA[Returns the socket settings, or if $sConfigurationKey is provided, the specific key.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getSocketConfiguration([ string $sConfigurationKey = null ])</string><arguments><argument type="string" name="$sConfigurationKey" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[$aServerConfig = $this->getServerConfiguration();]]></source><output><![CDATA[(populate me)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getUser"><description><![CDATA[Returns the instance of [Class CoreUser] for that user.]]></description><prototype returnType="CoreUser"><string>CoreUser CoreMaster::getUser(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");]]></source><output><![CDATA[[object CoreUser]]]></output></example><modificationTime>1314657638</modificationTime></function><function class="CoreMaster" name="getWhoisData"><description><![CDATA[Returns an object containing all the user information. Only available if the Whois module is enabled - it is by default.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getWhoisData(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[$pWhois = $this->getWhoisData("Cameron");]]></source><output><![CDATA[stdClass Object
+)]]></output></example><modificationTime>1311873626</modificationTime></function><function class="CoreMaster" name="getSocketConfiguration"><description><![CDATA[Returns the socket settings, or if $sConfigurationKey is provided, the specific key.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getSocketConfiguration([ string $sConfigurationKey = null ])</string><arguments><argument type="string" name="$sConfigurationKey" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[$aServerConfig = $this->getServerConfiguration();]]></source><output><![CDATA[(populate me)]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getUser"><description><![CDATA[Returns the instance of [Class CoreUser] for that user.]]></description><prototype returnType="CoreUser"><string>CoreUser CoreMaster::getUser(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");]]></source><output><![CDATA[[object CoreUser]]]></output></example><modificationTime>1314657638</modificationTime></function><function class="CoreMaster" name="getWhoisData"><description><![CDATA[Returns an object containing all the user information. Only available if the Whois module is enabled - it is by default.]]></description><prototype returnType="stdClass"><string>stdClass CoreMaster::getWhoisData(string $sNickname)</string><arguments><argument type="string" name="$sNickname"/></arguments></prototype><example><source><![CDATA[$pWhois = $this->getWhoisData("Westie");]]></source><output><![CDATA[stdClass Object
 (
+    [address] => icarus.typefish.co.uk
     [away] => false
-    [helper] => false
-    [user] => stdClass Object
-        (
-            [nick] => Cameron
-            [username] => Cameron
-            [address] => no1servers.com
-            [info] => Cameron Banfield
-        )
-    [server] => stdClass Object
-        (
-            [address] => nl.irc.androidirc.org
-            [name] => AndroidIRC
-        )
-    [ircop] => false
-    [idleTime] => 5
-    [signonTime] => 1309163378
     [channels] => Array
         (
-            [0] => ~#Cameron
-            [1] => %#TWiY-RP
-            [2] => #italymafia
+            [0] => &#android
+            [2] => &#php
+            [3] => #services
+            [4] => @#opers
+            [5] => #countr
+            [6] => #relations
+            [7] => +#music
+            [8] => ~#OUTRAGEbot
         )
-)]]></output></example><modificationTime>1311873346</modificationTime></function><function class="CoreMaster" name="isAdmin"><description><![CDATA[Checks if the user is a Bot administrator. Nothing to do with channel rights.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::isAdmin(void)</string><arguments/></prototype><example><source><![CDATA[if($this->isAdmin())
+    [helper] => true
+    [idleTime] => 0
+    [ircOp] => true
+    [nickname] => Westie
+    [realname] => David Weston
+    [serverAddress] => nl.irc.sc
+    [serverName] => irc.sc
+    [signonTime] => 1313004064
+    [username] => westie
+)]]></output></example><modificationTime>1314821866</modificationTime></function><function class="CoreMaster" name="isAdmin"><description><![CDATA[Checks if the user is a Bot administrator. Nothing to do with channel rights.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::isAdmin(void)</string><arguments/></prototype><example><source><![CDATA[if($this->isAdmin())
 {
         $this->Message($sChannel, "It looks like this user is actually an admin!");
 }]]></source><output><![CDATA[It looks like this user is actually an admin!]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="isResource"><description><![CDATA[Checks if that Resource exists.<br /><br />
@@ -854,4 +853,40 @@ if($pResource->isNew())
 
 echo $pResource->modifyTime();]]></source><output><![CDATA[133050650 (it's a timestamp.)]]></output></example><modificationTime>1311722784</modificationTime></function><function class="CoreResource" name="__toString"><description><![CDATA[Returns a string representation of the resources location on the computer. Useful with native PHP file functions.]]></description><prototype returnType="string"><string>string CoreResource::__toString(void)</string><arguments/></prototype><example><source><![CDATA[$pResource = $this->getResource("Accounts/Westie.user");
 
-echo filectime((string) $pResource);]]></source><output><![CDATA[/home/OUTRAGEbot/Resources/ScriptName/Accounts/Westie.user]]></output></example><modificationTime>1311722946</modificationTime></function></documentation>
+echo filectime((string) $pResource);]]></source><output><![CDATA[/home/OUTRAGEbot/Resources/ScriptName/Accounts/Westie.user]]></output></example><modificationTime>1311722946</modificationTime></function><variable class="CoreUser" name="address"><description><![CDATA[This property returns the user's address.]]></description><prototype returnType="string"><string>string CoreUser::$address</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+echo $pUser->address;]]></source><output><![CDATA[raptor.typefish.co.uk]]></output></example><modificationTime>1314825331</modificationTime></variable><variable class="CoreUser" name="away"><description><![CDATA[This property checks if the user is away or not.]]></description><prototype returnType="boolean"><string>boolean CoreUser::$away</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+var_dump($pUser->away);]]></source><output><![CDATA[bool(false)]]></output></example><modificationTime>1314824362</modificationTime></variable><variable class="CoreUser" name="channels"><description><![CDATA[This property returns an array of all the channels this person is on, along with their channel modes.]]></description><prototype returnType="array"><string>array CoreUser::$channels</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+print_r($pUser->channels)]]></source><output><![CDATA[Array
+(
+    [0] => &#android
+    [2] => &#php
+    [3] => #services
+    [4] => @#opers
+    [5] => #countr
+    [6] => #relations
+    [7] => +#music
+    [8] => ~#OUTRAGEbot
+)]]></output></example><modificationTime>1314824990</modificationTime></variable><variable class="CoreUser" name="helper"><description><![CDATA[This property checks if the user is available as an IRC helper.]]></description><prototype returnType="boolean"><string>boolean CoreUser::$helper</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+var_dump($pUser->away);]]></source><output><![CDATA[bool(true)]]></output></example><modificationTime>1314824419</modificationTime></variable><variable class="CoreUser" name="idleTime"><description><![CDATA[This property returns how many seconds the user has been idle.]]></description><prototype returnType="integer"><string>integer CoreUser::$idleTime</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+var_dump($pUser->idleTime);]]></source><output><![CDATA[integer(0)]]></output></example><modificationTime>1314824852</modificationTime></variable><variable class="CoreUser" name="ircOp"><description><![CDATA[This property checks if the user is an IRC operator.]]></description><prototype returnType="boolean"><string>boolean CoreUser::$ircOp</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+var_dump($pUser->ircOp);]]></source><output><![CDATA[bool(true)]]></output></example><modificationTime>1314824458</modificationTime></variable><variable class="CoreUser" name="nickname"><description><![CDATA[This property returns the user's nickname. Rather superfluous (you used the nickname to access this...) but it's provided here for completeness.]]></description><prototype returnType="string"><string>string CoreUser::$nickname</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+echo $pUser->nickname;]]></source><output><![CDATA[Westie]]></output></example><modificationTime>1314825332</modificationTime></variable><variable class="CoreUser" name="realname"><description><![CDATA[This property returns the user's real name. Well, that's when they give real names...]]></description><prototype returnType="string"><string>string CoreUser::$realname</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+echo $pUser->realname;]]></source><output><![CDATA[David Weston]]></output></example><modificationTime>1314825335</modificationTime></variable><variable class="CoreUser" name="serverAddress"><description><![CDATA[This property returns the IRC server's address that this user is connected to.]]></description><prototype returnType="string"><string>string CoreUser::$serverAddress</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+echo $pUser->serverAddress;]]></source><output><![CDATA[nl.irc.sc]]></output></example><modificationTime>1314823956</modificationTime></variable><variable class="CoreUser" name="serverName"><description><![CDATA[This property returns the IRC server's network name that this user is connected to.]]></description><prototype returnType="string"><string>string CoreUser::$serverName</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+echo $pUser->serverName;]]></source><output><![CDATA[irc.sc]]></output></example><modificationTime>1314826638</modificationTime></variable><variable class="CoreUser" name="signonTime"><description><![CDATA[This property returns in a timestamp, when the user signed on to the network.]]></description><prototype returnType="integer"><string>integer CoreUser::$signonTime</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+var_dump($pUser->signonTime);]]></source><output><![CDATA[integer(1313004064)]]></output></example><modificationTime>1314824859</modificationTime></variable><variable class="CoreUser" name="username"><description><![CDATA[This property returns the user's username.]]></description><prototype returnType="string"><string>string CoreUser::$username</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+echo $pUser->username;]]></source><output><![CDATA[westie]]></output></example><modificationTime>1314825329</modificationTime></variable><function class="CoreUser" name="version"><description><![CDATA[This method returns the user's client version.]]></description><prototype returnType="string"><string>string CoreUser::version(void)</string><arguments/></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+echo $pUser->version();]]></source><output><![CDATA[mIRC v7.19 Khaled Mardam-Bey]]></output></example><modificationTime>1314826451</modificationTime></function></documentation>
