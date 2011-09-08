@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     b4261585b7804e8c46a15f36d4cb274a811f0586
- *	Committed at:   Mon Aug 29 23:47:12 BST 2011
+ *	Git commit:     ebfddab76bb5fe996e439e9c2697eaa89e465874
+ *	Committed at:   Thu Sep  8 15:53:04 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -281,9 +281,9 @@ class CoreMaster
 
 
 	/**
-	 *	This private method deals with the construction of the portkey.
+	 *	This fake-private method deals with the construction of the portkey.
 	 */
-	private function internalPortkey(CoreSocket $pSocket, $sString)
+	public function internalPortkey(CoreSocket $pSocket, $sString)
 	{
 		$pMessage = Core::getMessageObject($sString);
 

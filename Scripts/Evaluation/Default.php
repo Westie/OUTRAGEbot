@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     b4261585b7804e8c46a15f36d4cb274a811f0586
- *	Committed at:   Mon Aug 29 23:47:32 BST 2011
+ *	Git commit:     ebfddab76bb5fe996e439e9c2697eaa89e465874
+ *	Committed at:   Thu Sep  8 16:03:36 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -26,12 +26,13 @@ class Evaluation extends Script
 	 */
 	public function onConstruct()
 	{
-		if(!class_exists("Tokeniser"))
+		if(!class_exists("EvaluationTokeniser"))
 		{
 			include "Tokeniser.php";
 		}
 
-		$this->pTokeniser = new Tokeniser();
+		$this->pTokeniser = new EvaluationTokeniser();
+		$this->pTokeniser->bind('$this', $this);
 	}
 
 
@@ -47,26 +48,30 @@ class Evaluation extends Script
 
 		if($sCommand == $this->getNetworkConfiguration("delimiter"))
 		{
-			$this->pTokeniser->Analyse($sArguments);
-			$sArguments = $this->pTokeniser->getOutput();
-
-			ob_start();
-
-			eval($sArguments);
-			$aOutput = ob_get_contents();
-
-			ob_end_clean();
-
-			foreach(explode("\n", $aOutput) as $sOutput)
+			try
 			{
-				$sOutput = rtrim($sOutput);
+				ob_start();
 
-				if(strlen($sOutput) < 1)
+				eval($this->pTokeniser->run($sArguments));
+				$aOutput = ob_get_contents();
+
+				ob_end_clean();
+
+				foreach(explode("\n", $aOutput) as $sOutput)
 				{
-					continue;
-				}
+					$sOutput = rtrim($sOutput);
 
-				$this->Message($sChannel, $sOutput);
+					if(strlen($sOutput) < 1)
+					{
+						continue;
+					}
+
+					$sChannel($sOutput);
+				}
+			}
+			catch(Exception $e)
+			{
+				$sChannel("Error: ".$e->getMessage());
 			}
 
 			return END_EVENT_EXEC;

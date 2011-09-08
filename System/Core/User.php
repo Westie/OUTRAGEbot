@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     31ad7f1e21fb1a1676f99c6ce89e2e51a6897a0e
- *	Committed at:   Wed Aug 31 21:37:31 UTC 2011
+ *	Git commit:     ebfddab76bb5fe996e439e9c2697eaa89e465874
+ *	Committed at:   Thu Sep  8 15:53:04 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -49,9 +49,27 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 	/**
 	 *	Sends stuff to the channel. It's a shortcut, basically.
 	 */
+	public function Message($sMessage, $mOption = SEND_DEF)
+	{
+		return $this->internalMasterObject()->Message($this->sNickname, $sMessage, $mOption);
+	}
+
+
+	/**
+	 *	Sends stuff to the channel. It's a shortcut, basically.
+	 */
 	public function __invoke($sMessage, $mOption = SEND_DEF)
 	{
 		return $this->internalMasterObject()->Message($this->sNickname, $sMessage, $mOption);
+	}
+
+
+	/**
+	 *	Returns the user's client version.
+	 */
+	public function __call($sFunction, $aArguments)
+	{
+		return call_user_func(Core::$pFunctionList->requestCTCPMessage, $this->sNickname, $sFunction.' '.implode(' ', $aArguments));
 	}
 
 
@@ -81,15 +99,6 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 		}
 
 		return null;
-	}
-
-
-	/**
-	 *	Returns the user's client version.
-	 */
-	public function version()
-	{
-		return call_user_func(Core::$pFunctionList->requestCTCPMessage, $this->sNickname, "VERSION");
 	}
 
 

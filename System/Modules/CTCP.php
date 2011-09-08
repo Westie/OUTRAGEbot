@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
- *	Committed at:   Tue Jul 26 23:19:17 BST 2011
+ *	Git commit:     ebfddab76bb5fe996e439e9c2697eaa89e465874
+ *	Committed at:   Thu Sep  8 15:53:04 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -25,11 +25,11 @@ class ModuleCTCP
 	 */
  	public static function initModule()
  	{
- 		Core::introduceFunction("replyCTCPMessage", array(__CLASS__, "Reply"));
- 		Core::introduceFunction("ctcpReply", array(__CLASS__, "Reply"));
+ 		Core::introduceFunction("replyCTCP", array("ModuleCTCP", "Reply"));
+ 		Core::introduceFunction("replyCTCPMessage", array("ModuleCTCP", "Reply"));
 
-		Core::introduceFunction("requestCTCPMessage", array(__CLASS__, "Request"));
-		Core::introduceFunction("ctcpRequest", array(__CLASS__, "Request"));
+		Core::introduceFunction("requestCTCPMessage", array("ModuleCTCP", "Request"));
+		Core::introduceFunction("requestCTCP", array("ModuleCTCP", "Request"));
  	}
 
 
@@ -47,7 +47,7 @@ class ModuleCTCP
 	/**
 	 *	Sends a CTCP request.
 	 */
-	public static function Request($sNickname, $sRequest, $iTimeout = 5)
+	public static function Request($sNickname, $sRequest, $iTimeout = 3)
 	{
 		list(self::$sCommand) = explode(' ', $sRequest, 2);
 
@@ -61,7 +61,7 @@ class ModuleCTCP
 		$pInstance->Raw($sString, SEND_CURR);
 
 		$pSocket = $pInstance->getCurrentSocket();
-		$pSocket->executeCapture(array(__CLASS__, "Response"));
+		$pSocket->executeCapture(array("ModuleCTCP", "Response"));
 
 		$sMessage = self::$sMessage;
 

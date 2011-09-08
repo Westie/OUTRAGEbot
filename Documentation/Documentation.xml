@@ -661,7 +661,7 @@ $this->Join("#westie-private passw0rd3d");]]></source><output><![CDATA[]]></outp
                 # This will require the CoreMaster instance as the first argument.
                 $this->addEventHandler("INVITE", function($irc, $messageObject)
                 {
-                        $this->Message("#OUTRAGEbot", "The bot was invited into {$messageObject->Payload}.");
+                        $irc->Message("#OUTRAGEbot", "The bot was invited into {$messageObject->Payload}.");
                 });
                 
                 
@@ -677,7 +677,7 @@ $this->Join("#westie-private passw0rd3d");]]></source><output><![CDATA[]]></outp
         {
                 $this->Message("#OUTRAGEbot", "The bot was invited into {$channel} by {$user}. Decide already!");
         }
-}]]></source><output><![CDATA[]]></output></example><modificationTime>1314217873</modificationTime></function><function class="CoreMaster" name="addTimer"><description><![CDATA[Creates a timer which will be executed.<br />
+}]]></source><output><![CDATA[]]></output></example><modificationTime>1315493500</modificationTime></function><function class="CoreMaster" name="addTimer"><description><![CDATA[Creates a timer which will be executed.<br />
 <br />
 List of options for <span class=\"Code\">$iRepeat</span>:<br />
 <ul><li><span class=\"Code\">0</span> - Infinitely execute.</li><li><span class=\"Code\">1</span> - Repeat once</li><li><span class=\"Code\">2</span> - Repeat twice, and so on.</li></ul>]]></description><prototype returnType="string"><string>string CoreMaster::addTimer(callback $cCallback, integer $iInterval [, integer $iRepeat = 1 [, array $aArguments = array() ]])</string><arguments><argument type="callback" name="$cCallback"/><argument type="integer" name="$iInterval"/><argument type="integer" name="$iRepeat" value="1" optional="1"/><argument type="array" name="$aArguments" value="array()" optional="1"/></arguments></prototype><example><source><![CDATA[$sTimerHandler = $this->addTimer(function($pInstance)

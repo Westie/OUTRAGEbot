@@ -1,105 +1,181 @@
 <?php
 /**
-*	OUTRAGEbot - PHP 5.3 based IRC bot
-*
-*	Author:		David Weston <westie@typefish.co.uk>
-*
-*	Version:        <version>
-*	Git commit:     <commitHash>
-*	Committed at:   <commitTime>
-*
-*	Licence:	http://www.typefish.co.uk/licences/
-*/
+ *	This is the Tokeniser class, part of the PHP-Scripting
+ *	collection.
+ *
+ *	Author:		David Weston <westie@typefish.co.uk>
+ *
+ *	Version:        2.0.0-Alpha
+ *	Git commit:     ebfddab76bb5fe996e439e9c2697eaa89e465874
+ *	Committed at:   Thu Sep  8 16:03:36 BST 2011
+ *
+ *	Licence:	http://www.typefish.co.uk/licences/
+ */
 
 
-class Tokeniser
+class EvaluationTokeniser
 {
 	/**
 	 *	Store our output
 	 */
 	private
-		$sReturn,
-		$aTokeniser;
+		$fTimeDelta = 0,
+		$aBindingInstances = null,
+		$aPatches = array(),
+		$aTokeniser = array();
 
 
 	/**
 	 *	Called when the tokeniser is loaded.
 	 */
-	public function __construct($sCode = null)
+	public final function __construct()
 	{
-		if($sCode == null)
+		$this->patch("Method", function($current, $previous)
 		{
-			return;
-		}
+			if($current[0] == T_STRING && $previous[0] != T_OBJECT_OPERATOR)
+			{
+				if(!defined($current[1]) && !function_exists($current[1]) && $current[1] != "function")
+				{
+					return true;
+				}
+			}
 
-		$this->__invoke($sCode);
+			return false;
+		});
+
+		$this->patch("Cast", function($current, $previous)
+		{
+			if($current[1] != '(')
+			{
+				return false;
+			}
+
+			switch($previous[0])
+			{
+				case T_WHITESPACE:
+				case '(':
+				case ';':
+				case ',':
+				{
+					return true;
+				}
+
+				default:
+				{
+					return false;
+				}
+			}
+
+			return true;
+		});
 	}
 
 
 	/**
 	 *	Tokenise and patch the code.
 	 */
-	public function __invoke($sCode)
+	public final function __invoke($sCode)
 	{
-		$this->Analyse($sCode);
+		return $this->runTokeniser($sCode);
 	}
 
 
 	/**
-	 *	Tokenise and patch the code.
+	 *	Binds the tokeniser to an object.
+	 *	This enables advanced object patches.
 	 */
-	public function Analyse($sCode)
+	public final function bind($sPointer, $pObject)
 	{
+		$this->aBindingInstances[] = (object) array
+		(
+			"variable" => $sPointer,
+			"pointer" => $pObject,
+		);
+	}
+
+
+	/**
+	 *	Adds a patch to the Tokeniser.
+	 */
+	public final function patch($cPatchCallback, $cPatchVerifier)
+	{
+		$this->aPatches[] = (object) array
+		(
+			"callback" => $cPatchCallback,
+			"verifier" => $cPatchVerifier,
+		);
+	}
+
+
+	/**
+	 *	Analyses the code, tokenises it, and then
+	 *	applies the patches where needed.
+	 */
+	public final function run($sCode)
+	{
+		$fTimeDelta = microtime(true);
 		$this->aTokeniser = token_get_all('<?php '.$sCode.' ?>');
 
-		$iIndex = 0;
-		$iLength = count($this->aTokeniser);
-
-		while($iIndex < $iLength)
+		foreach($this->aTokeniser as $iIndex => $mValue)
 		{
-			# Get the cast type
-			$mToken = $this->aTokeniser[$iIndex];
-			$mPrevious = ($iIndex != 0 ? $this->aTokeniser[$iIndex - 1] : '');
-
-			# Decide what patch we need to apply
-			if(is_string($mToken))
+			if(!is_array($this->aTokeniser[$iIndex]))
 			{
-				if($mToken == '(' && $mPrevious[0] != T_STRING)
-				{
-					$this->Cast($iIndex, $this->aTokeniser);
-				}
+				$this->aTokeniser[$iIndex] = array
+				(
+					(string) $mValue,
+					(string) $mValue,
+					0,
+				);
 			}
-			else
-			{
-				if($mToken[0] == T_STRING && $mPrevious[0] != T_OBJECT_OPERATOR)
-				{
-					if(!defined($mToken[1]) && !function_exists($mToken[1]) && $mToken[1] != "function")
-					{
-						$this->Method($iIndex, $this->aTokeniser);
-					}
-				}
-			}
-
-			++$iIndex;
-
-			$iLength = count($this->aTokeniser);
 		}
+
+		foreach($this->aPatches as $cPatch)
+		{
+			$iIndex = 0;
+			$iLength = count($this->aTokeniser);
+
+			while($iIndex < $iLength)
+			{
+				$mCurrent = $this->aTokeniser[$iIndex];
+				$mPrevious = ($iIndex != 0 ? $this->aTokeniser[$iIndex - 1] : array(0, "", 0));
+
+				$cVerifier = $cPatch->verifier;
+
+				if($cVerifier($mCurrent, $mPrevious))
+				{
+					if(is_array($cPatch->callback))
+					{
+						call_user_func($cPatch->callback, $iIndex);
+					}
+					else
+					{
+						if(method_exists($this, $cPatch->callback))
+						{
+							$this->{$cPatch->callback}($iIndex);
+						}
+						else
+						{
+							$sFunction = $cPatch->callback;
+							$sFunction($iIndex);
+						}
+					}
+
+					$iLength = count($this->aTokeniser);
+				}
+
+				++$iIndex;
+			}
+		}
+
+		$this->fTimeDelta = microtime(true) - $fTimeDelta;
+		return $this->getOutput();
 	}
 
 
 	/**
 	 *	Return the output as a string.
 	 */
-	public function getOutput()
-	{
-		return $this->__toString();
-	}
-
-
-	/**
-	 *	Return the output as a string.
-	 */
-	public function __toString()
+	public final function getOutput()
 	{
 		$sReturn = "";
 
@@ -120,79 +196,177 @@ class Tokeniser
 
 
 	/**
+	 *	Returns the amount of time in seconds it took to compile
+	 *	the patches.
+	 */
+	public final function getTimeDelta()
+	{
+		return $this->fTimeDelta;
+	}
+
+
+	/**
+	 *	Gets the token string.
+	 */
+	protected function getToken($iIndex, &$iType = null, &$iLine = 0)
+	{
+		if(!isset($this->aTokeniser[$iIndex]))
+		{
+			$iLength = count($this->aTokeniser);
+			throw new OutOfRangeException("Invalid index accessed [{$iIndex}, {$iLength}]");
+		}
+
+		if(is_array($this->aTokeniser[$iIndex]))
+		{
+			$iType = $this->aTokeniser[$iIndex][0];
+			$iLine = $this->aTokeniser[$iIndex][2];
+
+			return $this->aTokeniser[$iIndex][1];
+		}
+
+		return $this->aTokeniser[$iIndex];
+	}
+
+
+	/**
 	 *	Called to cast something to a custom type/object.
 	 */
 	private function Cast(&$iIndex)
 	{
 		# Retrieve our cast.
 		$iStart = $iIndex;
-		$aToken = &$this->aTokeniser[++$iIndex];
+		++$iIndex;
 
-		if(!is_array($aToken) || $aToken[0] != 307)
+		$sCast = $this->getToken($iIndex, $iType);
+
+		if($iType != T_STRING)
 		{
-			return count($this->aTokeniser);
+			return;
 		}
 
-		$sCast = $aToken[1];
+		++$iIndex;
 
-		$aToken = &$this->aTokeniser[++$iIndex];
-
-		if($aToken != ')')
+		if($this->getToken($iIndex) != ')' || function_exists($sCast) || defined($sCast))
 		{
 			return;
 		}
 
 		# Get rid of whitespace to locate our variable.
-		while($this->aTokeniser[++$iIndex][0] == 371);
+		++$iIndex;
 
-		list($iType, $sObject, $iLine) = $this->aTokeniser[$iIndex];
+		$aContext = array();
 
-		if($iType == T_STRING)
+		list($iType, $sContext, $iLine) = ($aContext[0] = $this->aTokeniser[++$iIndex]);
+
+		# Make sure what we're doing here...
+		if($sContext == '{')
 		{
-			$iType = T_CONSTANT_ENCAPSED_STRING;
-			$sObject = '"'.$sObject.'"';
+			# So, it's a complex thing. We need to make everything inside
+			# brackets the context.
+			$aContext = array();
+
+			while($this->aTokeniser[++$iIndex][1] != '}')
+			{
+				$aContext[] = $this->aTokeniser[$iIndex];
+			}
+
+			# A retarded hack, I know! Please don't kill me.
+			$this->aTokeniser[$iIndex] = array
+			(
+				T_WHITESPACE,
+				'',
+				0,
+			);
+		}
+		else
+		{
+			if($iType == T_STRING && !is_callable($sContext) && !defined($sContext))
+			{
+				$aContext[0] = array
+				(
+					T_CONSTANT_ENCAPSED_STRING,
+					'"'.$sContext.'"',
+					$iLine,
+				);
+			}
+
+			++$iIndex;
 		}
 
 		# Find the end of our expression.
-		while(!in_array($this->aTokeniser[++$iIndex][0], array(')', ';', T_OBJECT_OPERATOR)));
 
 		# And finally, fix the array.
 		$iSpliceLength = $iIndex - $iStart;
 
-		array_splice($this->aTokeniser, $iStart, $iSpliceLength, array
-		(
-			array
+		$aTokens = array();
+
+		$sMethod = 'to'.ucwords($sCast);
+		$bMethod = is_callable($sMethod);
+
+		foreach($this->aBindingInstances as $pBind)
+		{
+			$cMethod = array
+			(
+				$pBind->pointer,
+				$sMethod,
+			);
+
+			if(!is_callable($cMethod))
+			{
+				continue;
+			}
+
+			$aTokens[] = array
 			(
 				T_VARIABLE,
-				'$this',
+				$pBind->variable,
 				$iLine,
-			),
+			);
 
-			array
+			$aTokens[] = array
 			(
 				T_OBJECT_OPERATOR,
 				'->',
 				$iLine,
-			),
+			);
 
-			array
-			(
-				T_STRING,
-				'to'.ucwords($sCast),
-				$iLine,
-			),
+			$bMethod = true;
 
+			break;
+		}
+
+		if(!$bMethod)
+		{
+			throw new BadFunctionCallException("Function call doesn't exist { {$sMethod}() } in tokenised code.");
+		}
+
+		$aTokens[] = array
+		(
+			T_STRING,
+			$sMethod,
+			$iLine,
+		);
+
+		$aTokens[] = array
+		(
 			'(',
+			'(',
+			$iLine,
+		);
 
-			array
-			(
-				$iType,
-				$sObject,
-				$iLine,
-			),
+		foreach($aContext as $aToken)
+		{
+			$aTokens[] = $aToken;
+		}
 
+		$aTokens[] = array
+		(
 			')',
-		));
+			')',
+			$iLine,
+		);
+
+		array_splice($this->aTokeniser, $iStart, $iSpliceLength, $aTokens);
 	}
 
 
@@ -204,39 +378,47 @@ class Tokeniser
 		list(, $sMethod, $iLine) = $this->aTokeniser[$iIndex];
 
 		# Get rid of whitespace to locate our function.
-		while($this->aTokeniser[++$iIndex][0] == 371);
-
-		$sToken = $this->aTokeniser[$iIndex];
+		$sToken = $this->getToken(++$iIndex);
 
 		if($sToken != '(')
 		{
 			return;
 		}
 
-		array_splice($this->aTokeniser, $iStart, 1, array
-		(
-			array
-			(
-				T_VARIABLE,
-				'$this',
-				$iLine,
-			),
+		foreach($this->aBindingInstances as $pBind)
+		{
+			if(!is_callable(array($pBind->pointer, $sMethod)) && !is_callable(array($pBind->pointer, "__invoke")))
+			{
+				continue;
+			}
 
-			array
+			array_splice($this->aTokeniser, $iStart, 1, array
 			(
-				T_OBJECT_OPERATOR,
-				'->',
-				$iLine,
-			),
+				array
+				(
+					T_VARIABLE,
+					$pBind->variable,
+					$iLine,
+				),
 
-			array
-			(
-				T_STRING,
-				$sMethod,
-				$iLine,
-			),
-		));
+				array
+				(
+					T_OBJECT_OPERATOR,
+					'->',
+					$iLine,
+				),
 
-		++$iIndex;
+				array
+				(
+					T_STRING,
+					$sMethod,
+					$iLine,
+				),
+			));
+
+			return;
+		}
+
+		throw new BadFunctionCallException("Function call doesn't exist { {$sMethod}() } in tokenised code.");
 	}
 }
