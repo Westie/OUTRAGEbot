@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     ebfddab76bb5fe996e439e9c2697eaa89e465874
- *	Committed at:   Thu Sep  8 15:53:04 BST 2011
+ *	Git commit:     062e23c8971226610eeb03902aff34e0acea8a54
+ *	Committed at:   Sun Sep 11 14:58:36 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -123,7 +123,11 @@ class CoreMaster
 			$aOptions['realname'] = $sNickname;
 		}
 
-		$aOptions['nickname'] = $sNickname;
+		if(!isset($aOptions['nickname']))
+		{
+			$aOptions['nickname'] = $sNickname;
+		}
+
 		$aOptions['handle'] = $sNickname;
 		$aOptions['slave'] = true;
 

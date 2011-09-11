@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     b4261585b7804e8c46a15f36d4cb274a811f0586
- *	Committed at:   Mon Aug 29 23:47:12 BST 2011
+ *	Git commit:     062e23c8971226610eeb03902aff34e0acea8a54
+ *	Committed at:   Sun Sep 11 14:58:36 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -153,7 +153,7 @@ class CoreHandler
 
 	/**
 	 *	Called when a user enters a channel.
-	 *	Numeric: 332 - Topic information.
+	 *	Numeric: 333 - Topic information. (Thanks, bpeterson)
 	 */
 	public static function N333(CoreMaster $pInstance, MessageObject $pMessage)
 	{

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     ebfddab76bb5fe996e439e9c2697eaa89e465874
- *	Committed at:   Thu Sep  8 16:03:51 BST 2011
+ *	Git commit:     062e23c8971226610eeb03902aff34e0acea8a54
+ *	Committed at:   Sun Sep 11 14:58:36 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -27,8 +27,8 @@ define("BOT_TICKRATE", 2600);
 /**
  *	Some bot-brag-relating things.
  */
-define("BOT_VERSION", "2.0.0-Alpha-ebfddab");
-define("BOT_RELDATE", "08/09/2011");
+define("BOT_VERSION", "2.0.0-Alpha-062e23c");
+define("BOT_RELDATE", "11/09/2011");
 
 
 /**
