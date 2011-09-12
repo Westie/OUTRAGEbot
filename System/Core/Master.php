@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     062e23c8971226610eeb03902aff34e0acea8a54
- *	Committed at:   Sun Sep 11 14:58:36 BST 2011
+ *	Git commit:     5f0b25489c21ae65471f2289c56a4475a94296dc
+ *	Committed at:   Mon Sep 12 18:38:35 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -59,14 +59,19 @@ class CoreMaster
 	/**
 	 *	Called when any other undefined method is called.
 	 */
-	public function __call($sFunctionName, $aArgumentList)
+	public function __call($sMethod, $aArguments)
 	{
-		if(isset(Core::$pFunctionList->$sFunctionName))
+		try
 		{
-			return call_user_func_array(Core::$pFunctionList->$sFunctionName, $aArgumentList);
-		}
+			$cStaticMethod = Core::$pFunctionList->$sMethod;
 
-		return null;
+			$pReflection = new ReflectionMethod($cStaticMethod[0], $cStaticMethod[1]);
+			$pReflection->invokeArgs(null, $aArguments);
+		}
+		catch(ReflectionException $pError)
+		{
+			return null;
+		}
 	}
 
 
@@ -111,7 +116,7 @@ class CoreMaster
 	/**
 	 *	Creates a new Socket instance.
 	 */
-	public function addChild($sNickname, $aOptions = array())
+	public function addChild($sNickname, array $aOptions = array())
 	{
 		if(!isset($aOptions['username']))
 		{
@@ -241,7 +246,7 @@ class CoreMaster
 			$aMethods[] = $sFunctionName;
 		}
 
-		return sort($aMethods);
+		return sort($aMethods, SORT_STRING);
 	}
 
 
@@ -715,14 +720,13 @@ class CoreMaster
 
 
 	/**
-	 *	Trigger an event for loaded Scripts.
+	 *	Trigger an event for loaded Scripts and handlers.
 	 *	Like everything else, needs cleaning up.
 	 */
 	public function triggerEvent()
 	{
 		$aArguments = func_get_args();
 		$sEventName = array_shift($aArguments);
-		$mReturn = null;
 
 		# Go through the handlers - they have high presidence than Scripts.
 		if(isset($this->pEventHandlers->{"+{$sEventName}"}))
@@ -731,17 +735,9 @@ class CoreMaster
 
 			foreach($aEventHandlers as $pEventHandler)
 			{
-				if(Core::isEventScript($pEventHandler->eventCallback))
-				{
-					$mReturn = call_user_func_array($pEventHandler->eventCallback, $aArguments);
-				}
-				else
-				{
-					$aTempArguments = array_merge(array($this), $aArguments);
-					$mReturn = call_user_func_array($pEventHandler->eventCallback, $aTempArguments);
-				}
+				$iReturn = Core::invokeReflection($pEventHandler->eventCallback, $aArguments);
 
-				if(Core::assert($mReturn))
+				if(Core::assert($iReturn))
 				{
 					return;
 				}
@@ -751,12 +747,15 @@ class CoreMaster
 		# And finally, the scripts.
 		foreach($this->aScripts as $pScriptInstance)
 		{
-			if(method_exists($pScriptInstance, $sEventName))
-			{
-				$mReturn = call_user_func_array(array($pScriptInstance, $sEventName), $aArguments);
-			}
+			$pInstance = array
+			(
+				$pScriptInstance,
+				$sEventName
+			);
 
-			if(Core::assert($mReturn))
+			$iReturn = Core::invokeReflection($pInstance, $aArguments);
+
+			if(Core::assert($iReturn))
 			{
 				return;
 			}

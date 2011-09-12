@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     0638fa8bb13e1aca64885a4be9e6b7d78aab0af7
- *	Committed at:   Wed Aug 24 23:16:56 BST 2011
+ *	Git commit:     5f0b25489c21ae65471f2289c56a4475a94296dc
+ *	Committed at:   Mon Sep 12 18:38:35 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -29,7 +29,7 @@ class Core
 	/**
 	 *	Called when the core class is loaded.
 	 */
-	static function initClass()
+	public static function initClass()
 	{
 		self::$pFunctionList = new stdClass();
 
@@ -41,7 +41,7 @@ class Core
 	/**
 	 *	Called to load a module
 	 */
-	static function Module($sModule)
+	public static function Module($sModule)
 	{
 		$sModuleLocation = ROOT."/System/Modules/{$sModule}.php";
 
@@ -64,7 +64,7 @@ class Core
 	/**
 	 *	Called to load a core module
 	 */
-	static function LModule($sModule)
+	public static function LModule($sModule)
 	{
 		$sModuleLocation = ROOT."/System/Core/{$sModule}.php";
 
@@ -87,7 +87,7 @@ class Core
 	/**
 	 *	Called to load a system class.
 	 */
-	static function Library($sClass)
+	public static function Library($sClass)
 	{
 		$sClassLocation = ROOT."/System/Core/{$sClass}.php";
 
@@ -104,7 +104,7 @@ class Core
 	/**
 	 *	Called on every iteration, deals with global modules.
 	 */
-	static function Tick()
+	public static function Tick()
 	{
 		foreach(self::$aModules as $sModuleClass)
 		{
@@ -119,7 +119,7 @@ class Core
 	/**
 	 *	Called on every iteration, deals with the sockets.
 	 */
-	static function Socket()
+	public static function Socket()
 	{
 		foreach(self::$aInstances as $pInstance)
 		{
@@ -133,7 +133,7 @@ class Core
 	/**
 	 *	Gets the current CoreMaster instance.
 	 */
-	static function getCurrentInstance()
+	public static function getCurrentInstance()
 	{
 		return self::$pCurrentInstance;
 	}
@@ -142,7 +142,7 @@ class Core
 	/**
 	 *	Gets a specific CoreMaster instance.
 	 */
-	static function getSpecificInstance($sInstanceName)
+	public static function getSpecificInstance($sInstanceName)
 	{
 		if(isset(self::$aInstances[$sInstanceName]))
 		{
@@ -156,7 +156,7 @@ class Core
 	/**
 	 *	Return the list of CoreMaster instances.
 	 */
-	static function getListOfInstances()
+	public static function getListOfInstances()
 	{
 		return array_keys(self::$aInstances);
 	}
@@ -165,7 +165,7 @@ class Core
 	/**
 	 *	Scan the configuration directory for settings.
 	 */
-	static function scanConfig()
+	public static function scanConfig()
 	{
 		foreach(glob(ROOT.'/Configuration/*.ini') as $sDirectory)
 		{
@@ -177,7 +177,7 @@ class Core
 	/**
 	 *	Adds an instance of CoreMaster to the core.
 	 */
-	static function addInstance($sInstance, $pInstance)
+	public static function addInstance($sInstance, $pInstance)
 	{
 		self::$aInstances[$sInstance] = $pInstance;
 
@@ -189,9 +189,65 @@ class Core
 	 *	Removes an instance of CoreMaster.
 	 *	This will probably only work once I fix some 'PHP bugs'
 	 */
-	static function removeInstance($sInstance)
+	public static function removeInstance($sInstance)
 	{
 		unset(self::$aInstances[$sInstance]);
+	}
+
+
+	/**
+	 *	Returns a suitable instance of reflection,
+	 *	depending on what the method is.
+	 */
+	public static function invokeReflection($cCallback, $aArguments, $pInstance = null)
+	{
+		try
+		{
+			if($pInstance === null)
+			{
+				$pInstance = self::getCurrentInstance();
+			}
+
+			# Is this an object?
+			if(is_array($cCallback))
+			{
+				if(!($cCallback[0] instanceof Script))
+				{
+					array_unshift($aArguments, $pInstance);
+				}
+
+				$pReflection = new ReflectionMethod($cCallback[0], $cCallback[1]);
+
+				return $pReflection->invokeArgs($cCallback[0], $aArguments);
+			}
+
+			# Sorry, but this is here for those that choose to run V8JS.
+			# I should fix this anyhow.
+			if($cCallback instanceof V8Function)
+			{
+				return;
+			}
+
+			# It's just a normal function or closure.
+			array_unshift($aArguments, $pInstance);
+
+			$pReflection = new ReflectionFunction($cCallback);
+
+			return $pReflection->invokeArgs($aArguments);
+		}
+		catch(ReflectionException $pError)
+		{
+			return null;
+		}
+	}
+
+
+	/**
+	 *	Checks if a section of code has successfully been executed.
+	 */
+	public static function assert($mReturn)
+	{
+		return $mReturn === END_EVENT_EXEC || $mReturn === true;
 	}
 
 
@@ -199,7 +255,7 @@ class Core
 	 *	The main handler function. This function delegates
 	 *	everything.
 	 */
-	static function Handler(CoreMaster $pInstance, MessageObject $pMessage)
+	public static function Handler(CoreMaster $pInstance, MessageObject $pMessage)
 	{
 		if(isset($pInstance->pEventHandlers->{$pMessage->Numeric}))
 		{
@@ -254,44 +310,11 @@ class Core
 
 
 	/**
-	 *	Checks if a section of code has successfully been executed.
-	 */
-	public static function assert($mReturn)
-	{
-		return $mReturn == END_EVENT_EXEC || $mReturn == true;
-	}
-
-
-	/**
-	 *	Checks if the event is a member of Script.
-	 */
-	public static function isEventScript($pEventHandler)
-	{
-		if(!is_array($pEventHandler->eventCallback))
-		{
-			return false;
-		}
-
-		if($pEventHandler->eventCallback[0] instanceof Script)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-
-	/**
 	 *	Deals with the default handlers.
 	 */
 	private static function DefaultHandler(CoreMaster $pInstance, MessageObject $pMessage, $pEventHandler)
 	{
-		if(self::isEventScript($pEventHandler))
-		{
-			return call_user_func($pEventHandler->eventCallback, $pMessage);
-		}
-
-		return call_user_func($pEventHandler->eventCallback, $pInstance, $pMessage);
+		return Core::invokeReflection($pEventHandler->eventCallback, array($pMessage), $pInstance);
 	}
 
 
@@ -310,12 +333,14 @@ class Core
 
 		$aCommandPayload[1] = isset($aCommandPayload[1]) ? $aCommandPayload[1] : "";
 
-		if(self::isEventScript($pEventHandler))
-		{
-			return call_user_func($pEventHandler->eventCallback, $pInstance->getChannel($pMessage->Parts[2]), $pMessage->User->Nickname, $aCommandPayload[1]);
-		}
+		$aArguments = array
+		(
+			$pInstance->getChannel($pMessage->Parts[2]),
+			$pInstance->getUser($pMessage->User->Nickname),
+			$aCommandPayload[1],
+		);
 
-		return call_user_func($pEventHandler->eventCallback, $pInstance, $pInstance->getChannel($pMessage->Parts[2]), $pMessage->User->Nickname, $aCommandPayload[1]);
+		return Core::invokeReflection($pEventHandler->eventCallback, $aArguments, $pInstance);
 	}
 
 
@@ -368,19 +393,14 @@ class Core
 			}
 		}
 
-		if(!self::isEventScript($pEventHandler))
-		{
-			array_unshift($aArguments, $pInstance);
-		}
-
-		return call_user_func_array($pEventHandler->eventCallback, $aArguments);
+		return Core::invokeReflection($pEventHandler->eventCallback, $aArguments, $pInstance);
 	}
 
 
 	/**
 	 *	Adds a virtual function into the bot.
 	 */
-	static function introduceFunction($sFunctionName, $cMethodCallback)
+	public static function introduceFunction($sFunctionName, $cMethodCallback)
 	{
 		if(!is_callable($cMethodCallback))
 		{
@@ -395,7 +415,7 @@ class Core
 	/**
 	 *	Removes a virtual function from the bot.
 	 */
-	static function removeFunction($sFunctionName)
+	public static function removeFunction($sFunctionName)
 	{
 		unset(self::$pFunctionList->$sFunctionName);
 	}
@@ -404,7 +424,7 @@ class Core
 	/**
 	 *	Error handler for OUTRAGEbot
 	 */
-	static function errorHandler($errno, $errstr, $errfile, $errline)
+	public static function errorHandler($errno, $errstr, $errfile, $errline)
 	{
 		self::$aErrorLog[] = (object) array
 		(
@@ -419,7 +439,7 @@ class Core
 	/**
 	 *	Return (and purge if necessary) the error log.
 	 */
-	static function getErrorLog($bPurge = false)
+	public static function getErrorLog($bPurge = false)
 	{
 		$aErrorLog = self::$aErrorLog;
 
@@ -434,8 +454,9 @@ class Core
 
 	/**
 	 *	Parse a string from the IRC server.
+	 *	I don't know if this is still even needed.
 	 */
-	static function getMessageObject($sString)
+	public static function getMessageObject($sString)
 	{
 		return new MessageObject($sString);
 	}
@@ -444,7 +465,7 @@ class Core
 	/**
 	 *	What? Someone spelled a function call wrong? Let's protect against a crash!
 	 */
-	static function __callStatic($sFunctionName, $aArguments)
+	public static function __callStatic($sFunctionName, $aArguments)
 	{
 		self::$aErrorLog[] = (object) array
 		(

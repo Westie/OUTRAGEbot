@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
- *	Committed at:   Tue Jul 26 23:19:16 BST 2011
+ *	Git commit:     5f0b25489c21ae65471f2289c56a4475a94296dc
+ *	Committed at:   Mon Sep 12 18:38:35 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -33,25 +33,25 @@ class CoreTimer
 	 */
 	static function onTick()
 	{
-		foreach(self::$aTimers as $sTimerKey => &$aTimerInfo)
+		foreach(self::$aTimers as $sTimerKey => &$pTimerInfo)
 		{
-			if(microtime(true) <= $aTimerInfo->nextTimerCall)
+			if(microtime(true) <= $pTimerInfo->nextTimerCall)
 			{
 				continue;
 			}
 
-			call_user_func_array($aTimerInfo->timerCallback, $aTimerInfo->timerArguments);
+			Core::invokeReflection($pTimerInfo->timerCallback, $pTimerInfo->timerArguments, $pTimerInfo->timerEnvironment);
 
-			$aTimerInfo->nextTimerCall = (float) microtime(true) + (float) $aTimerInfo->timerInterval;
+			$pTimerInfo->nextTimerCall = (float) microtime(true) + (float) $pTimerInfo->timerInterval;
 
-			if($aTimerInfo->timerRepeat == -1)
+			if($pTimerInfo->timerRepeat == -1)
 			{
 				continue;
 			}
 
-			--$aTimerInfo->timerRepeat;
+			--$pTimerInfo->timerRepeat;
 
-			if($aTimerInfo->timerRepeat == 0)
+			if($pTimerInfo->timerRepeat == 0)
 			{
 				unset(self::$aTimers[$sTimerKey]);
 			}
@@ -62,11 +62,12 @@ class CoreTimer
 	/**
 	 *	Add a timer
 	 */
-	static function Add($cCallback, $iInterval, $iRepeat = 1, $aArguments = array())
+	static function Add($cCallback, $iInterval, $iRepeat = 1, array $aArguments = array())
 	{
 		if(!is_callable($cCallback))
 		{
-			$cCallback = array(Core::getCurrentInstance()->pCurrentScript, $cCallback);
+			$pInstance = Core::getCurrentInstance();
+			$cCallback = array($pInstance->pCurrentScript, $cCallback);
 
 			if(!is_callable($cCallback))
 			{
@@ -89,6 +90,7 @@ class CoreTimer
 			"timerRepeat" => $iRepeat,
 			"nextTimerCall" => (float) microtime(true) + (float) $iInterval,
 			"timerArguments" => $aArguments,
+			"timerEnvironment" => $pInstance,
 		);
 
 		return $sTimerKey;

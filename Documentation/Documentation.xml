@@ -587,7 +587,7 @@ $this->Join("#westie-private passw0rd3d");]]></source><output><![CDATA[]]></outp
 (
         "username" => "hicksftw",
         "realname" => "Inbred American",
-);]]></source><output><![CDATA[HickyBot]]></output></example><modificationTime>1310983448</modificationTime></function><function class="CoreMaster" name="addCommandHandler"><description><![CDATA[Creates a command handler.
+));]]></source><output><![CDATA[HickyBot]]></output></example><modificationTime>1315749064</modificationTime></function><function class="CoreMaster" name="addCommandHandler"><description><![CDATA[Creates a command handler.
 
 <br /><br />If the method is in a <span class="Var">Script</span>, then the first argument will <strong>not</strong> be the <span class="Var">Master</span> class.]]></description><prototype returnType="string"><string>string CoreMaster::addCommandHandler(string $sCommandName, string $cCallback)</string><arguments><argument type="string" name="$sCommandName"/><argument type="string" name="$cCallback"/></arguments></prototype><example><source><![CDATA[class Example extends Script
 {
@@ -610,7 +610,7 @@ $this->Join("#westie-private passw0rd3d");]]></source><output><![CDATA[]]></outp
         }
 }]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="addEventHandler" section="Event handlers"><description><![CDATA[One of the uses for addEventHandler is to listen into a built in event. You can do this by creating an event handler with the <a href="#Callbacks">pre-registered callbacks</a>, such as onChannelMessage().
 
-<br /><br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra argument.]]></description><prototype returnType="string"><string>string CoreMaster::addEventHandler(string $sEvent, callback $cCallback)</string><arguments><argument type="string" name="$sEvent"/><argument type="callback" name="$cCallback"/></arguments></prototype><example><source><![CDATA[class EventExample extends Script
+<br /><br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra, prepended argument.]]></description><prototype returnType="string"><string>string CoreMaster::addEventHandler(string $sEvent, callback $cCallback)</string><arguments><argument type="string" name="$sEvent"/><argument type="callback" name="$cCallback"/></arguments></prototype><example><source><![CDATA[class EventExample extends Script
 {
         /**
          *      Called when the script is constructed.
@@ -639,7 +639,7 @@ $this->Join("#westie-private passw0rd3d");]]></source><output><![CDATA[]]></outp
                         $c("hello world!");
                 }
         }
-}]]></source><output><![CDATA[]]></output></example><modificationTime>1314217120</modificationTime></function><function class="CoreMaster" name="addEventHandler" section="Numeric handlers"><description><![CDATA[One of the uses for addEventHandler is to listen for IRC numerics and commands. You can do this by creating an event handler, listening for perhaps, invite requests. The format codes, mentioned below, can be placed in any order, dependent on how they're needed.
+}]]></source><output><![CDATA[]]></output></example><modificationTime>1315846805</modificationTime></function><function class="CoreMaster" name="addEventHandler" section="Numeric handlers"><description><![CDATA[One of the uses for addEventHandler is to listen for IRC numerics and commands. You can do this by creating an event handler, listening for perhaps, invite requests. The format codes, mentioned below, can be placed in any order, dependent on how they're needed.
 
 <h4>List of format codes</h4>
 <ul>
@@ -651,7 +651,7 @@ $this->Join("#westie-private passw0rd3d");]]></source><output><![CDATA[]]></outp
 	<li>u - User's nickname, as a string.</li>
 </ul>
 
-<br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra argument.]]></description><prototype returnType="string"><string>string CoreMaster::addEventHandler(string $sNumerics, callback $cCallback [, string $sArgumentFormat = "m" ])</string><arguments><argument type="string" name="$sNumerics"/><argument type="callback" name="$cCallback"/><argument type="string" name="$sArgumentFormat" value="&quot;m&quot;" optional="1"/></arguments></prototype><example><source><![CDATA[class NumericExample extends Script
+<br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra, prepended argument.]]></description><prototype returnType="string"><string>string CoreMaster::addEventHandler(string $sNumerics, callback $cCallback [, string $sArgumentFormat = "m" ])</string><arguments><argument type="string" name="$sNumerics"/><argument type="callback" name="$cCallback"/><argument type="string" name="$sArgumentFormat" value="&quot;m&quot;" optional="1"/></arguments></prototype><example><source><![CDATA[class NumericExample extends Script
 {
         /**
          *      Called when the script is constructed.
@@ -677,13 +677,18 @@ $this->Join("#westie-private passw0rd3d");]]></source><output><![CDATA[]]></outp
         {
                 $this->Message("#OUTRAGEbot", "The bot was invited into {$channel} by {$user}. Decide already!");
         }
-}]]></source><output><![CDATA[]]></output></example><modificationTime>1315493500</modificationTime></function><function class="CoreMaster" name="addTimer"><description><![CDATA[Creates a timer which will be executed.<br />
+}]]></source><output><![CDATA[]]></output></example><modificationTime>1315846802</modificationTime></function><function class="CoreMaster" name="addTimer"><description><![CDATA[Creates a timer which will be executed.<br />
 <br />
 List of options for <span class=\"Code\">$iRepeat</span>:<br />
-<ul><li><span class=\"Code\">0</span> - Infinitely execute.</li><li><span class=\"Code\">1</span> - Repeat once</li><li><span class=\"Code\">2</span> - Repeat twice, and so on.</li></ul>]]></description><prototype returnType="string"><string>string CoreMaster::addTimer(callback $cCallback, integer $iInterval [, integer $iRepeat = 1 [, array $aArguments = array() ]])</string><arguments><argument type="callback" name="$cCallback"/><argument type="integer" name="$iInterval"/><argument type="integer" name="$iRepeat" value="1" optional="1"/><argument type="array" name="$aArguments" value="array()" optional="1"/></arguments></prototype><example><source><![CDATA[$sTimerHandler = $this->addTimer(function($pInstance)
+<ul><li><span class=\"Code\">0</span> - Infinitely execute.</li><li><span class=\"Code\">1</span> - Repeat once</li><li><span class=\"Code\">2</span> - Repeat twice, and so on.</li></ul>
+<br />
+<strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for $this.
+This means that closures and global scope functions will have that extra, prepended argument.]]></description><prototype returnType="string"><string>string CoreMaster::addTimer(callback $cCallback, integer $iInterval [, integer $iRepeat = 1 [, array $aArguments = array() ]])</string><arguments><argument type="callback" name="$cCallback"/><argument type="integer" name="$iInterval"/><argument type="integer" name="$iRepeat" value="1" optional="1"/><argument type="array" name="$aArguments" value="array()" optional="1"/></arguments></prototype><example><source><![CDATA[$cTimer = function($pInstance)
 {
         $pInstance->Message("#android", "This is a message executed every one second, five times.");
-}, 1, 5, $this);]]></source><output><![CDATA[[string]]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="deactivateScript"><description><![CDATA[Removes a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::deactivateScript(string $sScriptName)</string><arguments><argument type="string" name="$sScriptName"/></arguments></prototype><example><source><![CDATA[$this->deactivateScript("Debug");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getActivatedScripts"><description><![CDATA[Removes and reloads a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::getActivatedScripts(void)</string><arguments/></prototype><example><source><![CDATA[$aScriptList = $this->getActivatedScripts();]]></source><output><![CDATA[Array
+};
+
+$sTimerHandler = $this->addTimer($cTimer, 1, 5);]]></source><output><![CDATA[[string]]]></output></example><modificationTime>1315846772</modificationTime></function><function class="CoreMaster" name="deactivateScript"><description><![CDATA[Removes a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::deactivateScript(string $sScriptName)</string><arguments><argument type="string" name="$sScriptName"/></arguments></prototype><example><source><![CDATA[$this->deactivateScript("Debug");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getActivatedScripts"><description><![CDATA[Removes and reloads a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::getActivatedScripts(void)</string><arguments/></prototype><example><source><![CDATA[$aScriptList = $this->getActivatedScripts();]]></source><output><![CDATA[Array
 (
     [0] => Evaluation
     [1] => Commands

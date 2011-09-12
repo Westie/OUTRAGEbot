@@ -6,8 +6,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     ebfddab76bb5fe996e439e9c2697eaa89e465874
- *	Committed at:   Thu Sep  8 16:03:36 BST 2011
+ *	Git commit:     5f0b25489c21ae65471f2289c56a4475a94296dc
+ *	Committed at:   Mon Sep 12 18:38:47 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -32,7 +32,7 @@ class EvaluationTokeniser
 	{
 		$this->patch("Method", function($current, $previous)
 		{
-			if($current[0] == T_STRING && $previous[0] != T_OBJECT_OPERATOR)
+			if($current[0] == T_STRING && $previous[0] != T_OBJECT_OPERATOR && $previous[0] != T_DOUBLE_COLON)
 			{
 				if(!defined($current[1]) && !function_exists($current[1]) && $current[1] != "function")
 				{

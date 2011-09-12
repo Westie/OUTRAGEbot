@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
- *	Committed at:   Tue Jul 26 23:19:16 BST 2011
+ *	Git commit:     5f0b25489c21ae65471f2289c56a4475a94296dc
+ *	Committed at:   Mon Sep 12 18:38:35 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -64,25 +64,31 @@ abstract class Script extends CoreChild
 	/**
 	 *	Called when any other undefined method is called.
 	 */
-	public final function __call($sFunctionName, $aArgumentList)
+	public final function __call($sMethod, $aArguments)
 	{
 		$pInstance = $this->internalMasterObject();
-
 		$pInstance->pCurrentScript = $this;
 
-		if(method_exists($pInstance, $sFunctionName))
+		try
 		{
-			return call_user_func_array(array($pInstance, $sFunctionName), $aArgumentList);
+			$pReflection = new ReflectionMethod($pInstance, $sMethod);
+
+			return $pReflection->invokeArgs($pInstance, $aArguments);
 		}
-		else
+		catch(ReflectionException $pError)
 		{
-			if(isset(Core::$pFunctionList->$sFunctionName))
+			try
 			{
-				return call_user_func_array(Core::$pFunctionList->$sFunctionName, $aArgumentList);
+				$cStaticMethod = Core::$pFunctionList->$sMethod;
+
+				$pReflection = new ReflectionMethod($cStaticMethod[0], $cStaticMethod[1]);
+				return $pReflection->invokeArgs($pInstance, $aArguments);
+			}
+			catch(ReflectionException $pError)
+			{
+				return null;
 			}
 		}
-
-		return null;
 	}
 
 

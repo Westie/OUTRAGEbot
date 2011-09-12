@@ -1196,7 +1196,7 @@ List of current modifiers:
 </code></div>
 
 			<h4>Example and Output</h4>
-			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addChild</span><span style="color: #007700">(</span><span style="color: #DD0000">"HickyBot"</span><span style="color: #007700">,&nbsp;array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">"username"&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">"hicksftw"</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">"realname"&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">"Inbred&nbsp;American"</span><span style="color: #007700">,<br />);</span>
+			<div class="Source"><code><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addChild</span><span style="color: #007700">(</span><span style="color: #DD0000">"HickyBot"</span><span style="color: #007700">,&nbsp;array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">"username"&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">"hicksftw"</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">"realname"&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">"Inbred&nbsp;American"</span><span style="color: #007700">,<br />));</span>
 </span>
 </code></div>
 			<div class="Output"><code><span style="color: #0000BB">HickyBot</span>
@@ -1230,7 +1230,7 @@ List of current modifiers:
 			<h4>Description</h4>
 			<div class="Description">One of the uses for addEventHandler is to listen into a built in event. You can do this by creating an event handler with the <a href="#Callbacks">pre-registered callbacks</a>, such as onChannelMessage().
 
-<br /><br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra argument.</div>
+<br /><br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra, prepended argument.</div>
 
 			<h4>Prototype</h4>
 			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sEvent</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">callback&nbsp;$cCallback</span><span style="color: #007700">)</span>
@@ -1259,7 +1259,7 @@ List of current modifiers:
 	<li>u - User's nickname, as a string.</li>
 </ul>
 
-<br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra argument.</div>
+<br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra, prepended argument.</div>
 
 			<h4>Prototype</h4>
 			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNumerics</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">callback&nbsp;$cCallback&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sArgumentFormat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"m"&nbsp;</span><span style="color: #007700">])</span>
@@ -1279,7 +1279,10 @@ List of current modifiers:
 			<div class="Description">Creates a timer which will be executed.<br />
 <br />
 List of options for <span class=\"Code\">$iRepeat</span>:<br />
-<ul><li><span class=\"Code\">0</span> - Infinitely execute.</li><li><span class=\"Code\">1</span> - Repeat once</li><li><span class=\"Code\">2</span> - Repeat twice, and so on.</li></ul></div>
+<ul><li><span class=\"Code\">0</span> - Infinitely execute.</li><li><span class=\"Code\">1</span> - Repeat once</li><li><span class=\"Code\">2</span> - Repeat twice, and so on.</li></ul>
+<br />
+<strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for $this.
+This means that closures and global scope functions will have that extra, prepended argument.</div>
 
 			<h4>Prototype</h4>
 			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">callback&nbsp;$cCallback</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">integer&nbsp;$iInterval&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">integer&nbsp;$iRepeat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">1&nbsp;</span><span style="color: #007700">[,&nbsp;array&nbsp;</span><span style="color: #0000BB">$aArguments&nbsp;</span><span style="color: #007700">=&nbsp;array()&nbsp;]])</span>
@@ -1287,7 +1290,7 @@ List of options for <span class=\"Code\">$iRepeat</span>:<br />
 </code></div>
 
 			<h4>Example and Output</h4>
-			<div class="Source"><code><span style="color: #0000BB">$sTimerHandler&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addTimer</span><span style="color: #007700">(function(</span><span style="color: #0000BB">$pInstance</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pInstance</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #DD0000">"#android"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"This&nbsp;is&nbsp;a&nbsp;message&nbsp;executed&nbsp;every&nbsp;one&nbsp;second,&nbsp;five&nbsp;times."</span><span style="color: #007700">);<br />},&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">5</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">);</span>
+			<div class="Source"><code><span style="color: #0000BB">$cTimer&nbsp;</span><span style="color: #007700">=&nbsp;function(</span><span style="color: #0000BB">$pInstance</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pInstance</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Message</span><span style="color: #007700">(</span><span style="color: #DD0000">"#android"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"This&nbsp;is&nbsp;a&nbsp;message&nbsp;executed&nbsp;every&nbsp;one&nbsp;second,&nbsp;five&nbsp;times."</span><span style="color: #007700">);<br />};<br /><br /></span><span style="color: #0000BB">$sTimerHandler&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">$cTimer</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">5</span><span style="color: #007700">);</span>
 </span>
 </code></div>
 			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">string</span><span style="color: #007700">]</span>
@@ -2384,7 +2387,7 @@ Take note that this is Script specific, a Resource available in one Script is no
 		</div>
 	
 	<p>
-		This documentation is up to date as of Thu, 08 Sep 2011 15:51:47 +0100, and it is generated from the
+		This documentation is up to date as of Mon, 12 Sep 2011 18:12:22 +0100, and it is generated from the
 		<a href="http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/">official online documentation</a>.
 	</p>
 	
