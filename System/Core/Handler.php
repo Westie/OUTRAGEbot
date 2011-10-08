@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     062e23c8971226610eeb03902aff34e0acea8a54
- *	Committed at:   Sun Sep 11 14:58:36 BST 2011
+ *	Git commit:     b2b9bec3e8f868955af03270809ddf2f66aa8f4d
+ *	Committed at:   Sat Oct  8 20:32:41 BST 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -344,7 +344,7 @@ class CoreHandler
 			}
 			default:
 			{
-				return $pInstance->triggerEvent("onPrivateMessage", $pUser, $this->getUser($pMessage->Parts[2]), $pMessage->Payload);
+				return $pInstance->triggerEvent("onPrivateMessage", $pUser, $pInstance->getUser($pMessage->Parts[2]), $pMessage->Payload);
 			}
 		}
 	}
