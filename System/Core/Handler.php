@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     b2b9bec3e8f868955af03270809ddf2f66aa8f4d
- *	Committed at:   Sat Oct  8 20:32:41 BST 2011
+ *	Git commit:     fad5caed81ae072a6741085d7b776db29db8f96c
+ *	Committed at:   Thu Nov  3 21:56:15 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -202,7 +202,7 @@ class CoreHandler
 		}
 
 		$pChannel->addUserToChannel($pMessage->User->Nickname);
-		$pUser = $pInstance->getUser($pMessage->User->Nickname);
+		$pUser = $pInstance->getUser($pMessage->User);
 
 		$pInstance->triggerEvent("onChannelJoin", $pChannel, $pUser);
 	}
@@ -216,7 +216,7 @@ class CoreHandler
 		$pChannel = $pInstance->getChannel($pMessage->Parts[2]);
 
 		$pChannel->removeUserFromChannel($pMessage->User->Nickname);
-		$pUser = $pInstance->getUser($pMessage->User->Nickname);
+		$pUser = $pInstance->getUser($pMessage->User);
 
 		$pInstance->triggerEvent("onChannelPart", $pChannel, $pUser, $pMessage->Payload);
 	}
@@ -231,7 +231,7 @@ class CoreHandler
 		$pChannel = $pInstance->getChannel($pMessage->Parts[2]);
 		$pChannel->removeUserFromChannel($pMessage->Parts[3]);
 
-		$pAdmin = $pInstance->getUser($pMessage->User->Nickname);
+		$pAdmin = $pInstance->getUser($pMessage->User);
 		$pLoser = $pInstance->getUser($pMessage->Parts[3]);
 
 		$pInstance->triggerEvent("onChannelKick", $pChannel, $pAdmin, $pLoser, $pMessage->Payload);
@@ -279,7 +279,7 @@ class CoreHandler
 			$pChannel->removeUserFromChannel($pMessage->User->Nickname);
 		}
 
-		$pUser = $pInstance->getUser($pMessage->User->Nickname);
+		$pUser = $pInstance->getUser($pMessage->User);
 		$pInstance->triggerEvent("onUserQuit", $pUser, $pMessage->Payload);
 
 		unset($pInstance->pUsers->{$pMessage->User->Nickname});
@@ -291,7 +291,7 @@ class CoreHandler
 	 */
 	public static function Notice(CoreMaster $pInstance, MessageObject $pMessage)
 	{
-		$pSender = $pInstance->getUser($pMessage->User->Nickname);
+		$pSender = $pInstance->getUser($pMessage->User);
 		$pRecipient = $pInstance->getObject($pMessage->Parts[2]);
 
 		if($pMessage->Payload[0] == Format::CTCP)
@@ -309,7 +309,7 @@ class CoreHandler
 	 */
 	public static function Privmsg(CoreMaster $pInstance, MessageObject $pMessage)
 	{
-		$pUser = $pInstance->getUser($pMessage->User->Nickname);
+		$pUser = $pInstance->getUser($pMessage->User);
 
 		if($pMessage->Payload[0] == Format::CTCP)
 		{
@@ -356,7 +356,7 @@ class CoreHandler
 	public static function Topic(CoreMaster $pInstance, MessageObject $pMessage)
 	{
 		$pChannel = $pInstance->getChannel($pMessage->Parts[2]);
-		$pUser = $pInstance->getUser($pMessage->User->Nickname);
+		$pUser = $pInstance->getUser($pMessage->User);
 
 		$pChannel->pTopic = (object) array
 		(

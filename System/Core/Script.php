@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     5f0b25489c21ae65471f2289c56a4475a94296dc
- *	Committed at:   Mon Sep 12 18:38:35 BST 2011
+ *	Git commit:     fad5caed81ae072a6741085d7b776db29db8f96c
+ *	Committed at:   Thu Nov  3 21:56:15 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -16,8 +16,10 @@ abstract class Script extends CoreChild
 {
 	private
 		$spScript,
+		$aVariableLocalCache = array(),
 		$aTimerScriptLocalCache = array(),
 		$aEventScriptLocalCache = array();
+
 
 	public
 		$sScriptID,
@@ -34,7 +36,10 @@ abstract class Script extends CoreChild
 		$this->sScriptID = __CLASS__;
 
 		$this->internalMasterObject($pInstance);
+
+		$this->wakeupScript();
 		$this->onConstruct();
+
 		return true;
 	}
 
@@ -58,6 +63,7 @@ abstract class Script extends CoreChild
 	 */
 	public final function __destruct()
 	{
+		$this->serialiseScript();
 	}
 
 
@@ -93,6 +99,15 @@ abstract class Script extends CoreChild
 
 
 	/**
+	 *	Sets the internal variable cache.
+	 */
+	public final function __set($sKey, $mValue)
+	{
+		$this->aVariableLocalCache[$sKey] = $mValue;
+	}
+
+
+	/**
 	 *	Retrieve objects from the Master object.
 	 */
 	public final function __get($sKey)
@@ -102,6 +117,10 @@ abstract class Script extends CoreChild
 		if(property_exists($pInstance, $sKey))
 		{
 			return $pInstance->$sKey;
+		}
+		elseif(isset($this->aVariableLocalCache[$sKey]))
+		{
+			return $this->aVariableLocalCache[$sKey];
 		}
 
 		return null;
@@ -187,5 +206,37 @@ abstract class Script extends CoreChild
 	public final function getLocalEventHandlers()
 	{
 		return $this->aEventScriptLocalCache;
+	}
+
+
+	/**
+	 *	Called to serialise this object.
+	 */
+	private final function serialiseScript()
+	{
+		$pResource = $this->getModuleSerialisationResource();
+		$pResource->write(serialize($this->aVariableLocalCache));
+	}
+
+
+	/**
+	 *	Called to wake up the object.
+	 */
+	private function wakeupScript()
+	{
+		$pResource = $this->getModuleSerialisationResource();
+		$this->aVariableLocalCache = unserialize($pResource->read());
+	}
+
+
+	/**
+	 *	This method returns a CoreResource of a location to
+	 *	serialise a network environment to.
+	 */
+	private final function getModuleSerialisationResource()
+	{
+		$sNetwork = $this->getNetworkConfiguration("name");
+
+		return new CoreResource("ScriptEnvironment", "/{$this->spScript}/{$sNetwork}.object", "w+");
 	}
 }

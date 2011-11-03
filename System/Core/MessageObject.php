@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
- *	Committed at:   Tue Jul 26 23:19:16 BST 2011
+ *	Git commit:     fad5caed81ae072a6741085d7b776db29db8f96c
+ *	Committed at:   Thu Nov  3 21:56:15 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -31,7 +31,7 @@ class MessageObject
 		$this->Parts = explode(' ', $sString);
 		$this->Numeric = strtoupper($this->Parts[1]);
 		$this->User = CoreMaster::parseHostmask(substr($this->Parts[0], 1));
-		$this->Payload = (($iPosition = strpos($sString, ':', 2)) !== false) ? substr($sString, $iPosition + 1) : '';
+		$this->Payload = (($iPosition = strpos($sString, ' :', 2)) !== false) ? substr($sString, $iPosition + 2) : '';
 	}
 
 

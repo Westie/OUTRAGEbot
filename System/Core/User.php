@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     ebfddab76bb5fe996e439e9c2697eaa89e465874
- *	Committed at:   Thu Sep  8 15:53:04 BST 2011
+ *	Git commit:     fad5caed81ae072a6741085d7b776db29db8f96c
+ *	Committed at:   Thu Nov  3 21:56:15 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -19,6 +19,7 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public
 		$sNickname,
+		$pHostmaskObject,
 		$pWhois;
 
 
@@ -47,16 +48,7 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 
 
 	/**
-	 *	Sends stuff to the channel. It's a shortcut, basically.
-	 */
-	public function Message($sMessage, $mOption = SEND_DEF)
-	{
-		return $this->internalMasterObject()->Message($this->sNickname, $sMessage, $mOption);
-	}
-
-
-	/**
-	 *	Sends stuff to the channel. It's a shortcut, basically.
+	 *	Sends stuff to the user. It's a shortcut, basically.
 	 */
 	public function __invoke($sMessage, $mOption = SEND_DEF)
 	{
@@ -84,6 +76,15 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 
 
 	/**
+	 *	Sends stuff to the channel. It's a shortcut, basically.
+	 */
+	public function Message($sMessage, $mOption = SEND_DEF)
+	{
+		return $this->internalMasterObject()->Message($this->sNickname, $sMessage, $mOption);
+	}
+
+
+	/**
 	 *	Retrieve a member of the WHOIS object.
 	 */
 	public function __get($sKey)
@@ -96,6 +97,11 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 		if(isset($this->pWhois->$sKey))
 		{
 			return $this->pWhois->$sKey;
+		}
+
+		if($sKey == 'hostmask')
+		{
+			return "{$pHostmask->Nickname}!{$pHostmask->Username}@{$pHostmask->Hostname}";
 		}
 
 		return null;

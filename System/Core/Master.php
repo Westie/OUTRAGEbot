@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     5f0b25489c21ae65471f2289c56a4475a94296dc
- *	Committed at:   Mon Sep 12 18:38:35 BST 2011
+ *	Git commit:     fad5caed81ae072a6741085d7b776db29db8f96c
+ *	Committed at:   Thu Nov  3 21:56:15 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -786,17 +786,27 @@ class CoreMaster
 	 */
 	public function getUser($sNickname)
 	{
-		if($sNickname instanceof CoreUser)
+		if(isset($sNickname->Nickname))
 		{
-			return $sNickname;
-		}
+			$pUser = $this->getUser($sNickname->Nickname);
+			$pUser->pHostmaskObject = $sNickname;
 
-		if(!isset($this->pUsers->$sNickname))
+			return $pUser;
+		}
+		else
 		{
-			$this->pUsers->$sNickname = new CoreUser($this, $sNickname);
-		}
+			if($sNickname instanceof CoreUser)
+			{
+				return $sNickname;
+			}
 
-		return $this->pUsers->$sNickname;
+			if(!isset($this->pUsers->$sNickname))
+			{
+				$this->pUsers->$sNickname = new CoreUser($this, $sNickname);
+			}
+
+			return $this->pUsers->$sNickname;
+		}
 	}
 
 
@@ -888,5 +898,26 @@ class CoreMaster
 	public function Invite($sNickname, $sChannel)
 	{
 		return $this->Raw("INVITE {$sNickname} {$sChannel}");
+	}
+
+
+	/**
+	 *	Returns a list of users, matching hostmasks.
+	 */
+	public function Match($sHostmask)
+	{
+		$sSearch = '/^'.str_replace('\*', '(.*?)', preg_quote($sHostmask)).'$/';
+
+		$aUsers = array();
+
+		foreach($this->pUsers as $pUser)
+		{
+			if(preg_match($sSearch, $pUser->hostmask))
+			{
+				$aUsers[] = $pUser;
+			}
+		}
+
+		return $aUsers;
 	}
 }
