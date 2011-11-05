@@ -109,6 +109,19 @@
 			
 			color: #666;
 		}
+		
+		.Code
+		{
+			font-family: "Courier New";
+			
+			border: 1px solid #EEE;
+			background-color: #DDD;
+			
+			padding-left: 2px;
+			padding-right: 2px;
+			padding-top: 0px;
+			padding-bottom: 1px;
+		}
 	</style>
 	
 	<body>
@@ -180,6 +193,7 @@
 			<li><a name="CoreMaster">CoreMaster</a></li>
 			<ul>
 				<li><a href="#CoreMaster::Action">CoreMaster::Action()</a></li>
+				<li><a href="#CoreMaster::Find">CoreMaster::Find()</a></li>
 				<li><a href="#CoreMaster::Format">CoreMaster::Format()</a></li>
 				<li><a href="#CoreMaster::Invite">CoreMaster::Invite()</a></li>
 				<li><a href="#CoreMaster::Join">CoreMaster::Join()</a></li>
@@ -244,6 +258,7 @@
 				<li><a href="#CoreUser::away">CoreUser::$away</a></li>
 				<li><a href="#CoreUser::channels">CoreUser::$channels</a></li>
 				<li><a href="#CoreUser::helper">CoreUser::$helper</a></li>
+				<li><a href="#CoreUser::hostmask">CoreUser::$hostmask</a></li>
 				<li><a href="#CoreUser::idleTime">CoreUser::$idleTime</a></li>
 				<li><a href="#CoreUser::ircOp">CoreUser::$ircOp</a></li>
 				<li><a href="#CoreUser::nickname">CoreUser::$nickname</a></li>
@@ -925,6 +940,65 @@
 		</div>
 
 		<div class="DefMethod">
+			<a name="CoreMaster::Find" class="Name">CoreMaster::Find()</a>
+
+			<h4>Description</h4>
+			<div class="Description">
+<p>
+	This method finds all users matching a case insensitive pattern - and optionally those in certain
+	channels - and then returns this this result as an array of <a href="#CoreUser">CoreUser</a>
+	objects. The users are limited to those that are visible to the bot, so it isn't
+	able to find users in channels that the bot isn't in.
+</p>
+
+<p>
+	One can search for IRC users using these patterns:
+</p>
+
+<ul>
+	<li><span class="Code">!username</span> - Search for a IRC username.</li>
+	<li><span class="Code">@address.tld</span> - Search for a client's host address or IP.</li>
+	<li><span class="Code">nickname!username@address.tld</span> - Perform a full hostmask search.</li>
+	<li><span class="Code">username@address.tld</span> - Search for usernames and host addresses.</li>
+	<li><span class="Code">nickname</span> - Search for nicknames.</li>
+</ul>
+
+<p>
+	You can also search for channels that these users are in, but these do not support patterns. Modes can be matched as well (and are optional), as these examples show:
+</p>
+
+<ul>
+	<li><span class="Code">@address.tld: #android, #OUTRAGEbot</span> - Searches for that host address in either #android or #OUTRAGEbot.</li>
+	<li><span class="Code">:#OUTRAGEbot</span> - Searches for all users in #OUTRAGEbot</li>
+	<li><span class="Code">:#android:%</span> - Searches for all % (half-operator) users in #android</li>
+	<li><span class="Code">:#android:@&</span> - Searches for all @ (channel op) and &amp; (admin) users in #android</li>
+</ul>
+
+<p>
+	And finally, one can use the wildcard operator <span class="Code">%</span>, to search for partial 
+	user matches, again, as demonstrated:
+</p>
+
+<ul>
+	<li><span class="Code">@%.typefish.co.uk :#android</span> - Searches for users that match that subdomain query in #android</li>
+</ul></div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Find</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sQueryString&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">callback&nbsp;$cCallback&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null&nbsp;</span><span style="color: #007700">])</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #FF8000">/**<br />&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;example&nbsp;will&nbsp;send&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;users&nbsp;matching&nbsp;this&nbsp;subdomain&nbsp;to&nbsp;the&nbsp;current&nbsp;channel.<br />&nbsp;*/<br /></span><span style="color: #0000BB">$aUsers&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">find</span><span style="color: #007700">(</span><span style="color: #DD0000">"@%.typefish.co.uk"</span><span style="color: #007700">);<br /><br />foreach(</span><span style="color: #0000BB">$aUsers&nbsp;</span><span style="color: #007700">as&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"</span><span style="color: #007700">{</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">}</span><span style="color: #DD0000">"</span><span style="color: #007700">);<br />}<br /><br /><br /></span><span style="color: #FF8000">/**<br />&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;example&nbsp;will&nbsp;send&nbsp;a&nbsp;private&nbsp;message&nbsp;to&nbsp;all&nbsp;of&nbsp;the&nbsp;matched&nbsp;users,&nbsp;using&nbsp;the&nbsp;lambda&nbsp;functionality.<br />&nbsp;*/<br /></span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">find</span><span style="color: #007700">(</span><span style="color: #DD0000">":#android,&nbsp;#OUTRAGEbot:~"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">CoreUser&nbsp;$user</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">(</span><span style="color: #DD0000">"Big&nbsp;brother&nbsp;-&nbsp;or&nbsp;rather,&nbsp;this&nbsp;bot&nbsp;-&nbsp;is&nbsp;watching&nbsp;you.&nbsp;o.o"</span><span style="color: #007700">);<br />});<br /></span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">Westie<br />Happycat<br />OUTRAGEbot</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
 			<a name="CoreMaster::Format" class="Name">CoreMaster::Format()</a>
 
 			<h4>Description</h4>
@@ -1285,7 +1359,7 @@ List of options for <span class=\"Code\">$iRepeat</span>:<br />
 This means that closures and global scope functions will have that extra, prepended argument.</div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">callback&nbsp;$cCallback</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">integer&nbsp;$iInterval&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">integer&nbsp;$iRepeat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">1&nbsp;</span><span style="color: #007700">[,&nbsp;array&nbsp;</span><span style="color: #0000BB">$aArguments&nbsp;</span><span style="color: #007700">=&nbsp;array()&nbsp;]])</span>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">callback&nbsp;$cCallback</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">float&nbsp;$iInterval&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">integer&nbsp;$iRepeat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">1&nbsp;</span><span style="color: #007700">[,&nbsp;array&nbsp;</span><span style="color: #0000BB">$aArguments&nbsp;</span><span style="color: #007700">=&nbsp;array()&nbsp;]])</span>
 </span>
 </code></div>
 
@@ -2198,6 +2272,27 @@ Take note that this is Script specific, a Resource available in one Script is no
 		</div>
 
 		<div class="DefVariable">
+			<a name="CoreUser::hostmask" class="Name">CoreUser::$hostmask</a>
+
+			<h4>Description</h4>
+			<div class="Description">This property returns a string representation of the user's hostmask.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreUser</span><span style="color: #007700">::</span><span style="color: #0000BB">$hostmask</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$pUser&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"Westie"</span><span style="color: #007700">);<br /><br />echo&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">hostmask</span><span style="color: #007700">;</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #0000BB">Westie</span><span style="color: #007700">!</span><span style="color: #0000BB">westie</span><span style="color: #007700">@</span><span style="color: #0000BB">icarus</span><span style="color: #007700">.</span><span style="color: #0000BB">typefish</span><span style="color: #007700">.</span><span style="color: #0000BB">co</span><span style="color: #007700">.</span><span style="color: #0000BB">uk</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefVariable">
 			<a name="CoreUser::idleTime" class="Name">CoreUser::$idleTime</a>
 
 			<h4>Description</h4>
@@ -2387,7 +2482,7 @@ Take note that this is Script specific, a Resource available in one Script is no
 		</div>
 	
 	<p>
-		This documentation is up to date as of Mon, 12 Sep 2011 18:12:22 +0100, and it is generated from the
+		This documentation is up to date as of Sat, 05 Nov 2011 00:49:31 +0000, and it is generated from the
 		<a href="http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/">official online documentation</a>.
 	</p>
 	

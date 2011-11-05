@@ -462,7 +462,65 @@ $aUsers = $sChannel->users;]]></source><output><![CDATA[Array
             [Usermode] => q
         )
     ...
-)]]></output></example><modificationTime>1314218465</modificationTime></variable><function class="CoreMaster" name="Action"><description><![CDATA[Sends an action string to the specified channel.<br /><br />More details on the optional $mOptionvalue are available from [Method CoreMaster::Raw].]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Action(string $sChannel, string $sMessage [, integer $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sMessage"/><argument type="integer" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Action("#ffs", "walks away from the cow.");]]></source><output><![CDATA[* OUTRAGEbot walks away from the cow.]]></output></example><modificationTime>1311961821</modificationTime></function><function class="CoreMaster" name="Format"><description><![CDATA[Formats a string to mIRC-like colours and formatting.
+)]]></output></example><modificationTime>1314218465</modificationTime></variable><function class="CoreMaster" name="Action"><description><![CDATA[Sends an action string to the specified channel.<br /><br />More details on the optional $mOptionvalue are available from [Method CoreMaster::Raw].]]></description><prototype returnType="boolean"><string>boolean CoreMaster::Action(string $sChannel, string $sMessage [, integer $mOption = SEND_DEF ])</string><arguments><argument type="string" name="$sChannel"/><argument type="string" name="$sMessage"/><argument type="integer" name="$mOption" value="SEND_DEF" optional="1"/></arguments></prototype><example><source><![CDATA[$this->Action("#ffs", "walks away from the cow.");]]></source><output><![CDATA[* OUTRAGEbot walks away from the cow.]]></output></example><modificationTime>1311961821</modificationTime></function><function class="CoreMaster" name="Find"><description><![CDATA[
+<p>
+	This method finds all users matching a case insensitive pattern - and optionally those in certain
+	channels - and then returns this this result as an array of [Class CoreUser]
+	objects. The users are limited to those that are visible to the bot, so it isn't
+	able to find users in channels that the bot isn't in.
+</p>
+
+<p>
+	One can search for IRC users using these patterns:
+</p>
+
+<ul>
+	<li><span class="Code">!username</span> - Search for a IRC username.</li>
+	<li><span class="Code">@address.tld</span> - Search for a client's host address or IP.</li>
+	<li><span class="Code">nickname!username@address.tld</span> - Perform a full hostmask search.</li>
+	<li><span class="Code">username@address.tld</span> - Search for usernames and host addresses.</li>
+	<li><span class="Code">nickname</span> - Search for nicknames.</li>
+</ul>
+
+<p>
+	You can also search for channels that these users are in, but these do not support patterns. Modes can be matched as well (and are optional), as these examples show:
+</p>
+
+<ul>
+	<li><span class="Code">@address.tld: #android, #OUTRAGEbot</span> - Searches for that host address in either #android or #OUTRAGEbot.</li>
+	<li><span class="Code">:#OUTRAGEbot</span> - Searches for all users in #OUTRAGEbot</li>
+	<li><span class="Code">:#android:%</span> - Searches for all % (half-operator) users in #android</li>
+	<li><span class="Code">:#android:@&</span> - Searches for all @ (channel op) and &amp; (admin) users in #android</li>
+</ul>
+
+<p>
+	And finally, one can use the wildcard operator <span class="Code">%</span>, to search for partial 
+	user matches, again, as demonstrated:
+</p>
+
+<ul>
+	<li><span class="Code">@%.typefish.co.uk :#android</span> - Searches for users that match that subdomain query in #android</li>
+</ul>]]></description><prototype returnType="array"><string>array CoreMaster::Find(string $sQueryString [, callback $cCallback = null ])</string><arguments><argument type="string" name="$sQueryString"/><argument type="callback" name="$cCallback" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[/**
+ *        This example will send a list of all users matching this subdomain to the current channel.
+ */
+$aUsers = $this->find("@%.typefish.co.uk");
+
+foreach($aUsers as $pUser)
+{
+        $sChannel("{$pUser}");
+}
+
+
+/**
+ *        This example will send a private message to all of the matched users, using the lambda functionality.
+ */
+$this->find(":#android, #OUTRAGEbot:~", function(CoreUser $user)
+{
+        $user("Big brother - or rather, this bot - is watching you. o.o");
+});
+]]></source><output><![CDATA[Westie
+Happycat
+OUTRAGEbot]]></output></example><modificationTime>1320454100</modificationTime></function><function class="CoreMaster" name="Format"><description><![CDATA[Formats a string to mIRC-like colours and formatting.
 <br /><br />
 List of current modifiers:
 <br />
@@ -683,12 +741,12 @@ List of options for <span class=\"Code\">$iRepeat</span>:<br />
 <ul><li><span class=\"Code\">0</span> - Infinitely execute.</li><li><span class=\"Code\">1</span> - Repeat once</li><li><span class=\"Code\">2</span> - Repeat twice, and so on.</li></ul>
 <br />
 <strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for $this.
-This means that closures and global scope functions will have that extra, prepended argument.]]></description><prototype returnType="string"><string>string CoreMaster::addTimer(callback $cCallback, integer $iInterval [, integer $iRepeat = 1 [, array $aArguments = array() ]])</string><arguments><argument type="callback" name="$cCallback"/><argument type="integer" name="$iInterval"/><argument type="integer" name="$iRepeat" value="1" optional="1"/><argument type="array" name="$aArguments" value="array()" optional="1"/></arguments></prototype><example><source><![CDATA[$cTimer = function($pInstance)
+This means that closures and global scope functions will have that extra, prepended argument.]]></description><prototype returnType="string"><string>string CoreMaster::addTimer(callback $cCallback, float $iInterval [, integer $iRepeat = 1 [, array $aArguments = array() ]])</string><arguments><argument type="callback" name="$cCallback"/><argument type="float" name="$iInterval"/><argument type="integer" name="$iRepeat" value="1" optional="1"/><argument type="array" name="$aArguments" value="array()" optional="1"/></arguments></prototype><example><source><![CDATA[$cTimer = function($pInstance)
 {
         $pInstance->Message("#android", "This is a message executed every one second, five times.");
 };
 
-$sTimerHandler = $this->addTimer($cTimer, 1, 5);]]></source><output><![CDATA[[string]]]></output></example><modificationTime>1315846772</modificationTime></function><function class="CoreMaster" name="deactivateScript"><description><![CDATA[Removes a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::deactivateScript(string $sScriptName)</string><arguments><argument type="string" name="$sScriptName"/></arguments></prototype><example><source><![CDATA[$this->deactivateScript("Debug");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getActivatedScripts"><description><![CDATA[Removes and reloads a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::getActivatedScripts(void)</string><arguments/></prototype><example><source><![CDATA[$aScriptList = $this->getActivatedScripts();]]></source><output><![CDATA[Array
+$sTimerHandler = $this->addTimer($cTimer, 1, 5);]]></source><output><![CDATA[[string]]]></output></example><modificationTime>1320357963</modificationTime></function><function class="CoreMaster" name="deactivateScript"><description><![CDATA[Removes a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::deactivateScript(string $sScriptName)</string><arguments><argument type="string" name="$sScriptName"/></arguments></prototype><example><source><![CDATA[$this->deactivateScript("Debug");]]></source><output><![CDATA[]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="getActivatedScripts"><description><![CDATA[Removes and reloads a Script into the CoreMaster instance.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::getActivatedScripts(void)</string><arguments/></prototype><example><source><![CDATA[$aScriptList = $this->getActivatedScripts();]]></source><output><![CDATA[Array
 (
     [0] => Evaluation
     [1] => Commands
@@ -820,7 +878,7 @@ Take note that this is Script specific, a Resource available in one Script is no
     [serverName] => irc.sc
     [signonTime] => 1313004064
     [username] => westie
-)]]></output></example><modificationTime>1314821866</modificationTime></function><function class="CoreMaster" name="isAdmin"><description><![CDATA[Checks if the user is a Bot administrator. Nothing to do with channel rights.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::isAdmin(void)</string><arguments/></prototype><example><source><![CDATA[if($this->isAdmin())
+)]]></output></example><modificationTime>1320447440</modificationTime></function><function class="CoreMaster" name="isAdmin"><description><![CDATA[Checks if the user is a Bot administrator. Nothing to do with channel rights.]]></description><prototype returnType="boolean"><string>boolean CoreMaster::isAdmin(void)</string><arguments/></prototype><example><source><![CDATA[if($this->isAdmin())
 {
         $this->Message($sChannel, "It looks like this user is actually an admin!");
 }]]></source><output><![CDATA[It looks like this user is actually an admin!]]></output></example><modificationTime>1310589674</modificationTime></function><function class="CoreMaster" name="isResource"><description><![CDATA[Checks if that Resource exists.<br /><br />
@@ -876,7 +934,9 @@ print_r($pUser->channels)]]></source><output><![CDATA[Array
     [8] => ~#OUTRAGEbot
 )]]></output></example><modificationTime>1314824990</modificationTime></variable><variable class="CoreUser" name="helper"><description><![CDATA[This property checks if the user is available as an IRC helper.]]></description><prototype returnType="boolean"><string>boolean CoreUser::$helper</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
 
-var_dump($pUser->away);]]></source><output><![CDATA[bool(true)]]></output></example><modificationTime>1314824419</modificationTime></variable><variable class="CoreUser" name="idleTime"><description><![CDATA[This property returns how many seconds the user has been idle.]]></description><prototype returnType="integer"><string>integer CoreUser::$idleTime</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+var_dump($pUser->away);]]></source><output><![CDATA[bool(true)]]></output></example><modificationTime>1314824419</modificationTime></variable><variable class="CoreUser" name="hostmask"><description><![CDATA[This property returns a string representation of the user's hostmask.]]></description><prototype returnType="string"><string>string CoreUser::$hostmask</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
+
+echo $pUser->hostmask;]]></source><output><![CDATA[Westie!westie@icarus.typefish.co.uk]]></output></example><modificationTime>1320447305</modificationTime></variable><variable class="CoreUser" name="idleTime"><description><![CDATA[This property returns how many seconds the user has been idle.]]></description><prototype returnType="integer"><string>integer CoreUser::$idleTime</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
 
 var_dump($pUser->idleTime);]]></source><output><![CDATA[integer(0)]]></output></example><modificationTime>1314824852</modificationTime></variable><variable class="CoreUser" name="ircOp"><description><![CDATA[This property checks if the user is an IRC operator.]]></description><prototype returnType="boolean"><string>boolean CoreUser::$ircOp</string></prototype><example><source><![CDATA[$pUser = $this->getUser("Westie");
 
