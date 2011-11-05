@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     b2b9bec3e8f868955af03270809ddf2f66aa8f4d
- *	Committed at:   Sat Oct  8 20:32:41 BST 2011
+ *	Git commit:     a0e8de1a3833f32cd262ba9a785dc2eafc375bbe
+ *	Committed at:   Sat Nov  5 00:51:52 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -401,6 +401,8 @@ class Core
 	 */
 	public static function introduceFunction($sFunctionName, $cMethodCallback)
 	{
+		$sFunctionName = strtolower($sFunctionName);
+
 		if(!is_callable($cMethodCallback))
 		{
 			return false;
@@ -416,6 +418,7 @@ class Core
 	 */
 	public static function removeFunction($sFunctionName)
 	{
+		$sFunctionName = strtolower($sFunctionName);
 		unset(self::$pFunctionList->$sFunctionName);
 	}
 

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     5f0b25489c21ae65471f2289c56a4475a94296dc
- *	Committed at:   Mon Sep 12 18:38:35 BST 2011
+ *	Git commit:     a0e8de1a3833f32cd262ba9a785dc2eafc375bbe
+ *	Committed at:   Sat Nov  5 00:51:52 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -115,10 +115,14 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 
 	/**
 	 *	Users: Checks if a user is in the database
-	 *	@ignore
 	 */
 	public function isUserInChannel($sNickname)
 	{
+		if($sNickname instanceof CoreUser)
+		{
+			$sNickname = $sNickname->sNickname;
+		}
+
 		return isset($this->aUsers[$sNickname]);
 	}
 
@@ -404,6 +408,11 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function isUserVoice($sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		if(!isset($this->aUsers[$sUser]))
 		{
 			return false;
@@ -419,6 +428,11 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function isUserHalfOp($sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		if(!isset($this->aUsers[$sUser]))
 		{
 			return false;
@@ -434,6 +448,11 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function isUserOp($sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		if(!isset($this->aUsers[$sUser]))
 		{
 			return false;
@@ -449,6 +468,11 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function isUserAdmin($sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		if(!isset($this->aUsers[$sUser]))
 		{
 			return false;
@@ -464,6 +488,11 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function isUserOwner($sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		if(!isset($this->aUsers[$sUser]))
 		{
 			return false;
@@ -505,6 +534,11 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function offsetExists($sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		return isset($this->aUsers[$sUser]);
 	}
 
@@ -517,6 +551,11 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function offsetGet($sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		return $sUser;
 	}
 
@@ -526,6 +565,11 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function offsetSet($sUser, $mValue)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		return false;
 	}
 
@@ -535,6 +579,11 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function offsetUnset($sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		return false;
 	}
 

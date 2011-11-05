@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     fad5caed81ae072a6741085d7b776db29db8f96c
- *	Committed at:   Thu Nov  3 21:56:15 GMT 2011
+ *	Git commit:     a0e8de1a3833f32cd262ba9a785dc2eafc375bbe
+ *	Committed at:   Sat Nov  5 00:51:52 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -71,7 +71,9 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 	public function getWhois()
 	{
 		$this->pWhois = call_user_func(Core::$pFunctionList->getWhoisData, $this->sNickname);
-		$this->iWhoisExpire = time() + 30;
+		$this->pWhois->hostmask = $this->hostmask;
+
+		$this->iWhoisExpire = time() + 60;
 	}
 
 
@@ -89,22 +91,29 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function __get($sKey)
 	{
-		if($this->iWhoisExpire == null || $this->iWhoisExpire < time())
+		switch($sKey)
 		{
-			$this->getWhois();
-		}
+			case 'hostmask':
+			{
+				$pHostmask = $this->pHostmaskObject;
+				return "{$this->sNickname}!{$pHostmask->Username}@{$pHostmask->Hostname}";
+			}
 
-		if(isset($this->pWhois->$sKey))
-		{
-			return $this->pWhois->$sKey;
-		}
+			default:
+			{
+				if($this->iWhoisExpire == null || $this->iWhoisExpire < time())
+				{
+					$this->getWhois();
+				}
 
-		if($sKey == 'hostmask')
-		{
-			return "{$pHostmask->Nickname}!{$pHostmask->Username}@{$pHostmask->Hostname}";
-		}
+				if(isset($this->pWhois->$sKey))
+				{
+					return $this->pWhois->$sKey;
+				}
 
-		return null;
+				return null;
+			}
+		}
 	}
 
 

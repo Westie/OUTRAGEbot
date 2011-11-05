@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     fad5caed81ae072a6741085d7b776db29db8f96c
- *	Committed at:   Thu Nov  3 21:56:15 GMT 2011
+ *	Git commit:     a0e8de1a3833f32cd262ba9a785dc2eafc375bbe
+ *	Committed at:   Sat Nov  5 00:51:52 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -63,6 +63,7 @@ class CoreMaster
 	{
 		try
 		{
+			$sMethod = strtolower($sMethod);
 			$cStaticMethod = Core::$pFunctionList->$sMethod;
 
 			$pReflection = new ReflectionMethod($cStaticMethod[0], $cStaticMethod[1]);
@@ -394,6 +395,11 @@ class CoreMaster
 	 */
 	public function isUserVoice($sChannel, $sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		$pChannel = $this->getChannel($sChannel);
 
 		if(!isset($pChannel->pUsers->$sUser))
@@ -411,6 +417,11 @@ class CoreMaster
 	 */
 	public function isUserHalfOp($sChannel, $sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		$pChannel = $this->getChannel($sChannel);
 
 		if(!isset($pChannel->pUsers->$sUser))
@@ -428,6 +439,11 @@ class CoreMaster
 	 */
 	public function isUserOp($sChannel, $sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		$pChannel = $this->getChannel($sChannel);
 
 		if(!isset($pChannel->pUsers->$sUser))
@@ -445,6 +461,11 @@ class CoreMaster
 	 */
 	public function isUserAdmin($sChannel, $sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		$pChannel = $this->getChannel($sChannel);
 
 		if(!isset($pChannel->pUsers->$sUser))
@@ -462,6 +483,11 @@ class CoreMaster
 	 */
 	public function isUserOwner($sChannel, $sUser)
 	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
 		$pChannel = $this->getChannel($sChannel);
 
 		if(!isset($pChannel->pUsers->$sUser))
@@ -470,6 +496,28 @@ class CoreMaster
 		}
 
 		return preg_match('/[q]/', $pChannel->pUsers->$sUser) == true;
+	}
+
+
+	/**
+	 *	Checks if that user is in the channel.
+	 *	Why this was removed, I have zero idea.
+	 */
+	public function isUserInChannel($sChannel, $sUser)
+	{
+		if($sUser instanceof CoreUser)
+		{
+			$sUser = $sUser->sNickname;
+		}
+
+		$pChannel = $this->getChannel($sChannel);
+
+		if(!isset($pChannel->pUsers->$sUser))
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 
@@ -898,26 +946,5 @@ class CoreMaster
 	public function Invite($sNickname, $sChannel)
 	{
 		return $this->Raw("INVITE {$sNickname} {$sChannel}");
-	}
-
-
-	/**
-	 *	Returns a list of users, matching hostmasks.
-	 */
-	public function Match($sHostmask)
-	{
-		$sSearch = '/^'.str_replace('\*', '(.*?)', preg_quote($sHostmask)).'$/';
-
-		$aUsers = array();
-
-		foreach($this->pUsers as $pUser)
-		{
-			if(preg_match($sSearch, $pUser->hostmask))
-			{
-				$aUsers[] = $pUser;
-			}
-		}
-
-		return $aUsers;
 	}
 }

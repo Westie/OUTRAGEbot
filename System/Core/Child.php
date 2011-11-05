@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     34505731494ce4358c897884a185e6869f52bc08
- *	Committed at:   Tue Jul 26 23:19:16 BST 2011
+ *	Git commit:     a0e8de1a3833f32cd262ba9a785dc2eafc375bbe
+ *	Committed at:   Sat Nov  5 00:51:52 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -21,7 +21,7 @@ abstract class CoreChild
 	/**
 	 *	Used to set (and return) the Master object.
 	 */
-	protected final function internalMasterObject($pMaster = null)
+	protected final function internalMasterObject(CoreMaster $pMaster = null)
 	{
 		if($this->sInternalMasterObject === null)
 		{
