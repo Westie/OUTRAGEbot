@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     a0e8de1a3833f32cd262ba9a785dc2eafc375bbe
- *	Committed at:   Sat Nov  5 00:51:52 GMT 2011
+ *	Git commit:     09c68fbaed58f5eaf8f1066c15fd6277f02d8812
+ *	Committed at:   Sat Nov 26 19:53:03 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -166,7 +166,7 @@ class CoreHandler
 
 	/**
 	 *	Called when we recieve a NAMES response.
-	 *	Numeric: 353 - Names response.
+	 *	Numeric: 353 - NAMES response.
 	 */
 	public static function N353(CoreMaster $pInstance, MessageObject $pMessage)
 	{
@@ -185,6 +185,21 @@ class CoreHandler
 
 			$pInstance->getUser($sNickname);
 		}
+	}
+
+
+	/**
+	 *	This seems to be always return when the bot joins a channel.
+	 *	It will also cause things to slow down when it enters, but it's supposed
+	 *	to help speed things up in the long run (and help make things like find()
+	 *	work with silent users).
+	 *
+	 *	Numeric: 366 - End of NAMES response.
+	 */
+	public static function N366(CoreMaster $pInstance, MessageObject $pMessage)
+	{
+		$sChannel = $pMessage->Parts[3];
+		$pInstance->getWhoList($sChannel);
 	}
 
 

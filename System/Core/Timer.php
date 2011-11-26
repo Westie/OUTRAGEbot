@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     5f0b25489c21ae65471f2289c56a4475a94296dc
- *	Committed at:   Mon Sep 12 18:38:35 BST 2011
+ *	Git commit:     09c68fbaed58f5eaf8f1066c15fd6277f02d8812
+ *	Committed at:   Sat Nov 26 19:53:04 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -64,6 +64,8 @@ class CoreTimer
 	 */
 	static function Add($cCallback, $iInterval, $iRepeat = 1, array $aArguments = array())
 	{
+		$pInstance = null;
+
 		if(!is_callable($cCallback))
 		{
 			$pInstance = Core::getCurrentInstance();

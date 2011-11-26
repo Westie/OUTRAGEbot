@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     a0e8de1a3833f32cd262ba9a785dc2eafc375bbe
- *	Committed at:   Sat Nov  5 00:51:52 GMT 2011
+ *	Git commit:     09c68fbaed58f5eaf8f1066c15fd6277f02d8812
+ *	Committed at:   Sat Nov 26 19:53:03 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -144,6 +144,35 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 		return $this->internalMasterObject()->Message($this->sChannel, $sMessage, $mOption);
 	}
 
+
+	/**
+	 *	Send actions to the channel.
+	 */
+	public function Action($sMessage, $mOption = SEND_DEF)
+	{
+		return $this->internalMasterObject()->Action($this->sChannel, $sMessage, $mOption);
+	}
+
+
+	/**
+	 *	Retrieves a list of all users matching a pattern.
+	 *	It uses the same pattern prototypes as its parent function, ModuleFind::Find();
+	 */
+	public function Find($sPattern)
+	{
+		$aPatternSegments = explode($sPattern, ':', 2);
+
+		if(!isset($aPatternSegments[1]))
+		{
+			$aPatternSegments[1] = "{$this->sChannel}";
+		}
+		else
+		{
+			$aPatternSegments[1] = trim($aPatternSegments[1]).",{$this->sChannel}";
+		}
+
+		return $this->internalMasterObject()->Find($sPattern);
+	}
 
 
 	/**
@@ -402,7 +431,7 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	}
 
 
-		/**
+	/**
 	 *	Checks if that user has voice in that channel. Voicers have the
 	 *	mode ' + '.
 	 */

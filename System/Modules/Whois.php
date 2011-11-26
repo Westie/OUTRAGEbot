@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     31ad7f1e21fb1a1676f99c6ce89e2e51a6897a0e
- *	Committed at:   Wed Aug 31 21:37:31 UTC 2011
+ *	Git commit:     09c68fbaed58f5eaf8f1066c15fd6277f02d8812
+ *	Committed at:   Sat Nov 26 19:53:04 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -23,15 +23,21 @@ class ModuleWhois
 	 */
 	static function initModule()
 	{
-		Core::introduceFunction("getWhois", array(__CLASS__, "sendWhoisRequest"));
-		Core::introduceFunction("getWhoisData", array(__CLASS__, "sendWhoisRequest"));
+		$aMethods = array
+		(
+			"whois",
+			"getWhois",
+			"getWhoisData",
+		);
+
+		Core::introduceFunction($aMethods, array(__CLASS__, "requestWhois"));
 	}
 
 
 	/**
 	 *	The command handler
 	 */
-	static function sendWhoisRequest($sNickname)
+	static function requestWhois($sNickname)
 	{
 		/* Send the request, and sort out the handler */
 		self::$pTempObject = (object) array

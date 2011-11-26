@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     a0e8de1a3833f32cd262ba9a785dc2eafc375bbe
- *	Committed at:   Sat Nov  5 00:51:52 GMT 2011
+ *	Git commit:     09c68fbaed58f5eaf8f1066c15fd6277f02d8812
+ *	Committed at:   Sat Nov 26 19:53:03 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -211,6 +211,9 @@ class Core
 			# Is this an object?
 			if(is_array($cCallback))
 			{
+				# This will incorporate a test to check if this
+				# is a PHP 5.4 Closure object.
+
 				if(!($cCallback[0] instanceof Script))
 				{
 					array_unshift($aArguments, $pInstance);
@@ -399,16 +402,20 @@ class Core
 	/**
 	 *	Adds a virtual function into the bot.
 	 */
-	public static function introduceFunction($sFunctionName, $cMethodCallback)
+	public static function introduceFunction($aMethodNames, $cMethodCallback)
 	{
-		$sFunctionName = strtolower($sFunctionName);
-
-		if(!is_callable($cMethodCallback))
+		foreach((array) $aMethodNames as $sFunctionName)
 		{
-			return false;
+			$sFunctionName = strtolower($sFunctionName);
+
+			if(!is_callable($cMethodCallback))
+			{
+				return false;
+			}
+
+			self::$pFunctionList->$sFunctionName = $cMethodCallback;
 		}
 
-		self::$pFunctionList->$sFunctionName = $cMethodCallback;
 		return true;
 	}
 
@@ -434,6 +441,7 @@ class Core
 			"errorString" => $errstr,
 			"offendingFile" => $errfile,
 			"offendingLine" => $errline,
+			"timeHandled" => time(),
 		);
 	}
 

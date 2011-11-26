@@ -222,6 +222,7 @@
 				<li><a href="#CoreMaster::getServerConfiguration">CoreMaster::getServerConfiguration()</a></li>
 				<li><a href="#CoreMaster::getSocketConfiguration">CoreMaster::getSocketConfiguration()</a></li>
 				<li><a href="#CoreMaster::getUser">CoreMaster::getUser()</a></li>
+				<li><a href="#CoreMaster::getWhoList">CoreMaster::getWhoList()</a></li>
 				<li><a href="#CoreMaster::getWhoisData">CoreMaster::getWhoisData()</a></li>
 				<li><a href="#CoreMaster::isAdmin">CoreMaster::isAdmin()</a></li>
 				<li><a href="#CoreMaster::isResource">CoreMaster::isResource()</a></li>
@@ -1205,17 +1206,17 @@ List of current modifiers:
 
 			<h4>Description</h4>
 			<div class="Description">Sends a raw message to the IRC server.
-<br /><br />List of possible types for $mOption:
+<br /><br />List of possible types for <span class="Code">$mOption</span>:
 <ul>
 	<li>
 		Output options
 		
 		<ul>
-			<li>SEND_DEF - option defined in configuration file</li>
-			<li>SEND_MAST - sent from the first defined IRC slave (in this case, the master)</li>
-			<li>SEND_CURR - sent from the current IRC child</li>
-			<li>SEND_ALL - sent from all at once</li>
-			<li>SEND_DIST - each message is distributed between each bot.</li>
+			<li><span class="Code">SEND_DEF</span> - option defined in configuration file</li>
+			<li><span class="Code">SEND_MAST</span> - sent from the first defined IRC slave (in this case, the master)</li>
+			<li><span class="Code">SEND_CURR</span> - sent from the current IRC child</li>
+			<li><span class="Code">SEND_ALL</span> - sent from all at once</li>
+			<li><span class="Code">SEND_DIST</span> - each message is distributed between each bot.</li>
 		</ul>
 	</li>
 	
@@ -1223,12 +1224,12 @@ List of current modifiers:
 		Output modification
 		
 		<ul>
-			<li>FORMAT - formats the string in accordance with CoreMaster::Format()</li>
+			<li><span class="Code">FORMAT</span> - formats the string in accordance with CoreMaster::Format()</li>
 		</ul>
 	</li>
 </ul>
 
-<br />Setting the $mOption argument null, will result in the second argument becoming SEND_DIST.</div>
+<br />Setting the <span class="Code">$mOption</span> argument null, will result it in becoming <span class="Code">SEND_DIST</span>.</div>
 
 			<h4>Prototype</h4>
 			<div class="Prototype"><code><span style="color: #0000BB">boolean&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Raw</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sMessage&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">mixed&nbsp;$mOption&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">SEND_DEF&nbsp;</span><span style="color: #007700">])</span>
@@ -1325,15 +1326,15 @@ List of current modifiers:
 
 <h4>List of format codes</h4>
 <ul>
-	<li>c - Message parts as an array.</li>
-	<li>m - Message object. (<a href="#Core::getMessageObject">Core::getMessageObject</a>)</li>
-	<li>p - The payload, or rather the bit after the semi-colon.</li>
-	<li>r - The raw, unparsed input string.</li>
-	<li>h - The parsed hostname, as an object.</li>
-	<li>u - User's nickname, as a string.</li>
+	<li><span class="Code">c</span> - Message parts as an array.</li>
+	<li><span class="Code">m</span> - Message object. (<a href="#Core::getMessageObject">Core::getMessageObject</a>)</li>
+	<li><span class="Code">p</span> - The payload, or rather the bit after the semi-colon.</li>
+	<li><span class="Code">r</span> - The raw, unparsed input string.</li>
+	<li><span class="Code">h</span> - The parsed hostname, as an object.</li>
+	<li><span class="Code">u</span> - User's nickname, as a string.</li>
 </ul>
 
-<br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <samp>$this</samp>. This means that closures and global scope functions will have that extra, prepended argument.</div>
+<br /><strong>Please note:</strong> If the callback isn't a member of any class that is a child of Script, then there will be an argument prepended that acts as the replacement for <span class="Code">$this</span>. This means that closures and global scope functions will have that extra, prepended argument.</div>
 
 			<h4>Prototype</h4>
 			<div class="Prototype"><code><span style="color: #0000BB">string&nbsp;CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">addEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sNumerics</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">callback&nbsp;$cCallback&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">string&nbsp;$sArgumentFormat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"m"&nbsp;</span><span style="color: #007700">])</span>
@@ -1683,6 +1684,27 @@ Take note that this is Script specific, a Resource available in one Script is no
 </span>
 </code></div>
 			<div class="Output"><code><span style="color: #007700">[</span><span style="color: #0000BB">object&nbsp;CoreUser</span><span style="color: #007700">]</span>
+</span>
+</code></div>
+
+		</div>
+
+		<div class="DefMethod">
+			<a name="CoreMaster::getWhoList" class="Name">CoreMaster::getWhoList()</a>
+
+			<h4>Description</h4>
+			<div class="Description">Returns an array containing detailed information about users in the channel. Only available if the Who module is enabled - it is by default.</div>
+
+			<h4>Prototype</h4>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">getWhoList</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sChannel</span><span style="color: #007700">)</span>
+</span>
+</code></div>
+
+			<h4>Example and Output</h4>
+			<div class="Source"><code><span style="color: #0000BB">$aUsers&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getWhoList</span><span style="color: #007700">(</span><span style="color: #DD0000">"#OUTRAGEbot"</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+			<div class="Output"><code><span style="color: #007700">Array<br />(<br />&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">0</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">stdClass&nbsp;Object<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[</span><span style="color: #0000BB">nickname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">OUTRAGEbot<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">username</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">OUTRAGEbot<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">address</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">irc</span><span style="color: #007700">-</span><span style="color: #0000BB">26FB1DC6</span><span style="color: #007700">.</span><span style="color: #0000BB">typefish</span><span style="color: #007700">.</span><span style="color: #0000BB">co</span><span style="color: #007700">.</span><span style="color: #0000BB">uk<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">realname</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">Mr</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">Robinson<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">channel</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #FF8000">#OUTRAGEbot<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">server</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">nl</span><span style="color: #007700">.</span><span style="color: #0000BB">irc</span><span style="color: #007700">.</span><span style="color: #0000BB">sc<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">userModes</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">H<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">[</span><span style="color: #0000BB">serverHops</span><span style="color: #007700">]&nbsp;=&gt;&nbsp;</span><span style="color: #0000BB">0<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />)</span>
 </span>
 </code></div>
 
@@ -2482,7 +2504,7 @@ Take note that this is Script specific, a Resource available in one Script is no
 		</div>
 	
 	<p>
-		This documentation is up to date as of Sat, 05 Nov 2011 00:49:31 +0000, and it is generated from the
+		This documentation is up to date as of Sat, 26 Nov 2011 18:58:11 +0000, and it is generated from the
 		<a href="http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/">official online documentation</a>.
 	</p>
 	

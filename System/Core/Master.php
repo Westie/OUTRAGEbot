@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     a0e8de1a3833f32cd262ba9a785dc2eafc375bbe
- *	Committed at:   Sat Nov  5 00:51:52 GMT 2011
+ *	Git commit:     09c68fbaed58f5eaf8f1066c15fd6277f02d8812
+ *	Committed at:   Sat Nov 26 19:53:04 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -64,10 +64,16 @@ class CoreMaster
 		try
 		{
 			$sMethod = strtolower($sMethod);
+
+			if(!isset(Core::$pFunctionList->$sMethod))
+			{
+				return null;
+			}
+
 			$cStaticMethod = Core::$pFunctionList->$sMethod;
 
 			$pReflection = new ReflectionMethod($cStaticMethod[0], $cStaticMethod[1]);
-			$pReflection->invokeArgs(null, $aArguments);
+			return $pReflection->invokeArgs(null, $aArguments);
 		}
 		catch(ReflectionException $pError)
 		{
@@ -256,6 +262,11 @@ class CoreMaster
 	 */
 	public function getNetworkConfiguration($sConfigKey = null)
 	{
+		if(!isset($this->pConfig->Network->$sConfigKey))
+		{
+			return null;
+		}
+
 		return $sConfigKey == null ? $this->pConfig->Network : $this->pConfig->Network->$sConfigKey;
 	}
 
@@ -265,6 +276,11 @@ class CoreMaster
 	 */
 	public function getServerConfiguration($sConfigKey = null)
 	{
+		if(!isset($this->pConfig->Server->$sConfigKey))
+		{
+			return null;
+		}
+
 		return $sConfigKey == null ? $this->pConfig->Server : $this->pConfig->Server->$sConfigKey;
 	}
 
@@ -818,7 +834,7 @@ class CoreMaster
 	 */
 	public function getObject($sObject)
 	{
-		$sPattern = "/[".$this->getServerConfiguration('CHANTYPES')."]/";
+		$sPattern = "/[".preg_quote($this->getServerConfiguration("CHANTYPES"))."]/";
 
 		if(preg_match($sPattern, $sObject[0]))
 		{

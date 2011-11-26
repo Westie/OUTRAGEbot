@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     a0e8de1a3833f32cd262ba9a785dc2eafc375bbe
- *	Committed at:   Sat Nov  5 00:51:52 GMT 2011
+ *	Git commit:     09c68fbaed58f5eaf8f1066c15fd6277f02d8812
+ *	Committed at:   Sat Nov 26 19:53:04 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -86,6 +86,12 @@ abstract class Script extends CoreChild
 			try
 			{
 				$sMethod = strtolower($sMethod);
+
+				if(!isset(Core::$pFunctionList->$sMethod))
+				{
+					return null;
+				}
+
 				$cStaticMethod = Core::$pFunctionList->$sMethod;
 
 				$pReflection = new ReflectionMethod($cStaticMethod[0], $cStaticMethod[1]);
