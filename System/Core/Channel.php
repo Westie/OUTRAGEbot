@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     09c68fbaed58f5eaf8f1066c15fd6277f02d8812
- *	Committed at:   Sat Nov 26 19:53:03 GMT 2011
+ *	Git commit:     8ab985ac85295eb69ce3d8064a149802417bba81
+ *	Committed at:   Sun Nov 27 20:49:41 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -181,7 +181,17 @@ class CoreChannel extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function addUserToChannel($sNickname, $sChannelMode = "")
 	{
-		$this->aUsers[$sNickname] = $sChannelMode;
+		if($sChannelMode === null)
+		{
+			if(!isset($this->aUsers[$sNickname]))
+			{
+				$this->aUsers[$sNickname] = $sChannelMode;
+			}
+		}
+		else
+		{
+			$this->aUsers[$sNickname] = $sChannelMode;
+		}
 	}
 
 
