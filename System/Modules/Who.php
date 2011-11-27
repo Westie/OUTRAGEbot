@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     8ab985ac85295eb69ce3d8064a149802417bba81
- *	Committed at:   Sun Nov 27 20:49:41 GMT 2011
+ *	Git commit:     f0c76f989f9d77b192709024e6c02e8b16cb13bd
+ *	Committed at:   Sun Nov 27 21:37:27 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -89,7 +89,7 @@ class ModuleWho
 				$pInstance->getUser($pMask);
 
 				$pChannel = $pInstance->getChannel($pMessage->Parts[3]);
-				$pChannel->addUserToChannel($pMessage->Parts[3], null);
+				$pChannel->addUserToChannel($pMessage->Parts[7], null);
 
 				return false;
 			}
