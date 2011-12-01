@@ -5,14 +5,14 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     09c68fbaed58f5eaf8f1066c15fd6277f02d8812
- *	Committed at:   Sat Nov 26 19:53:04 GMT 2011
+ *	Git commit:     d7e5e8f1ecf3942dd0070b4b4fa2357ab45821f9
+ *	Committed at:   Thu Dec  1 21:43:53 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
 
 
-class MessageObject
+class MessageObject implements ArrayAccess, Countable, Iterator
 {
 	public
 		$Raw = null,
@@ -41,11 +41,101 @@ class MessageObject
 	 */
 	public function __toString()
 	{
-		if($this->Payload == '')
+		if(empty($this->Payload))
 		{
 			return $this->Raw;
 		}
 
 		return $this->Payload;
+	}
+
+
+	/**
+	 *	Countable interface: Counts the parts.
+	 */
+	public function count()
+	{
+		return count($this->Parts);
+	}
+
+
+	/**
+	 *	ArrayAccess interface: Checks if that part is exists.
+	 */
+	public function offsetExists($iOffset)
+	{
+		return isset($this->Parts[$iOffset]);
+	}
+
+
+	/**
+	 *	ArrayAccess interface: Returns that part.
+	 */
+	public function offsetGet($iOffset)
+	{
+		return $this->Parts[$iOffset];
+	}
+
+
+	/**
+	 *	ArrayAccess interface: Sets the offset.
+	 */
+	public function offsetSet($iOffset, $mValue)
+	{
+		return false;
+	}
+
+
+	/**
+	 *	ArrayAccess interface: Unsets the offset.
+	 */
+	public function offsetUnset($iOffset)
+	{
+		return false;
+	}
+
+
+	/**
+	 *	Iterator interface: Rewinds the parts array.
+	 */
+	public final function rewind()
+	{
+		return reset($this->Parts);
+	}
+
+
+	/**
+	 *	Iterator interface: Returns the current part element.
+	 */
+	public final function current()
+	{
+		return current($this->Parts);
+	}
+
+
+	/**
+	 *	Iterator interface: Returns the part key
+	 */
+	public final function key()
+	{
+		return key($this->Parts);
+	}
+
+
+	/**
+	 *	Iterator interface: Moves the parts array pointer on by one.
+	 */
+	public final function next()
+	{
+		return next($this->Parts);
+	}
+
+
+	/**
+	 *	Iterator interface: Checks if the parts key is valid.
+	 */
+	public final function valid()
+	{
+		return (key($this->Parts) !== null);
 	}
 }
