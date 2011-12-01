@@ -4,9 +4,10 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
- *	Version:        2.0.0-Alpha
- *	Git commit:     8ab985ac85295eb69ce3d8064a149802417bba81
- *	Committed at:   Sun Nov 27 20:49:41 GMT 2011
+ *	Version:        2.0.0-Beta
+
+ *	Git commit:     a27156d898fcdbfad3f997382f35b1887b317e02
+ *	Committed at:   Thu Dec  1 22:14:49 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -93,10 +94,15 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 	{
 		switch($sKey)
 		{
-			case 'hostmask':
+			case "hostmask":
 			{
 				$pHostmask = $this->pHostmaskObject;
 				return "{$this->sNickname}!{$pHostmask->Username}@{$pHostmask->Hostname}";
+			}
+
+			case "address":
+			{
+				return $this->pHostmaskObject->Hostname;
 			}
 
 			default:

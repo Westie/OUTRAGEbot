@@ -4,9 +4,10 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
- *	Version:        2.0.0-Alpha
- *	Git commit:     d7e5e8f1ecf3942dd0070b4b4fa2357ab45821f9
- *	Committed at:   Thu Dec  1 21:43:53 GMT 2011
+ *	Version:        2.0.0-Beta
+
+ *	Git commit:     a27156d898fcdbfad3f997382f35b1887b317e02
+ *	Committed at:   Thu Dec  1 22:14:49 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -850,27 +851,30 @@ class CoreMaster
 	 */
 	public function getUser($sNickname)
 	{
-		if(isset($sNickname->Nickname))
-		{
-			$pUser = $this->getUser($sNickname->Nickname);
-			$pUser->pHostmaskObject = $sNickname;
-
-			return $pUser;
-		}
-		else
+		if(is_object($sNickname))
 		{
 			if($sNickname instanceof CoreUser)
 			{
 				return $sNickname;
 			}
 
-			if(!isset($this->pUsers->$sNickname))
+			elseif(isset($sNickname->Nickname))
 			{
-				$this->pUsers->$sNickname = new CoreUser($this, $sNickname);
+				$pUser = $this->getUser($sNickname->Nickname);
+				$pUser->pHostmaskObject = $sNickname;
+
+				return $pUser;
 			}
 
-			return $this->pUsers->$sNickname;
+			return null;
 		}
+
+		if(!isset($this->pUsers->$sNickname))
+		{
+			$this->pUsers->$sNickname = new CoreUser($this, $sNickname);
+		}
+
+		return $this->pUsers->$sNickname;
 	}
 
 

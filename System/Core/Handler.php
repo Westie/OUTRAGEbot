@@ -4,9 +4,10 @@
  *
  *	Author:		David Weston <westie@typefish.co.uk>
  *
- *	Version:        2.0.0-Alpha
- *	Git commit:     d7e5e8f1ecf3942dd0070b4b4fa2357ab45821f9
- *	Committed at:   Thu Dec  1 21:43:52 GMT 2011
+ *	Version:        2.0.0-Beta
+
+ *	Git commit:     a27156d898fcdbfad3f997382f35b1887b317e02
+ *	Committed at:   Thu Dec  1 22:14:49 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -161,6 +162,25 @@ class CoreHandler
 
 		$pChannel->pTopic->topicSetter = $pMessage->Parts[4];
 		$pChannel->pTopic->topicTime = $pMessage->Parts[5];
+	}
+
+
+	/**
+	 *	Called when we recieve a WHO response.
+	 *	Numeric: 352 - WHO response.
+	 */
+	public static function N352(CoreMaster $pInstance, MessageObject $pMessage)
+	{
+		$aInformation = explode(' ', $pMessage->Payload, 2);
+
+		$pMask = (object) array
+		(
+			"Nickname" => $pMessage->Parts[7],
+			"Username" => $pMessage->Parts[4],
+			"Hostname" => $pMessage->Parts[5],
+		);
+
+		$pInstance->getUser($pMask);
 	}
 
 
