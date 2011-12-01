@@ -6,8 +6,9 @@
  *
  *	Version:        2.0.0-Beta
 
- *	Git commit:     d7e5e8f1ecf3942dd0070b4b4fa2357ab45821f9
- *	Committed at:   Thu Dec  1 21:45:28 GMT 2011
+
+ *	Git commit:     b882ae6528fa3950a03f50ec895ea670f8541f26
+ *	Committed at:   Thu Dec  1 22:35:19 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -29,6 +30,7 @@ define("BOT_TICKRATE", 2600);
  *	Some bot-brag-relating things.
  */
 define("BOT_VERSION", "2.0.0-Beta
+-b882ae6");
 -d7e5e8f");
 define("BOT_RELDATE", "01/12/2011");
 

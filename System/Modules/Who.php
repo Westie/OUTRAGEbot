@@ -6,8 +6,9 @@
  *
  *	Version:        2.0.0-Beta
 
- *	Git commit:     a27156d898fcdbfad3f997382f35b1887b317e02
- *	Committed at:   Thu Dec  1 22:14:49 GMT 2011
+
+ *	Git commit:     b882ae6528fa3950a03f50ec895ea670f8541f26
+ *	Committed at:   Thu Dec  1 22:35:20 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */

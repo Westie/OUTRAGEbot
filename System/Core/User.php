@@ -6,8 +6,9 @@
  *
  *	Version:        2.0.0-Beta
 
- *	Git commit:     a27156d898fcdbfad3f997382f35b1887b317e02
- *	Committed at:   Thu Dec  1 22:14:49 GMT 2011
+
+ *	Git commit:     b882ae6528fa3950a03f50ec895ea670f8541f26
+ *	Committed at:   Thu Dec  1 22:35:19 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -71,7 +72,7 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 	 */
 	public function getWhois()
 	{
-		$this->pWhois = call_user_func(Core::$pFunctionList->getWhoisData, $this->sNickname);
+		$this->pWhois = $this->internalMasterObject()->getWhois($sNickname);
 		$this->pWhois->hostmask = $this->hostmask;
 
 		$this->iWhoisExpire = time() + 60;
@@ -96,6 +97,11 @@ class CoreUser extends CoreChild implements ArrayAccess, Countable, Iterator
 		{
 			case "hostmask":
 			{
+				if(!isset($this->pHostmaskObject))
+				{
+					return null;
+				}
+
 				$pHostmask = $this->pHostmaskObject;
 				return "{$this->sNickname}!{$pHostmask->Username}@{$pHostmask->Hostname}";
 			}
