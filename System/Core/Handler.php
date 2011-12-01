@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4a7dced0b3ef96338f36bc64bd40ed91063c3e01
- *	Committed at:   Thu Dec  1 22:49:57 GMT 2011
+ *	Git commit:     95304f4359b55dae9234c2c1156593d3c5fdb40d
+ *	Committed at:   Thu Dec  1 23:01:51 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -171,6 +171,11 @@ class CoreHandler
 	public static function N352(CoreMaster $pInstance, MessageObject $pMessage)
 	{
 		$aInformation = explode(' ', $pMessage->Payload, 2);
+
+		if(!isset($pMessage->Parts[4]) || isset($pMessage->Parts[5]) || isset($pMessage->Parts[7]))
+		{
+			return null;
+		}
 
 		$pMask = (object) array
 		(
