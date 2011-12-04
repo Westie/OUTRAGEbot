@@ -483,14 +483,25 @@ $aUsers = $sChannel->users;]]></source><output><![CDATA[Array
 </ul>
 
 <p>
-	You can also search for channels that these users are in, but these do not support patterns. Modes can be matched as well (and are optional), as these examples show:
+	One can also search for channels that these users are in, but these do not support partial matches. Modes can be matched as well (and are optional), as these examples show:
 </p>
 
 <ul>
 	<li><span class="Code">@address.tld: #android, #OUTRAGEbot</span> - Searches for that host address in either #android or #OUTRAGEbot.</li>
 	<li><span class="Code">:#OUTRAGEbot</span> - Searches for all users in #OUTRAGEbot</li>
-	<li><span class="Code">:#android:%</span> - Searches for all % (half-operator) users in #android</li>
-	<li><span class="Code">:#android:@&</span> - Searches for all @ (channel op) and &amp; (admin) users in #android</li>
+	<li><span class="Code">:%#android</span> - Searches for all % (half-operator) users in #android</li>
+	<li><span class="Code">:@&amp;#android</span> - Searches for all @ (channel op) and &amp; (admin) users in #android</li>
+	<li><span class="Code">:^~#android</span> - Removes channel owners in #android from the results</li>
+</ul>
+
+<p>
+	One can also filter these results even further, by selecting users that are on all channels presented in one statement. As usual, modes can be used as part of the filter, as shown:
+</p>
+
+<ul>
+	<li><span class="Code">:#channel1 #channel2</span> - Returns users that are in both #channel1 and #channel2</li>
+	<li><span class="Code">:&#android ~&#OUTRAGEbot</span> - Returns users that both are admins in #android and admins or owners in #OUTRAGEbot.</li>
+	<li><span class="Code">:&#a ~&b, #c</span> - Returns either users who are both admins in #a and owners in &b, or members of #c</li>
 </ul>
 
 <p>
@@ -500,7 +511,7 @@ $aUsers = $sChannel->users;]]></source><output><![CDATA[Array
 
 <ul>
 	<li><span class="Code">@%.typefish.co.uk :#android</span> - Searches for users that match that subdomain query in #android</li>
-</ul>]]></description><prototype returnType="array"><string>array CoreMaster::Find(string $sQueryString [, callback $cCallback = null ])</string><arguments><argument type="string" name="$sQueryString"/><argument type="callback" name="$cCallback" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[/**
+</ul>]]></description><prototype returnType="array"><string>array CoreMaster::Find(mixed $mQueryString [, callback $cCallback = null ])</string><arguments><argument type="mixed" name="$mQueryString"/><argument type="callback" name="$cCallback" value="null" optional="1"/></arguments></prototype><example><source><![CDATA[/**
  *        This example will send a list of all users matching this subdomain to the current channel.
  */
 $aUsers = $this->find("@%.typefish.co.uk");
@@ -514,13 +525,13 @@ foreach($aUsers as $pUser)
 /**
  *        This example will send a private message to all of the matched users, using the lambda functionality.
  */
-$this->find(":#android, #OUTRAGEbot:~", function(CoreUser $user)
+$this->find(":#android, ~#OUTRAGEbot", function(CoreUser $user)
 {
         $user("Big brother - or rather, this bot - is watching you. o.o");
 });
 ]]></source><output><![CDATA[Westie
 Happycat
-OUTRAGEbot]]></output></example><modificationTime>1320454100</modificationTime></function><function class="CoreMaster" name="Format"><description><![CDATA[Formats a string to mIRC-like colours and formatting.
+OUTRAGEbot]]></output></example><modificationTime>1323022617</modificationTime></function><function class="CoreMaster" name="Format"><description><![CDATA[Formats a string to mIRC-like colours and formatting.
 <br /><br />
 List of current modifiers:
 <br />

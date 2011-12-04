@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95304f4359b55dae9234c2c1156593d3c5fdb40d
- *	Committed at:   Thu Dec  1 23:01:52 GMT 2011
+ *	Git commit:     673e7bc312dc0cd03956efc0d4556fd369986a67
+ *	Committed at:   Sun Dec  4 21:28:32 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */

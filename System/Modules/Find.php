@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4a7dced0b3ef96338f36bc64bd40ed91063c3e01
- *	Committed at:   Thu Dec  1 22:49:57 GMT 2011
+ *	Git commit:     673e7bc312dc0cd03956efc0d4556fd369986a67
+ *	Committed at:   Sun Dec  4 21:28:32 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -17,61 +17,69 @@ class ModuleFind
 	/**
 	 *	Called when the module is loaded.
 	 */
-	static function initModule()
+	static public function initModule()
 	{
 		Core::introduceFunction("Find", array(__CLASS__, "Find"));
 	}
 
 
 	/**
-	 *	Called when someone wants to retrieve matched users.
+	 *	Called when someone wants to retrieve matched users. If multiple queries
+	 *	have been provided, retrieve each query separately and then remove all
+	 *	duplicates.
 	 */
-	static function Find($sQueryString, $cCallback = null)
+	static public function Find($mQueryString, $cCallback = null)
 	{
-		list($aChannels, $aCriteria) = self::generateSearchCriteria($sQueryString);
+		if(is_array($mQueryString) || $mQueryString instanceof Traversable)
+		{
+			$aReturnedUsers = array();
+
+			foreach($mQueryString as $sQueryString)
+			{
+				$aMatchedUsers = self::PerformSearch((string) $sQueryString, $cCallback);
+
+				foreach($aMatchedUsers as $pUser)
+				{
+					if(!isset($aReturnedUsers[$pUser->hostmask]))
+					{
+						$aReturnedUsers[$pUser->hostmask] = $pUser;
+					}
+				}
+			}
+
+			return $aReturnedUsers;
+		}
+
+		return self::PerformSearch((string) $mQueryString, $cCallback);
+	}
+
+
+	/**
+	 *	Individual selector method - retrieves the matched users and returns it.
+	 */
+	static private function PerformSearch($sQueryString, $cCallback)
+	{
+		list($aChannelSelectors, $aCriteria) = self::generateSearchCriteria($sQueryString);
 
 		$pInstance = Core::getCurrentInstance();
 		$sCompiledPattern = self::compilePattern($aCriteria);
 
 		$aMatchedUsers = array();
-		$bCheckChannels = isset($aChannels[0]);
+		$bCheckChannels = isset($aChannelSelectors[0]);
 
 		foreach($pInstance->pUsers as $pUser)
 		{
-			if(preg_match($sCompiledPattern, $pUser->hostmask))
+			if($sCompiledPattern == null || preg_match($sCompiledPattern, $pUser->hostmask))
 			{
 				if($bCheckChannels)
 				{
-					$iChannels = 0;
-
-					foreach($aChannels as $pChannel)
-					{
-						if($pChannel->channel->isUserInChannel($pUser))
-						{
-							if($pChannel->modes !== null)
-							{
-								foreach($pChannel->modes as $cMode)
-								{
-									if(stristr($pChannel->channel->aUsers[$pUser->sNickname], $cMode))
-									{
-										++$iChannels;
-									}
-								}
-							}
-							else
-							{
-								++$iChannels;
-							}
-						}
-					}
-
-					if(!$iChannels)
+					if(!self::delegateChannelSelectors($pUser, $aChannelSelectors))
 					{
 						continue;
 					}
 				}
 
-				$aMatchedUsers[] = $pUser;
+				$aMatchedUsers[$pUser->hostmask] = $pUser;
 
 				if($cCallback)
 				{
@@ -85,10 +93,102 @@ class ModuleFind
 
 
 	/**
+	 *	A method to delegate searching the channel elements.
+	 */
+	static private function delegateChannelSelectors(CoreUser $pUser, array $aChannelSelectors)
+	{
+		$bSuccessfulMatch = false;
+
+		foreach($aChannelSelectors as $aChannelElements)
+		{
+			$bSuccessfulMatch = self::isUserSelected($pUser, $aChannelElements);
+		}
+
+		return $bSuccessfulMatch;
+	}
+
+
+	/**
+	 *	A method delegated to search the channel elements, and returns whether
+	 *	the user is in the channel.
+	 *
+	 *	I don't like the fact I have to do different things for negations...
+	 */
+	static private function isUserSelected(CoreUser $pUser, array $aChannelElements)
+	{
+		$sUser = (string) $pUser;
+
+		foreach($aChannelElements as $pChannel)
+		{
+			if($pChannel->Negation)
+			{
+				if($pChannel->Channel->isUserInChannel($pUser))
+				{
+					if(empty($pChannel->Modes))
+					{
+						return false;
+					}
+
+					$iModeCount = 0;
+
+					foreach($pChannel->Modes as $cMode)
+					{
+						$sModeString = $pChannel->Channel->aUsers[$sUser];
+
+						if(stristr($sModeString, $cMode) != null)
+						{
+							++$iModeCount;
+						}
+					}
+
+					if($iModeCount)
+					{
+						return false;
+					}
+				}
+
+				continue;
+			}
+			else
+			{
+				if(!$pChannel->Channel->isUserInChannel($pUser))
+				{
+					return false;
+				}
+
+				if(!empty($pChannel->Modes))
+				{
+					$iModeCount = 0;
+
+					foreach($pChannel->Modes as $cMode)
+					{
+						$sModeString = $pChannel->Channel->aUsers[$sUser];
+
+						if(stristr($sModeString, $cMode) != null)
+						{
+							++$iModeCount;
+						}
+					}
+
+					if(!$iModeCount)
+					{
+						return false;
+					}
+				}
+
+				continue;
+			}
+		}
+
+		return true;
+	}
+
+
+	/**
 	 *	This method returns an array of user criteria and channels,
 	 *	that is used to match users in the query.
 	 */
-	static function generateSearchCriteria($sQueryString)
+	static private function generateSearchCriteria($sQueryString)
 	{
 		$pInstance = Core::getCurrentInstance();
 
@@ -100,35 +200,42 @@ class ModuleFind
 			"Hostname" => "%",
 		);
 
-		$sQueryString = preg_quote($sQueryString);
-
-
-		# Channel query and/or selector.
-		if(preg_match('/^[\s]{0,}(.*?)[\s]{0,}\:[\s]{0,}(.*?)[\s]{0,}$/', $sQueryString, $aParts))
+		# Determinate channel selector and query separator.
+		if(preg_match('/^[\s]{0,}(.*?)[\s]{0,}\:[\s]{0,}(.*?)[\s]{0,}$/', preg_quote($sQueryString), $aParts))
 		{
-			$sQueryString = $aParts[1];
+			$sQueryString = stripslashes($aParts[1]);
+			$sCSelectorList = stripslashes($aParts[2]);
 
-			foreach(explode(',', $aParts[2]) as $sChannel)
+			$sPrefixes = $pInstance->getServerConfiguration("PREFIX");
+			$sPrefix = substr($sPrefixes, strpos($sPrefixes, ")") + 1);
+
+			$sChanTypes = preg_quote($pInstance->getServerConfiguration("CHANTYPES"));
+
+			$sChannelPattern = "/^([\^]{0,1})([{$sPrefix}]{0,})([{$sChanTypes}])(.*)$/";
+
+			foreach(explode(',', $sCSelectorList) as $sSelector)
 			{
-				$aChannel = explode(':', $sChannel);
+				$sSelector = trim($sSelector);
 
-				$aChannel[0] = trim($aChannel[0]);
+				$aSelector = explode(' ', $sSelector);
+				$iSelectorCount = count($aSelector);
 
-				if(isset($aChannel[1]))
+				$aChannelElements = array();
+
+				foreach($aSelector as $sChannel)
 				{
-					$aChannel[1] = trim($aChannel[1]);
-					$aChannel[1] = preg_split('//', CoreUtilities::modeCharToLetter($aChannel[1]), -1, PREG_SPLIT_NO_EMPTY);
-				}
-				else
-				{
-					$aChannel[1] = null;
+					if(preg_match($sChannelPattern, $sChannel, $aMatches))
+					{
+						$aChannelElements[] = (object) array
+						(
+							"Channel" => $pInstance->getChannel("{$aMatches[3]}{$aMatches[4]}"),
+							"Modes" => preg_split('//', CoreUtilities::modeCharToLetter($aMatches[2]), -1, PREG_SPLIT_NO_EMPTY),
+							"Negation" => ($aMatches[1] == "^"),
+						);
+					}
 				}
 
-				$aChannels[] = (object) array
-				(
-					"channel" => $pInstance->getChannel($aChannel[0]),
-					"modes" => $aChannel[1],
-				);
+				$aChannels[] = $aChannelElements;
 			}
 		}
 
@@ -138,7 +245,7 @@ class ModuleFind
 			$aCriteria = array
 			(
 				"Nickname" => "%",
-				"Username" => $aParts[1],
+				"Username" => trim($aParts[1]),
 				"Hostname" => "%",
 			);
 		}
@@ -150,7 +257,7 @@ class ModuleFind
 			(
 				"Nickname" => "%",
 				"Username" => "%",
-				"Hostname" => $aParts[1],
+				"Hostname" => trim($aParts[1]),
 			);
 		}
 
@@ -159,9 +266,9 @@ class ModuleFind
 		{
 			$aCriteria = array
 			(
-				"Nickname" => $aParts[1],
-				"Username" => $aParts[2],
-				"Hostname" => $aParts[3],
+				"Nickname" => trim($aParts[1]),
+				"Username" => trim($aParts[2]),
+				"Hostname" => trim($aParts[3]),
 			);
 		}
 
@@ -171,8 +278,8 @@ class ModuleFind
 			$aCriteria = array
 			(
 				"Nickname" => "%",
-				"Username" => $aParts[1],
-				"Hostname" => $aParts[2],
+				"Username" => trim($aParts[1]),
+				"Hostname" => trim($aParts[2]),
 			);
 		}
 
@@ -181,7 +288,7 @@ class ModuleFind
 		{
 			$aCriteria = array
 			(
-				"Nickname" => $aParts[1],
+				"Nickname" => trim($aParts[1]),
 				"Username" => "%",
 				"Hostname" => "%",
 			);
@@ -198,8 +305,17 @@ class ModuleFind
 	/**
 	 *	Compile a pattern to search hostmasks for.
 	 */
-	static function compilePattern($aCriteria)
+	static private function compilePattern($aCriteria)
 	{
+		if($aCriteria["Nickname"] == "%" && $aCriteria["Username"] == "%" && $aCriteria["Hostname"] == "%")
+		{
+			return null;
+		}
+
+		$aCriteria["Nickname"] = preg_quote($aCriteria["Nickname"]);
+		$aCriteria["Username"] = preg_quote($aCriteria["Username"]);
+		$aCriteria["Hostname"] = preg_quote($aCriteria["Hostname"]);
+
 		$sPattern = "/{$aCriteria['Nickname']}!{$aCriteria['Username']}@{$aCriteria['Hostname']}/s";
 		$sPattern = str_replace(array('%'), '(.*?)', $sPattern);
 

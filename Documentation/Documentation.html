@@ -965,14 +965,25 @@
 </ul>
 
 <p>
-	You can also search for channels that these users are in, but these do not support patterns. Modes can be matched as well (and are optional), as these examples show:
+	One can also search for channels that these users are in, but these do not support partial matches. Modes can be matched as well (and are optional), as these examples show:
 </p>
 
 <ul>
 	<li><span class="Code">@address.tld: #android, #OUTRAGEbot</span> - Searches for that host address in either #android or #OUTRAGEbot.</li>
 	<li><span class="Code">:#OUTRAGEbot</span> - Searches for all users in #OUTRAGEbot</li>
-	<li><span class="Code">:#android:%</span> - Searches for all % (half-operator) users in #android</li>
-	<li><span class="Code">:#android:@&</span> - Searches for all @ (channel op) and &amp; (admin) users in #android</li>
+	<li><span class="Code">:%#android</span> - Searches for all % (half-operator) users in #android</li>
+	<li><span class="Code">:@&amp;#android</span> - Searches for all @ (channel op) and &amp; (admin) users in #android</li>
+	<li><span class="Code">:^~#android</span> - Removes channel owners in #android from the results</li>
+</ul>
+
+<p>
+	One can also filter these results even further, by selecting users that are on all channels presented in one statement. As usual, modes can be used as part of the filter, as shown:
+</p>
+
+<ul>
+	<li><span class="Code">:#channel1 #channel2</span> - Returns users that are in both #channel1 and #channel2</li>
+	<li><span class="Code">:&#android ~&#OUTRAGEbot</span> - Returns users that both are admins in #android and admins or owners in #OUTRAGEbot.</li>
+	<li><span class="Code">:&#a ~&b, #c</span> - Returns either users who are both admins in #a and owners in &b, or members of #c</li>
 </ul>
 
 <p>
@@ -985,12 +996,12 @@
 </ul></div>
 
 			<h4>Prototype</h4>
-			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Find</span><span style="color: #007700">(</span><span style="color: #0000BB">string&nbsp;$sQueryString&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">callback&nbsp;$cCallback&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null&nbsp;</span><span style="color: #007700">])</span>
+			<div class="Prototype"><code><span style="color: #007700">array&nbsp;</span><span style="color: #0000BB">CoreMaster</span><span style="color: #007700">::</span><span style="color: #0000BB">Find</span><span style="color: #007700">(</span><span style="color: #0000BB">mixed&nbsp;$mQueryString&nbsp;</span><span style="color: #007700">[,&nbsp;</span><span style="color: #0000BB">callback&nbsp;$cCallback&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null&nbsp;</span><span style="color: #007700">])</span>
 </span>
 </code></div>
 
 			<h4>Example and Output</h4>
-			<div class="Source"><code><span style="color: #FF8000">/**<br />&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;example&nbsp;will&nbsp;send&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;users&nbsp;matching&nbsp;this&nbsp;subdomain&nbsp;to&nbsp;the&nbsp;current&nbsp;channel.<br />&nbsp;*/<br /></span><span style="color: #0000BB">$aUsers&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">find</span><span style="color: #007700">(</span><span style="color: #DD0000">"@%.typefish.co.uk"</span><span style="color: #007700">);<br /><br />foreach(</span><span style="color: #0000BB">$aUsers&nbsp;</span><span style="color: #007700">as&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"</span><span style="color: #007700">{</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">}</span><span style="color: #DD0000">"</span><span style="color: #007700">);<br />}<br /><br /><br /></span><span style="color: #FF8000">/**<br />&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;example&nbsp;will&nbsp;send&nbsp;a&nbsp;private&nbsp;message&nbsp;to&nbsp;all&nbsp;of&nbsp;the&nbsp;matched&nbsp;users,&nbsp;using&nbsp;the&nbsp;lambda&nbsp;functionality.<br />&nbsp;*/<br /></span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">find</span><span style="color: #007700">(</span><span style="color: #DD0000">":#android,&nbsp;#OUTRAGEbot:~"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">CoreUser&nbsp;$user</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">(</span><span style="color: #DD0000">"Big&nbsp;brother&nbsp;-&nbsp;or&nbsp;rather,&nbsp;this&nbsp;bot&nbsp;-&nbsp;is&nbsp;watching&nbsp;you.&nbsp;o.o"</span><span style="color: #007700">);<br />});<br /></span>
+			<div class="Source"><code><span style="color: #FF8000">/**<br />&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;example&nbsp;will&nbsp;send&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;users&nbsp;matching&nbsp;this&nbsp;subdomain&nbsp;to&nbsp;the&nbsp;current&nbsp;channel.<br />&nbsp;*/<br /></span><span style="color: #0000BB">$aUsers&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">find</span><span style="color: #007700">(</span><span style="color: #DD0000">"@%.typefish.co.uk"</span><span style="color: #007700">);<br /><br />foreach(</span><span style="color: #0000BB">$aUsers&nbsp;</span><span style="color: #007700">as&nbsp;</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$sChannel</span><span style="color: #007700">(</span><span style="color: #DD0000">"</span><span style="color: #007700">{</span><span style="color: #0000BB">$pUser</span><span style="color: #007700">}</span><span style="color: #DD0000">"</span><span style="color: #007700">);<br />}<br /><br /><br /></span><span style="color: #FF8000">/**<br />&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;example&nbsp;will&nbsp;send&nbsp;a&nbsp;private&nbsp;message&nbsp;to&nbsp;all&nbsp;of&nbsp;the&nbsp;matched&nbsp;users,&nbsp;using&nbsp;the&nbsp;lambda&nbsp;functionality.<br />&nbsp;*/<br /></span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">find</span><span style="color: #007700">(</span><span style="color: #DD0000">":#android,&nbsp;~#OUTRAGEbot"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">CoreUser&nbsp;$user</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">(</span><span style="color: #DD0000">"Big&nbsp;brother&nbsp;-&nbsp;or&nbsp;rather,&nbsp;this&nbsp;bot&nbsp;-&nbsp;is&nbsp;watching&nbsp;you.&nbsp;o.o"</span><span style="color: #007700">);<br />});<br /></span>
 </span>
 </code></div>
 			<div class="Output"><code><span style="color: #0000BB">Westie<br />Happycat<br />OUTRAGEbot</span>
@@ -2504,7 +2515,7 @@ Take note that this is Script specific, a Resource available in one Script is no
 		</div>
 	
 	<p>
-		This documentation is up to date as of Sat, 26 Nov 2011 18:58:11 +0000, and it is generated from the
+		This documentation is up to date as of Sun, 04 Dec 2011 21:16:54 +0000, and it is generated from the
 		<a href="http://docs.typefish.co.uk/OUTRAGEbot/2.0.0/">official online documentation</a>.
 	</p>
 	
