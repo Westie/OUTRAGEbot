@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95304f4359b55dae9234c2c1156593d3c5fdb40d
- *	Committed at:   Thu Dec  1 23:01:51 GMT 2011
+ *	Git commit:     49a4202f3ec4db7e2d12ed679b7ffaf5c4c08176
+ *	Committed at:   Sun Dec  4 02:33:54 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -855,7 +855,10 @@ class CoreMaster
 	 */
 	public function getUser($sNickname)
 	{
-		if(empty($sNickname))
+		# Thank you, deadmavu5.
+		# empty() is indeed a scam, but most IRCds disallow a user with a nickname
+		# beginning with a number. This however will
+		if(is_string($sNickname) && !isset($sNickname[0]))
 		{
 			return null;
 		}

@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95304f4359b55dae9234c2c1156593d3c5fdb40d
- *	Committed at:   Thu Dec  1 23:01:51 GMT 2011
+ *	Git commit:     49a4202f3ec4db7e2d12ed679b7ffaf5c4c08176
+ *	Committed at:   Sun Dec  4 02:33:54 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -35,6 +35,8 @@ class Core
 
 		error_reporting(E_ALL | E_STRICT);
 		set_error_handler(array("Core", "errorHandler"));
+
+		register_shutdown_function(array("Core", "shutdownHandler"));
 	}
 
 
@@ -443,6 +445,21 @@ class Core
 			"offendingLine" => $errline,
 			"timeHandled" => time(),
 		);
+	}
+
+
+	/**
+	 *	Shutdown handler for OUTRAGEbot
+	 */
+	public static function shutdownHandler()
+	{
+		foreach(self::$aInstances as $pInstance)
+		{
+			foreach($pInstance->getActivatedScripts() as $sScript)
+			{
+				$pInstance->deactivateScript($sScript);
+			}
+		}
 	}
 
 

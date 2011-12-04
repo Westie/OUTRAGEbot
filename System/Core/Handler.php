@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     95304f4359b55dae9234c2c1156593d3c5fdb40d
- *	Committed at:   Thu Dec  1 23:01:51 GMT 2011
+ *	Git commit:     49a4202f3ec4db7e2d12ed679b7ffaf5c4c08176
+ *	Committed at:   Sun Dec  4 02:33:54 GMT 2011
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -172,16 +172,16 @@ class CoreHandler
 	{
 		$aInformation = explode(' ', $pMessage->Payload, 2);
 
-		if(!isset($pMessage->Parts[4]) || isset($pMessage->Parts[5]) || isset($pMessage->Parts[7]))
+		if(!isset($pMessage[7]))
 		{
 			return null;
 		}
 
 		$pMask = (object) array
 		(
-			"Nickname" => $pMessage->Parts[7],
-			"Username" => $pMessage->Parts[4],
-			"Hostname" => $pMessage->Parts[5],
+			"Nickname" => $pMessage[7],
+			"Username" => $pMessage[4],
+			"Hostname" => $pMessage[5],
 		);
 
 		$pInstance->getUser($pMask);
