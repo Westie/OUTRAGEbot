@@ -5,8 +5,8 @@
  *	Author:		David Weston <westie@typefish.co.uk>
  *
  *	Version:        2.0.0-Alpha
- *	Git commit:     4a7dced0b3ef96338f36bc64bd40ed91063c3e01
- *	Committed at:   Thu Dec  1 22:49:57 GMT 2011
+ *	Git commit:     6fa977b99b0dae9e08284c0eb7eef0ed021d9ed8
+ *	Committed at:   Sun Jan  1 22:50:25 GMT 2012
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
@@ -42,24 +42,28 @@ class ModuleWhois
 		/* Send the request, and sort out the handler */
 		self::$pTempObject = (object) array
 		(
-			'address' => false,
-			'away' => false,
-			'channels' => array(),
-			'helper' => false,
-			'idleTime' => 0,
-			'ircOp' => false,
-			'nickname' => false,
-			'realname' => false,
-			'serverAddress' => false,
-			'serverName' => false,
-			'signonTime' => 0,
-			'username' => false,
+			"address" => null,
+			"away" => null,
+			"channels" => array(),
+			"helper" => null,
+			"idleTime" => 0,
+			"ircOp" => null,
+			"nickname" => null,
+			"realname" => null,
+			"serverAddress" => null,
+			"serverName" => null,
+			"signonTime" => 0,
+			"username" => null,
+			"isSecure" => false,
+			"ipAddress" => null,
+			"userModes" => null,
+			"serverModes" => null,
 		);
 
 		$pInstance = Core::getCurrentInstance();
 		$pSocket = $pInstance->getCurrentSocket();
 
-		$pSocket->Output("WHOIS {$sNickname} {$sNickname}"); // We're cheating here!
+		$pSocket->Output("WHOIS {$sNickname} {$sNickname}"); // We"re cheating here!
 		$pSocket->executeCapture(array(__CLASS__, "parseWhoisLine"));
 
 		return self::$pTempObject;
@@ -129,10 +133,40 @@ class ModuleWhois
 
 			case "319":
 			{
-				self::$pTempObject->channels = array_merge(self::$pTempObject->channels, explode(' ', $pMessage->Payload));
+				self::$pTempObject->channels = array_merge(self::$pTempObject->channels, explode(" ", $pMessage->Payload));
 
 				return false;
 			}
+
+			case "378":
+			{
+				$aMatches = array();
+
+				if(preg_match("/^is connecting from (.*?) (.*?)$/", $pMessage->Payload, $aMatches))
+				{
+					self::$pTempObject->ipAddress = $aMatches[2];
+				}
+
+				return false;
+			}
+
+			case "379":
+			{
+				if(preg_match("/^is using modes (.*?) (.*?)$/", $pMessage->Payload, $aMatches))
+				{
+					self::$pTempObject->userModes = $aMatches[1];
+					self::$pTempObject->serverModes = $aMatches[2];
+				}
+
+				return false;
+			}
+
+			case "671":
+			{
+				self::$pTempObject->isSecure = true;
+			}
 		}
+
+		return false;
 	}
 }

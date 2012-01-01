@@ -6,8 +6,8 @@
  *
  *	Version:        2.0.0-Alpha
 
- *	Git commit:     4a7dced0b3ef96338f36bc64bd40ed91063c3e01
- *	Committed at:   Thu Dec  1 22:49:57 GMT 2011
+ *	Git commit:     6fa977b99b0dae9e08284c0eb7eef0ed021d9ed8
+ *	Committed at:   Sun Jan  1 22:50:25 GMT 2012
  *
  *	Licence:	http://www.typefish.co.uk/licences/
  */
