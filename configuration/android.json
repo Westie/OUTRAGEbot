@@ -1,0 +1,25 @@
+network:
+{
+	identifier: "AndroidIRC"
+	
+	host: "irc.androidirc.org"
+	port: 6667
+	
+	owners: [ "irc-96AEA465.typefish.co.uk" ]
+	channels: [ "#outrage.test" ]
+	scripts: [ "evaluation", "commands" ]
+	
+	delimiter: "@"
+}
+
+bots:
+{
+	master:
+	{
+		nick: "OUTRAGEbot"
+		alt: "OUTRAGEswot"
+		
+		username: "outrage"
+		realname: "David Weston"
+	}
+}
