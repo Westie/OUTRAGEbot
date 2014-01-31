@@ -37,7 +37,10 @@ class Stack extends Core\ObjectContainer
 		$events = [ "poll", "instanceInit" ];
 		
 		# load global modules
-		$files = glob("classes/outragebot/module/modules/*.php");
+		$files = [];
+		
+		$files += glob("classes/outragebot/module/modules/*.php");
+		$files += glob("modules/*.php");
 		
 		foreach($files as $file)
 		{

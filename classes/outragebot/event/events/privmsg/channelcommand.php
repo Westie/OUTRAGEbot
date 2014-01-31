@@ -13,6 +13,11 @@ class ChannelCommand extends Event\Template
 {
 	/**
 	 *	Called whenever this event has been invoked.
+	 *
+	 *	@supplies Element\Channel $channel  Channel in which the command was received
+	 *	@supplies Element\User    $user     User which sent the message
+	 *	@supplies string          $command  Command name
+	 *	@supplies string          $payload	Command payload
 	 */
 	public function invoke()
 	{

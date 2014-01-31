@@ -13,6 +13,9 @@ class CTCPResponse extends Event\Template
 {
 	/**
 	 *	Called whenever this event has been invoked.
+	 *
+	 *	@supplies Element\User    $user     User which sent the response
+	 *	@supplies string          $payload  CTCP response
 	 */
 	public function invoke()
 	{

@@ -14,6 +14,9 @@ class Nick extends Event\Template
 {
 	/**
 	 *	Called whenever this event has been invoked.
+	 *
+	 *	@supplies Element\User $user      User whose nickname changed - object reflected name change
+	 *	@supplies string       $previous  Old nickname of this user.
 	 */
 	public function invoke()
 	{
@@ -39,6 +42,6 @@ class Nick extends Event\Template
 		
 		$this->instance->users[$current] = $user;
 		
-		return $this->dispatch([ $user ]);
+		return $this->dispatch([ $user, $previous ]);
 	}
 }

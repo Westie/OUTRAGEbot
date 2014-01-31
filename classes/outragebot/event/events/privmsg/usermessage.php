@@ -13,6 +13,9 @@ class UserMessage extends Event\Template
 {
 	/**
 	 *	Called whenever this event has been invoked.
+	 *
+	 *	@supplies Element\User    $user     User which sent the message
+	 *	@supplies string          $message  Message that was sent to the channel
 	 */
 	public function invoke()
 	{

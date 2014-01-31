@@ -58,6 +58,23 @@ abstract class Template
 				$list[$item] = $this->toClosure($callback);
 		}
 		
+		# used to generate documentation, won't really be used
+		# anywhere else...
+		# should I comment out in commits?
+		if(defined("OUTRAGEbot_DEBUG"))
+		{
+			if(!isset($this->__methods))
+				$this->__methods = [];
+			
+			$reflection = new \ReflectionObject($this);
+			
+			foreach($name as $item)
+			{
+				if($reflection->hasMethod($callback))
+					$this->__methods[$item] = $reflection->getMethod($callback);
+			}
+		}
+		
 		return $this;
 	}
 	

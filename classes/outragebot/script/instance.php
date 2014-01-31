@@ -62,9 +62,33 @@ class Instance
 	
 	
 	/**
+	 *	Called when the script has been removed.
+	 */
+	public final function __destruct()
+	{
+		$this->destruct();
+		$this->off();
+		
+		unset($this->context);
+		unset($this->instance);
+		
+		return true;
+	}
+	
+	
+	/**
 	 *	Also called when the script has been loaded, however this thing you can use.
 	 */
 	public function construct()
+	{
+		return true;
+	}
+	
+	
+	/**
+	 *	Called when the script has been unloaded.
+	 */
+	public function destruct()
 	{
 		return true;
 	}
@@ -81,6 +105,9 @@ class Instance
 	
 	/**
 	 *	Called to bind an event handler to this script.
+	 *	
+	 *	@param string $event      Event name
+	 *	@param callback $handler  Callback
 	 */
 	public function on($event, $handler, $metadata = [])
 	{
@@ -90,6 +117,12 @@ class Instance
 		
 		if($matches)
 			$type = (string) $matches[1];
+		
+		if(!is_numeric($type))
+		{
+			if(preg_match("/^on(.*)$/", $type))
+				$type = substr($type, 2);
+		}
 		
 		$type = strtolower($type);
 		
@@ -104,17 +137,46 @@ class Instance
 	
 	/**
 	 *	Called to remove event handlers that belong to this script.
+	 *	
+	 *	@param mixed $event  Event name
 	 */
-	public function off($event)
+	public function off($event = null)
 	{
-		$type = strtolower($type);
-		
-		foreach($this->instance->events as $type => $struct)
+		if(!empty($event))
 		{
-			foreach($struct as $key => $item)
+			$matches = [];
+			
+			preg_match("/^(.*?)(\.(.*?))?$/", $event, $matches);
+			
+			if($matches)
+				$type = (string) $matches[1];
+		
+			if(!is_numeric($type))
 			{
-				if($item->getContext() == $this)
-					unset($this->instance->events[$type][$key]);
+				if(preg_match("/^on(.*)$/", $type))
+					$type = substr($type, 2);
+			}
+			
+			$type = strtolower($type);
+			
+			if(!empty($this->instance->events[$type]))
+			{
+				foreach($this->instance->events[$type] as $key => $item)
+				{
+					if($item->getContext() == $this)
+						unset($this->instance->events[$type][$key]);
+				}
+			}
+		}
+		else
+		{
+			foreach($this->instance->events as $type => $struct)
+			{
+				foreach($struct as $key => $item)
+				{
+					if($item->getContext() == $this)
+						unset($this->instance->events[$type][$key]);
+				}
 			}
 		}
 		
@@ -124,6 +186,9 @@ class Instance
 	
 	/**
 	 *	Called to bind a command handler to this script.
+	 *
+	 *	@param string $command    Command to listen to
+	 *	@param callback $handler  Callback for this command handler.
 	 */
 	public function addCommandHandler($command, $handler)
 	{
@@ -165,6 +230,8 @@ class Instance
 	
 	/**
 	 *	Removes a command handler that is assigned to this script.
+	 *
+	 *	@param string $command  Command to be removed.
 	 *
 	 *	@todo: Perhaps there's a simpler way to do this rather than basically rewriting the
 	 *	       capabilities of Instance::off?

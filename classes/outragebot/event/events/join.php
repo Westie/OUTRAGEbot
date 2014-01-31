@@ -13,7 +13,16 @@ use \OUTRAGEbot\Connection;
 class Join extends Event\Template
 {
 	/**
+	 *	Override the qualified name.
+	 */
+	public $qualified_name = "ChannelJoin";
+	
+	
+	/**
 	 *	Called whenever this event has been invoked.
+	 *
+	 *	@supplies Element\Channel $channel  Channel that this user joined
+	 *	@supplies Element\User    $user     User that joined this channel
 	 */
 	public function invoke()
 	{

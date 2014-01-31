@@ -14,6 +14,11 @@ class Mode extends Event\Template
 {
 	/**
 	 *	Called whenever this event has been invoked.
+	 *
+	 *	@supplies Element\Channel $channel     Channel in which modes were applied
+	 *	@supplies Element\User    $user        User who applied those changes
+	 *	@supplies string          $operations  List of operations
+	 *	@supplies array           $arguments   Arguments for those operations
 	 */
 	public function invoke()
 	{

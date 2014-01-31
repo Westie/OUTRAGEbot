@@ -19,6 +19,6 @@ class Ping extends Event\Template
 	{
 		$this->socket->write("PONG ".$this->packet->payload);
 		
-		return $this->dispatch([ ]);
+		return parent::invoke();
 	}
 }

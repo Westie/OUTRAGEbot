@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>OUTRAG3bot documentation</title>
+		
+		<style type="text/css">
+			body
+			{
+				width: 65%;
+				
+				margin-left: auto;
+				margin-right: auto;
+				
+				font-family: "Tahoma";
+			}
+			
+			.doc-item
+			{
+				border: 1px solid #CCC;
+				border-left: 15px solid #CCC;
+				
+				padding: 20px;
+				margin-bottom: 30px;
+				
+				font-size: 78%;
+			}
+			
+			.doc-item h3
+			{
+				margin-top: 0px;
+				font-family: monospace;
+				font-size: 16px;
+			}
+			
+			.doc-item .type
+			{
+				width: 110px;
+				display: inline-block;
+				
+				font-family: monospace;
+				font-size: 12px;
+				text-align: right;
+				
+				margin-right: 2px;
+				
+				color: #007700;
+			}
+			
+			.doc-item .name
+			{
+				width: 110px;
+				display: inline-block;
+				
+				font-family: monospace;
+				font-size: 12px;
+				text-align: left;
+				
+				margin-right: 2px;
+				
+				color: #0000BB;
+			}
+			
+			.doc-item .example
+			{
+				font-size: 12px;
+				
+				border: 1px solid #DDD;
+				
+				background-color: #EFEEFF;
+				
+				padding: 20px;
+				margin-bottom: 20px;
+			}
+			
+			.doc-item .example:last-child
+			{
+				margin-bottom: 0px;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<header>
+			<h1>OUTRAG3bot documentation</h1>
+		</header>
+		
+		<section class="doc-group methods">
+			<h2>Methods</h2>
+			
+							<article class="doc-item">
+										
+					<h3>Script::on($event, $handler)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called to bind an event handler to this script.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$event									</span>
+									
+									<span class="description">
+										Event name									</span>
+								</li>
+															<li>
+									<span class="type">
+										callback									</span>
+									
+									<span class="name">
+										$handler									</span>
+									
+									<span class="description">
+										Callback									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::off([ $event ])</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called to remove event handlers that belong to this script.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$event									</span>
+									
+									<span class="description">
+										Event name									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::addCommandHandler($command, $handler)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called to bind a command handler to this script.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$command									</span>
+									
+									<span class="description">
+										Command to listen to									</span>
+								</li>
+															<li>
+									<span class="type">
+										callback									</span>
+									
+									<span class="name">
+										$handler									</span>
+									
+									<span class="description">
+										Callback for this command handler.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::removeCommandHandler($command)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Removes a command handler that is assigned to this script.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$command									</span>
+									
+									<span class="description">
+										Command to be removed.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::replyCTCP($destination, $message)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Reply/respond to a CTCP request.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$destination									</span>
+									
+									<span class="description">
+										Destination object									</span>
+								</li>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$message									</span>
+									
+									<span class="description">
+										Response to be sent back									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::requestCTCP($destination, $message)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Request from someone or a channel .						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$destination									</span>
+									
+									<span class="description">
+										Destination object									</span>
+								</li>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$message									</span>
+									
+									<span class="description">
+										Response to be sent back									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::stripFormat($input)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Strips the text of formatting.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$input									</span>
+									
+									<span class="description">
+										String to be removed of only formatting markers.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::stripColour($input)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Strips the text of colours.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$input									</span>
+									
+									<span class="description">
+										String to be removed of only colour markers.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::stripAll($input)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Strips the text of formatting and colours.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$input									</span>
+									
+									<span class="description">
+										String to be removed of all formatting and colour markers.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::format($input)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Provides a way to format certain strings with colour and other formatting markers.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$input									</span>
+									
+									<span class="description">
+										String to be parsed.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::join($channel, [ $password ])</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Join a channel.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel name									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$password									</span>
+									
+									<span class="description">
+										Channel password									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::part($channel, [ $reason ])</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Leave a channel.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel name									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$reason									</span>
+									
+									<span class="description">
+										Reason to leave the channel									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::invite($user, $channel)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Invite a user to a channel.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User to invite to channel									</span>
+								</li>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel to invite this user									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::message($channel, $message)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Send a message to the specified channel.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Destination channel									</span>
+								</li>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$message									</span>
+									
+									<span class="description">
+										Message to be sent to the channel									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::raw($message)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Send a raw string to the server.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$message									</span>
+									
+									<span class="description">
+										Message to be sent to the server									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::action($channel, $message)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Send an action to the specified channel.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Destination channel									</span>
+								</li>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$message									</span>
+									
+									<span class="description">
+										Action to be sent to the channel									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::getUser($user)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Returns a user object associated with this context.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User to be found									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::getChannel($channel)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Returns a channel object associated with this context.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel to be found									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::getScript($script)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Returns an instance of a script that is currently loaded into the bot.<br />
+I wasn't going to have this, but heck, PwnFlakes wanted it and there<br />
+was a valid reason for it so here it returns.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										mixed									</span>
+									
+									<span class="name">
+										$script									</span>
+									
+									<span class="description">
+										Script name									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::resourceExists($filename)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Proxies file_exists requests for resources within scripts.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$filename									</span>
+									
+									<span class="description">
+										Relative path of file.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::resourcePut($filename, $string)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Proxies file_put_contents requests for resources within scripts.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$filename									</span>
+									
+									<span class="description">
+										Relative path of file.									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$string									</span>
+									
+									<span class="description">
+										Contents of file.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::resourceGet($filename)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Proxies file_get_contents requests for resources within scripts.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$filename									</span>
+									
+									<span class="description">
+										Relative path of file.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::resourceScan($filename)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Proxies glob requests for resources within scripts.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$filename									</span>
+									
+									<span class="description">
+										Relative path of file.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::resourceUnlink($filename)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Proxies unlink requests for resources within scripts.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$filename									</span>
+									
+									<span class="description">
+										Relative path of file.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::addTimer($callback, $interval, [ $repeat = 1, [ $arguments ]])</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called when adding a timer.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										callback									</span>
+									
+									<span class="name">
+										$callback									</span>
+									
+									<span class="description">
+										Timer handler									</span>
+								</li>
+															<li>
+									<span class="type">
+										double									</span>
+									
+									<span class="name">
+										$interval									</span>
+									
+									<span class="description">
+										Interval in seconds (can support fractional seconds)									</span>
+								</li>
+															<li>
+									<span class="type">
+										integer									</span>
+									
+									<span class="name">
+										$repeat									</span>
+									
+									<span class="description">
+										How many times to repeat the call, or -1 for infinite									</span>
+								</li>
+															<li>
+									<span class="type">
+										array									</span>
+									
+									<span class="name">
+										$arguments									</span>
+									
+									<span class="description">
+										Array of arguments passed to the timer function.									</span>
+								</li>
+													</ol>
+									</article>
+							<article class="doc-item">
+										
+					<h3>Script::removeTimer($index)</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called when removing a timer.						</p>
+										
+					<h4>Accepted arguments</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$index									</span>
+									
+									<span class="description">
+										Timer ID									</span>
+								</li>
+													</ol>
+									</article>
+					</section>
+		
+		<section class="doc-group events">
+			<h2>Events</h2>
+			
+							<article class="doc-item">
+					<h3>ChannelJoin</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> JOIN						</li>
+						
+						<li>
+							<strong>Handler:</strong> onChannelJoin						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\Channel									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel that this user joined									</span>
+								</li>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User that joined this channel									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelJoin</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"channeljoin"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>ChannelKick</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> KICK						</li>
+						
+						<li>
+							<strong>Handler:</strong> onChannelKick						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\Channel									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel in which the user was kicked									</span>
+								</li>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$admin									</span>
+									
+									<span class="description">
+										Admin who ejected the user									</span>
+								</li>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$kicked									</span>
+									
+									<span class="description">
+										User that was removed from the channel									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$reason									</span>
+									
+									<span class="description">
+										Reason for being kicked from the channel									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelKick</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$admin</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$kicked</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$reason</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"channelkick"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$admin</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$kicked</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$reason</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>Mode</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> MODE						</li>
+						
+						<li>
+							<strong>Handler:</strong> onMode						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\Channel									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel in which modes were applied									</span>
+								</li>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User who applied those changes									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$operations									</span>
+									
+									<span class="description">
+										List of operations									</span>
+								</li>
+															<li>
+									<span class="type">
+										array									</span>
+									
+									<span class="name">
+										$arguments									</span>
+									
+									<span class="description">
+										Arguments for those operations									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onMode</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$operations</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$arguments</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"mode"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$operations</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$arguments</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>Nick</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> NICK						</li>
+						
+						<li>
+							<strong>Handler:</strong> onNick						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User whose nickname changed - object reflected name change									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$previous									</span>
+									
+									<span class="description">
+										Old nickname of this user.									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onNick</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$previous</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"nick"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$previous</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>ChannelPart</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> PART						</li>
+						
+						<li>
+							<strong>Handler:</strong> onChannelPart						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\Channel									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel that this user just left									</span>
+								</li>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User that left the channel									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$reason									</span>
+									
+									<span class="description">
+										Reason why this user left the channel									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelPart</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$reason</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"channelpart"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$reason</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>UserQuit</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> QUIT						</li>
+						
+						<li>
+							<strong>Handler:</strong> onUserQuit						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User that left the network									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$reason									</span>
+									
+									<span class="description">
+										Reason for leaving the network									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUserQuit</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$reason</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"userquit"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$reason</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>ChannelTopic</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> TOPIC						</li>
+						
+						<li>
+							<strong>Handler:</strong> onChannelTopic						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\Channel									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel that had its topic changed									</span>
+								</li>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User that changed its topic									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$topic									</span>
+									
+									<span class="description">
+										New channel topc									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelTopic</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$topic</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"channeltopic"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$topic</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>ChannelNotice</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> NOTICE						</li>
+						
+						<li>
+							<strong>Handler:</strong> onChannelNotice						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\Channel									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel in which the notice was sent									</span>
+								</li>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User which sent the notice									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$message									</span>
+									
+									<span class="description">
+										Message									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelNotice</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"channelnotice"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>CTCPResponse</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> NOTICE						</li>
+						
+						<li>
+							<strong>Handler:</strong> onCTCPResponse						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User which sent the response									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$payload									</span>
+									
+									<span class="description">
+										CTCP response									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onCTCPResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$payload</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"ctcpresponse"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$payload</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>UserNotice</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> NOTICE						</li>
+						
+						<li>
+							<strong>Handler:</strong> onUserNotice						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User which sent the notice									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$message									</span>
+									
+									<span class="description">
+										Message that sent to this user.									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUserNotice</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"usernotice"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>ChannelCommand</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> PRIVMSG						</li>
+						
+						<li>
+							<strong>Handler:</strong> onChannelCommand						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\Channel									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel in which the command was received									</span>
+								</li>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User which sent the message									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$command									</span>
+									
+									<span class="description">
+										Command name									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$payload									</span>
+									
+									<span class="description">
+										Command payload									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelCommand</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$command</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$payload</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"channelcommand"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$command</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$payload</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>ChannelMessage</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> PRIVMSG						</li>
+						
+						<li>
+							<strong>Handler:</strong> onChannelMessage						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\Channel									</span>
+									
+									<span class="name">
+										$channel									</span>
+									
+									<span class="description">
+										Channel in which the message was received									</span>
+								</li>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User which sent the message									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$message									</span>
+									
+									<span class="description">
+										Message that was sent to the channel									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onChannelMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"channelmessage"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>CTCPRequest</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> PRIVMSG						</li>
+						
+						<li>
+							<strong>Handler:</strong> onCTCPRequest						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User which sent the request									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$payload									</span>
+									
+									<span class="description">
+										CTCP payload - this is not separated into command/payload.									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onCTCPRequest</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$payload</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"ctcprequest"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$payload</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+							<article class="doc-item">
+					<h3>UserMessage</h3>
+					
+											<h4>Description</h4>
+						
+						<p>
+							Called whenever this event has been invoked.						</p>
+										
+					<h4>Information</h4>
+					
+					<ul>
+						<li>
+							<strong>Numeric:</strong> PRIVMSG						</li>
+						
+						<li>
+							<strong>Handler:</strong> onUserMessage						</li>
+					</ul>
+					
+					<h4>Arguments passed to handler</h4>
+					
+											<ol>
+															<li>
+									<span class="type">
+										Element\User									</span>
+									
+									<span class="name">
+										$user									</span>
+									
+									<span class="description">
+										User which sent the message									</span>
+								</li>
+															<li>
+									<span class="type">
+										string									</span>
+									
+									<span class="name">
+										$message									</span>
+									
+									<span class="description">
+										Message that was sent to the channel									</span>
+								</li>
+													</ol>
+										
+					<h4>Examples</h4>
+					
+										
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">onUserMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+					
+					<div class="example">
+						<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">ExampleScript&nbsp;</span><span style="color: #007700">extends&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"usermessage"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>					</div>
+				</article>
+					</section>
+	</body>
+</html>

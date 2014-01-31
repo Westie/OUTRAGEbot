@@ -27,7 +27,8 @@ class Resources extends Module\Template
 			if($method->getName() == "construct")
 				continue;
 			
-			$this->introduceMethod($method->getName());
+			if($method->getDeclaringClass()->getName() == get_class($this))
+				$this->introduceMethod($method->getName());
 		}
 	}
 	

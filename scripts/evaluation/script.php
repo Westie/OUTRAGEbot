@@ -26,8 +26,6 @@ class Evaluation extends OUTRAGEbot\Script
 	 */
 	public function compile($channel, $user, $payload)
 	{
-		echo "1";
-		
 		if(!$user->is_admin)
 			return true;
 		

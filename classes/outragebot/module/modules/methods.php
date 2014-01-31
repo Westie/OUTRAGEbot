@@ -32,7 +32,8 @@ class Methods extends Module\Template
 			if($method->getName() == "construct")
 				continue;
 			
-			$this->introduceMethod($method->getName());
+			if($method->getDeclaringClass()->getName() == get_class($this))
+				$this->introduceMethod($method->getName());
 		}
 	}
 	
@@ -157,5 +158,23 @@ class Methods extends Module\Template
 	public function getChannel($context, $channel)
 	{
 		return $context->instance->getChannel($channel);
+	}
+	
+	
+	/**
+	 *	Returns an instance of a script that is currently loaded into the bot.
+	 *	I wasn't going to have this, but heck, PwnFlakes wanted it and there
+	 *	was a valid reason for it so here it returns.
+	 *
+	 *	@param mixed $script  Script name
+	 */
+	public function getScript($context, $script)
+	{
+		$script = strtolower($script);
+		
+		if(!isset($context->instance->scripts[$script]))
+			return null;
+		
+		return $context->instance->scripts[$script];
 	}
 }

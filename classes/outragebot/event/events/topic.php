@@ -20,6 +20,10 @@ class Topic extends Event\Template
 	
 	/**
 	 *	Called whenever this event has been invoked.
+	 *
+	 *	@supplies Element\Channel $channel  Channel that had its topic changed
+	 *	@supplies Element\User    $user     User that changed its topic
+	 *	@supplies string          $topic    New channel topc
 	 */
 	public function invoke()
 	{

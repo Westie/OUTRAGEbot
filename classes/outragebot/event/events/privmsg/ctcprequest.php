@@ -13,6 +13,9 @@ class CTCPRequest extends Event\Template
 {
 	/**
 	 *	Called whenever this event has been invoked.
+	 *
+	 *	@supplies Element\User    $user     User which sent the request
+	 *	@supplies string          $payload  CTCP payload - this is not separated into command/payload.
 	 */
 	public function invoke()
 	{

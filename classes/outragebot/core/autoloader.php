@@ -11,11 +11,22 @@ namespace OUTRAGEbot\Core;
 class Autoloader
 {
 	/**
+	 *	Stores the folder in which to look for the classes.
+	 */
+	public $directory = null;
+	
+	
+	/**
 	 *	Register the autoloader.
 	 */
-	public static function register()
+	public static function register($directory)
 	{
-        spl_autoload_register(array(new self, "autoload"));
+		$object = new self();
+		$object->directory = $directory;
+		
+		$reflection = new \ReflectionObject($object);
+		
+        spl_autoload_register($reflection->getMethod("autoload")->getClosure($object));
 	}
 	
 	
@@ -23,16 +34,16 @@ class Autoloader
 	 *	Our autoloader method. Not PSR-0 compliant but I don't particularly
 	 *	care about this.
 	 */
-	public static function autoload($class)
+	public function autoload($class)
 	{
-		$class = str_replace(array("_", "\\"), DIRECTORY_SEPARATOR, $class);
+		$class = str_replace([ "_", "\\" ], DIRECTORY_SEPARATOR, $class);
 		$class = strtolower($class);
 		
 		if(preg_match("/^outragebot\//", $class))
 		{
-			if(file_exists("classes/{$class}.php"))
+			if(file_exists($this->directory."/classes/".$class.".php"))
 			{
-				require "classes/{$class}.php";
+				require $this->directory."/classes/".$class.".php";
 				return true;
 			}
 		}

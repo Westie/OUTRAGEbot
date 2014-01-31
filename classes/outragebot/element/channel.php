@@ -83,6 +83,24 @@ class Channel extends Core\ObjectContainer
 	
 	
 	/**
+	 *	Called to send a message to a channel.
+	 */
+	public function message($message)
+	{
+		if(!is_array($message))
+			$message = explode("\n", $message);
+		
+		foreach($message as $item)
+		{
+			if(strlen($item))
+				$this->instance->raw("PRIVMSG ".$this->channel." :".$item);
+		}
+		
+		return $this;
+	}
+	
+	
+	/**
 	 *	Return the string representation of this object.
 	 *	In this instance, it is the name of the channel.
 	 */

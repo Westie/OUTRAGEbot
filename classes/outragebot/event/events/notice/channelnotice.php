@@ -13,6 +13,10 @@ class ChannelNotice extends Event\Template
 {
 	/**
 	 *	Called whenever this event has been invoked.
+	 *
+	 *	@supplies Element\Channel $channel  Channel in which the notice was sent
+	 *	@supplies Element\User    $user     User which sent the notice
+	 *	@supplies string          $message  Message
 	 */
 	public function invoke()
 	{

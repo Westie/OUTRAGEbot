@@ -31,7 +31,7 @@ try
 	include "classes/outragebot/core/autoloader.php";
 	include "classes/externals/PEAR/Services/JSON.php";
 	
-	\OUTRAGEbot\Core\Autoloader::register();
+	\OUTRAGEbot\Core\Autoloader::register(__DIR__);
 	
 	
 	/**

@@ -101,6 +101,24 @@ class User extends Core\ObjectContainer
 	
 	
 	/**
+	 *	Called to send a message to a user.
+	 */
+	public function message($message)
+	{
+		if(!is_array($message))
+			$message = explode("\n", $message);
+		
+		foreach($message as $item)
+		{
+			if(strlen($item))
+				$this->instance->raw("PRIVMSG ".$this->hostmask->nickname." :".$item);
+		}
+		
+		return $this;
+	}
+	
+	
+	/**
 	 *	Called to send a notice to a user.
 	 */
 	public function notice($message)
