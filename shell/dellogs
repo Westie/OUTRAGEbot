@@ -1,0 +1,17 @@
+#!/bin/bash
+ 
+echo "Moving logs to /var/www, backup logs, deleting remainder"
+source_logsdir=/home/zarthus/twitchbot/logs
+target_logsdir=/var/www/zarth.us/public_html/logs
+
+
+cp $source_logsdir/{cmds,a,b,left,right,up,down,democracy,anarchy,start,chat}.log $target_logsdir/
+ 
+ymddate=`date +%y-%m-%d`
+fname=logs_$ymddate
+ 
+mkdir -p $target_logsdir/tar/
+tar -cvnf $target_logsdir/tar/$fname.tar $target_logsdir/logs
+rm $source_logsdir/*
+ 
+echo "Done!"

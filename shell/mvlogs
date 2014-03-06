@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Moving logs to /var/www"
+source_logsdir=/home/zarthus/twitchbot/logs
+target_logsdir=/var/www/zarth.us/public_html/logs
+
+currentdate=`date`
+
+echo $ moved logs on: $currentdate >> $target_logsdir/README
+
+cp $source_logsdir/*.log $target_logsdir/
+
+echo "Done!"
+

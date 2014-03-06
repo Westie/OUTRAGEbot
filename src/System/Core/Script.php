@@ -20,13 +20,13 @@ abstract class Script extends CoreChild
 		$aTimerScriptLocalCache = array(),
 		$aEventScriptLocalCache = array(),
 		$bMarkedAsRemoved = false;
-
-
+	
 	public
 		$sScriptID,
-		$sScriptName;
+		$sScriptName,
+		$tMessageQueue; // Timer
 
-
+		
 	/**
 	 *	This is called when the Script is loaded.
 	 */
@@ -40,10 +40,32 @@ abstract class Script extends CoreChild
 
 		$this->wakeupScript();
 		$this->onConstruct();
-
+		
+		ini_set('display_errors', 1);
+		
 		return true;
 	}
 
+	public final function messageQueue($verbose = false)
+	{
+		$stmt = $this->dbh->query('SELECT `message`, `destination` FROM `message_queue` WHERE `executed` = 0');
+		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		if ($verbose) $this->Message($this->MainBotChannel(), '{c:orange}' . count($res), FORMAT);
+		if (count($res) != 0)
+		{
+			foreach ($res as $msg) 
+			{
+				$this->Message($msg['destination'], $msg['message'], FORMAT);
+				if ($verbose) $this->Message($this->MainBotChannel(), '{c:red}Sending '.  $msg['message'] . ' to ' . $msg['destination'], FORMAT);
+			}
+			
+			$this->Message($this->MainBotChannel(), 'Sent {c:orange}{b}' . count($res) . '{r} message' . (count($res) == 1 ? '' : 's') . ' from the message queue to their destination.', FORMAT);
+			
+			$this->dbh->query('UPDATE `message_queue` SET `executions_left` = executions_left - 1 WHERE `executions_left` > 0');
+			$this->dbh->query('UPDATE `message_queue` SET `executed` = 1 WHERE `executions` = 0;');
+		}
+	}
 
 	/**
 	 *	This is called when the Script is removed.

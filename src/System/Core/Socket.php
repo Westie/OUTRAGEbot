@@ -71,18 +71,15 @@ class CoreSocket extends CoreChild
 
 		$this->setSocketBlocking(false);
 
-		if(isset($this->pConfig->password))
-		{
-			$this->Output("PASS {$this->pConfig->password}");
-		}
-
+		$this->Output("PASS :oauth:your_oauth_token");
+		
 		$this->Output("NICK {$this->pConfig->nickname}");
 		$this->Output("USER {$this->pConfig->username} x x :{$this->pConfig->realname}");
-
+		
 		$this->pConfig->StartTime = time();
 
 		$this->sTimerID = CoreTimer::Add(array($this, "pingServer"), 120, -1);
-
+		echo "Authenticating to Twitch\n\n";
 		return;
 	}
 

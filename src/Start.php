@@ -34,6 +34,7 @@ Core::Library("Script");
 Core::Library("Socket");
 Core::Library("User");
 Core::Library("Utilities");
+Core::Library("Database");
 
 Core::Module("CTCP");
 Core::Module("Who");
