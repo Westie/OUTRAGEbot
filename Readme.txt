@@ -6,8 +6,8 @@
 Licence
 -------
 
- The contents of this file are covered by my licence, where this
- can be found at http://www.typefish.co.uk/licences/.
+The contents of this repo are MIT. Go find the MIT licence somewhere, it's probably the three clause one.
+Just don't be stupid, okay? :)
 
 
 Installation
