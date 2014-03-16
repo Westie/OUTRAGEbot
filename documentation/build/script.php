@@ -55,12 +55,17 @@ foreach($modules as $module)
 # also, they need to be introduced into the stack with introduceModule,
 # this script will force this - and then read from some debug variable
 # somewhere.
-$global_methods = parse($root, $methods);
+$ns = "OUTRAGEbot\\Script";
 
-foreach($global_methods as $key => $method)
-	$global_methods[$key]["metadata"]["class"] = "Script";
+$global_methods = array
+(
+	$ns => parse_methods($root, $methods),
+);
+
+foreach($global_methods[$ns] as $key => $method)
+	$global_methods[$ns][$key]["metadata"]["class"] = $ns;
 
 
 # since we want it in JSON format...
-echo json_encode([ "methods" => $global_methods ]);
+echo json_encode([ "methods" => $global_methods ], JSON_PRETTY_PRINT);
 exit;

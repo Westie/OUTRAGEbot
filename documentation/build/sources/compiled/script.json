@@ -1,0 +1,96 @@
+ {
+    "methods": {
+        "OUTRAGEbot\\Script": {
+            "on": {
+                "type": "method",
+                "metadata": {
+                    "method": "on",
+                    "file": "classes\\outragebot\\script\\instance.php",
+                    "line": 112,
+                    "class": "OUTRAGEbot\\Script"
+                },
+                "comments": "Called to bind an event handler to this script.",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": "string",
+                        "description": "Event name",
+                        "optional": false,
+                        "default": null
+                    },
+                    {
+                        "name": "handler",
+                        "type": "callback",
+                        "description": "Callback",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            },
+            "off": {
+                "type": "method",
+                "metadata": {
+                    "method": "off",
+                    "file": "classes\\outragebot\\script\\instance.php",
+                    "line": 143,
+                    "class": "OUTRAGEbot\\Script"
+                },
+                "comments": "Called to remove event handlers that belong to this script.",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": "mixed",
+                        "description": "Event name",
+                        "optional": true,
+                        "default": null
+                    }
+                ]
+            },
+            "addCommandHandler": {
+                "type": "method",
+                "metadata": {
+                    "method": "addCommandHandler",
+                    "file": "classes\\outragebot\\script\\instance.php",
+                    "line": 193,
+                    "class": "OUTRAGEbot\\Script"
+                },
+                "comments": "Called to bind a command handler to this script.",
+                "parameters": [
+                    {
+                        "name": "command",
+                        "type": "string",
+                        "description": "Command to listen to",
+                        "optional": false,
+                        "default": null
+                    },
+                    {
+                        "name": "handler",
+                        "type": "callback",
+                        "description": "Callback for this command handler.",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            },
+            "removeCommandHandler": {
+                "type": "method",
+                "metadata": {
+                    "method": "removeCommandHandler",
+                    "file": "classes\\outragebot\\script\\instance.php",
+                    "line": 239,
+                    "class": "OUTRAGEbot\\Script"
+                },
+                "comments": "Removes a command handler that is assigned to this script.",
+                "parameters": [
+                    {
+                        "name": "command",
+                        "type": "string",
+                        "description": "Command to be removed.",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            }
+        }
+    }
+}

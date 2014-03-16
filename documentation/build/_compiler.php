@@ -7,7 +7,7 @@
 
 function get_registered_events()
 {
-	$contents = file_get_contents("output/events.json");
+	$contents = file_get_contents("sources/compiled/events.json");
 	$contents = json_decode($contents);
 	
 	return $contents->events;
@@ -20,11 +20,17 @@ function get_registered_methods()
 	
 	foreach([ "script", "methods" ] as $item)
 	{
-		$contents = file_get_contents("output/".$item.".json");
+		$contents = file_get_contents("sources/compiled/".$item.".json");
 		$contents = json_decode($contents);
 		
-		foreach($contents->methods as $method)
-			$set[$method->metadata->method] = $method;
+		foreach($contents->methods as $class => $methods)
+		{
+			if(!isset($set[$class]))
+				$set[$class] = [];
+			
+			foreach($methods as $key => $method)
+				$set[$class][$key] = $method;
+		}
 	}
 	
 	return $set;

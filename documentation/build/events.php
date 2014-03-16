@@ -36,7 +36,7 @@ foreach($events as $item)
 	$methods[$numeric] = (new ReflectionClass("\\OUTRAGEbot\\Event\\Events\\".$name))->getMethod("invoke");
 }
 
-$global_methods = parse($root, $methods);
+$global_methods = parse_methods($root, $methods);
 
 
 # now for the funny part - we have to now go through each of the child
@@ -67,7 +67,7 @@ foreach($subs as $sub)
 		$methods[$numeric] = (new ReflectionClass("\\OUTRAGEbot\\Event\\Events\\".$namespace."\\".$name))->getMethod("invoke");
 	}
 	
-	$local_methods = parse($root, $methods);
+	$local_methods = parse_methods($root, $methods);
 	
 	foreach($local_methods as $key => $item)
 		$local_methods[$key]["metadata"]["method"] = $namespace;
@@ -78,5 +78,5 @@ foreach($subs as $sub)
 
 
 # since we want it in JSON format...
-echo json_encode([ "events" => $global_methods ]);
+echo json_encode([ "events" => $global_methods ], JSON_PRETTY_PRINT);
 exit;

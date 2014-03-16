@@ -86,764 +86,928 @@
 		</header>
 		
 		<section class="doc-group methods">
-			<h2>Methods</h2>
-			
-							<article class="doc-item">
-										
-					<h3>Script::on($event, $handler)</h3>
+							<section class="method-class-list">
+					<h2>Class: OUTRAGEbot\Script</h2>
 					
-											<h4>Description</h4>
-						
-						<p>
-							Called to bind an event handler to this script.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
+																		<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::on($event, $handler)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$event									</span>
+									<p>
+										Called to bind an event handler to this script.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$event												</span>
+												
+												<span class="description">
+													Event name												</span>
+											</li>
+																					<li>
+												<span class="type">
+													callback												</span>
+												
+												<span class="name">
+													$handler												</span>
+												
+												<span class="description">
+													Callback												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::off([ $event ])</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Event name									</span>
-								</li>
-															<li>
-									<span class="type">
-										callback									</span>
+									<p>
+										Called to remove event handlers that belong to this script.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$event												</span>
+												
+												<span class="description">
+													Event name												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::addCommandHandler($command, $handler)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$handler									</span>
+									<p>
+										Called to bind a command handler to this script.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$command												</span>
+												
+												<span class="description">
+													Command to listen to												</span>
+											</li>
+																					<li>
+												<span class="type">
+													callback												</span>
+												
+												<span class="name">
+													$handler												</span>
+												
+												<span class="description">
+													Callback for this command handler.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::removeCommandHandler($command)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Callback									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::off([ $event ])</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Called to remove event handlers that belong to this script.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
+									<p>
+										Removes a command handler that is assigned to this script.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$command												</span>
+												
+												<span class="description">
+													Command to be removed.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::replyCTCP($destination, $message)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$event									</span>
+									<p>
+										Reply/respond to a CTCP request.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$destination												</span>
+												
+												<span class="description">
+													Destination object												</span>
+											</li>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$message												</span>
+												
+												<span class="description">
+													Response to be sent back												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::requestCTCP($destination, $message)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Event name									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::addCommandHandler($command, $handler)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Called to bind a command handler to this script.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
+									<p>
+										Request from someone or a channel .									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$destination												</span>
+												
+												<span class="description">
+													Destination object												</span>
+											</li>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$message												</span>
+												
+												<span class="description">
+													Response to be sent back												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::stripFormat($input)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$command									</span>
+									<p>
+										Strips the text of formatting.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$input												</span>
+												
+												<span class="description">
+													String to be removed of only formatting markers.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::stripColour($input)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Command to listen to									</span>
-								</li>
-															<li>
-									<span class="type">
-										callback									</span>
+									<p>
+										Strips the text of colours.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$input												</span>
+												
+												<span class="description">
+													String to be removed of only colour markers.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::stripAll($input)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$handler									</span>
+									<p>
+										Strips the text of formatting and colours.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$input												</span>
+												
+												<span class="description">
+													String to be removed of all formatting and colour markers.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::format($input)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Callback for this command handler.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::removeCommandHandler($command)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Removes a command handler that is assigned to this script.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
+									<p>
+										Provides a way to format certain strings with colour and other formatting markers.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$input												</span>
+												
+												<span class="description">
+													String to be parsed.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::join($channel, [ $password ])</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$command									</span>
+									<p>
+										Join a channel.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$channel												</span>
+												
+												<span class="description">
+													Channel name												</span>
+											</li>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$password												</span>
+												
+												<span class="description">
+													Channel password												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::part($channel, [ $reason ])</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Command to be removed.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::replyCTCP($destination, $message)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Reply/respond to a CTCP request.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
+									<p>
+										Leave a channel.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$channel												</span>
+												
+												<span class="description">
+													Channel name												</span>
+											</li>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$reason												</span>
+												
+												<span class="description">
+													Reason to leave the channel												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::invite($user, $channel)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$destination									</span>
+									<p>
+										Invite a user to a channel.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$user												</span>
+												
+												<span class="description">
+													User to invite to channel												</span>
+											</li>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$channel												</span>
+												
+												<span class="description">
+													Channel to invite this user												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::message($channel, $message)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Destination object									</span>
-								</li>
-															<li>
-									<span class="type">
-										mixed									</span>
+									<p>
+										Send a message to the specified channel.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$channel												</span>
+												
+												<span class="description">
+													Destination channel												</span>
+											</li>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$message												</span>
+												
+												<span class="description">
+													Message to be sent to the channel												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::raw($message)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$message									</span>
+									<p>
+										Send a raw string to the server.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$message												</span>
+												
+												<span class="description">
+													Message to be sent to the server												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::action($channel, $message)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Response to be sent back									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::requestCTCP($destination, $message)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Request from someone or a channel .						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
+									<p>
+										Send an action to the specified channel.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$channel												</span>
+												
+												<span class="description">
+													Destination channel												</span>
+											</li>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$message												</span>
+												
+												<span class="description">
+													Action to be sent to the channel												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::getUser($user)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$destination									</span>
+									<p>
+										Returns a user object associated with this context.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$user												</span>
+												
+												<span class="description">
+													User to be found												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::getChannel($channel)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Destination object									</span>
-								</li>
-															<li>
-									<span class="type">
-										mixed									</span>
+									<p>
+										Returns a channel object associated with this context.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$channel												</span>
+												
+												<span class="description">
+													Channel to be found												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::getScript($script)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$message									</span>
-									
-									<span class="description">
-										Response to be sent back									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::stripFormat($input)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Strips the text of formatting.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$input									</span>
-									
-									<span class="description">
-										String to be removed of only formatting markers.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::stripColour($input)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Strips the text of colours.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$input									</span>
-									
-									<span class="description">
-										String to be removed of only colour markers.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::stripAll($input)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Strips the text of formatting and colours.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$input									</span>
-									
-									<span class="description">
-										String to be removed of all formatting and colour markers.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::format($input)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Provides a way to format certain strings with colour and other formatting markers.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$input									</span>
-									
-									<span class="description">
-										String to be parsed.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::join($channel, [ $password ])</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Join a channel.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$channel									</span>
-									
-									<span class="description">
-										Channel name									</span>
-								</li>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$password									</span>
-									
-									<span class="description">
-										Channel password									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::part($channel, [ $reason ])</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Leave a channel.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$channel									</span>
-									
-									<span class="description">
-										Channel name									</span>
-								</li>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$reason									</span>
-									
-									<span class="description">
-										Reason to leave the channel									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::invite($user, $channel)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Invite a user to a channel.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$user									</span>
-									
-									<span class="description">
-										User to invite to channel									</span>
-								</li>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$channel									</span>
-									
-									<span class="description">
-										Channel to invite this user									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::message($channel, $message)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Send a message to the specified channel.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$channel									</span>
-									
-									<span class="description">
-										Destination channel									</span>
-								</li>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$message									</span>
-									
-									<span class="description">
-										Message to be sent to the channel									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::raw($message)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Send a raw string to the server.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$message									</span>
-									
-									<span class="description">
-										Message to be sent to the server									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::action($channel, $message)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Send an action to the specified channel.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$channel									</span>
-									
-									<span class="description">
-										Destination channel									</span>
-								</li>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$message									</span>
-									
-									<span class="description">
-										Action to be sent to the channel									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::getUser($user)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Returns a user object associated with this context.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$user									</span>
-									
-									<span class="description">
-										User to be found									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::getChannel($channel)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Returns a channel object associated with this context.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
-									
-									<span class="name">
-										$channel									</span>
-									
-									<span class="description">
-										Channel to be found									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::getScript($script)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Returns an instance of a script that is currently loaded into the bot.<br />
+									<p>
+										Returns an instance of a script that is currently loaded into the bot.<br />
 I wasn't going to have this, but heck, PwnFlakes wanted it and there<br />
-was a valid reason for it so here it returns.						</p>
-										
-					<h4>Accepted arguments</h4>
+was a valid reason for it so here it returns.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													mixed												</span>
+												
+												<span class="name">
+													$script												</span>
+												
+												<span class="description">
+													Script name												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::resourceExists($filename)</h3>
+								
+																	<h4>Description</h4>
+									
+									<p>
+										Proxies file_exists requests for resources within scripts.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$filename												</span>
+												
+												<span class="description">
+													Relative path of file.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::resourcePut($filename, $string)</h3>
+								
+																	<h4>Description</h4>
+									
+									<p>
+										Proxies file_put_contents requests for resources within scripts.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$filename												</span>
+												
+												<span class="description">
+													Relative path of file.												</span>
+											</li>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$string												</span>
+												
+												<span class="description">
+													Contents of file.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::resourceGet($filename)</h3>
+								
+																	<h4>Description</h4>
+									
+									<p>
+										Proxies file_get_contents requests for resources within scripts.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$filename												</span>
+												
+												<span class="description">
+													Relative path of file.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::resourceScan($filename)</h3>
+								
+																	<h4>Description</h4>
+									
+									<p>
+										Proxies glob requests for resources within scripts.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$filename												</span>
+												
+												<span class="description">
+													Relative path of file.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::resourceUnlink($filename)</h3>
+								
+																	<h4>Description</h4>
+									
+									<p>
+										Proxies unlink requests for resources within scripts.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$filename												</span>
+												
+												<span class="description">
+													Relative path of file.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::addTimer($callback, $interval, [ $repeat = 1, [ $arguments ]])</h3>
+								
+																	<h4>Description</h4>
+									
+									<p>
+										Called when adding a timer.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													callback												</span>
+												
+												<span class="name">
+													$callback												</span>
+												
+												<span class="description">
+													Timer handler												</span>
+											</li>
+																					<li>
+												<span class="type">
+													double												</span>
+												
+												<span class="name">
+													$interval												</span>
+												
+												<span class="description">
+													Interval in seconds (can support fractional seconds)												</span>
+											</li>
+																					<li>
+												<span class="type">
+													integer												</span>
+												
+												<span class="name">
+													$repeat												</span>
+												
+												<span class="description">
+													How many times to repeat the call, or -1 for infinite												</span>
+											</li>
+																					<li>
+												<span class="type">
+													array												</span>
+												
+												<span class="name">
+													$arguments												</span>
+												
+												<span class="description">
+													Array of arguments passed to the timer function.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Script::removeTimer($index)</h3>
+								
+																	<h4>Description</h4>
+									
+									<p>
+										Called when removing a timer.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$index												</span>
+												
+												<span class="description">
+													Timer ID												</span>
+											</li>
+																			</ol>
+															</article>
+															</section>
+							<section class="method-class-list">
+					<h2>Class: OUTRAGEbot\Element\User</h2>
 					
-											<ol>
-															<li>
-									<span class="type">
-										mixed									</span>
+																		<article class="doc-item property">
+								<h3>OUTRAGEbot\Element\User::$is_admin</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$script									</span>
+									<p>
+										Performs a check to see if this hostmask is currently an admin or not.									</p>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Element\User::getNickname()</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Script name									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::resourceExists($filename)</h3>
+									<p>
+										Retrieves this user's name.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<p>This method does not take any arguments.</p>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Element\User::send($message)</h3>
+								
+																	<h4>Description</h4>
+									
+									<p>
+										Called to send a message to a user.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$message												</span>
+												
+												<span class="description">
+													Message to send to this user.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Element\User::message($message)</h3>
+								
+																	<h4>Description</h4>
+									
+									<p>
+										Called to send a message to a user.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$message												</span>
+												
+												<span class="description">
+													Message to send to this user.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Element\User::notice($message)</h3>
+								
+																	<h4>Description</h4>
+									
+									<p>
+										Called to send a notice to a user.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$message												</span>
+												
+												<span class="description">
+													Message to notice to this user.												</span>
+											</li>
+																			</ol>
+															</article>
+															</section>
+							<section class="method-class-list">
+					<h2>Class: OUTRAGEbot\Element\Channel</h2>
 					
-											<h4>Description</h4>
-						
-						<p>
-							Proxies file_exists requests for resources within scripts.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
+																		<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Element\Channel::getChannelName()</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$filename									</span>
+									<p>
+										Retrieves the channel name.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<p>This method does not take any arguments.</p>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Element\Channel::send($message)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="description">
-										Relative path of file.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::resourcePut($filename, $string)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Proxies file_put_contents requests for resources within scripts.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
+									<p>
+										Called to send a message to a channel.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$message												</span>
+												
+												<span class="description">
+													Message to send to the channel.												</span>
+											</li>
+																			</ol>
+															</article>
+																								<article class="doc-item method">
+																
+								<h3>OUTRAGEbot\Element\Channel::message($message)</h3>
+								
+																	<h4>Description</h4>
 									
-									<span class="name">
-										$filename									</span>
-									
-									<span class="description">
-										Relative path of file.									</span>
-								</li>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$string									</span>
-									
-									<span class="description">
-										Contents of file.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::resourceGet($filename)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Proxies file_get_contents requests for resources within scripts.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$filename									</span>
-									
-									<span class="description">
-										Relative path of file.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::resourceScan($filename)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Proxies glob requests for resources within scripts.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$filename									</span>
-									
-									<span class="description">
-										Relative path of file.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::resourceUnlink($filename)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Proxies unlink requests for resources within scripts.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$filename									</span>
-									
-									<span class="description">
-										Relative path of file.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::addTimer($callback, $interval, [ $repeat = 1, [ $arguments ]])</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Called when adding a timer.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										callback									</span>
-									
-									<span class="name">
-										$callback									</span>
-									
-									<span class="description">
-										Timer handler									</span>
-								</li>
-															<li>
-									<span class="type">
-										double									</span>
-									
-									<span class="name">
-										$interval									</span>
-									
-									<span class="description">
-										Interval in seconds (can support fractional seconds)									</span>
-								</li>
-															<li>
-									<span class="type">
-										integer									</span>
-									
-									<span class="name">
-										$repeat									</span>
-									
-									<span class="description">
-										How many times to repeat the call, or -1 for infinite									</span>
-								</li>
-															<li>
-									<span class="type">
-										array									</span>
-									
-									<span class="name">
-										$arguments									</span>
-									
-									<span class="description">
-										Array of arguments passed to the timer function.									</span>
-								</li>
-													</ol>
-									</article>
-							<article class="doc-item">
-										
-					<h3>Script::removeTimer($index)</h3>
-					
-											<h4>Description</h4>
-						
-						<p>
-							Called when removing a timer.						</p>
-										
-					<h4>Accepted arguments</h4>
-					
-											<ol>
-															<li>
-									<span class="type">
-										string									</span>
-									
-									<span class="name">
-										$index									</span>
-									
-									<span class="description">
-										Timer ID									</span>
-								</li>
-													</ol>
-									</article>
+									<p>
+										Called to send a message to a channel.									</p>
+																
+								<h4>Accepted arguments</h4>
+								
+																	<ol>
+																					<li>
+												<span class="type">
+													string												</span>
+												
+												<span class="name">
+													$message												</span>
+												
+												<span class="description">
+													Message to send to the channel.												</span>
+											</li>
+																			</ol>
+															</article>
+															</section>
 					</section>
 		
 		<section class="doc-group events">
