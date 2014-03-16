@@ -579,6 +579,25 @@
                         "default": null
                     }
                 ]
+            },
+            "action": {
+                "type": "method",
+                "metadata": {
+                    "method": "action",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 152,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Send an action to the specified user.",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "type": "mixed",
+                        "description": "Action to be sent to the user",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
             }
         },
         "OUTRAGEbot\\Element\\Channel": {
@@ -628,6 +647,158 @@
                         "name": "message",
                         "type": "string",
                         "description": "Message to send to the channel.",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            },
+            "notice": {
+                "type": "method",
+                "metadata": {
+                    "method": "notice",
+                    "file": "classes\\outragebot\\element\\channel.php",
+                    "line": 114,
+                    "class": "OUTRAGEbot\\Element\\Channel"
+                },
+                "comments": "Called to send a notice to an entire channel.",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "Message to notice to this channel.",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            },
+            "action": {
+                "type": "method",
+                "metadata": {
+                    "method": "action",
+                    "file": "classes\\outragebot\\element\\channel.php",
+                    "line": 134,
+                    "class": "OUTRAGEbot\\Element\\Channel"
+                },
+                "comments": "Send an action to the specified channel.",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "type": "mixed",
+                        "description": "Action to be sent to the channel",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            },
+            "isUserInChannel": {
+                "type": "method",
+                "metadata": {
+                    "method": "isUserInChannel",
+                    "file": "classes\\outragebot\\element\\channel.php",
+                    "line": 164,
+                    "class": "OUTRAGEbot\\Element\\Channel"
+                },
+                "comments": "Checks if a user is in this channel.",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "type": "Element\\User",
+                        "description": "User to search for in channel.",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            },
+            "isUserVoice": {
+                "type": "method",
+                "metadata": {
+                    "method": "isUserVoice",
+                    "file": "classes\\outragebot\\element\\channel.php",
+                    "line": 178,
+                    "class": "OUTRAGEbot\\Element\\Channel"
+                },
+                "comments": "Checks if this user has voice rights (+) in this channel.\nMight not be supported on all networks.",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "type": "Element\\User",
+                        "description": "User to check for that mode\/right in this channel.",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            },
+            "isUserHalfOp": {
+                "type": "method",
+                "metadata": {
+                    "method": "isUserHalfOp",
+                    "file": "classes\\outragebot\\element\\channel.php",
+                    "line": 195,
+                    "class": "OUTRAGEbot\\Element\\Channel"
+                },
+                "comments": "Checks if this user has half op rights (%) in this channel.\nMight not be supported on all networks.",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "type": "Element\\User",
+                        "description": "User to check for that mode\/right in this channel.",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            },
+            "isUserOp": {
+                "type": "method",
+                "metadata": {
+                    "method": "isUserOp",
+                    "file": "classes\\outragebot\\element\\channel.php",
+                    "line": 212,
+                    "class": "OUTRAGEbot\\Element\\Channel"
+                },
+                "comments": "Checks if this user has channel op rights (@) in this channel.\nMight not be supported on all networks.",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "type": "Element\\User",
+                        "description": "User to check for that mode\/right in this channel.",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            },
+            "isUserAdmin": {
+                "type": "method",
+                "metadata": {
+                    "method": "isUserAdmin",
+                    "file": "classes\\outragebot\\element\\channel.php",
+                    "line": 229,
+                    "class": "OUTRAGEbot\\Element\\Channel"
+                },
+                "comments": "Checks if this user has admin rights (&) in this channel.\nMight not be supported on all networks.",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "type": "Element\\User",
+                        "description": "User to check for that mode\/right in this channel.",
+                        "optional": false,
+                        "default": null
+                    }
+                ]
+            },
+            "isUserOwner": {
+                "type": "method",
+                "metadata": {
+                    "method": "isUserOwner",
+                    "file": "classes\\outragebot\\element\\channel.php",
+                    "line": 246,
+                    "class": "OUTRAGEbot\\Element\\Channel"
+                },
+                "comments": "Checks if this user has owner rights (~) in this channel.\nMight not be supported on all networks.",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "type": "Element\\User",
+                        "description": "User to check for that mode\/right in this channel.",
                         "optional": false,
                         "default": null
                     }

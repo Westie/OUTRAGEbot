@@ -142,4 +142,24 @@ class User extends Core\ObjectContainer
 		
 		return $this;
 	}
+	
+	
+	/**
+	 *	Send an action to the specified user.
+	 *
+	 *	@param mixed $message  Action to be sent to the user
+	 */
+	public function action($message)
+	{
+		if(!is_array($message))
+			$message = explode("\n", $message);
+		
+		foreach($message as $item)
+		{
+			if(strlen($item))
+				$context->instance->raw("PRIVMSG ".$this->hostmask->nickname." :".chr(1)."ACTION ".$item.chr(1));
+		}
+		
+		return $this;
+	}
 }

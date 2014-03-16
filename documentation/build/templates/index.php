@@ -15,6 +15,14 @@
 				font-family: "Tahoma";
 			}
 			
+			.doc-overview
+			{
+				padding: 20px;
+				background: #F6F9F3;
+				border: 1px solid #CCC;
+				margin-bottom: 30px;
+			}
+			
 			.doc-item
 			{
 				border: 1px solid #CCC;
@@ -77,6 +85,11 @@
 			{
 				margin-bottom: 0px;
 			}
+			
+			code
+			{
+				font-size: 12px;
+			}
 		</style>
 	</head>
 	
@@ -88,7 +101,63 @@
 		<section class="doc-group methods">
 			<?php foreach($_methods as $class => $methods): ?>
 				<section class="method-class-list">
-					<h2>Class: <?php echo $class ?></h2>
+					<h2>Class description for <?php echo $class ?></h2>
+					
+					<article class="doc-overview">
+						<?php
+							# define the header
+							$definition = "class ".$class.PHP_EOL."{".PHP_EOL;
+							
+							$_overview_properties = [];
+							$_overview_methods = [];
+							
+							foreach($methods as $title => $method)
+							{
+								if($method->type == "property")
+									$_overview_properties[$title] = $method;
+								
+								if($method->type == "method")
+									$_overview_methods[$title] = $method;
+							}
+							
+							if($_overview_properties)
+							{
+								$definition .= "\t/* properties */".PHP_EOL;
+								
+								foreach($_overview_properties as $title => $method)
+									$definition .= "\tpublic $".$title.";".PHP_EOL;
+								
+								$definition .= PHP_EOL;
+							}
+							
+							if($_overview_methods)
+							{
+								$definition .= "\t/* methods */".PHP_EOL;
+								
+								foreach($_overview_methods as $title => $method)
+								{
+									$optional = 0;
+									$arguments = [];
+									
+									foreach($method->parameters as $item)
+									{
+										if($item->optional)
+											++$optional;
+										
+										$arguments[] = ($item->optional ? "[ " : "")."$".$item->name.($item->default ? " = ".json_encode($item->default) : "");
+									}
+									
+									$arguments = implode(", ", $arguments).($item->optional ? " ".str_repeat("]", $optional) : "");
+									
+									$definition .= "\tpublic function ".$title."(".$arguments.");".PHP_EOL;
+								}
+							}
+							
+							$definition .= "}";
+							
+							echo custom_highlight_string($definition);
+						?>
+					</article>
 					
 					<?php foreach($methods as $title => $method): ?>
 						<?php if($method->type == "method"): ?>
@@ -226,8 +295,6 @@
 						<?php
 						
 						$example = <<<EOL
-<?php
-
 class ExampleScript extends OUTRAGEbot\Script
 {
 	public function {$event->metadata->onevent}({$arguments})
@@ -235,10 +302,8 @@ class ExampleScript extends OUTRAGEbot\Script
 		...
 	}
 }
-
-?>
 EOL;
-						highlight_string($example);
+						echo custom_highlight_string($example);
 						?>
 					</div>
 					
@@ -248,8 +313,6 @@ EOL;
 						$onevent = strtolower($event->metadata->event);
 						
 						$example = <<<EOL
-<?php
-
 class ExampleScript extends OUTRAGEbot\Script
 {
 	public function init()
@@ -260,10 +323,8 @@ class ExampleScript extends OUTRAGEbot\Script
 		});
 	}
 }
-
-?>
 EOL;
-						highlight_string($example);
+						echo custom_highlight_string($example);
 						?>
 					</div>
 				</article>

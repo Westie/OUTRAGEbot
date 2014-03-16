@@ -35,3 +35,9 @@ function get_registered_methods()
 	
 	return $set;
 }
+
+
+function custom_highlight_string($string)
+{
+	return str_replace([ "&lt;?php&nbsp;", "?>" ], "", highlight_string("<?php ".$string, true));
+}
