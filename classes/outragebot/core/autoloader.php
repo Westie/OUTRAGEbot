@@ -36,7 +36,7 @@ class Autoloader
 	 */
 	public function autoload($class)
 	{
-		$class = str_replace([ "_", "\\" ], DIRECTORY_SEPARATOR, $class);
+		$class = str_replace([ "_", "\\" ], "/", $class);
 		$class = strtolower($class);
 		
 		if(preg_match("/^outragebot\//", $class))

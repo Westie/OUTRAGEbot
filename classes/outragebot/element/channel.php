@@ -57,6 +57,8 @@ class Channel extends Core\ObjectContainer
 	
 	/**
 	 *	Retrieves the channel name.
+	 *
+	 *	@param void
 	 */
 	public function getChannelName()
 	{
@@ -66,6 +68,8 @@ class Channel extends Core\ObjectContainer
 	
 	/**
 	 *	Called to send a message to a channel.
+	 *
+	 *	@param string $message Message to send to the channel.
 	 */
 	public function send($message)
 	{
@@ -84,6 +88,8 @@ class Channel extends Core\ObjectContainer
 	
 	/**
 	 *	Called to send a message to a channel.
+	 *
+	 *	@param string $message Message to send to the channel.
 	 */
 	public function message($message)
 	{

@@ -65,6 +65,8 @@ class User extends Core\ObjectContainer
 	
 	/**
 	 *	Retrieves this user's name.
+	 *	
+	 *	@param void
 	 */
 	public function getNickname()
 	{
@@ -84,6 +86,8 @@ class User extends Core\ObjectContainer
 	
 	/**
 	 *	Called to send a message to a user.
+	 *
+	 *	@param string $message Message to send to this user.
 	 */
 	public function send($message)
 	{
@@ -102,6 +106,8 @@ class User extends Core\ObjectContainer
 	
 	/**
 	 *	Called to send a message to a user.
+	 *
+	 *	@param string $message Message to send to this user.
 	 */
 	public function message($message)
 	{
@@ -120,6 +126,8 @@ class User extends Core\ObjectContainer
 	
 	/**
 	 *	Called to send a notice to a user.
+	 *
+	 *	@param string $message Message to notice to this user.
 	 */
 	public function notice($message)
 	{

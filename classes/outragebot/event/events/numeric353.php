@@ -27,10 +27,15 @@ class Numeric353 extends Event\Template
 			
 			if($user)
 			{
+				$prefixes = $this->instance->serverconf->prefixes;
+				
+				$modes = implode("", $hostmask->modes);
+				$modes = str_replace(array_values($prefixes), array_keys($prefixes), $modes);
+				
 				$channel->users[$user->getNickname()] = array
 				(
 					"object" => $user,
-					"modes" => implode("", $hostmask->modes),
+					"modes" => $modes,
 				);
 			}
 		}
