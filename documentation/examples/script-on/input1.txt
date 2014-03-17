@@ -1,0 +1,5 @@
+$this->on("message", function($channel, $user, $message)
+{
+	if($channel == "#android")
+		$user->message("you sent a message to #android");
+});

@@ -6,7 +6,7 @@
                 "metadata": {
                     "method": "on",
                     "file": "classes\\outragebot\\script\\instance.php",
-                    "line": 112,
+                    "line": 115,
                     "class": "OUTRAGEbot\\Script"
                 },
                 "comments": "Called to bind an event handler to this script.",
@@ -25,6 +25,16 @@
                         "optional": false,
                         "default": null
                     }
+                ],
+                "examples": [
+                    {
+                        "type": "input",
+                        "contents": "$this->on(\"message\", function($channel, $user, $message)\r\n{\r\n\tif($channel == \"#android\")\r\n\t\t$user->message(\"you sent a message to #android\");\r\n});"
+                    },
+                    {
+                        "type": "input",
+                        "contents": "$this->on(\"PRIVMSG\", function($event)\r\n{\r\n\tvar_dump($event);\r\n});"
+                    }
                 ]
             },
             "off": {
@@ -32,7 +42,7 @@
                 "metadata": {
                     "method": "off",
                     "file": "classes\\outragebot\\script\\instance.php",
-                    "line": 143,
+                    "line": 146,
                     "class": "OUTRAGEbot\\Script"
                 },
                 "comments": "Called to remove event handlers that belong to this script.",
@@ -51,7 +61,7 @@
                 "metadata": {
                     "method": "addCommandHandler",
                     "file": "classes\\outragebot\\script\\instance.php",
-                    "line": 193,
+                    "line": 196,
                     "class": "OUTRAGEbot\\Script"
                 },
                 "comments": "Called to bind a command handler to this script.",
@@ -77,7 +87,7 @@
                 "metadata": {
                     "method": "removeCommandHandler",
                     "file": "classes\\outragebot\\script\\instance.php",
-                    "line": 239,
+                    "line": 242,
                     "class": "OUTRAGEbot\\Script"
                 },
                 "comments": "Removes a command handler that is assigned to this script.",

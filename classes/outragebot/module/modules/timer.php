@@ -37,7 +37,10 @@ class Timer extends Module\Template
 	 *	@param integer $repeat     How many times to repeat the call, or -1 for infinite
 	 *	@param array $arguments    Array of arguments passed to the timer function.
 	 *
-	 *	@return	string             Timer ID	 
+	 *	@return	string             Timer ID
+	 *
+	 *	@example input documentation/examples/timers/timer-add-1.txt
+	 *	@example input documentation/examples/timers/timer-add-2.txt
 	 */
 	public function add($context, $callback, $interval, $repeat = 1, $arguments = [])
 	{

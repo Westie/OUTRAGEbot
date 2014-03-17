@@ -1,0 +1,4 @@
+$this->on("PRIVMSG", function($event)
+{
+	var_dump($event);
+});

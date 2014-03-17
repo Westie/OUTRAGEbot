@@ -1,0 +1,6 @@
+$callback = function($hero = "Bob")
+{
+	echo "this will get called every half a minute, with ".$hero." as my hero!";
+};
+
+$this->addTimer($callback, 30, -1, [ "Sarah" ]);

@@ -73,9 +73,8 @@
 			{
 				font-size: 12px;
 				
-				border: 1px solid #DDD;
-				
-				background-color: #EFEEFF;
+				background: #F6F9F3;
+				border: 1px solid #CCC;
 				
 				padding: 20px;
 				margin-bottom: 20px;
@@ -84,6 +83,27 @@
 			.doc-item .example:last-child
 			{
 				margin-bottom: 0px;
+			}
+			
+			.doc-item.method
+			{
+				border: 1px solid #F33;
+				border-left: 15px solid #F33;
+				background-color: #FDD;
+			}
+			
+			.doc-item.property
+			{
+				border: 1px solid #33F;
+				border-left: 15px solid #33F;
+				background-color: #CCF;
+			}
+			
+			.doc-item.event
+			{
+				border: 1px solid #AAE5AA;
+				border-left: 15px solid #AAE5AA;
+				background-color: #DDFFE3;
 			}
 			
 			code
@@ -145,7 +165,18 @@
 													Callback												</span>
 											</li>
 																			</ol>
-															</article>
+																
+																	<h4>Examples</h4>
+									
+																			<div class="example input"><code><span style="color: #000000">
+<span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"message"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;if(</span><span style="color: #0000BB">$channel&nbsp;</span><span style="color: #007700">==&nbsp;</span><span style="color: #DD0000">"#android"</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">message</span><span style="color: #007700">(</span><span style="color: #DD0000">"you&nbsp;sent&nbsp;a&nbsp;message&nbsp;to&nbsp;#android"</span><span style="color: #007700">);<br />});</span>
+</span>
+</code></div>
+																			<div class="example input"><code><span style="color: #000000">
+<span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #DD0000">"PRIVMSG"</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">$event</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$event</span><span style="color: #007700">);<br />});</span>
+</span>
+</code></div>
+																								</article>
 																								<article class="doc-item method">
 																
 								<h3>
@@ -173,6 +204,7 @@
 													Event name												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -211,6 +243,7 @@
 													Callback for this command handler.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -239,6 +272,7 @@
 													Command to be removed.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -277,6 +311,7 @@
 													Response to be sent back												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -315,6 +350,7 @@
 													Response to be sent back												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -343,6 +379,7 @@
 													String to be removed of only formatting markers.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -371,6 +408,7 @@
 													String to be removed of only colour markers.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -399,6 +437,7 @@
 													String to be removed of all formatting and colour markers.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -427,6 +466,7 @@
 													String to be parsed.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -465,6 +505,7 @@
 													Channel password												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -503,6 +544,7 @@
 													Reason to leave the channel												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -541,6 +583,7 @@
 													Channel to invite this user												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -579,6 +622,7 @@
 													Message to be sent to the channel												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -607,6 +651,7 @@
 													Message to be sent to the server												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -645,6 +690,7 @@
 													Action to be sent to the channel												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -673,6 +719,7 @@
 													User to be found												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -701,6 +748,7 @@
 													Channel to be found												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -731,6 +779,7 @@ was a valid reason for it so here it returns.									</p>
 													Script name												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -759,6 +808,7 @@ was a valid reason for it so here it returns.									</p>
 													Relative path of file.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -797,6 +847,7 @@ was a valid reason for it so here it returns.									</p>
 													Contents of file.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -825,6 +876,7 @@ was a valid reason for it so here it returns.									</p>
 													Relative path of file.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -853,6 +905,7 @@ was a valid reason for it so here it returns.									</p>
 													Relative path of file.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -881,6 +934,7 @@ was a valid reason for it so here it returns.									</p>
 													Relative path of file.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -939,7 +993,18 @@ was a valid reason for it so here it returns.									</p>
 													Array of arguments passed to the timer function.												</span>
 											</li>
 																			</ol>
-															</article>
+																
+																	<h4>Examples</h4>
+									
+																			<div class="example input"><code><span style="color: #000000">
+<span style="color: #0000BB">$callback&nbsp;</span><span style="color: #007700">=&nbsp;function()<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"this&nbsp;will&nbsp;get&nbsp;called&nbsp;every&nbsp;half&nbsp;a&nbsp;second"</span><span style="color: #007700">;<br />};<br /><br /></span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">$callback</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">0.5</span><span style="color: #007700">,&nbsp;-</span><span style="color: #0000BB">1</span><span style="color: #007700">);</span>
+</span>
+</code></div>
+																			<div class="example input"><code><span style="color: #000000">
+<span style="color: #0000BB">$callback&nbsp;</span><span style="color: #007700">=&nbsp;function(</span><span style="color: #0000BB">$hero&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"Bob"</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"this&nbsp;will&nbsp;get&nbsp;called&nbsp;every&nbsp;half&nbsp;a&nbsp;minute,&nbsp;with&nbsp;"</span><span style="color: #007700">.</span><span style="color: #0000BB">$hero</span><span style="color: #007700">.</span><span style="color: #DD0000">"&nbsp;as&nbsp;my&nbsp;hero!"</span><span style="color: #007700">;<br />};<br /><br /></span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">$callback</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">0.5</span><span style="color: #007700">,&nbsp;-</span><span style="color: #0000BB">1</span><span style="color: #007700">,&nbsp;[&nbsp;</span><span style="color: #DD0000">"Sarah"&nbsp;</span><span style="color: #007700">]);</span>
+</span>
+</code></div>
+																								</article>
 																								<article class="doc-item method">
 																
 								<h3>
@@ -967,6 +1032,7 @@ was a valid reason for it so here it returns.									</p>
 													Timer ID												</span>
 											</li>
 																			</ol>
+																
 															</article>
 															</section>
 							<section class="method-class-list">
@@ -1005,6 +1071,7 @@ was a valid reason for it so here it returns.									</p>
 								<h4>Accepted arguments</h4>
 								
 																	<p>This method does not take any arguments.</p>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1033,6 +1100,7 @@ was a valid reason for it so here it returns.									</p>
 													Message to send to this user.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1061,6 +1129,7 @@ was a valid reason for it so here it returns.									</p>
 													Message to send to this user.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1089,6 +1158,7 @@ was a valid reason for it so here it returns.									</p>
 													Message to notice to this user.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1117,6 +1187,7 @@ was a valid reason for it so here it returns.									</p>
 													Action to be sent to the user												</span>
 											</li>
 																			</ol>
+																
 															</article>
 															</section>
 							<section class="method-class-list">
@@ -1144,6 +1215,7 @@ was a valid reason for it so here it returns.									</p>
 								<h4>Accepted arguments</h4>
 								
 																	<p>This method does not take any arguments.</p>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1172,6 +1244,7 @@ was a valid reason for it so here it returns.									</p>
 													Message to send to the channel.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1200,6 +1273,7 @@ was a valid reason for it so here it returns.									</p>
 													Message to send to the channel.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1228,6 +1302,7 @@ was a valid reason for it so here it returns.									</p>
 													Message to notice to this channel.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1256,6 +1331,7 @@ was a valid reason for it so here it returns.									</p>
 													Action to be sent to the channel												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1284,6 +1360,7 @@ was a valid reason for it so here it returns.									</p>
 													User to search for in channel.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1313,6 +1390,7 @@ Might not be supported on all networks.									</p>
 													User to check for that mode/right in this channel.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1342,6 +1420,7 @@ Might not be supported on all networks.									</p>
 													User to check for that mode/right in this channel.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1371,6 +1450,7 @@ Might not be supported on all networks.									</p>
 													User to check for that mode/right in this channel.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1400,6 +1480,7 @@ Might not be supported on all networks.									</p>
 													User to check for that mode/right in this channel.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 																								<article class="doc-item method">
 																
@@ -1429,6 +1510,7 @@ Might not be supported on all networks.									</p>
 													User to check for that mode/right in this channel.												</span>
 											</li>
 																			</ol>
+																
 															</article>
 															</section>
 					</section>
@@ -1436,7 +1518,7 @@ Might not be supported on all networks.									</p>
 		<section class="doc-group events">
 			<h2>Events</h2>
 			
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>ChannelJoin</h3>
 					
 											<h4>Description</h4>
@@ -1494,7 +1576,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>ChannelKick</h3>
 					
 											<h4>Description</h4>
@@ -1572,7 +1654,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>Mode</h3>
 					
 											<h4>Description</h4>
@@ -1650,7 +1732,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>Nick</h3>
 					
 											<h4>Description</h4>
@@ -1708,7 +1790,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>ChannelPart</h3>
 					
 											<h4>Description</h4>
@@ -1776,7 +1858,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>UserQuit</h3>
 					
 											<h4>Description</h4>
@@ -1834,7 +1916,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>ChannelTopic</h3>
 					
 											<h4>Description</h4>
@@ -1902,7 +1984,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>ChannelNotice</h3>
 					
 											<h4>Description</h4>
@@ -1970,7 +2052,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>CTCPResponse</h3>
 					
 											<h4>Description</h4>
@@ -2028,7 +2110,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>UserNotice</h3>
 					
 											<h4>Description</h4>
@@ -2086,7 +2168,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>ChannelCommand</h3>
 					
 											<h4>Description</h4>
@@ -2164,7 +2246,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>ChannelMessage</h3>
 					
 											<h4>Description</h4>
@@ -2232,7 +2314,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>CTCPRequest</h3>
 					
 											<h4>Description</h4>
@@ -2290,7 +2372,7 @@ Might not be supported on all networks.									</p>
 </span>
 </code>					</div>
 				</article>
-							<article class="doc-item">
+							<article class="doc-item event">
 					<h3>UserMessage</h3>
 					
 											<h4>Description</h4>

@@ -73,9 +73,8 @@
 			{
 				font-size: 12px;
 				
-				border: 1px solid #DDD;
-				
-				background-color: #EFEEFF;
+				background: #F6F9F3;
+				border: 1px solid #CCC;
 				
 				padding: 20px;
 				margin-bottom: 20px;
@@ -84,6 +83,27 @@
 			.doc-item .example:last-child
 			{
 				margin-bottom: 0px;
+			}
+			
+			.doc-item.method
+			{
+				border: 1px solid #F33;
+				border-left: 15px solid #F33;
+				background-color: #FDD;
+			}
+			
+			.doc-item.property
+			{
+				border: 1px solid #33F;
+				border-left: 15px solid #33F;
+				background-color: #CCF;
+			}
+			
+			.doc-item.event
+			{
+				border: 1px solid #AAE5AA;
+				border-left: 15px solid #AAE5AA;
+				background-color: #DDFFE3;
 			}
 			
 			code
@@ -191,7 +211,7 @@
 									</a>
 								</h3>
 								
-								<?php if($method->comments): ?>
+								<?php if(!empty($method->comments)): ?>
 									<h4>Description</h4>
 									
 									<p>
@@ -201,7 +221,7 @@
 								
 								<h4>Accepted arguments</h4>
 								
-								<?php if($method->parameters): ?>
+								<?php if(!empty($method->parameters)): ?>
 									<ol>
 										<?php foreach($method->parameters as $item): ?>
 											<li>
@@ -221,6 +241,14 @@
 									</ol>
 								<?php else: ?>
 									<p>This method does not take any arguments.</p>
+								<?php endif ?>
+								
+								<?php if(!empty($method->examples)): ?>
+									<h4>Examples</h4>
+									
+									<?php foreach($method->examples as $index => $example): ?>
+										<div class="example <?php echo strtolower($example->type) ?>"><?php echo custom_highlight_string($example->contents) ?></div>
+									<?php endforeach ?>
 								<?php endif ?>
 							</article>
 						<?php else: ?>
@@ -249,7 +277,7 @@
 			<h2>Events</h2>
 			
 			<?php foreach($_events as $title => $event): ?>
-				<article class="doc-item">
+				<article class="doc-item event">
 					<h3><?php echo $event->metadata->event ?></h3>
 					
 					<?php if($event->comments): ?>

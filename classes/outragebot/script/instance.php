@@ -108,6 +108,9 @@ class Instance
 	 *	
 	 *	@param string $event      Event name
 	 *	@param callback $handler  Callback
+	 *	
+	 *	@example input documentation/examples/script-on/input1.txt
+	 *	@example input documentation/examples/script-on/input2.txt
 	 */
 	public function on($event, $handler, $metadata = [])
 	{

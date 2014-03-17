@@ -442,7 +442,7 @@
                 "metadata": {
                     "method": "addTimer",
                     "file": "classes\\outragebot\\module\\modules\\timer.php",
-                    "line": 42,
+                    "line": 45,
                     "class": "OUTRAGEbot\\Script"
                 },
                 "comments": "Called when adding a timer.",
@@ -477,6 +477,16 @@
 
                         ]
                     }
+                ],
+                "examples": [
+                    {
+                        "type": "input",
+                        "contents": "$callback = function()\r\n{\r\n\techo \"this will get called every half a second\";\r\n};\r\n\r\n$this->addTimer($callback, 0.5, -1);"
+                    },
+                    {
+                        "type": "input",
+                        "contents": "$callback = function($hero = \"Bob\")\r\n{\r\n\techo \"this will get called every half a minute, with \".$hero.\" as my hero!\";\r\n};\r\n\r\n$this->addTimer($callback, 0.5, -1, [ \"Sarah\" ]);"
+                    }
                 ]
             },
             "removeTimer": {
@@ -484,7 +494,7 @@
                 "metadata": {
                     "method": "removeTimer",
                     "file": "classes\\outragebot\\module\\modules\\timer.php",
-                    "line": 73,
+                    "line": 76,
                     "class": "OUTRAGEbot\\Script"
                 },
                 "comments": "Called when removing a timer.",

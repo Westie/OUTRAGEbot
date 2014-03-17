@@ -132,6 +132,17 @@ function parse_methods($root, $methods)
 					if(preg_match("/^\@todo/", $line))
 						$done = true;
 					
+					if(preg_match("/^\@example\s+(.*?)\s+(.*)$/", $line, $set))
+					{
+						$path = $root."/".trim($set[2]);
+						
+						if(!isset($context["examples"]))
+							$context["examples"] = [];
+						
+						if(file_exists($path))
+							$context["examples"][] = [ "type" => $set[1], "contents" => file_get_contents($path) ];
+					}
+					
 					break;
 				}
 			}

@@ -1,0 +1,6 @@
+$callback = function()
+{
+	echo "this will get called every half a second";
+};
+
+$this->addTimer($callback, 0.5, -1);
