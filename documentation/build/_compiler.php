@@ -41,3 +41,9 @@ function custom_highlight_string($string)
 {
 	return str_replace([ "&lt;?php&nbsp;", "?>" ], "", highlight_string("<?php ".$string, true));
 }
+
+
+function method_to_hash($class, $method)
+{
+	return sha1(strtolower($class)."::".strtolower($method));
+}

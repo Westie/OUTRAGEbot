@@ -125,7 +125,7 @@
 								$definition .= "\t/* properties */".PHP_EOL;
 								
 								foreach($_overview_properties as $title => $method)
-									$definition .= "\tpublic $".$title.";".PHP_EOL;
+									$definition .= "\tpublic <<<<<$".$title.">>>>>;".PHP_EOL;
 								
 								$definition .= PHP_EOL;
 							}
@@ -149,13 +149,21 @@
 									
 									$arguments = implode(", ", $arguments).($item->optional ? " ".str_repeat("]", $optional) : "");
 									
-									$definition .= "\tpublic function ".$title."(".$arguments.");".PHP_EOL;
+									$definition .= "\tpublic function <<<<<".$title.">>>>>(".$arguments.");".PHP_EOL;
 								}
 							}
 							
 							$definition .= "}";
+							$definition = custom_highlight_string($definition);
 							
-							echo custom_highlight_string($definition);
+							$pattern = "/".preg_quote('&lt;&lt;&lt;&lt;&lt;</span><span style="color: #0000BB">', '/')."(.*?)".preg_quote('</span><span style="color: #007700">&gt;&gt;&gt;&gt;&gt;', '/')."/";
+							
+							$callback = function($matches) use ($class)
+							{
+								return '<span style="color: #0000BB"><a href="#'.method_to_hash($class, $matches[1]).'" data-class="'.$class.'" data-method="'.$matches[1].'">'.$matches[1].'</a></span>';
+							};
+							
+							echo preg_replace_callback($pattern, $callback, $definition);
 						?>
 					</article>
 					
@@ -177,7 +185,11 @@
 									$arguments = implode(", ", $arguments).($item->optional ? " ".str_repeat("]", $optional) : "");
 								?>
 								
-								<h3><?php echo $method->metadata->class ?>::<?php echo $method->metadata->method ?>(<?php echo $arguments ?>)</h3>
+								<h3>
+									<a name="<?php echo method_to_hash($class, $title) ?>">
+										<?php echo $method->metadata->class ?>::<?php echo $method->metadata->method ?>(<?php echo $arguments ?>)
+									</a>
+								</h3>
 								
 								<?php if($method->comments): ?>
 									<h4>Description</h4>
@@ -213,7 +225,11 @@
 							</article>
 						<?php else: ?>
 							<article class="doc-item property">
-								<h3><?php echo $method->metadata->class ?>::$<?php echo $method->metadata->property ?></h3>
+								<h3>
+									<a name="<?php echo method_to_hash($class, $title) ?>">
+										<?php echo $method->metadata->class ?>::$<?php echo $method->metadata->property ?>
+									</a>
+								</h3>
 								
 								<?php if($method->comments): ?>
 									<h4>Description</h4>

@@ -104,13 +104,17 @@
 					
 					<article class="doc-overview">
 						<code><span style="color: #000000">
-<span style="color: #0000BB"></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/*&nbsp;methods&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">on</span><span style="color: #007700">(</span><span style="color: #0000BB">$event</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$handler</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">off</span><span style="color: #007700">([&nbsp;</span><span style="color: #0000BB">$event&nbsp;</span><span style="color: #007700">]);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">addCommandHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">$command</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$handler</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">removeCommandHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">$command</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">replyCTCP</span><span style="color: #007700">(</span><span style="color: #0000BB">$destination</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">requestCTCP</span><span style="color: #007700">(</span><span style="color: #0000BB">$destination</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">stripFormat</span><span style="color: #007700">(</span><span style="color: #0000BB">$input</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">stripColour</span><span style="color: #007700">(</span><span style="color: #0000BB">$input</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">stripAll</span><span style="color: #007700">(</span><span style="color: #0000BB">$input</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">format</span><span style="color: #007700">(</span><span style="color: #0000BB">$input</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">join</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;[&nbsp;</span><span style="color: #0000BB">$password&nbsp;</span><span style="color: #007700">]);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">part</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;[&nbsp;</span><span style="color: #0000BB">$reason&nbsp;</span><span style="color: #007700">]);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">invite</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$channel</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">message</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">raw</span><span style="color: #007700">(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">action</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">getUser</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">getChannel</span><span style="color: #007700">(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">getScript</span><span style="color: #007700">(</span><span style="color: #0000BB">$script</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">resourceExists</span><span style="color: #007700">(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">resourcePut</span><span style="color: #007700">(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$string</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">resourceGet</span><span style="color: #007700">(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">resourceScan</span><span style="color: #007700">(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">resourceUnlink</span><span style="color: #007700">(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">addTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">$callback</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$interval</span><span style="color: #007700">,&nbsp;[&nbsp;</span><span style="color: #0000BB">$repeat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">,&nbsp;[&nbsp;</span><span style="color: #0000BB">$arguments&nbsp;</span><span style="color: #007700">]]);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">removeTimer</span><span style="color: #007700">(</span><span style="color: #0000BB">$index</span><span style="color: #007700">);<br />}</span>
+<span style="color: #0000BB"></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Script<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/*&nbsp;methods&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#fd0ad9ea3582630048ea2d10df33be102e941545" data-class="OUTRAGEbot\Script" data-method="on">on</a></span>(</span><span style="color: #0000BB">$event</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$handler</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#b747b262ec59a53220a52563ad9fa349c946c6e8" data-class="OUTRAGEbot\Script" data-method="off">off</a></span>([&nbsp;</span><span style="color: #0000BB">$event&nbsp;</span><span style="color: #007700">]);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#16ad0ac3d10f410f5df3eb630be81fbeda6e64fa" data-class="OUTRAGEbot\Script" data-method="addCommandHandler">addCommandHandler</a></span>(</span><span style="color: #0000BB">$command</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$handler</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#cebaa36a74c7c0e1599e23df0376c5a71015ae00" data-class="OUTRAGEbot\Script" data-method="removeCommandHandler">removeCommandHandler</a></span>(</span><span style="color: #0000BB">$command</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#0c4cfd37a20cdda68ddd56ea4cdd89900c19f611" data-class="OUTRAGEbot\Script" data-method="replyCTCP">replyCTCP</a></span>(</span><span style="color: #0000BB">$destination</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#e9f85647634f8586e31ef501fe2242f1c046b29c" data-class="OUTRAGEbot\Script" data-method="requestCTCP">requestCTCP</a></span>(</span><span style="color: #0000BB">$destination</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#d44eb642f8d85cabcff5adbec237f3fa554e395a" data-class="OUTRAGEbot\Script" data-method="stripFormat">stripFormat</a></span>(</span><span style="color: #0000BB">$input</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#b5b799960799745a46ddd97600237311ad1b38c0" data-class="OUTRAGEbot\Script" data-method="stripColour">stripColour</a></span>(</span><span style="color: #0000BB">$input</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#124d0e0d0ff2113db71a0eade0af69dbcd173dc2" data-class="OUTRAGEbot\Script" data-method="stripAll">stripAll</a></span>(</span><span style="color: #0000BB">$input</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#41b2333b8f1ffd2568efdf9d07f21cfb24b33799" data-class="OUTRAGEbot\Script" data-method="format">format</a></span>(</span><span style="color: #0000BB">$input</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#18b7d469c2380f47b8f1c4d43fb313c453378c99" data-class="OUTRAGEbot\Script" data-method="join">join</a></span>(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;[&nbsp;</span><span style="color: #0000BB">$password&nbsp;</span><span style="color: #007700">]);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#8fd0c3eeeed343e05a9c6a21912faf83e6886eff" data-class="OUTRAGEbot\Script" data-method="part">part</a></span>(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;[&nbsp;</span><span style="color: #0000BB">$reason&nbsp;</span><span style="color: #007700">]);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#c2299247bcf0d630d8640f12d8859a1531d9260f" data-class="OUTRAGEbot\Script" data-method="invite">invite</a></span>(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$channel</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#a599fe60501b92f343e6ef380972659fa6a919aa" data-class="OUTRAGEbot\Script" data-method="message">message</a></span>(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#7a6181184fb4fb04f91c6e51e49688d4082ba312" data-class="OUTRAGEbot\Script" data-method="raw">raw</a></span>(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#27027d9bbd67a3726ffa0d235a658cad08c28f81" data-class="OUTRAGEbot\Script" data-method="action">action</a></span>(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#fa0c985b9032997866aa0ad9b2dd9b81c0058ef7" data-class="OUTRAGEbot\Script" data-method="getUser">getUser</a></span>(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#979b30f948666a98afb835eb9ad7acb6ab11d57b" data-class="OUTRAGEbot\Script" data-method="getChannel">getChannel</a></span>(</span><span style="color: #0000BB">$channel</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#59346a4f88896a5c4f75cfd97a2c4de648525ec3" data-class="OUTRAGEbot\Script" data-method="getScript">getScript</a></span>(</span><span style="color: #0000BB">$script</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#711be70e2adf45ab6b0927b9cf56e9e005a73b8b" data-class="OUTRAGEbot\Script" data-method="resourceExists">resourceExists</a></span>(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#bbb15c0b56799a0f44e0c99e16b3bd273d9ea7d4" data-class="OUTRAGEbot\Script" data-method="resourcePut">resourcePut</a></span>(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$string</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#6dd9e9ab66b770dda109bd37ef55717dad22e540" data-class="OUTRAGEbot\Script" data-method="resourceGet">resourceGet</a></span>(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#2f34711480a93ba15d706eafaf2990cc985a27a3" data-class="OUTRAGEbot\Script" data-method="resourceScan">resourceScan</a></span>(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#02f2c93c78d0229e8614bac5bc575681e563750e" data-class="OUTRAGEbot\Script" data-method="resourceUnlink">resourceUnlink</a></span>(</span><span style="color: #0000BB">$filename</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#6341cfb8e3390a1cd60987fa2bcd78b0c9b3f4fb" data-class="OUTRAGEbot\Script" data-method="addTimer">addTimer</a></span>(</span><span style="color: #0000BB">$callback</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$interval</span><span style="color: #007700">,&nbsp;[&nbsp;</span><span style="color: #0000BB">$repeat&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">1</span><span style="color: #007700">,&nbsp;[&nbsp;</span><span style="color: #0000BB">$arguments&nbsp;</span><span style="color: #007700">]]);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#bcd6e3494ec5981c4eacb56b76ef824ea2251fda" data-class="OUTRAGEbot\Script" data-method="removeTimer">removeTimer</a></span>(</span><span style="color: #0000BB">$index</span><span style="color: #007700">);<br />}</span>
 </span>
 </code>					</article>
 					
 																		<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::on($event, $handler)</h3>
+								<h3>
+									<a name="fd0ad9ea3582630048ea2d10df33be102e941545">
+										OUTRAGEbot\Script::on($event, $handler)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -144,7 +148,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::off([ $event ])</h3>
+								<h3>
+									<a name="b747b262ec59a53220a52563ad9fa349c946c6e8">
+										OUTRAGEbot\Script::off([ $event ])
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -168,7 +176,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::addCommandHandler($command, $handler)</h3>
+								<h3>
+									<a name="16ad0ac3d10f410f5df3eb630be81fbeda6e64fa">
+										OUTRAGEbot\Script::addCommandHandler($command, $handler)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -202,7 +214,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::removeCommandHandler($command)</h3>
+								<h3>
+									<a name="cebaa36a74c7c0e1599e23df0376c5a71015ae00">
+										OUTRAGEbot\Script::removeCommandHandler($command)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -226,7 +242,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::replyCTCP($destination, $message)</h3>
+								<h3>
+									<a name="0c4cfd37a20cdda68ddd56ea4cdd89900c19f611">
+										OUTRAGEbot\Script::replyCTCP($destination, $message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -260,7 +280,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::requestCTCP($destination, $message)</h3>
+								<h3>
+									<a name="e9f85647634f8586e31ef501fe2242f1c046b29c">
+										OUTRAGEbot\Script::requestCTCP($destination, $message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -294,7 +318,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::stripFormat($input)</h3>
+								<h3>
+									<a name="d44eb642f8d85cabcff5adbec237f3fa554e395a">
+										OUTRAGEbot\Script::stripFormat($input)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -318,7 +346,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::stripColour($input)</h3>
+								<h3>
+									<a name="b5b799960799745a46ddd97600237311ad1b38c0">
+										OUTRAGEbot\Script::stripColour($input)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -342,7 +374,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::stripAll($input)</h3>
+								<h3>
+									<a name="124d0e0d0ff2113db71a0eade0af69dbcd173dc2">
+										OUTRAGEbot\Script::stripAll($input)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -366,7 +402,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::format($input)</h3>
+								<h3>
+									<a name="41b2333b8f1ffd2568efdf9d07f21cfb24b33799">
+										OUTRAGEbot\Script::format($input)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -390,7 +430,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::join($channel, [ $password ])</h3>
+								<h3>
+									<a name="18b7d469c2380f47b8f1c4d43fb313c453378c99">
+										OUTRAGEbot\Script::join($channel, [ $password ])
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -424,7 +468,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::part($channel, [ $reason ])</h3>
+								<h3>
+									<a name="8fd0c3eeeed343e05a9c6a21912faf83e6886eff">
+										OUTRAGEbot\Script::part($channel, [ $reason ])
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -458,7 +506,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::invite($user, $channel)</h3>
+								<h3>
+									<a name="c2299247bcf0d630d8640f12d8859a1531d9260f">
+										OUTRAGEbot\Script::invite($user, $channel)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -492,7 +544,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::message($channel, $message)</h3>
+								<h3>
+									<a name="a599fe60501b92f343e6ef380972659fa6a919aa">
+										OUTRAGEbot\Script::message($channel, $message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -526,7 +582,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::raw($message)</h3>
+								<h3>
+									<a name="7a6181184fb4fb04f91c6e51e49688d4082ba312">
+										OUTRAGEbot\Script::raw($message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -550,7 +610,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::action($channel, $message)</h3>
+								<h3>
+									<a name="27027d9bbd67a3726ffa0d235a658cad08c28f81">
+										OUTRAGEbot\Script::action($channel, $message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -584,7 +648,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::getUser($user)</h3>
+								<h3>
+									<a name="fa0c985b9032997866aa0ad9b2dd9b81c0058ef7">
+										OUTRAGEbot\Script::getUser($user)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -608,7 +676,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::getChannel($channel)</h3>
+								<h3>
+									<a name="979b30f948666a98afb835eb9ad7acb6ab11d57b">
+										OUTRAGEbot\Script::getChannel($channel)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -632,7 +704,11 @@
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::getScript($script)</h3>
+								<h3>
+									<a name="59346a4f88896a5c4f75cfd97a2c4de648525ec3">
+										OUTRAGEbot\Script::getScript($script)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -658,7 +734,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::resourceExists($filename)</h3>
+								<h3>
+									<a name="711be70e2adf45ab6b0927b9cf56e9e005a73b8b">
+										OUTRAGEbot\Script::resourceExists($filename)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -682,7 +762,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::resourcePut($filename, $string)</h3>
+								<h3>
+									<a name="bbb15c0b56799a0f44e0c99e16b3bd273d9ea7d4">
+										OUTRAGEbot\Script::resourcePut($filename, $string)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -716,7 +800,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::resourceGet($filename)</h3>
+								<h3>
+									<a name="6dd9e9ab66b770dda109bd37ef55717dad22e540">
+										OUTRAGEbot\Script::resourceGet($filename)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -740,7 +828,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::resourceScan($filename)</h3>
+								<h3>
+									<a name="2f34711480a93ba15d706eafaf2990cc985a27a3">
+										OUTRAGEbot\Script::resourceScan($filename)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -764,7 +856,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::resourceUnlink($filename)</h3>
+								<h3>
+									<a name="02f2c93c78d0229e8614bac5bc575681e563750e">
+										OUTRAGEbot\Script::resourceUnlink($filename)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -788,7 +884,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::addTimer($callback, $interval, [ $repeat = 1, [ $arguments ]])</h3>
+								<h3>
+									<a name="6341cfb8e3390a1cd60987fa2bcd78b0c9b3f4fb">
+										OUTRAGEbot\Script::addTimer($callback, $interval, [ $repeat = 1, [ $arguments ]])
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -842,7 +942,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Script::removeTimer($index)</h3>
+								<h3>
+									<a name="bcd6e3494ec5981c4eacb56b76ef824ea2251fda">
+										OUTRAGEbot\Script::removeTimer($index)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -870,12 +974,15 @@ was a valid reason for it so here it returns.									</p>
 					
 					<article class="doc-overview">
 						<code><span style="color: #000000">
-<span style="color: #0000BB"></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Element</span><span style="color: #007700">\</span><span style="color: #0000BB">User<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/*&nbsp;properties&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;</span><span style="color: #0000BB">$is_admin</span><span style="color: #007700">;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/*&nbsp;methods&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">getNickname</span><span style="color: #007700">();<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">send</span><span style="color: #007700">(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">message</span><span style="color: #007700">(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">notice</span><span style="color: #007700">(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">action</span><span style="color: #007700">(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />}</span>
+<span style="color: #0000BB"></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Element</span><span style="color: #007700">\</span><span style="color: #0000BB">User<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/*&nbsp;properties&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;<span style="color: #0000BB"><a href="#bc33a984b8b8176ef7e7d5508a1b128820574152" data-class="OUTRAGEbot\Element\User" data-method="$is_admin">$is_admin</a></span>;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/*&nbsp;methods&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#05b44c1d3e30b2731bc79e42d302954989f50c38" data-class="OUTRAGEbot\Element\User" data-method="getNickname">getNickname</a></span>();<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#a7cf63ceab8a9d7721be7f8adbbb55cd8572aeab" data-class="OUTRAGEbot\Element\User" data-method="send">send</a></span>(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#4f42ecc75260c744d9a43b44774fb46fbc49ca25" data-class="OUTRAGEbot\Element\User" data-method="message">message</a></span>(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#4d5f53a697e8a386f4dc103160a66e5ca7c3ce36" data-class="OUTRAGEbot\Element\User" data-method="notice">notice</a></span>(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#6c6e4ae3704fce10d0f75c08630f565236cfb64e" data-class="OUTRAGEbot\Element\User" data-method="action">action</a></span>(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />}</span>
 </span>
 </code>					</article>
 					
 																		<article class="doc-item property">
-								<h3>OUTRAGEbot\Element\User::$is_admin</h3>
+								<h3>
+									<a name="00dc8441964922d3c715086634e22333d0ab6df8">
+										OUTRAGEbot\Element\User::$is_admin									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -884,7 +991,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\User::getNickname()</h3>
+								<h3>
+									<a name="05b44c1d3e30b2731bc79e42d302954989f50c38">
+										OUTRAGEbot\Element\User::getNickname()
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -897,7 +1008,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\User::send($message)</h3>
+								<h3>
+									<a name="a7cf63ceab8a9d7721be7f8adbbb55cd8572aeab">
+										OUTRAGEbot\Element\User::send($message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -921,7 +1036,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\User::message($message)</h3>
+								<h3>
+									<a name="4f42ecc75260c744d9a43b44774fb46fbc49ca25">
+										OUTRAGEbot\Element\User::message($message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -945,7 +1064,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\User::notice($message)</h3>
+								<h3>
+									<a name="4d5f53a697e8a386f4dc103160a66e5ca7c3ce36">
+										OUTRAGEbot\Element\User::notice($message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -969,7 +1092,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\User::action($message)</h3>
+								<h3>
+									<a name="6c6e4ae3704fce10d0f75c08630f565236cfb64e">
+										OUTRAGEbot\Element\User::action($message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -997,13 +1124,17 @@ was a valid reason for it so here it returns.									</p>
 					
 					<article class="doc-overview">
 						<code><span style="color: #000000">
-<span style="color: #0000BB"></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Element</span><span style="color: #007700">\</span><span style="color: #0000BB">Channel<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/*&nbsp;methods&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">getChannelName</span><span style="color: #007700">();<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">send</span><span style="color: #007700">(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">message</span><span style="color: #007700">(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">notice</span><span style="color: #007700">(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">action</span><span style="color: #007700">(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">isUserInChannel</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">isUserVoice</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">isUserHalfOp</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">isUserOp</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">isUserAdmin</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">isUserOwner</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />}</span>
+<span style="color: #0000BB"></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">OUTRAGEbot</span><span style="color: #007700">\</span><span style="color: #0000BB">Element</span><span style="color: #007700">\</span><span style="color: #0000BB">Channel<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/*&nbsp;methods&nbsp;*/<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#294c96c1b2d4edfd3539f02cfcf9ced9e11a8b8e" data-class="OUTRAGEbot\Element\Channel" data-method="getChannelName">getChannelName</a></span>();<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#05cb2013912c3bcded9008d690acd0a41e3dda0a" data-class="OUTRAGEbot\Element\Channel" data-method="send">send</a></span>(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#2adad5dc94ab5bae6061fc97ee0bdaf69f1f9d31" data-class="OUTRAGEbot\Element\Channel" data-method="message">message</a></span>(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#898794651c42e53d9791760dd8846578f5f35ed7" data-class="OUTRAGEbot\Element\Channel" data-method="notice">notice</a></span>(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#181b3590e26cff7a291459974ef0f32794a6c016" data-class="OUTRAGEbot\Element\Channel" data-method="action">action</a></span>(</span><span style="color: #0000BB">$message</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#6faaaf598e508e6dc24a022d38f48b8a633cd318" data-class="OUTRAGEbot\Element\Channel" data-method="isUserInChannel">isUserInChannel</a></span>(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#40f3474ed41709e06d2fcd23a8333b25b3eac9f1" data-class="OUTRAGEbot\Element\Channel" data-method="isUserVoice">isUserVoice</a></span>(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#a3fabadeda7b7f8109e0a57f06886762e63f8d39" data-class="OUTRAGEbot\Element\Channel" data-method="isUserHalfOp">isUserHalfOp</a></span>(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#b534836873dd3b3f7beac656232b3db68625887e" data-class="OUTRAGEbot\Element\Channel" data-method="isUserOp">isUserOp</a></span>(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#26022f80a19af7dc46df69fb812c8a7bce0e2469" data-class="OUTRAGEbot\Element\Channel" data-method="isUserAdmin">isUserAdmin</a></span>(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;<span style="color: #0000BB"><a href="#c9c3092148c42e4930d7e9b74600de6bb897a40c" data-class="OUTRAGEbot\Element\Channel" data-method="isUserOwner">isUserOwner</a></span>(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);<br />}</span>
 </span>
 </code>					</article>
 					
 																		<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::getChannelName()</h3>
+								<h3>
+									<a name="294c96c1b2d4edfd3539f02cfcf9ced9e11a8b8e">
+										OUTRAGEbot\Element\Channel::getChannelName()
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -1016,7 +1147,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::send($message)</h3>
+								<h3>
+									<a name="05cb2013912c3bcded9008d690acd0a41e3dda0a">
+										OUTRAGEbot\Element\Channel::send($message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -1040,7 +1175,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::message($message)</h3>
+								<h3>
+									<a name="2adad5dc94ab5bae6061fc97ee0bdaf69f1f9d31">
+										OUTRAGEbot\Element\Channel::message($message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -1064,7 +1203,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::notice($message)</h3>
+								<h3>
+									<a name="898794651c42e53d9791760dd8846578f5f35ed7">
+										OUTRAGEbot\Element\Channel::notice($message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -1088,7 +1231,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::action($message)</h3>
+								<h3>
+									<a name="181b3590e26cff7a291459974ef0f32794a6c016">
+										OUTRAGEbot\Element\Channel::action($message)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -1112,7 +1259,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::isUserInChannel($user)</h3>
+								<h3>
+									<a name="6faaaf598e508e6dc24a022d38f48b8a633cd318">
+										OUTRAGEbot\Element\Channel::isUserInChannel($user)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -1136,7 +1287,11 @@ was a valid reason for it so here it returns.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::isUserVoice($user)</h3>
+								<h3>
+									<a name="40f3474ed41709e06d2fcd23a8333b25b3eac9f1">
+										OUTRAGEbot\Element\Channel::isUserVoice($user)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -1161,7 +1316,11 @@ Might not be supported on all networks.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::isUserHalfOp($user)</h3>
+								<h3>
+									<a name="a3fabadeda7b7f8109e0a57f06886762e63f8d39">
+										OUTRAGEbot\Element\Channel::isUserHalfOp($user)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -1186,7 +1345,11 @@ Might not be supported on all networks.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::isUserOp($user)</h3>
+								<h3>
+									<a name="b534836873dd3b3f7beac656232b3db68625887e">
+										OUTRAGEbot\Element\Channel::isUserOp($user)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -1211,7 +1374,11 @@ Might not be supported on all networks.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::isUserAdmin($user)</h3>
+								<h3>
+									<a name="26022f80a19af7dc46df69fb812c8a7bce0e2469">
+										OUTRAGEbot\Element\Channel::isUserAdmin($user)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
@@ -1236,7 +1403,11 @@ Might not be supported on all networks.									</p>
 															</article>
 																								<article class="doc-item method">
 																
-								<h3>OUTRAGEbot\Element\Channel::isUserOwner($user)</h3>
+								<h3>
+									<a name="c9c3092148c42e4930d7e9b74600de6bb897a40c">
+										OUTRAGEbot\Element\Channel::isUserOwner($user)
+									</a>
+								</h3>
 								
 																	<h4>Description</h4>
 									
