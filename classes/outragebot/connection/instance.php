@@ -236,15 +236,15 @@ class Instance
 	/**
 	 *	Retrieves a user from the internal user cache.
 	 */
-	public function getUser($pattern)
+	public function getUser($context)
 	{
-		if($pattern instanceof Element\User)
-			return $pattern;
+		if($context instanceof Element\User)
+			return $context;
 		
-		if($pattern instanceof Hostmask)
-			$hostmask = $pattern;
+		if($context instanceof Hostmask)
+			$hostmask = $context;
 		else
-			$hostmask = new Hostmask($this, $pattern);
+			$hostmask = new Hostmask($this, $context);
 		
 		if(!isset($this->users[$hostmask->nickname]))
 			$this->users[$hostmask->nickname] = new Element\User($this, $hostmask);

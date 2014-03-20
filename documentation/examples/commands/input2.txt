@@ -1,0 +1,1 @@
+$this->addCommandHandler("run", "startRunning");

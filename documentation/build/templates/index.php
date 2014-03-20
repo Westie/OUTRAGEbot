@@ -118,6 +118,120 @@
 			<h1>OUTRAG3bot documentation</h1>
 		</header>
 		
+		<section class="doc-group global-overview">
+			<h2>General overview of system</h2>
+			
+			<?php foreach($_methods as $class => $methods): ?>
+				<article class="doc-overview">
+					<?php
+						# define the header
+						$definition = "class ".$class.PHP_EOL."{".PHP_EOL;
+						
+						$_overview_properties = [];
+						$_overview_methods = [];
+						
+						foreach($methods as $title => $method)
+						{
+							if($method->type == "property")
+								$_overview_properties[$title] = $method;
+							
+							if($method->type == "method")
+								$_overview_methods[$title] = $method;
+						}
+						
+						if($_overview_properties)
+						{
+							$definition .= "\t/* properties */".PHP_EOL;
+							
+							foreach($_overview_properties as $title => $method)
+								$definition .= "\tpublic <<<<<$".$title.">>>>>;".PHP_EOL;
+							
+							$definition .= PHP_EOL;
+						}
+						
+						if($_overview_methods)
+						{
+							$definition .= "\t/* methods */".PHP_EOL;
+							
+							foreach($_overview_methods as $title => $method)
+							{
+								$optional = 0;
+								$arguments = [];
+								
+								foreach($method->parameters as $item)
+								{
+									if($item->optional)
+										++$optional;
+									
+									$arguments[] = ($item->optional ? "[ " : "")."$".$item->name.($item->default ? " = ".json_encode($item->default) : "");
+								}
+								
+								$arguments = implode(", ", $arguments).($item->optional ? " ".str_repeat("]", $optional) : "");
+								
+								$definition .= "\tpublic function <<<<<".$title.">>>>>(".$arguments.");".PHP_EOL;
+							}
+						}
+						
+						$definition .= "}";
+						$definition = custom_highlight_string($definition);
+						
+						$pattern = "/".preg_quote('&lt;&lt;&lt;&lt;&lt;</span><span style="color: #0000BB">', '/')."(.*?)".preg_quote('</span><span style="color: #007700">&gt;&gt;&gt;&gt;&gt;', '/')."/";
+						
+						$callback = function($matches) use ($class)
+						{
+							return '<span style="color: #0000BB"><a href="#'.method_to_hash($class, $matches[1]).'" data-class="'.$class.'" data-target="'.$matches[1].'">'.$matches[1].'</a></span>';
+						};
+						
+						echo preg_replace_callback($pattern, $callback, $definition);
+					?>
+				</article>
+			<?php endforeach ?>
+			
+			<article class="doc-overview">
+				<?php
+					# define the header
+					$definition = "class OUTRAGEbot\Script".PHP_EOL."{".PHP_EOL;
+					
+					$_overview_properties = [];
+					$_overview_methods = [];
+					
+					if($_events)
+					{
+						$definition .= "\t/* events */".PHP_EOL;
+						
+						foreach($_events as $event)
+						{
+							$definition .= "\tpublic function <<<<<".$event->metadata->onevent.">>>>>(";
+							
+							$arguments = [];
+							
+							foreach($event->supplies as $item)
+								$arguments[] = "$".$item->name;
+							
+							$definition .= implode(", ", $arguments);
+							$definition .= ");".PHP_EOL;
+						}
+					}
+					
+					$definition .= "}";
+					$definition = custom_highlight_string($definition);
+					
+					$pattern = "/".preg_quote('&lt;&lt;&lt;&lt;&lt;</span><span style="color: #0000BB">', '/')."(.*?)".preg_quote('</span><span style="color: #007700">&gt;&gt;&gt;&gt;&gt;', '/')."/";
+					
+					$callback = function($matches) use ($class)
+					{
+						return '<span style="color: #0000BB"><a href="#'.sha1('event-'.$matches[1]).'">'.$matches[1].'</a></span>';
+					};
+					
+					echo preg_replace_callback($pattern, $callback, $definition);
+				?>
+			</article>
+		</section>
+		
+		<br />
+		<hr />
+		<br />
+		
 		<section class="doc-group methods">
 			<?php foreach($_methods as $class => $methods): ?>
 				<section class="method-class-list">
@@ -254,7 +368,7 @@
 						<?php else: ?>
 							<article class="doc-item property">
 								<h3>
-									<a name="<?php echo method_to_hash($class, $title) ?>">
+									<a name="<?php echo method_to_hash($class, "$".$title) ?>">
 										<?php echo $method->metadata->class ?>::$<?php echo $method->metadata->property ?>
 									</a>
 								</h3>
@@ -273,12 +387,60 @@
 			<?php endforeach ?>
 		</section>
 		
+		<br />
+		<hr />
+		<br />
+		
 		<section class="doc-group events">
-			<h2>Events</h2>
+			<h2>Available Events</h2>
+			
+			<article class="doc-overview">
+				<?php
+					# define the header
+					$definition = "class OUTRAGEbot\Script".PHP_EOL."{".PHP_EOL;
+					
+					$_overview_properties = [];
+					$_overview_methods = [];
+					
+					if($_events)
+					{
+						$definition .= "\t/* events */".PHP_EOL;
+						
+						foreach($_events as $event)
+						{
+							$definition .= "\tpublic function <<<<<".$event->metadata->onevent.">>>>>(";
+							
+							$arguments = [];
+							
+							foreach($event->supplies as $item)
+								$arguments[] = "$".$item->name;
+							
+							$definition .= implode(", ", $arguments);
+							$definition .= ");".PHP_EOL;
+						}
+					}
+					
+					$definition .= "}";
+					$definition = custom_highlight_string($definition);
+					
+					$pattern = "/".preg_quote('&lt;&lt;&lt;&lt;&lt;</span><span style="color: #0000BB">', '/')."(.*?)".preg_quote('</span><span style="color: #007700">&gt;&gt;&gt;&gt;&gt;', '/')."/";
+					
+					$callback = function($matches) use ($class)
+					{
+						return '<span style="color: #0000BB"><a href="#'.sha1('event-'.$matches[1]).'">'.$matches[1].'</a></span>';
+					};
+					
+					echo preg_replace_callback($pattern, $callback, $definition);
+				?>
+			</article>
 			
 			<?php foreach($_events as $title => $event): ?>
 				<article class="doc-item event">
-					<h3><?php echo $event->metadata->event ?></h3>
+					<h3>
+						<a name="<?php echo sha1('event-'.$event->metadata->onevent) ?>">
+							<?php echo $event->metadata->event ?>
+						</a>
+					</h3>
 					
 					<?php if($event->comments): ?>
 						<h4>Description</h4>

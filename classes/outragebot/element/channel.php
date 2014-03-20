@@ -47,6 +47,10 @@ class Channel extends Core\ObjectContainer
 	 */
 	public function __construct(Connection\Instance $instance, $channel)
 	{
+		$this->context = new Context();
+		$this->context->callee = $this;
+		$this->context->instance = $instance;
+		
 		$this->instance = $instance;
 		$this->channel = $channel;
 		

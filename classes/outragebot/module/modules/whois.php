@@ -51,7 +51,7 @@ class Whois extends Module\Template
 			
 			"success" => array
 			(
-				318 => [ $this, "parseInputSuccess" ],
+				"318" => [ $this, "parseInputSuccess" ],
 			),
 		);
 		

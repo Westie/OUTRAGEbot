@@ -192,6 +192,9 @@ class Instance
 	 *
 	 *	@param string $command    Command to listen to
 	 *	@param callback $handler  Callback for this command handler.
+	 *	
+	 *	@example input documentation/examples/commands/input1.txt
+	 *	@example input documentation/examples/commands/input2.txt
 	 */
 	public function addCommandHandler($command, $handler)
 	{
@@ -265,16 +268,16 @@ class Instance
 	 */
 	public function __call($method, $arguments)
 	{
-		$list = Module\Stack::getInstance();
-		$name = strtolower($method);
+		$closure = Module\Stack::getInstance()->getClosure($method);
 		
-		if(!empty($list[$name]))
-		{
-			array_unshift($arguments, $this->context);
-			
-			return call_user_func_array($list[$name], $arguments);
-		}
+		if(!$closure)
+			return null;
 		
-		return null;
+		if(!is_array($arguments))
+			$arguments = [];
+		
+		array_unshift($arguments, $this->context);
+		
+		return call_user_func_array($closure, $arguments);
 	}
 }

@@ -485,7 +485,7 @@
                     },
                     {
                         "type": "input",
-                        "contents": "$callback = function($hero = \"Bob\")\r\n{\r\n\techo \"this will get called every half a minute, with \".$hero.\" as my hero!\";\r\n};\r\n\r\n$this->addTimer($callback, 0.5, -1, [ \"Sarah\" ]);"
+                        "contents": "$callback = function($hero = \"Bob\")\r\n{\r\n\techo \"this will get called every half a minute, with \".$hero.\" as my hero!\";\r\n};\r\n\r\n$this->addTimer($callback, 30, -1, [ \"Sarah\" ]);"
                     }
                 ]
             },
@@ -515,30 +515,127 @@
                 "metadata": {
                     "property": "is_admin",
                     "file": "classes\\outragebot\\element\\user.php",
-                    "line": 48,
+                    "line": 60,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
                 "comments": "Performs a check to see if this hostmask is currently an admin or not."
             },
-            "getNickname": {
-                "type": "method",
+            "username": {
+                "type": "property",
                 "metadata": {
-                    "method": "getNickname",
+                    "property": "username",
                     "file": "classes\\outragebot\\element\\user.php",
-                    "line": 71,
+                    "line": 81,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
-                "comments": "Retrieves this user's name.",
-                "parameters": [
-
-                ]
+                "comments": "Returns the user's username."
+            },
+            "nickname": {
+                "type": "property",
+                "metadata": {
+                    "property": "nickname",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 90,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Returns the user's nickname."
+            },
+            "address": {
+                "type": "property",
+                "metadata": {
+                    "property": "address",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 99,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Returns the user's address\/hostmask."
+            },
+            "channels": {
+                "type": "property",
+                "metadata": {
+                    "property": "channels",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 109,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Returns all the channels that this user is active in, that can be seen\nfrom the bot."
+            },
+            "away": {
+                "type": "property",
+                "metadata": {
+                    "property": "away",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 118,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Returns their away status, if they have one."
+            },
+            "is_helper": {
+                "type": "property",
+                "metadata": {
+                    "property": "is_helper",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 132,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Checks if this user has been flagged as being an IRC helper."
+            },
+            "is_operator": {
+                "type": "property",
+                "metadata": {
+                    "property": "is_operator",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 146,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Checks if this user has been flagged as being an IRC operator."
+            },
+            "is_secure": {
+                "type": "property",
+                "metadata": {
+                    "property": "is_secure",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 161,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Checks if this user is using a secure connection between their client and the\nserver."
+            },
+            "ip_addr": {
+                "type": "property",
+                "metadata": {
+                    "property": "ip_addr",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 176,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Retrieves the IP address that this user is connecting via.\nWill only usually return anything if the bot is an operator."
+            },
+            "idle_time": {
+                "type": "property",
+                "metadata": {
+                    "property": "idle_time",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 190,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Returns how many seconds have passed since this user's last activity."
+            },
+            "signon_time": {
+                "type": "property",
+                "metadata": {
+                    "property": "signon_time",
+                    "file": "classes\\outragebot\\element\\user.php",
+                    "line": 207,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Returns, in UNIX timestamp format, the date which this user signed in to the server at."
             },
             "send": {
                 "type": "method",
                 "metadata": {
                     "method": "send",
                     "file": "classes\\outragebot\\element\\user.php",
-                    "line": 92,
+                    "line": 291,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
                 "comments": "Called to send a message to a user.",
@@ -557,7 +654,7 @@
                 "metadata": {
                     "method": "message",
                     "file": "classes\\outragebot\\element\\user.php",
-                    "line": 112,
+                    "line": 311,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
                 "comments": "Called to send a message to a user.",
@@ -576,7 +673,7 @@
                 "metadata": {
                     "method": "notice",
                     "file": "classes\\outragebot\\element\\user.php",
-                    "line": 132,
+                    "line": 331,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
                 "comments": "Called to send a notice to a user.",
@@ -595,7 +692,7 @@
                 "metadata": {
                     "method": "action",
                     "file": "classes\\outragebot\\element\\user.php",
-                    "line": 152,
+                    "line": 351,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
                 "comments": "Send an action to the specified user.",
@@ -616,7 +713,7 @@
                 "metadata": {
                     "method": "getChannelName",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 63,
+                    "line": 67,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Retrieves the channel name.",
@@ -629,7 +726,7 @@
                 "metadata": {
                     "method": "send",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 74,
+                    "line": 78,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Called to send a message to a channel.",
@@ -648,7 +745,7 @@
                 "metadata": {
                     "method": "message",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 94,
+                    "line": 98,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Called to send a message to a channel.",
@@ -667,7 +764,7 @@
                 "metadata": {
                     "method": "notice",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 114,
+                    "line": 118,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Called to send a notice to an entire channel.",
@@ -686,7 +783,7 @@
                 "metadata": {
                     "method": "action",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 134,
+                    "line": 138,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Send an action to the specified channel.",
@@ -705,7 +802,7 @@
                 "metadata": {
                     "method": "isUserInChannel",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 164,
+                    "line": 168,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Checks if a user is in this channel.",
@@ -724,7 +821,7 @@
                 "metadata": {
                     "method": "isUserVoice",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 178,
+                    "line": 182,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Checks if this user has voice rights (+) in this channel.\nMight not be supported on all networks.",
@@ -743,7 +840,7 @@
                 "metadata": {
                     "method": "isUserHalfOp",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 195,
+                    "line": 199,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Checks if this user has half op rights (%) in this channel.\nMight not be supported on all networks.",
@@ -762,7 +859,7 @@
                 "metadata": {
                     "method": "isUserOp",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 212,
+                    "line": 216,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Checks if this user has channel op rights (@) in this channel.\nMight not be supported on all networks.",
@@ -781,7 +878,7 @@
                 "metadata": {
                     "method": "isUserAdmin",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 229,
+                    "line": 233,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Checks if this user has admin rights (&) in this channel.\nMight not be supported on all networks.",
@@ -800,7 +897,7 @@
                 "metadata": {
                     "method": "isUserOwner",
                     "file": "classes\\outragebot\\element\\channel.php",
-                    "line": 246,
+                    "line": 250,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Checks if this user has owner rights (~) in this channel.\nMight not be supported on all networks.",

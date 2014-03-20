@@ -102,9 +102,7 @@ trait ArrayMap
 	public final function each($callback)
 	{
 		foreach($this->container as $index => $element)
-		{
 			$callback($index, $element);
-		}
 		
 		return $this;
 	}

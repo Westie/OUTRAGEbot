@@ -1,0 +1,5 @@
+$this->addCommandHandler("dance", function($channel, $user, $payload)
+{
+	$channel->message("hi! i'm dancing!");
+	$channel->message("dance!");
+});

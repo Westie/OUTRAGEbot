@@ -61,7 +61,7 @@
                 "metadata": {
                     "method": "addCommandHandler",
                     "file": "classes\\outragebot\\script\\instance.php",
-                    "line": 196,
+                    "line": 199,
                     "class": "OUTRAGEbot\\Script"
                 },
                 "comments": "Called to bind a command handler to this script.",
@@ -80,6 +80,16 @@
                         "optional": false,
                         "default": null
                     }
+                ],
+                "examples": [
+                    {
+                        "type": "input",
+                        "contents": "$this->addCommandHandler(\"dance\", function($channel, $user, $payload)\r\n{\r\n\t$channel->message(\"hi! i'm dancing!\");\r\n\t$channel->message(\"dance!\");\r\n});"
+                    },
+                    {
+                        "type": "input",
+                        "contents": "$this->addCommandHandler(\"run\", \"startRunning\");"
+                    }
                 ]
             },
             "removeCommandHandler": {
@@ -87,7 +97,7 @@
                 "metadata": {
                     "method": "removeCommandHandler",
                     "file": "classes\\outragebot\\script\\instance.php",
-                    "line": 242,
+                    "line": 245,
                     "class": "OUTRAGEbot\\Script"
                 },
                 "comments": "Removes a command handler that is assigned to this script.",

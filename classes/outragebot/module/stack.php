@@ -88,4 +88,18 @@ class Stack extends Core\ObjectContainer
 		
 		return true;
 	}
+	
+	
+	/**
+	 *	Retrieves a closure, if it exists.
+	 */
+	public function getClosure($method)
+	{
+		$method = strtolower($method);
+		
+		if(isset($this[$method]))
+			return $this[$method];
+		
+		return null;
+	}
 }
