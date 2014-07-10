@@ -28,6 +28,10 @@ class AutoInvite extends Script
 	 */
 	public function onInvite($pMessage)
 	{
+		if(!$this->isAdmin())
+		{
+			return END_EVENT_EXEC;
+		}
 		$sChannel = $pMessage->Payload;
 
 		$this->Join($sChannel);
