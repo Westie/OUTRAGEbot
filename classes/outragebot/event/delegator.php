@@ -31,8 +31,6 @@ class Delegator
 	 */
 	public function getEvent($packet)
 	{
-		echo $packet->raw.PHP_EOL;
-		
 		if($packet instanceof Connection\Packet)
 			$numeric = is_numeric($packet->numeric) ? "Numeric".$packet->numeric : $packet->numeric;
 		else

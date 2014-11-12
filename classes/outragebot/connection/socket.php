@@ -8,6 +8,8 @@ namespace OUTRAGEbot\Connection;
 
 use \OUTRAGEbot\Core;
 use \OUTRAGEbot\Core\Attributes;
+use \OUTRAGEbot\Element;
+use \OUTRAGEbot\Module;
 
 
 class Socket
@@ -74,6 +76,19 @@ class Socket
 	
 	
 	/**
+	 *	This stores the ping timer index.
+	 */
+	private $pingtimer = null;
+	
+	
+	/**
+	 *	Stores the total number of failed pings. A failed ping is a ping that hasn't
+	 *	been responded to within I'd say, ten or so seconds?
+	 */
+	private $pingindex = 0;
+	
+	
+	/**
 	 *	Called whenever an intention to have a socket has been raised.
 	 */
 	public function __construct(Instance $parent)
@@ -99,6 +114,14 @@ class Socket
 	 */
 	public function connect()
 	{
+		$this->socket = null;
+		$this->statistics = null;
+		$this->prepared = false;
+		$this->listener = null;
+		$this->backlog = [];
+		$this->pingtimer = null;
+		$this->pingindex = 0;
+		
 		$settings = array
 		(
 			"socket" => [],
@@ -118,6 +141,51 @@ class Socket
 		
 		$this->write("NICK ".$this->configuration->nick);
 		$this->write("USER ".$this->configuration->username." x x :".$this->configuration->realname);
+		
+		# this rather awkward bit is here to grab the timer method - since we
+		# could in theory run this bot w/o a timer, we need to treat the ping
+		# timer as an optional extra.
+		if($closure = Module\Stack::getInstance()->getClosure("addTimer"))
+		{
+			$context = new Element\Context();
+			$context->callee = $this;
+			$context->instance = null;
+			
+			$this->pingtimer = $closure($context, [ $this, "sendPingMessage" ], 180, -1);
+		}
+		
+		return $this;
+	}
+	
+	
+	/**
+	 *	Disconnect from the server.
+	 */
+	public function disconnect($reason = "")
+	{
+		$this->write("QUIT :".$reason);
+		
+		fclose($this->socket);
+		
+		if($this->pingtimer)
+		{
+			if($closure = Module\Stack::getInstance()->getClosure("removeTimer"))
+			{
+				$context = new Element\Context();
+				$context->callee = $this;
+				$context->instance = null;
+				
+				$closure($context, $this->pingtimer);
+			}
+		}
+		
+		$this->socket = null;
+		$this->statistics = null;
+		$this->prepared = false;
+		$this->listener = null;
+		$this->backlog = [];
+		$this->pingtimer = null;
+		$this->pingindex = 0;
 		
 		return $this;
 	}
@@ -184,26 +252,16 @@ class Socket
 			if($this->listener)
 				$this->backlog[] = $packet;
 			
+			# we need to check to see if there's a PONG response in here - we could
+			# write this to be in the PONG response handler but considering how it is
+			# being sent out here it would make sense if it was handled here too
+			if($packet->numeric == "PONG")
+				$this->pingindex = 0;
+			
 			return $packet;
 		}
 		
 		return false;
-	}
-	
-	
-	/**
-	 *	Disconnects this socket from the network and resets all pointers.
-	 */
-	public function disconnect()
-	{
-		if($this->socket)
-		{
-			fclose($this->socket);
-			
-			$this->socket = null;
-		}
-		
-		return $this;
 	}
 	
 	
@@ -236,5 +294,25 @@ class Socket
 	{
 		$this->listener = null;
 		return $this;
+	}
+	
+	
+	/**
+	 *	This sends a ping message to the server. Too many of these and
+	 *	we'll disconnect and start again.
+	 */
+	public function sendPingMessage()
+	{
+		++$this->pingindex;
+		
+		if($this->pingindex >= 3)
+		{
+			$this->disconnect("Ping timeout");
+			$this->connect();
+		}
+		else
+		{
+			$this->write("PING ".time());
+		}
 	}
 }

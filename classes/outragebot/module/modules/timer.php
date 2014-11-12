@@ -44,7 +44,7 @@ class Timer extends Module\Template
 	 */
 	public function add($context, $callback, $interval, $repeat = 1, $arguments = [])
 	{
-		$callback = $this->toTimerClosure($context->caller, $callback);
+		$callback = $this->toTimerClosure($context->callee, $callback);
 		
 		if(!$callback)
 			return false;
@@ -88,7 +88,7 @@ class Timer extends Module\Template
 	{
 		$time = microtime(true);
 		
-		foreach($this->timers as $index => $timer)
+		foreach($this->timers as $index => &$timer)
 		{
 			if($timer["next"] > $time)
 				continue;
@@ -110,8 +110,12 @@ class Timer extends Module\Template
 			if($timer["repeat"] == -1)
 				continue;
 			
+			--$timer["repeat"];
+			
 			if($timer["repeat"] == 0)
 				unset($this->timers[$index]);
+			
+			unset($timer);
 		}
 		
 		return true;
