@@ -26,6 +26,7 @@
 name = AndroidIRC
 host = irc.sc
 port = 6667
+tls = true
 owners = your.hostname.here
 channels = #OUTRAGEbot
 scripts = Evaluation, Commands, AutoInvite, Blank
