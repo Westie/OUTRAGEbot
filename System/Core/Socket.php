@@ -60,8 +60,9 @@ class CoreSocket extends CoreChild
 		}
 
 		$rSocketOptions = stream_context_create($aSocketOptions);
-
-		$this->rSocket = @stream_socket_client($this->pConfig->tls ? "tls://" : "tcp://"."{$this->pConfig->host}:{$this->pConfig->port}", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $rSocketOptions);
+		$sProtocol = $this->pConfig->tls ? "tls://" : "tcp://";
+		
+		$this->rSocket = @stream_socket_client("{$sProtocol}{$this->pConfig->host}:{$this->pConfig->port}", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $rSocketOptions);
 
 		if($this->rSocket === false)
 		{
