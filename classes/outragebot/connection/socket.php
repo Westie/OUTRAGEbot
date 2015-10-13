@@ -145,13 +145,13 @@ class Socket
 		# this rather awkward bit is here to grab the timer method - since we
 		# could in theory run this bot w/o a timer, we need to treat the ping
 		# timer as an optional extra.
-		if($closure = Module\Stack::getInstance()->getClosure("addTimer"))
+		if($closure = Module\Stack::getInstance()->getClosure("setInterval"))
 		{
 			$context = new Element\Context();
 			$context->callee = $this;
 			$context->instance = null;
 			
-			$this->pingtimer = $closure($context, [ $this, "sendPingMessage" ], 180, -1);
+			$this->pingtimer = $closure($context, [ $this, "sendPingMessage" ], 180);
 		}
 		
 		return $this;
@@ -233,35 +233,75 @@ class Socket
 	 */
 	public function read($cache = true)
 	{
-		if($this->socket)
+		if($cache)
 		{
-			if($cache)
-			{
-				if(count($this->backlog))
-					return array_shift($this->backlog);
-			}
-			
-			$result = fgets($this->socket, 1024); # should be 512 max, need to detect missing \n ending or something
-			$result = trim($result);
-			
-			if(!$result)
-				return false;
-			
-			$packet = new Packet($this->parent, $result);
-			
-			if($this->listener)
-				$this->backlog[] = $packet;
-			
-			# we need to check to see if there's a PONG response in here - we could
-			# write this to be in the PONG response handler but considering how it is
-			# being sent out here it would make sense if it was handled here too
-			if($packet->numeric == "PONG")
-				$this->pingindex = 0;
-			
-			return $packet;
+			if(count($this->backlog))
+				return array_shift($this->backlog);
 		}
 		
-		return false;
+		if(!$this->socket)
+			return false;
+		
+		$ticks = 0;
+		$buffer = "";
+		
+		# ouch - forgive me, CPU
+		while(true)
+		{
+			$character = fgetc($this->socket);
+			
+			if($character === false)
+			{
+				# interesting scenario - if there's no buffer then we can immediately
+				# leave - otherwise, sleep for a small amount of time and see if this
+				# will help resolve the situation
+				if(!strlen($buffer))
+					return false;
+				
+				if($ticks > 100)
+					break;
+				
+				++$ticks;
+				
+				usleep(100);
+				continue;
+			}
+			
+			$ticks = 0;
+			
+			if($character == "\r")
+			{
+				$next = fgetc($this->socket);
+				
+				if($next == "\n")
+					break;
+				
+				$buffer .= $character;
+				$character = $next;
+			}
+			elseif($character == "\r" || $character == "\n")
+			{
+				break;
+			}
+			
+			$buffer .= $character;
+		}
+		
+		if(!strlen($buffer))
+			return false;
+		
+		$packet = new Packet($this->parent, $buffer);
+		
+		if($this->listener)
+			$this->backlog[] = $packet;
+		
+		# we need to check to see if there's a PONG response in here - we could
+		# write this to be in the PONG response handler but considering how it is
+		# being sent out here it would make sense if it was handled here too
+		if($packet->numeric == "PONG")
+			$this->pingindex = 0;
+		
+		return $packet;
 	}
 	
 	

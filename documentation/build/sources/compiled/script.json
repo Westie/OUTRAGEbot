@@ -5,7 +5,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "on",
-                    "file": "classes\\outragebot\\script\\instance.php",
+                    "file": "classes\/outragebot\/script\/instance.php",
                     "line": 115,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -29,11 +29,11 @@
                 "examples": [
                     {
                         "type": "input",
-                        "contents": "$this->on(\"message\", function($channel, $user, $message)\r\n{\r\n\tif($channel == \"#android\")\r\n\t\t$user->message(\"you sent a message to #android\");\r\n});"
+                        "contents": "$this->on(\"message\", function($channel, $user, $message)\n{\n\tif($channel == \"#android\")\n\t\t$user->message(\"you sent a message to #android\");\n});"
                     },
                     {
                         "type": "input",
-                        "contents": "$this->on(\"PRIVMSG\", function($event)\r\n{\r\n\tvar_dump($event);\r\n});"
+                        "contents": "$this->on(\"PRIVMSG\", function($event)\n{\n\tvar_dump($event);\n});"
                     }
                 ]
             },
@@ -41,7 +41,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "off",
-                    "file": "classes\\outragebot\\script\\instance.php",
+                    "file": "classes\/outragebot\/script\/instance.php",
                     "line": 146,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -60,7 +60,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "addCommandHandler",
-                    "file": "classes\\outragebot\\script\\instance.php",
+                    "file": "classes\/outragebot\/script\/instance.php",
                     "line": 199,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -84,7 +84,7 @@
                 "examples": [
                     {
                         "type": "input",
-                        "contents": "$this->addCommandHandler(\"dance\", function($channel, $user, $payload)\r\n{\r\n\t$channel->message(\"hi! i'm dancing!\");\r\n\t$channel->message(\"dance!\");\r\n});"
+                        "contents": "$this->addCommandHandler(\"dance\", function($channel, $user, $payload)\n{\n\t$channel->message(\"hi! i'm dancing!\");\n\t$channel->message(\"dance!\");\n});"
                     },
                     {
                         "type": "input",
@@ -96,7 +96,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "removeCommandHandler",
-                    "file": "classes\\outragebot\\script\\instance.php",
+                    "file": "classes\/outragebot\/script\/instance.php",
                     "line": 245,
                     "class": "OUTRAGEbot\\Script"
                 },

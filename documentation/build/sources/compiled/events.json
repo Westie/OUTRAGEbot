@@ -4,7 +4,7 @@
             "type": "method",
             "metadata": {
                 "method": "JOIN",
-                "file": "classes\\outragebot\\event\\events\\join.php",
+                "file": "classes\/outragebot\/event\/events\/join.php",
                 "line": 27,
                 "event": "ChannelJoin",
                 "onevent": "onChannelJoin"
@@ -27,7 +27,7 @@
             "type": "method",
             "metadata": {
                 "method": "KICK",
-                "file": "classes\\outragebot\\event\\events\\kick.php",
+                "file": "classes\/outragebot\/event\/events\/kick.php",
                 "line": 29,
                 "event": "ChannelKick",
                 "onevent": "onChannelKick"
@@ -60,7 +60,7 @@
             "type": "method",
             "metadata": {
                 "method": "MODE",
-                "file": "classes\\outragebot\\event\\events\\mode.php",
+                "file": "classes\/outragebot\/event\/events\/mode.php",
                 "line": 23,
                 "event": "Mode",
                 "onevent": "onMode"
@@ -93,7 +93,7 @@
             "type": "method",
             "metadata": {
                 "method": "NICK",
-                "file": "classes\\outragebot\\event\\events\\nick.php",
+                "file": "classes\/outragebot\/event\/events\/nick.php",
                 "line": 21,
                 "event": "Nick",
                 "onevent": "onNick"
@@ -116,7 +116,7 @@
             "type": "method",
             "metadata": {
                 "method": "PART",
-                "file": "classes\\outragebot\\event\\events\\part.php",
+                "file": "classes\/outragebot\/event\/events\/part.php",
                 "line": 28,
                 "event": "ChannelPart",
                 "onevent": "onChannelPart"
@@ -144,7 +144,7 @@
             "type": "method",
             "metadata": {
                 "method": "QUIT",
-                "file": "classes\\outragebot\\event\\events\\quit.php",
+                "file": "classes\/outragebot\/event\/events\/quit.php",
                 "line": 27,
                 "event": "UserQuit",
                 "onevent": "onUserQuit"
@@ -167,7 +167,7 @@
             "type": "method",
             "metadata": {
                 "method": "TOPIC",
-                "file": "classes\\outragebot\\event\\events\\topic.php",
+                "file": "classes\/outragebot\/event\/events\/topic.php",
                 "line": 28,
                 "event": "ChannelTopic",
                 "onevent": "onChannelTopic"
@@ -195,7 +195,7 @@
             "type": "method",
             "metadata": {
                 "method": "NOTICE",
-                "file": "classes\\outragebot\\event\\events\\notice\\channelnotice.php",
+                "file": "classes\/outragebot\/event\/events\/notice\/channelnotice.php",
                 "line": 21,
                 "event": "ChannelNotice",
                 "onevent": "onChannelNotice"
@@ -223,7 +223,7 @@
             "type": "method",
             "metadata": {
                 "method": "NOTICE",
-                "file": "classes\\outragebot\\event\\events\\notice\\ctcpresponse.php",
+                "file": "classes\/outragebot\/event\/events\/notice\/ctcpresponse.php",
                 "line": 20,
                 "event": "CTCPResponse",
                 "onevent": "onCTCPResponse"
@@ -246,7 +246,7 @@
             "type": "method",
             "metadata": {
                 "method": "NOTICE",
-                "file": "classes\\outragebot\\event\\events\\notice\\usernotice.php",
+                "file": "classes\/outragebot\/event\/events\/notice\/usernotice.php",
                 "line": 20,
                 "event": "UserNotice",
                 "onevent": "onUserNotice"
@@ -269,7 +269,7 @@
             "type": "method",
             "metadata": {
                 "method": "PRIVMSG",
-                "file": "classes\\outragebot\\event\\events\\privmsg\\channelcommand.php",
+                "file": "classes\/outragebot\/event\/events\/privmsg\/channelcommand.php",
                 "line": 22,
                 "event": "ChannelCommand",
                 "onevent": "onChannelCommand"
@@ -302,7 +302,7 @@
             "type": "method",
             "metadata": {
                 "method": "PRIVMSG",
-                "file": "classes\\outragebot\\event\\events\\privmsg\\channelmessage.php",
+                "file": "classes\/outragebot\/event\/events\/privmsg\/channelmessage.php",
                 "line": 21,
                 "event": "ChannelMessage",
                 "onevent": "onChannelMessage"
@@ -330,7 +330,7 @@
             "type": "method",
             "metadata": {
                 "method": "PRIVMSG",
-                "file": "classes\\outragebot\\event\\events\\privmsg\\ctcprequest.php",
+                "file": "classes\/outragebot\/event\/events\/privmsg\/ctcprequest.php",
                 "line": 20,
                 "event": "CTCPRequest",
                 "onevent": "onCTCPRequest"
@@ -353,7 +353,7 @@
             "type": "method",
             "metadata": {
                 "method": "PRIVMSG",
-                "file": "classes\\outragebot\\event\\events\\privmsg\\usermessage.php",
+                "file": "classes\/outragebot\/event\/events\/privmsg\/usermessage.php",
                 "line": 20,
                 "event": "UserMessage",
                 "onevent": "onUserMessage"

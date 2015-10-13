@@ -220,18 +220,23 @@ class Format extends Module\Template
 		{
 			case 'b':
 				return self::BOLD;
+			break;
 			
 			case 'i':
 				return self::ITALIC;
+			break;
 			
 			case 'r':
 				return self::CLEAR;
+			break;
 			
 			case 'u':
 				return self::UNDERLINE;
+			break;
 			
 			case 'v':
 				return self::INVERSE;
+			break;
 		}
 		
 		return "";

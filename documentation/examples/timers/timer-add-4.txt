@@ -1,0 +1,6 @@
+$callback = function()
+{
+	echo "this will get called once, after thirty seconds";
+};
+
+$this->setTimeout($callback, 30);

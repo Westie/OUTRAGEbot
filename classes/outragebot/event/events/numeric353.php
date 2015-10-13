@@ -18,7 +18,7 @@ class Numeric353 extends Event\Template
 	public function invoke()
 	{
 		$channel = $this->instance->getChannel($this->packet->parts[4]);
-		$hosts = explode(" ", $this->packet->payload);
+		$hosts = explode(" ", trim($this->packet->payload));
 		
 		foreach($hosts as $host)
 		{

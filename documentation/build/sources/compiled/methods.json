@@ -5,7 +5,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "replyCTCP",
-                    "file": "classes\\outragebot\\module\\modules\\ctcp.php",
+                    "file": "classes\/outragebot\/module\/modules\/ctcp.php",
                     "line": 40,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -31,7 +31,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "requestCTCP",
-                    "file": "classes\\outragebot\\module\\modules\\ctcp.php",
+                    "file": "classes\/outragebot\/module\/modules\/ctcp.php",
                     "line": 61,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -57,7 +57,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "stripFormat",
-                    "file": "classes\\outragebot\\module\\modules\\format.php",
+                    "file": "classes\/outragebot\/module\/modules\/format.php",
                     "line": 111,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -76,7 +76,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "stripColour",
-                    "file": "classes\\outragebot\\module\\modules\\format.php",
+                    "file": "classes\/outragebot\/module\/modules\/format.php",
                     "line": 122,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -95,7 +95,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "stripAll",
-                    "file": "classes\\outragebot\\module\\modules\\format.php",
+                    "file": "classes\/outragebot\/module\/modules\/format.php",
                     "line": 133,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -114,7 +114,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "format",
-                    "file": "classes\\outragebot\\module\\modules\\format.php",
+                    "file": "classes\/outragebot\/module\/modules\/format.php",
                     "line": 144,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -133,7 +133,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "join",
-                    "file": "classes\\outragebot\\module\\modules\\methods.php",
+                    "file": "classes\/outragebot\/module\/modules\/methods.php",
                     "line": 47,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -159,7 +159,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "part",
-                    "file": "classes\\outragebot\\module\\modules\\methods.php",
+                    "file": "classes\/outragebot\/module\/modules\/methods.php",
                     "line": 60,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -185,7 +185,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "invite",
-                    "file": "classes\\outragebot\\module\\modules\\methods.php",
+                    "file": "classes\/outragebot\/module\/modules\/methods.php",
                     "line": 73,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -211,7 +211,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "message",
-                    "file": "classes\\outragebot\\module\\modules\\methods.php",
+                    "file": "classes\/outragebot\/module\/modules\/methods.php",
                     "line": 86,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -237,7 +237,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "raw",
-                    "file": "classes\\outragebot\\module\\modules\\methods.php",
+                    "file": "classes\/outragebot\/module\/modules\/methods.php",
                     "line": 106,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -256,7 +256,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "action",
-                    "file": "classes\\outragebot\\module\\modules\\methods.php",
+                    "file": "classes\/outragebot\/module\/modules\/methods.php",
                     "line": 127,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -282,7 +282,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "getUser",
-                    "file": "classes\\outragebot\\module\\modules\\methods.php",
+                    "file": "classes\/outragebot\/module\/modules\/methods.php",
                     "line": 147,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -301,7 +301,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "getChannel",
-                    "file": "classes\\outragebot\\module\\modules\\methods.php",
+                    "file": "classes\/outragebot\/module\/modules\/methods.php",
                     "line": 158,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -320,7 +320,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "getScript",
-                    "file": "classes\\outragebot\\module\\modules\\methods.php",
+                    "file": "classes\/outragebot\/module\/modules\/methods.php",
                     "line": 171,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -339,7 +339,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "resourceExists",
-                    "file": "classes\\outragebot\\module\\modules\\resources.php",
+                    "file": "classes\/outragebot\/module\/modules\/resources.php",
                     "line": 41,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -358,7 +358,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "resourcePut",
-                    "file": "classes\\outragebot\\module\\modules\\resources.php",
+                    "file": "classes\/outragebot\/module\/modules\/resources.php",
                     "line": 59,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -384,7 +384,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "resourceGet",
-                    "file": "classes\\outragebot\\module\\modules\\resources.php",
+                    "file": "classes\/outragebot\/module\/modules\/resources.php",
                     "line": 79,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -403,7 +403,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "resourceScan",
-                    "file": "classes\\outragebot\\module\\modules\\resources.php",
+                    "file": "classes\/outragebot\/module\/modules\/resources.php",
                     "line": 96,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -422,7 +422,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "resourceUnlink",
-                    "file": "classes\\outragebot\\module\\modules\\resources.php",
+                    "file": "classes\/outragebot\/module\/modules\/resources.php",
                     "line": 123,
                     "class": "OUTRAGEbot\\Script"
                 },
@@ -441,11 +441,11 @@
                 "type": "method",
                 "metadata": {
                     "method": "addTimer",
-                    "file": "classes\\outragebot\\module\\modules\\timer.php",
-                    "line": 45,
+                    "file": "classes\/outragebot\/module\/modules\/timer.php",
+                    "line": 54,
                     "class": "OUTRAGEbot\\Script"
                 },
-                "comments": "Called when adding a timer.",
+                "comments": "Create a timer, with the ability to fine tune how many times you want the timer\nto be called.",
                 "parameters": [
                     {
                         "name": "callback",
@@ -473,19 +473,95 @@
                         "type": "array",
                         "description": "Array of arguments passed to the timer function.",
                         "optional": true,
-                        "default": [
-
-                        ]
+                        "default": []
                     }
                 ],
                 "examples": [
                     {
                         "type": "input",
-                        "contents": "$callback = function()\r\n{\r\n\techo \"this will get called every half a second\";\r\n};\r\n\r\n$this->addTimer($callback, 0.5, -1);"
+                        "contents": "$callback = function()\n{\n\techo \"this will get called every half a second\";\n};\n\n$this->addTimer($callback, 0.5, -1);"
                     },
                     {
                         "type": "input",
-                        "contents": "$callback = function($hero = \"Bob\")\r\n{\r\n\techo \"this will get called every half a minute, with \".$hero.\" as my hero!\";\r\n};\r\n\r\n$this->addTimer($callback, 30, -1, [ \"Sarah\" ]);"
+                        "contents": "$callback = function($hero = \"Bob\")\n{\n\techo \"this will get called every half a minute, with \".$hero.\" as my hero!\";\n};\n\n$this->addTimer($callback, 30, -1, [ \"Sarah\" ]);"
+                    }
+                ]
+            },
+            "setInterval": {
+                "type": "method",
+                "metadata": {
+                    "method": "setInterval",
+                    "file": "classes\/outragebot\/module\/modules\/timer.php",
+                    "line": 90,
+                    "class": "OUTRAGEbot\\Script"
+                },
+                "comments": "Creates an interval, being called approximately every n seconds.",
+                "parameters": [
+                    {
+                        "name": "callback",
+                        "type": "callback",
+                        "description": "Timer handler",
+                        "optional": false,
+                        "default": null
+                    },
+                    {
+                        "name": "interval",
+                        "type": "double",
+                        "description": "Interval in seconds (can support fractional seconds)",
+                        "optional": false,
+                        "default": null
+                    },
+                    {
+                        "name": "arguments",
+                        "type": "array",
+                        "description": "Array of arguments passed to the timer function.",
+                        "optional": true,
+                        "default": []
+                    }
+                ],
+                "examples": [
+                    {
+                        "type": "input",
+                        "contents": "$callback = function()\n{\n\techo \"this will get called every thirty seconds\";\n};\n\n$this->setInterval($callback, 30);"
+                    }
+                ]
+            },
+            "setTimeout": {
+                "type": "method",
+                "metadata": {
+                    "method": "setTimeout",
+                    "file": "classes\/outragebot\/module\/modules\/timer.php",
+                    "line": 107,
+                    "class": "OUTRAGEbot\\Script"
+                },
+                "comments": "Creates a timeout, being called approximately every n seconds.",
+                "parameters": [
+                    {
+                        "name": "callback",
+                        "type": "callback",
+                        "description": "Timer handler",
+                        "optional": false,
+                        "default": null
+                    },
+                    {
+                        "name": "interval",
+                        "type": "double",
+                        "description": "Interval in seconds (can support fractional seconds)",
+                        "optional": false,
+                        "default": null
+                    },
+                    {
+                        "name": "arguments",
+                        "type": "array",
+                        "description": "Array of arguments passed to the timer function.",
+                        "optional": true,
+                        "default": []
+                    }
+                ],
+                "examples": [
+                    {
+                        "type": "input",
+                        "contents": "$callback = function()\n{\n\techo \"this will get called once, after thirty seconds\";\n};\n\n$this->setTimeout($callback, 30);"
                     }
                 ]
             },
@@ -493,8 +569,8 @@
                 "type": "method",
                 "metadata": {
                     "method": "removeTimer",
-                    "file": "classes\\outragebot\\module\\modules\\timer.php",
-                    "line": 76,
+                    "file": "classes\/outragebot\/module\/modules\/timer.php",
+                    "line": 119,
                     "class": "OUTRAGEbot\\Script"
                 },
                 "comments": "Called when removing a timer.",
@@ -514,7 +590,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "is_admin",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 60,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -524,7 +600,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "username",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 81,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -534,7 +610,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "nickname",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 90,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -544,7 +620,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "address",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 99,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -554,7 +630,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "channels",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 109,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -564,7 +640,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "away",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 118,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -574,7 +650,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "is_helper",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 132,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -584,7 +660,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "is_operator",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 146,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -594,7 +670,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "is_secure",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 161,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -604,7 +680,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "ip_addr",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 176,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -614,7 +690,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "idle_time",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 190,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -624,7 +700,7 @@
                 "type": "property",
                 "metadata": {
                     "property": "signon_time",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 207,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -634,7 +710,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "send",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 291,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -653,7 +729,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "message",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 311,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -672,7 +748,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "notice",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 331,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -691,7 +767,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "action",
-                    "file": "classes\\outragebot\\element\\user.php",
+                    "file": "classes\/outragebot\/element\/user.php",
                     "line": 351,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
@@ -712,20 +788,18 @@
                 "type": "method",
                 "metadata": {
                     "method": "getChannelName",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 67,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
                 "comments": "Retrieves the channel name.",
-                "parameters": [
-
-                ]
+                "parameters": []
             },
             "send": {
                 "type": "method",
                 "metadata": {
                     "method": "send",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 78,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
@@ -744,7 +818,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "message",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 98,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
@@ -763,7 +837,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "notice",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 118,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
@@ -782,7 +856,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "action",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 138,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
@@ -801,7 +875,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "isUserInChannel",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 168,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
@@ -820,7 +894,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "isUserVoice",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 182,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
@@ -839,7 +913,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "isUserHalfOp",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 199,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
@@ -858,7 +932,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "isUserOp",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 216,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
@@ -877,7 +951,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "isUserAdmin",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 233,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },
@@ -896,7 +970,7 @@
                 "type": "method",
                 "metadata": {
                     "method": "isUserOwner",
-                    "file": "classes\\outragebot\\element\\channel.php",
+                    "file": "classes\/outragebot\/element\/channel.php",
                     "line": 250,
                     "class": "OUTRAGEbot\\Element\\Channel"
                 },

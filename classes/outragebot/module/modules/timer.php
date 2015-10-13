@@ -14,6 +14,12 @@ use \OUTRAGEbot\Connection;
 class Timer extends Module\Template
 {
 	/**
+	 *	What is our infinite constant?
+	 */
+	const INFINITE_TIMER = -1;
+	
+	
+	/**
 	 *	Stores all active timers.
 	 */
 	private $timers = [];
@@ -25,12 +31,15 @@ class Timer extends Module\Template
 	public function construct()
 	{
 		$this->introduceMethod("addTimer", "add");
+		$this->introduceMethod("setInterval", "setInterval");
+		$this->introduceMethod("setTimeout", "setTimeout");
 		$this->introduceMethod("removeTimer", "remove");
 	}
 	
 	
 	/**
-	 *	Called when adding a timer.
+	 *	Create a timer, with the ability to fine tune how many times you want the timer
+	 *	to be called.
 	 *
 	 *	@param callback	$callback  Timer handler
 	 *	@param double $interval    Interval in seconds (can support fractional seconds)
@@ -68,6 +77,40 @@ class Timer extends Module\Template
 	
 	
 	/**
+	 *	Creates an interval, being called approximately every n seconds.
+	 *
+	 *	@param callback	$callback  Timer handler
+	 *	@param double $interval    Interval in seconds (can support fractional seconds)
+	 *	@param array $arguments    Array of arguments passed to the timer function.
+	 *
+	 *	@return	string             Timer ID
+	 *
+	 *	@example input documentation/examples/timers/timer-add-3.txt
+	 */
+	public function setInterval($context, $callback, $interval, $arguments = [])
+	{
+		return $this->add($context, $callback, $interval, self::INFINITE_TIMER, $arguments);
+	}
+	
+	
+	/**
+	 *	Creates a timeout, being called approximately every n seconds.
+	 *
+	 *	@param callback	$callback  Timer handler
+	 *	@param double $interval    Interval in seconds (can support fractional seconds)
+	 *	@param array $arguments    Array of arguments passed to the timer function.
+	 *
+	 *	@return	string             Timer ID
+	 *	
+	 *	@example input documentation/examples/timers/timer-add-4.txt
+	 */
+	public function setTimeout($context, $callback, $interval, $arguments = [])
+	{
+		return $this->add($context, $callback, $interval, 0, $arguments);
+	}
+	
+	
+	/**
 	 *	Called when removing a timer.
 	 *
 	 *	@param string $index  Timer ID
@@ -75,8 +118,10 @@ class Timer extends Module\Template
 	 */
 	public function remove($context, $index)
 	{
-		unset($this->timers[$index]);
+		if(!isset($this->timers[$index]))
+			return false;
 		
+		unset($this->timers[$index]);
 		return true;
 	}
 	
@@ -107,13 +152,13 @@ class Timer extends Module\Template
 			$time = microtime(true);
 			$timer["next"] = $time + $timer["interval"];
 			
-			if($timer["repeat"] == -1)
-				continue;
-			
-			--$timer["repeat"];
-			
-			if($timer["repeat"] == 0)
-				unset($this->timers[$index]);
+			if($timer["repeat"] != self::INFINITE_TIMER)
+			{
+				--$timer["repeat"];
+				
+				if($timer["repeat"] < 1)
+					unset($this->timers[$index]);
+			}
 			
 			unset($timer);
 		}
@@ -133,19 +178,19 @@ class Timer extends Module\Template
 		}
 		else
 		{
-			if(method_exists($context, $callback))
-			{
-				$reflection = new \ReflectionObject($context);
-				
-				if($reflection->hasMethod($callback))
-					return $reflection->getMethod($callback)->getClosure($context);
-			}
-			elseif(is_array($callback))
+			if(is_array($callback))
 			{
 				$reflection = new \ReflectionObject($callback[0]);
 				
 				if($reflection->hasMethod($callback[1]))
 					return $reflection->getMethod($callback[1])->getClosure($callback[0]);
+			}
+			elseif(is_string($callback) && method_exists($context, $callback))
+			{
+				$reflection = new \ReflectionObject($context);
+				
+				if($reflection->hasMethod($callback))
+					return $reflection->getMethod($callback)->getClosure($context);
 			}
 			else
 			{

@@ -39,10 +39,8 @@ class Numeric005 extends Event\Template
 				{
 					case "UHNAMES":
 					case "NAMESX":
-					{
 						$this->socket->write("PROTOCTL ".$item);
-						break;
-					}
+					break;
 				}
 			}
 		}

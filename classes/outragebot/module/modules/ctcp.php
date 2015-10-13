@@ -85,10 +85,9 @@ class CTCP extends Module\Template
 		switch($command)
 		{
 			case "VERSION":
-			{
 				$this->reply($context, $user, "VERSION OUTRAGEbot, by David Weston - v3.0-pre-alpha");
 				return true;
-			}
+			break;
 		}
 		
 		return true;

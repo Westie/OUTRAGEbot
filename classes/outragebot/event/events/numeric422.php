@@ -1,6 +1,6 @@
 <?php
 /**
- *	Handler for the 376 (end of MOTD) numeric event for OUTRAG3bot
+ *	Handler for the 422 (no MOTD available) numeric event for OUTRAG3bot
  */
 
 
@@ -10,7 +10,7 @@ use \OUTRAGEbot\Event;
 use \OUTRAGEbot\Connection;
 
 
-class Numeric376 extends Event\Template
+class Numeric422 extends Event\Template
 {
 	/**
 	 *	Called whenever this event has been invoked.

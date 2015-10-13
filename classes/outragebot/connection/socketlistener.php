@@ -71,7 +71,6 @@ class SocketListener
 			if($this->receive($packet, $return))
 			{
 				$this->socket->clearSocketListener();
-				
 				return $return;
 			}
 		}

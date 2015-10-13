@@ -93,8 +93,11 @@ class Delegator
 		if($packet->payload[0] == Format\Modifiers::CTCP)
 			return $this->getEventHandler($namespace."CTCPResponse");
 		
-		if(in_array($packet->parts[2][0], $packet->instance->serverconf->chantypes))
-			return $this->getEventHandler($namespace."ChannelNotice");
+		if($packet->instance->serverconf->chantypes)
+		{
+			if(in_array($packet->parts[2][0], $packet->instance->serverconf->chantypes))
+				return $this->getEventHandler($namespace."ChannelNotice");
+		}
 		
 		return $this->getEventHandler($namespace."UserNotice");
 	}

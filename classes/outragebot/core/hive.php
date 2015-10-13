@@ -55,7 +55,7 @@ class Hive extends ObjectContainer
 	 */
 	public function tick()
 	{
-		usleep(4000);
+		usleep(5000);
 		
 		# cycle through the hivemind
 		foreach($this as $instance)

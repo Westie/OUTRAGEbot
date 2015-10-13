@@ -59,8 +59,7 @@ abstract class Template
 		}
 		
 		# used to generate documentation, won't really be used
-		# anywhere else...
-		# should I comment out in commits?
+		# anywhere else - should I comment out in commits?
 		if(defined("OUTRAGEbot_DEBUG"))
 		{
 			if(!isset($this->__methods))
