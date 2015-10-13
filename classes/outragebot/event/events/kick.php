@@ -28,7 +28,7 @@ class Kick extends Event\Template
 	 */
 	public function invoke()
 	{
-		$channel = $this->instance->getChannel($this->packet->payload);
+		$channel = $this->instance->getChannel($this->packet->parts[2]);
 		$admin = $this->instance->getUser($this->packet->user);
 		$kicked = $this->instance->getUser($this->packet->parts[3]);
 		
