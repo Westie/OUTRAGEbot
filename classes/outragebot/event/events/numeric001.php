@@ -32,7 +32,7 @@ class Numeric001 extends Event\Template
 			{
 				if(!$this->socket->prepared)
 					$this->socket->ready();
-			}, 3);
+			}, 15);
 		}
 		
 		return parent::invoke();

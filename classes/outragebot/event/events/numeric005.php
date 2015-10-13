@@ -21,9 +21,7 @@ class Numeric005 extends Event\Template
 		foreach($items as $item)
 		{
 			if($item[0] == ":")
-			{
 				break;
-			}
 			
 			$matches = [];
 			

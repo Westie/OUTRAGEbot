@@ -186,7 +186,7 @@ class Channel extends Core\ObjectContainer
 		if(!isset($this->users[$nickname]))
 			return false;
 		
-		return preg_match("/[qaohv]/", $this->users[$nickname]) == true;
+		return preg_match("/[qaohv]/", $this->users[$nickname]["modes"]) == true;
 	}
 	
 	
@@ -203,7 +203,7 @@ class Channel extends Core\ObjectContainer
 		if(!isset($this->users[$nickname]))
 			return false;
 		
-		return preg_match("/[qaoh]/", $this->users[$nickname]) == true;
+		return preg_match("/[qaoh]/", $this->users[$nickname]["modes"]) == true;
 	}
 	
 	
@@ -220,7 +220,7 @@ class Channel extends Core\ObjectContainer
 		if(!isset($this->users[$nickname]))
 			return false;
 		
-		return preg_match("/[qao]/", $this->users[$nickname]) == true;
+		return preg_match("/[qao]/", $this->users[$nickname]["modes"]) == true;
 	}
 	
 	
@@ -237,7 +237,7 @@ class Channel extends Core\ObjectContainer
 		if(!isset($this->users[$nickname]))
 			return false;
 		
-		return preg_match("/[qa]/", $this->users[$nickname]) == true;
+		return preg_match("/[qa]/", $this->users[$nickname]["modes"]) == true;
 	}
 	
 	
@@ -254,6 +254,6 @@ class Channel extends Core\ObjectContainer
 		if(!isset($this->users[$nickname]))
 			return false;
 		
-		return preg_match("/[q]/", $this->users[$nickname]) == true;
+		return preg_match("/[q]/", $this->users[$nickname]["modes"]) == true;
 	}
 }

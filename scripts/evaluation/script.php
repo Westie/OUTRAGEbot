@@ -44,7 +44,7 @@ class Evaluation extends OUTRAGEbot\Script
 			unset($this->environment["user"]);
 			unset($this->environment["payload"]);
 			
-			$output = ob_get_flush();
+			$output = ob_get_clean();
 		}
 		catch(Exception $exception)
 		{

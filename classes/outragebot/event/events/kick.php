@@ -32,7 +32,7 @@ class Kick extends Event\Template
 		$admin = $this->instance->getUser($this->packet->user);
 		$kicked = $this->instance->getUser($this->packet->parts[3]);
 		
-		if($user)
+		if($kicked)
 			unset($channel->users[$this->packet->parts[3]]);
 		
 		return $this->dispatch([ $channel, $admin, $kicked, $this->packet->payload ]);
