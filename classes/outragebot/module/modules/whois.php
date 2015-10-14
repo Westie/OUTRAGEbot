@@ -158,8 +158,8 @@ class Whois extends Module\Template
 		
 		if(preg_match("/^is using modes (.*?) (.*?)$/", $packet->payload, $matches))
 		{
-			$this->response->userModes = $aMatches[1];
-			$this->response->serverModes = $aMatches[2];
+			$this->response->userModes = $matches[1];
+			$this->response->serverModes = $matches[2];
 		}
 	}
 	
