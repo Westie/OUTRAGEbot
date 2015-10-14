@@ -199,6 +199,9 @@ class Socket
 	{
 		foreach($this->parent->network->channels as $channel)
 			$this->write("JOIN ".$channel);
+
+		foreach($this->parent->network->perform as $command)
+			$this->write($command);
 		
 		return $this->prepared = true;
 	}
