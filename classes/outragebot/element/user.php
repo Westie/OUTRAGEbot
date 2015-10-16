@@ -219,6 +219,21 @@ class User extends Core\ObjectContainer
 	
 	
 	/**
+	 *	Is this user a bot of the current instance?
+	 */
+	public function getter_is_instance()
+	{
+		foreach($this->instance->sockets() as $socket)
+		{
+			if($this->nickname == $socket->nickname)
+				return true;
+		}
+		
+		return false;
+	}
+	
+	
+	/**
 	 *	Iterates through all of the channels that are recognised by the bot, and returns the channels
 	 *	that this user is in.
 	 *

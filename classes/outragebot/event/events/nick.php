@@ -42,6 +42,9 @@ class Nick extends Event\Template
 		
 		$this->instance->users[$current] = $user;
 		
+		if($this->socket->nickname == $previous)
+			$this->socket->setNickname($current);
+		
 		return $this->dispatch([ $user, $previous ]);
 	}
 }

@@ -19,6 +19,9 @@ class Numeric001 extends Event\Template
 	 */
 	public function invoke()
 	{
+		# just to be doubly sure, we'll just verify the nickname of the bot...
+		$this->socket->setNickname($this->packet->parts[2]);
+		
 		# in a state of being awkward, there could be an instance where the server isn't RFC
 		# compliant and decided not to send us any MOTD stuff - that, for some insane reason
 		# is when I decide to join channels. so, after 15 seconds, if we haven't got either

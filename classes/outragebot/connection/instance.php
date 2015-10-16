@@ -125,6 +125,21 @@ class Instance
 	
 	
 	/**
+	 *	Retrieves all of the nicknames of the various sockets that are running
+	 *	under this instance.
+	 */
+	public function getter_socket_nicknames()
+	{
+		$list = [];
+		
+		foreach($this->sockets as $socket)
+			$list[] = $socket->nickname;
+		
+		return $list;
+	}
+	
+	
+	/**
 	 *	Called whenever an instance gets created.
 	 */
 	public function __construct()

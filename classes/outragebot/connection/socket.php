@@ -31,7 +31,7 @@ class Socket
 	 *	We'll also need to provide a localised copy of the configuration,
 	 *	specific to this bot only.
 	 */
-	private $configuration = null;
+	public $configuration = null;
 	
 	
 	/**
@@ -89,6 +89,12 @@ class Socket
 	
 	
 	/**
+	 *	What is the nickname of this bot?
+	 */
+	public $nickname = null;
+	
+	
+	/**
 	 *	Called whenever an intention to have a socket has been raised.
 	 */
 	public function __construct(Instance $parent)
@@ -130,17 +136,15 @@ class Socket
 		if($this->configuration->bind)
 			$settings["socket"]["bindto"] = $this->configuration->bind;
 		
+		$this->nickname = $this->configuration->nick;
+		
 		$errno = null;
 		$errstr = null;
 		
 		$this->socket = stream_socket_client("tcp://".$this->configuration->host.":".$this->configuration->port, $errno, $errstr, 30, STREAM_CLIENT_CONNECT, stream_context_create($settings));
+		
 		$this->block(false);
-		
-		if($this->configuration->password)
-			$this->write("PASS ".$this->configuration->password);
-		
-		$this->write("NICK ".$this->configuration->nick);
-		$this->write("USER ".$this->configuration->username." x x :".$this->configuration->realname);
+		$this->handshake();
 		
 		# this rather awkward bit is here to grab the timer method - since we
 		# could in theory run this bot w/o a timer, we need to treat the ping
@@ -188,6 +192,24 @@ class Socket
 		$this->pingindex = 0;
 		
 		return $this;
+	}
+	
+	
+	/**
+	 *	Run the handshake.
+	 */
+	public function handshake()
+	{
+		if($this->prepared)
+			return false;
+		
+		if($this->configuration->password)
+			$this->write("PASS ".$this->configuration->password);
+		
+		$this->write("NICK ".$this->nickname);
+		$this->write("USER ".$this->configuration->username." x x :".$this->configuration->realname);
+		
+		return true;
 	}
 	
 	
@@ -363,5 +385,21 @@ class Socket
 		{
 			$this->write("PING ".time());
 		}
+		
+		return true;
+	}
+	
+	
+	/**
+	 *	Set the bot's nickname.
+	 */
+	public function setNickname($nickname)
+	{
+		if(!$nickname)
+			return false;
+		
+		$this->nickname = $nickname;
+		
+		return true;
 	}
 }

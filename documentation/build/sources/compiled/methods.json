@@ -706,12 +706,22 @@
                 },
                 "comments": "Returns, in UNIX timestamp format, the date which this user signed in to the server at."
             },
+            "is_instance": {
+                "type": "property",
+                "metadata": {
+                    "property": "is_instance",
+                    "file": "classes\/outragebot\/element\/user.php",
+                    "line": 224,
+                    "class": "OUTRAGEbot\\Element\\User"
+                },
+                "comments": "Is this user a bot of the current instance?"
+            },
             "send": {
                 "type": "method",
                 "metadata": {
                     "method": "send",
                     "file": "classes\/outragebot\/element\/user.php",
-                    "line": 291,
+                    "line": 306,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
                 "comments": "Called to send a message to a user.",
@@ -730,7 +740,7 @@
                 "metadata": {
                     "method": "message",
                     "file": "classes\/outragebot\/element\/user.php",
-                    "line": 311,
+                    "line": 326,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
                 "comments": "Called to send a message to a user.",
@@ -749,7 +759,7 @@
                 "metadata": {
                     "method": "notice",
                     "file": "classes\/outragebot\/element\/user.php",
-                    "line": 331,
+                    "line": 346,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
                 "comments": "Called to send a notice to a user.",
@@ -768,7 +778,7 @@
                 "metadata": {
                     "method": "action",
                     "file": "classes\/outragebot\/element\/user.php",
-                    "line": 351,
+                    "line": 366,
                     "class": "OUTRAGEbot\\Element\\User"
                 },
                 "comments": "Send an action to the specified user.",
