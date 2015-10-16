@@ -33,6 +33,7 @@ class Quit extends Event\Template
 		foreach($this->instance->channels as $channel)
 			unset($channel->users[$user->hostmask->nickname]);
 		
+		unset($this->instance->users[$user->hostmask->nickname]);
 		return $this;
 	}
 }
