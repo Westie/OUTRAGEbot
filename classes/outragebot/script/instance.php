@@ -280,4 +280,22 @@ class Instance
 		
 		return call_user_func_array($closure, $arguments);
 	}
+	
+	
+	/**
+	 *	Retrieves the current connection controller - or, Connection\Instance.
+	 *
+	 *	You will need this if you're wanting to do such things as grab the username
+	 *	of the bots (as an example...)
+	 *
+	 *	The method call can either be used or you can use the 'instance' property
+	 *	from within a script.
+	 *
+	 *	@param void
+	 *	@example input documentation/examples/instance/nickname.txt
+	 */
+	public function getInstance()
+	{
+		return $this->instance;
+	}
 }

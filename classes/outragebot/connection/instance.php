@@ -35,6 +35,12 @@ class Instance
 	
 	
 	/**
+	 *	What is the socket currently in use?
+	 */
+	private $current = null;
+	
+	
+	/**
 	 *	Store all our users in here.
 	 */
 	public $users = null;
@@ -228,8 +234,12 @@ class Instance
 	{
 		foreach($this->sockets as $socket)
 		{
+			$this->current = $socket;
+			
 			while($packet = $socket->read())
 				$this->delegator->getEvent($packet)->newInstanceArgs([ $this, $socket, $packet ])->invoke();
+			
+			$this->current = null;
 		}
 		
 		return $this;
@@ -288,12 +298,10 @@ class Instance
 	 */
 	public function getCurrentSocket()
 	{
-		$count = count($this->sockets);
-		
-		if($count == 1)
+		if(empty($this->current))
 			return $this->sockets->first();
 		
-		return null;
+		return $this->current;
 	}
 	
 	
@@ -302,12 +310,10 @@ class Instance
 	 */
 	public function getter_socket()
 	{
-		$count = count($this->sockets);
-		
-		if($count == 1)
+		if(empty($this->current))
 			return $this->sockets->first();
 		
-		return null;
+		return $this->current;
 	}
 	
 	

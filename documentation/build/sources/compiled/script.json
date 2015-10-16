@@ -110,6 +110,23 @@
                         "default": null
                     }
                 ]
+            },
+            "getInstance": {
+                "type": "method",
+                "metadata": {
+                    "method": "getInstance",
+                    "file": "classes\/outragebot\/script\/instance.php",
+                    "line": 297,
+                    "class": "OUTRAGEbot\\Script"
+                },
+                "comments": "Retrieves the current connection controller - or, Connection\\Instance.\nYou will need this if you're wanting to do such things as grab the username\nof the bots (as an example...)\nThe method call can either be used or you can use the 'instance' property\nfrom within a script.",
+                "parameters": [],
+                "examples": [
+                    {
+                        "type": "input",
+                        "contents": "$this->addCommandHandler(\"whoami\", function($channel, $user, $payload)\n{\n\t$channel->message(\"It's me, your friend, \".$this->instance->socket->nickname.\"!\");\n});"
+                    }
+                ]
             }
         }
     }

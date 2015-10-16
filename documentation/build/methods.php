@@ -73,6 +73,8 @@ $objects = array
 (
 	'OUTRAGEbot\Element\User',
 	'OUTRAGEbot\Element\Channel',
+	'OUTRAGEbot\Connection\Instance',
+	'OUTRAGEbot\Connection\Packet',
 );
 
 foreach($objects as $object)

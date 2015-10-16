@@ -995,6 +995,58 @@
                     }
                 ]
             }
+        },
+        "OUTRAGEbot\\Connection\\Instance": {
+            "delegator": {
+                "type": "property",
+                "metadata": {
+                    "property": "delegator",
+                    "file": "classes\/outragebot\/connection\/instance.php",
+                    "line": 70,
+                    "class": "OUTRAGEbot\\Connection\\Instance"
+                },
+                "comments": "Returns an instance of the event delegator."
+            },
+            "serverconf": {
+                "type": "property",
+                "metadata": {
+                    "property": "serverconf",
+                    "file": "classes\/outragebot\/connection\/instance.php",
+                    "line": 79,
+                    "class": "OUTRAGEbot\\Connection\\Instance"
+                },
+                "comments": "Returns the server's configuration, parsed into easy to understand sets."
+            },
+            "network": {
+                "type": "property",
+                "metadata": {
+                    "property": "network",
+                    "file": "classes\/outragebot\/connection\/instance.php",
+                    "line": 127,
+                    "class": "OUTRAGEbot\\Connection\\Instance"
+                },
+                "comments": "Retrieves the network configuration."
+            },
+            "socket_nicknames": {
+                "type": "property",
+                "metadata": {
+                    "property": "socket_nicknames",
+                    "file": "classes\/outragebot\/connection\/instance.php",
+                    "line": 137,
+                    "class": "OUTRAGEbot\\Connection\\Instance"
+                },
+                "comments": "Retrieves all of the nicknames of the various sockets that are running\nunder this instance."
+            },
+            "socket": {
+                "type": "property",
+                "metadata": {
+                    "property": "socket",
+                    "file": "classes\/outragebot\/connection\/instance.php",
+                    "line": 311,
+                    "class": "OUTRAGEbot\\Connection\\Instance"
+                },
+                "comments": "Retrieves the current socket that is in use,"
+            }
         }
     }
 }

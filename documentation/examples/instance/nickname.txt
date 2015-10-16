@@ -1,0 +1,4 @@
+$this->addCommandHandler("whoami", function($channel, $user, $payload)
+{
+	$channel->message("It's me, your friend, ".$this->instance->socket->nickname."!");
+});
