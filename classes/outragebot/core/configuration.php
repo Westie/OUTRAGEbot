@@ -23,9 +23,7 @@ class Configuration extends ObjectContainer
 		$this->resetContainer();
 		
 		if(!file_exists($target))
-		{
 			throw new \Exception("Problem with the configuration - can't find {$target}.");
-		}
 		
 		$source = file($target);
 		
@@ -43,9 +41,7 @@ class Configuration extends ObjectContainer
 			$endchar = substr($source[$line], -1, 1);
 			
 			if(preg_match("/^[^\,\:\{\[]$/", $endchar))
-			{
 				$source[$line] .= ",";
-			}
 		}
 		
 		$handler = new \Services_JSON(\SERVICES_JSON_LOOSE_TYPE);
