@@ -38,6 +38,7 @@ class Whois extends Module\Template
 			"retrieve" => array
 			(
 				"301" => [ $this, "parseInputAwayMessage" ],
+				"307" => [ $this, "parseInputRegistered" ],
 				"310" => [ $this, "parseInputHelperMessage" ],
 				"311" => [ $this, "parseInputUser" ],
 				"312" => [ $this, "parseInputServer" ],
@@ -75,6 +76,15 @@ class Whois extends Module\Template
 	public function parseInputAwayMessage(Connection\Packet $packet)
 	{
 		$this->response->away = $packet->payload;
+	}
+
+
+	/**
+	 *	WHOIS Response: Nick registration status
+	 */
+	public function parseInputRegistered(Connection\Packet $packet)
+	{
+		$this->response->registered = true;
 	}
 	
 	
@@ -205,6 +215,7 @@ class Whois extends Module\Template
 			"ipAddress" => null,
 			"userModes" => null,
 			"serverModes" => null,
+			"registered" => false
 		);
 		
 		$response = new Core\ObjectContainer();
