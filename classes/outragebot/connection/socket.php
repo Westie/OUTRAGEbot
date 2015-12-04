@@ -227,19 +227,19 @@ class Socket
 		}
 
 		# Join channels specified in configuration file on a 5 second delay
-		if($closure = Module\Stack::getInstance()->getClosure("addTimer"))
+		if(!empty($this->parent->network->channels))
 		{
-			$context = new Element\Context();
-			$context->callee = $this;
-
-			$closure($context, function()
+			if($closure = Module\Stack::getInstance()->getClosure("addTimer"))
 			{
-				if(!empty($this->parent->network->channels))
+				$context = new Element\Context();
+				$context->callee = $this;
+
+				$closure($context, function ()
 				{
 					foreach($this->parent->network->channels as $channel)
-						$this->write("JOIN ".$channel);
-				}
-			}, 5);
+						$this->write("JOIN " . $channel);
+				}, 5);
+			}
 		}
 		
 		return $this->prepared = true;
