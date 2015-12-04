@@ -226,11 +226,20 @@ class Socket
 				$this->write($command);
 		}
 
-		# Join channels specified in configuration file
-		if(!empty($this->parent->network->channels))
+		# Join channels specified in configuration file on a 5 second delay
+		if($closure = Module\Stack::getInstance()->getClosure("addTimer"))
 		{
-			foreach($this->parent->network->channels as $channel)
-				$this->write("JOIN ".$channel);
+			$context = new Element\Context();
+			$context->callee = $this;
+
+			$closure($context, function()
+			{
+				if(!empty($this->parent->network->channels))
+				{
+					foreach($this->parent->network->channels as $channel)
+						$this->write("JOIN ".$channel);
+				}
+			}, 5);
 		}
 		
 		return $this->prepared = true;
