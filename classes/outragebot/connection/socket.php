@@ -219,16 +219,18 @@ class Socket
 	 */
 	public function ready()
 	{
-		if(!empty($this->parent->network->channels))
-		{
-			foreach($this->parent->network->channels as $channel)
-				$this->write("JOIN ".$channel);
-		}
-		
+		# Run perform[] commands from configuration file
 		if(!empty($this->parent->network->perform))
 		{
 			foreach($this->parent->network->perform as $command)
 				$this->write($command);
+		}
+
+		# Join channels specified in configuration file
+		if(!empty($this->parent->network->channels))
+		{
+			foreach($this->parent->network->channels as $channel)
+				$this->write("JOIN ".$channel);
 		}
 		
 		return $this->prepared = true;
