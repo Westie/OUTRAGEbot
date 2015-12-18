@@ -108,6 +108,7 @@ class CoreMaster
 			$pBot->handle = $pBot->nickname;
 			$pBot->host = $pNetwork->host;
 			$pBot->port = $pNetwork->port;
+			$pBot->tls = $pNetwork->tls;
 
 			$this->aSockets[] = new CoreSocket($this, $pBot);
 

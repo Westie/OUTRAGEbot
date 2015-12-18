@@ -68,7 +68,12 @@ class CoreConfiguration
 	{
 		$pConfig->Server = new stdClass();
 		$pNetwork = $pConfig->Network;
-
+		
+		if(empty($pNetwork->tls))
+		{
+			$pNetwork->tls = false;
+		}
+		
 		if(empty($pNetwork->delimiter))
 		{
 			$pNetwork->delimiter = "!";
