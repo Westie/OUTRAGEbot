@@ -215,7 +215,7 @@ class Whois extends Module\Template
 			"ipAddress" => null,
 			"userModes" => null,
 			"serverModes" => null,
-			"registered" => false
+			"registered" => false,
 		);
 		
 		$response = new Core\ObjectContainer();

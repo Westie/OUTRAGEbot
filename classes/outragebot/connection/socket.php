@@ -233,12 +233,17 @@ class Socket
 			{
 				$context = new Element\Context();
 				$context->callee = $this;
-
-				$closure($context, function ()
+				
+				$closure($context, function()
 				{
 					foreach($this->parent->network->channels as $channel)
 						$this->write("JOIN " . $channel);
 				}, 5);
+			}
+			else
+			{
+				foreach($this->parent->network->channels as $channel)
+					$this->write("JOIN " . $channel);
 			}
 		}
 		
@@ -264,7 +269,12 @@ class Socket
 	public function write($message)
 	{
 		if($this->socket)
-			fwrite($this->socket, $message."\r\n");
+		{
+			if(feof($this->socket))
+				$this->socket = null;
+			else
+				fwrite($this->socket, $message."\r\n", strlen($message."\r\n"));
+		}
 		
 		return $this;
 	}
@@ -275,6 +285,14 @@ class Socket
 	 */
 	public function read($cache = true)
 	{
+		if(feof($this->socket))
+		{
+			$this->disconnect("Undefined disconnection");
+			$this->connect();
+			
+			return null;
+		}
+		
 		if($cache)
 		{
 			if(count($this->backlog))
@@ -287,7 +305,8 @@ class Socket
 		$ticks = 0;
 		$buffer = "";
 		
-		# ouch - forgive me, CPU
+		# turns out this isn't as bad when it comes to CPU usage as
+		# as expected...
 		while(true)
 		{
 			$character = fgetc($this->socket);
@@ -321,7 +340,7 @@ class Socket
 				$buffer .= $character;
 				$character = $next;
 			}
-			elseif($character == "\r" || $character == "\n")
+			elseif($character == "\n")
 			{
 				break;
 			}
@@ -340,8 +359,8 @@ class Socket
 		# we need to check to see if there's a PONG response in here - we could
 		# write this to be in the PONG response handler but considering how it is
 		# being sent out here it would make sense if it was handled here too
-		if($packet->numeric == "PONG")
-			$this->pingindex = 0;
+		# if($packet->numeric == "PONG")
+		# 	$this->pingindex = 0;
 		
 		return $packet;
 	}
