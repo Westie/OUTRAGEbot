@@ -5,7 +5,7 @@ network:
 	host: "irc.androidirc.org"
 	port: 6667
 	
-	owners: [ "irc-96AEA465.typefish.co.uk" ]
+	owners: [ "irc-8E19D556.westie.sh" ]
 	channels: [ "#outrage.test" ]
 	scripts: [ "evaluation", "commands" ]
 	

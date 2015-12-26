@@ -219,31 +219,55 @@ class Socket
 	 */
 	public function ready()
 	{
-		# Run perform[] commands from configuration file
+		# what we need to do is make things join whenever it is safe to do so.
+		# the person who wanted performs re-introduced wanted joining channels
+		# delayed (and I didn't...) so I've come up with a compromise...
+		$blocks = [];
+		
 		if(!empty($this->parent->network->perform))
 		{
+			$block = [];
+			
 			foreach($this->parent->network->perform as $command)
-				$this->write($command);
+				$block[] = $command;
+			
+			$blocks[] = $block;
 		}
-
-		# Join channels specified in configuration file on a 5 second delay
+		
 		if(!empty($this->parent->network->channels))
 		{
-			if($closure = Module\Stack::getInstance()->getClosure("addTimer"))
+			$block = [];
+			
+			foreach($this->parent->network->channels as $channel)
+				$block[] = "JOIN ".$channel;
+			
+			$blocks[] = $block;
+		}
+		
+		# now for the real fun bit - dispatch everything away in five
+		# second intervals, starting *now*...
+		$blocks = array_filter($blocks);
+		
+		if($closure = Module\Stack::getInstance()->getClosure("setTimeout"))
+		{
+			$context = new Element\Context();
+			$context->callee = $this;
+			
+			$callback = function($block)
 			{
-				$context = new Element\Context();
-				$context->callee = $this;
-				
-				$closure($context, function()
-				{
-					foreach($this->parent->network->channels as $channel)
-						$this->write("JOIN " . $channel);
-				}, 5);
-			}
-			else
+				foreach($block as $item)
+					$this->write($item);
+			};
+			
+			foreach($blocks as $index => $block)
+				$closure($context, $callback, $index * 5, [ $block ]);
+		}
+		else
+		{
+			foreach($blocks as $index => $block)
 			{
-				foreach($this->parent->network->channels as $channel)
-					$this->write("JOIN " . $channel);
+				foreach($block as $item)
+					$this->write($item);
 			}
 		}
 		
@@ -285,12 +309,15 @@ class Socket
 	 */
 	public function read($cache = true)
 	{
+		if(!$this->socket)
+			return false;
+		
 		if(feof($this->socket))
 		{
 			$this->disconnect("Undefined disconnection");
 			$this->connect();
 			
-			return null;
+			return false;
 		}
 		
 		if($cache)
@@ -298,9 +325,6 @@ class Socket
 			if(count($this->backlog))
 				return array_shift($this->backlog);
 		}
-		
-		if(!$this->socket)
-			return false;
 		
 		$ticks = 0;
 		$buffer = "";
@@ -359,8 +383,8 @@ class Socket
 		# we need to check to see if there's a PONG response in here - we could
 		# write this to be in the PONG response handler but considering how it is
 		# being sent out here it would make sense if it was handled here too
-		# if($packet->numeric == "PONG")
-		# 	$this->pingindex = 0;
+		if($packet->numeric == "PONG")
+			$this->pingindex = 0;
 		
 		return $packet;
 	}
@@ -415,8 +439,6 @@ class Socket
 		{
 			$this->write("PING ".time());
 		}
-		
-		return true;
 	}
 	
 	
@@ -429,7 +451,6 @@ class Socket
 			return false;
 		
 		$this->nickname = $nickname;
-		
 		return true;
 	}
 }
