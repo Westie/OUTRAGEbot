@@ -7,9 +7,9 @@
 namespace OUTRAGEbot\Element;
 
 use OUTRAGEbot\Connection;
-use OUTRAGEbot\Core;
+use OUTRAGEbot\Core\ObjectContainer;
 
-class Channel extends Core\ObjectContainer
+class Channel extends ObjectContainer
 {
     /**
      *	Context of the object that started this request off.
@@ -49,7 +49,7 @@ class Channel extends Core\ObjectContainer
         $this->channel = $channel;
 
         $this->modes = new ChannelModes();
-        $this->users = new Core\ObjectContainer();
+        $this->users = new ObjectContainer();
     }
 
     /**

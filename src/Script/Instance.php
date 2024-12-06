@@ -10,8 +10,8 @@
 
 namespace OUTRAGEbot\Script;
 
-use OUTRAGEbot\Core;
 use OUTRAGEbot\Core\Attributes;
+use OUTRAGEbot\Core\ObjectContainer;
 use OUTRAGEbot\Element;
 use OUTRAGEbot\Event;
 use OUTRAGEbot\Module;
@@ -121,7 +121,7 @@ class Instance
         $type = strtolower($type);
 
         if (!isset($this->instance->events[$type])) {
-            $this->instance->events[$type] = new Core\ObjectContainer();
+            $this->instance->events[$type] = new ObjectContainer();
         }
 
         $this->instance->events[$type]->push(new Event\Handler($this, $event, $handler, $metadata));

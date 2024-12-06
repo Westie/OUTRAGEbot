@@ -7,10 +7,10 @@
 
 namespace OUTRAGEbot\Module;
 
-use OUTRAGEbot\Core;
 use OUTRAGEbot\Core\Attributes;
+use OUTRAGEbot\Core\ObjectContainer;
 
-class Stack extends Core\ObjectContainer
+class Stack extends ObjectContainer
 {
     /**
      *	It's necessary for this class to load the Singleton.

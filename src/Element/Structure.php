@@ -8,9 +8,9 @@
 
 namespace OUTRAGEbot\Element;
 
-use OUTRAGEbot\Core;
+use OUTRAGEbot\Core\ObjectContainer;
 
-class Structure extends Core\ObjectContainer
+class Structure extends ObjectContainer
 {
     /**
      *	Context of the object that started this request off.

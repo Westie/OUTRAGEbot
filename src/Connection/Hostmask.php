@@ -6,9 +6,9 @@
 
 namespace OUTRAGEbot\Connection;
 
-use OUTRAGEbot\Core;
+use OUTRAGEbot\Core\ObjectContainer;
 
-class Hostmask extends Core\ObjectContainer
+class Hostmask extends ObjectContainer
 {
     /**
      *	Called when the packet has been created.

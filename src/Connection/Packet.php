@@ -6,9 +6,9 @@
 
 namespace OUTRAGEbot\Connection;
 
-use OUTRAGEbot\Core;
+use OUTRAGEbot\Core\ObjectContainer;
 
-class Packet extends Core\ObjectContainer
+class Packet extends ObjectContainer
 {
     /**
      *	Stores a reference to the instance here.

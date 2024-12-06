@@ -7,8 +7,8 @@
 
 namespace OUTRAGEbot\Element;
 
-use OUTRAGEbot\Core;
+use OUTRAGEbot\Core\ObjectContainer;
 
-class ChannelModes extends Core\ObjectContainer
+class ChannelModes extends ObjectContainer
 {
 }

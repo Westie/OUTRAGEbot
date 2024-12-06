@@ -7,10 +7,10 @@
 namespace OUTRAGEbot\Element;
 
 use OUTRAGEbot\Connection;
-use OUTRAGEbot\Core;
+use OUTRAGEbot\Core\ObjectContainer;
 use OUTRAGEbot\Module;
 
-class User extends Core\ObjectContainer
+class User extends ObjectContainer
 {
     /**
      *	Context of the object that started this request off.

@@ -8,6 +8,7 @@ namespace OUTRAGEbot\Connection;
 
 use OUTRAGEbot\Core;
 use OUTRAGEbot\Core\Attributes;
+use OUTRAGEbot\Core\ObjectContainer;
 use OUTRAGEbot\Element;
 use OUTRAGEbot\Event;
 use OUTRAGEbot\Module;
@@ -68,7 +69,7 @@ class Instance
      */
     public function getter_serverconf()
     {
-        $configuration = new Core\ObjectContainer();
+        $configuration = new ObjectContainer();
         $socket = $this->sockets[0];
 
         if ($socket->serverconf) {
@@ -143,7 +144,7 @@ class Instance
         }
 
         foreach ([ 'events', 'scripts', 'sockets' ] as $item) {
-            $this->__set($item, new Core\ObjectContainer());
+            $this->__set($item, new ObjectContainer());
         }
 
         return true;

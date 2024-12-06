@@ -7,7 +7,7 @@
 namespace OUTRAGEbot\Module\Modules;
 
 use OUTRAGEbot\Connection;
-use OUTRAGEbot\Core;
+use OUTRAGEbot\Core\ObjectContainer;
 use OUTRAGEbot\Module;
 
 class Whois extends Module\Template
@@ -201,7 +201,7 @@ class Whois extends Module\Template
             'registered' => false,
         ];
 
-        $response = new Core\ObjectContainer();
+        $response = new ObjectContainer();
         $response->populateContainer($set);
 
         return $response;

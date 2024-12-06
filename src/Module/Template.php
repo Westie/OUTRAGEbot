@@ -10,7 +10,7 @@
 namespace OUTRAGEbot\Module;
 
 use OUTRAGEbot\Connection;
-use OUTRAGEbot\Core;
+use OUTRAGEbot\Core\ObjectContainer;
 use OUTRAGEbot\Event;
 use OUTRAGEbot\Module;
 
@@ -94,7 +94,7 @@ abstract class Template
         }
 
         if (!isset($instance->events[$type])) {
-            $instance->events[$type] = new Core\ObjectContainer();
+            $instance->events[$type] = new ObjectContainer();
         }
 
         $instance->events[$type]->push(new Event\Handler($this, $event, $handler, $metadata));
