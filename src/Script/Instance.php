@@ -10,18 +10,19 @@
 
 namespace OUTRAGEbot\Script;
 
-use OUTRAGEbot\Core\Attributes;
+use OUTRAGEbot\Core\Attributes\Delegator;
 use OUTRAGEbot\Core\ObjectContainer;
 use OUTRAGEbot\Element;
 use OUTRAGEbot\Event;
 use OUTRAGEbot\Module;
+use OUTRAGEbot\Core\Attributes\Delegator;
 
 class Instance
 {
     /**
      *	Include our delegator code
      */
-    use Attributes\Delegator;
+    use Delegator;
 
     /**
      *	Creates a context reference that is passed to modules and such.

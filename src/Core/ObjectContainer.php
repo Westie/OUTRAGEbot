@@ -21,13 +21,15 @@
 
 namespace OUTRAGEbot\Core;
 
+use OUTRAGEbot\Core\Attributes\Delegator;
+
 class ObjectContainer implements \ArrayAccess, \Countable, \Iterator, \Serializable
 {
     /**
      *	Include our delegator - this will provide getter/setter support
      *	across all the scopes.
      */
-    use Attributes\Delegator;
+    use Delegator;
     use Attributes\Delegations;
     use Attributes\ArrayMap;
     use Attributes\Conditionals;

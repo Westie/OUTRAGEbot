@@ -12,6 +12,7 @@ namespace OUTRAGEbot\Event;
 use OUTRAGEbot\Connection;
 use OUTRAGEbot\Core\Attributes;
 use OUTRAGEbot\Format;
+use OUTRAGEbot\Core\Attributes\Delegator;
 
 class Delegator
 {
@@ -19,7 +20,7 @@ class Delegator
      *	Denote that this is a singleton object, and that it needs a reflector.
      */
     use Attributes\Singleton;
-    use Attributes\Delegator;
+    use Delegator;
     use Attributes\Delegations;
 
     /**

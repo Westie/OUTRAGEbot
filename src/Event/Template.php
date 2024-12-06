@@ -8,13 +8,14 @@ namespace OUTRAGEbot\Event;
 
 use OUTRAGEbot\Connection;
 use OUTRAGEbot\Core\Attributes;
+use OUTRAGEbot\Core\Attributes\Delegator;
 
 abstract class Template
 {
     /**
      *	Allows the use of the delegator.
      */
-    use Attributes\Delegator;
+    use Delegator;
 
     /**
      *	Stores the bot instance that the event came from.

@@ -13,13 +13,14 @@ use OUTRAGEbot\Element;
 use OUTRAGEbot\Event;
 use OUTRAGEbot\Module;
 use OUTRAGEbot\Script;
+use OUTRAGEbot\Core\Attributes\Delegator;
 
 class Instance
 {
     /**
      *	We need to have a delegator here.
      */
-    use Attributes\Delegator;
+    use Delegator;
 
     /**
      *	Store our configuration here.

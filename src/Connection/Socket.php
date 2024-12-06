@@ -10,6 +10,7 @@ use OUTRAGEbot\Core;
 use OUTRAGEbot\Core\Attributes;
 use OUTRAGEbot\Element;
 use OUTRAGEbot\Module;
+use OUTRAGEbot\Core\Attributes\Delegator;
 
 class Socket
 {
@@ -17,7 +18,7 @@ class Socket
      *	We'll include our delegation trait, just to keep things
      *	simple.
      */
-    use Attributes\Delegator;
+    use Delegator;
 
     /**
      *	We'll need to keep track of the parent instance.
