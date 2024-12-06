@@ -8,6 +8,7 @@
 namespace OUTRAGEbot\Core;
 
 use OUTRAGEbot\Container;
+use OUTRAGEbot\Core\Attributes\Singleton;
 use OUTRAGEbot\Module;
 
 class Hive extends ObjectContainer
@@ -15,7 +16,7 @@ class Hive extends ObjectContainer
     /**
      *	We'll need the Singleton functionality here.
      */
-    use Attributes\Singleton;
+    use Singleton;
 
     /**
      *	Define our use of an IPC server in this hive.

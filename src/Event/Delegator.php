@@ -10,18 +10,20 @@
 namespace OUTRAGEbot\Event;
 
 use OUTRAGEbot\Connection;
-use OUTRAGEbot\Core\Attributes;
-use OUTRAGEbot\Format;
+use OUTRAGEbot\Core\Attributes\Delegations;
 use OUTRAGEbot\Core\Attributes\Delegator;
+use OUTRAGEbot\Core\Attributes\Singleton;
+use OUTRAGEbot\Format;
+use ReflectionClass;
 
 class Delegator
 {
     /**
      *	Denote that this is a singleton object, and that it needs a reflector.
      */
-    use Attributes\Singleton;
+    use Delegations;
     use Delegator;
-    use Attributes\Delegations;
+    use Singleton;
 
     /**
      *	Returns a ReflectionClass instance of the correct delegator - either straight
@@ -48,10 +50,10 @@ class Delegator
     protected function getEventHandler($numeric)
     {
         if (class_exists('\OUTRAGEbot\Event\Events\\' . $numeric)) {
-            return new \ReflectionClass('\OUTRAGEbot\Event\Events\\' . $numeric);
+            return new ReflectionClass('\OUTRAGEbot\Event\Events\\' . $numeric);
         }
 
-        return new \ReflectionClass('\OUTRAGEbot\Event\Events\Unhandled');
+        return new ReflectionClass('\OUTRAGEbot\Event\Events\Unhandled');
     }
 
     /**

@@ -7,13 +7,12 @@
 namespace OUTRAGEbot\Connection;
 
 use OUTRAGEbot\Core;
-use OUTRAGEbot\Core\Attributes;
+use OUTRAGEbot\Core\Attributes\Delegator;
 use OUTRAGEbot\Core\ObjectContainer;
 use OUTRAGEbot\Element;
 use OUTRAGEbot\Event;
 use OUTRAGEbot\Module;
 use OUTRAGEbot\Script;
-use OUTRAGEbot\Core\Attributes\Delegator;
 
 class Instance
 {

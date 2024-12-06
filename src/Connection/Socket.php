@@ -7,10 +7,9 @@
 namespace OUTRAGEbot\Connection;
 
 use OUTRAGEbot\Core;
-use OUTRAGEbot\Core\Attributes;
+use OUTRAGEbot\Core\Attributes\Delegator;
 use OUTRAGEbot\Element;
 use OUTRAGEbot\Module;
-use OUTRAGEbot\Core\Attributes\Delegator;
 
 class Socket
 {

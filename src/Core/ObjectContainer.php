@@ -21,18 +21,25 @@
 
 namespace OUTRAGEbot\Core;
 
+use ArrayAccess;
+use Countable;
+use Iterator;
+use OUTRAGEbot\Core\Attributes\ArrayMap;
+use OUTRAGEbot\Core\Attributes\Conditionals;
+use OUTRAGEbot\Core\Attributes\Delegations;
 use OUTRAGEbot\Core\Attributes\Delegator;
+use Serializable;
 
-class ObjectContainer implements \ArrayAccess, \Countable, \Iterator, \Serializable
+class ObjectContainer implements ArrayAccess, Countable, Iterator, Serializable
 {
     /**
      *	Include our delegator - this will provide getter/setter support
      *	across all the scopes.
      */
+    use ArrayMap;
+    use Conditionals;
+    use Delegations;
     use Delegator;
-    use Attributes\Delegations;
-    use Attributes\ArrayMap;
-    use Attributes\Conditionals;
 
     /**
      *	We can use this constant to determine whether the standard magic getters shall
@@ -63,7 +70,7 @@ class ObjectContainer implements \ArrayAccess, \Countable, \Iterator, \Serializa
         $array = [];
 
         foreach ($this->container as $property => $item) {
-            if ($item instanceof ObjectContainer) {
+            if ($item instanceof self) {
                 $array[$property] = $item->toArray();
             } else {
                 $array[$property] = $item;

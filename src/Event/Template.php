@@ -7,7 +7,6 @@
 namespace OUTRAGEbot\Event;
 
 use OUTRAGEbot\Connection;
-use OUTRAGEbot\Core\Attributes;
 use OUTRAGEbot\Core\Attributes\Delegator;
 
 abstract class Template

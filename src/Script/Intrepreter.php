@@ -10,14 +10,14 @@
 
 namespace OUTRAGEbot\Script;
 
-use OUTRAGEbot\Core\Attributes;
+use OUTRAGEbot\Core\Attributes\Singleton;
 
 class Intrepreter
 {
     /**
      *	Tell the system that we want this to be a singleton.
      */
-    use Attributes\Singleton;
+    use Singleton;
 
     /**
      *	Called to compile a new script.

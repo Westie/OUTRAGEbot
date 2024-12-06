@@ -15,7 +15,6 @@ use OUTRAGEbot\Core\ObjectContainer;
 use OUTRAGEbot\Element;
 use OUTRAGEbot\Event;
 use OUTRAGEbot\Module;
-use OUTRAGEbot\Core\Attributes\Delegator;
 
 class Instance
 {

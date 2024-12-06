@@ -6,14 +6,14 @@
 
 namespace OUTRAGEbot\Container;
 
-use OUTRAGEbot\Core\Attributes;
+use OUTRAGEbot\Core\Attributes\Singleton;
 
 class Server
 {
     /**
      *	We'll need the Singleton functionality here.
      */
-    use Attributes\Singleton;
+    use Singleton;
 
     /**
      *	Assign a variable for our IPC socket here.

@@ -7,7 +7,7 @@
 
 namespace OUTRAGEbot\Module;
 
-use OUTRAGEbot\Core\Attributes;
+use OUTRAGEbot\Core\Attributes\Singleton;
 use OUTRAGEbot\Core\ObjectContainer;
 
 class Stack extends ObjectContainer
@@ -15,7 +15,7 @@ class Stack extends ObjectContainer
     /**
      *	It's necessary for this class to load the Singleton.
      */
-    use Attributes\Singleton;
+    use Singleton;
 
     /**
      *	List of modules that have a requirement to receive ticks
